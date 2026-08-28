@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>🔢 BÉ VUI HỌC TOÁN LỚP 1 🍎</title>
+  <style>
+    :root {
+      --primary: #FF5A5F;
+      --secondary: #00A699;
+      --accent: #FFB400;
+      --blue: #2980B9;
+      --purple: #8E44AD;
+      --green: #27AE60;
+      --dark: #2C3E50;
+      --bg: #F8FAFC;
+    }
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', 'Comic Sans MS', -apple-system, sans-serif;
+      background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 12px;
+      overflow-x: hidden;
+    }
+    #app-container {
+      background: rgba(255, 255, 255, 0.98);
+      width: 100%;
+      max-width: 960px;
+      min-height: 700px;
+      border-radius: 36px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+      border: 8px solid #FFF;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    #start-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, #FF5A5F 0%, #FFB400 100%);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      color: white;
+    }
+    .big-start-btn {
+      background: #FFF;
+      color: #D35400;
+      font-size: 26px;
+      font-weight: 900;
+      padding: 16px 44px;
+      border-radius: 50px;
+      border: none;
+      box-shadow: 0 8px 0 #E67E22;
+      cursor: pointer;
+      margin-top: 24px;
+      animation: pulse 1.5s infinite;
+      transition: 0.15s;
+    }
+    .big-start-btn:active { transform: translateY(6px); box-shadow: 0 2px 0 #E67E22; }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    header {
+      background: #F8FAFC;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px dashed #E2E8F0;
+      gap: 12px;
+    }
+    .header-center-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--primary);
+      text-transform: uppercase;
+      text-align: center;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .score-badge {
+      background: linear-gradient(135deg, #FFE66D, #FFB400);
+      color: #7A3E00;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 8px 18px;
+      border-radius: 50px;
+      box-shadow: 0 4px 0 #D48800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .nav-btns { display: flex; gap: 8px; }
+    .btn-nav {
+      background: #EDF2F7;
+      border: none;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--dark);
+      padding: 8px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #CBD5E1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.1s;
+      white-space: nowrap;
+    }
+    .btn-nav:active { transform: translateY(4px); box-shadow: none; }
+    #main-content {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hub-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+    .topics-grid-10 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      width: 100%;
+      max-width: 920px;
+    }
+    @media (max-width: 860px) {
+      .topics-grid-10 { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 550px) {
+      .topics-grid-10 { grid-template-columns: repeat(2, 1fr); }
+    }
+    .subject-card {
+      background: #FFF;
+      border: 3px solid var(--primary);
+      border-radius: 20px;
+      padding: 14px 10px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 5px 0 var(--primary);
+      min-height: 110px;
+    }
+    .subject-card:hover { transform: translateY(-5px); }
+    .subject-card:active { transform: translateY(2px); }
+    .subject-card .icon-wrap { font-size: 34px; }
+    .subject-card .title { font-size: 13.5px; font-weight: 800; color: var(--dark); line-height: 1.2; }
+    
+    .question-prompt {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 12px;
+      line-height: 1.4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .speaker-btn {
+      background: #E8F0FE;
+      border: 2px solid #3498DB;
+      font-size: 14px;
+      padding: 5px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      color: #2980B9;
+      box-shadow: 0 3px 0 #CBD5E1;
+    }
+    .speaker-btn:active { transform: translateY(2px); box-shadow: none; }
+    
+    .stage-box {
+      min-height: 180px;
+      background: #F8FAFC;
+      border-radius: 24px;
+      border: 3px dashed #CBD5E1;
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      width: 100%;
+      max-width: 720px;
+    }
+    .choice-btn {
+      background: #FFF;
+      border: 3px solid var(--secondary);
+      color: var(--dark);
+      font-size: 22px;
+      font-weight: 900;
+      padding: 12px 8px;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #45B7AF;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .choice-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #45B7AF; }
+    .choice-btn.correct { background: #2ECC71 !important; color: white !important; border-color: #27AE60 !important; box-shadow: 0 5px 0 #219653 !important; }
+    .choice-btn.wrong { background: #E74C3C !important; color: white !important; border-color: #C0392B !important; box-shadow: 0 5px 0 #A93226 !important; }
+    
+    .game-asset-svg { width: 56px; height: 56px; }
+    .hand-svg { width: 76px; height: 86px; }
+    .hands-display-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #FFF;
+      padding: 6px 12px;
+      border-radius: 18px;
+      border: 2px solid #E2E8F0;
+    }
+    .calc-row-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .kid-instruction-text {
+      font-size: 16px;
+      font-weight: 800;
+      color: #D35400;
+      background: #FFF9DB;
+      padding: 6px 14px;
+      border-radius: 14px;
+      border: 2px dashed #F59F00;
+    }
+    
+    .sequence-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .seq-item {
+      width: 58px;
+      height: 58px;
+      border-radius: 14px;
+      background: #FFF;
+      border: 3px solid #CBD5E1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--dark);
+    }
+    .seq-item.target {
+      background: #FFF9DB;
+      border: 3px dashed #F59F00;
+      color: #E67E22;
+      animation: pulse 1.2s infinite;
+    }
+
+    #fx-canvas {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 99;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app-container">
+    <canvas id="fx-canvas"></canvas>
+
+    <div id="start-overlay">
+      <h1 style="font-size: 36px; font-weight: 900; margin-bottom: 12px;">🔢 BÉ VUI HỌC TOÁN LỚP 1 🍎</h1>
+      <p style="font-size: 19px; font-weight: 700; color: #FFF9DB; margin-bottom: 24px;">
+        Khám phá 10 chuyên đề Toán học trực quan, sinh động dành cho bé 5-6 tuổi!
+      </p>
+      <button class="big-start-btn" onclick="initAppAudio()">🚀 BẮT ĐẦU HỌC TOÁN</button>
+    </div>
+
+    <header>
+      <div class="nav-btns">
+        <button class="btn-nav" onclick="renderHub()">🏠 Danh mục chuyên đề</button>
+      </div>
+      <div class="header-center-title">🔢 TOÁN LỚP 1 TIỀN TIỂU HỌC</div>
+      <div class="score-badge">⭐ <span id="stars-count">0</span> Sao</div>
+    </header>
+
+    <div id="main-content"></div>
+  </div>
+
+  <script>
+    // ==========================================
+    // 1. TÀI NGUYÊN HÌNH KHỐI SVG & FINGER MATH
+    // ==========================================
+    const SVG_LIB = {
+      apple: `<svg viewBox="0 0 100 100" class="game-asset-svg"><circle cx="50" cy="55" r="38" fill="#FF4D4D"/><path d="M50,18 Q55,5 65,10" stroke="#8D6E63" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse cx="62" cy="18" rx="8" ry="4" fill="#4CAF50" transform="rotate(-20, 62, 18)"/></svg>`,
+      star: `<svg viewBox="0 0 100 100" class="game-asset-svg"><polygon points="50,5 64,36 98,36 70,57 81,91 50,70 19,91 30,57 2,36 36,36" fill="#FDCB6E" stroke="#E17055" stroke-width="3"/></svg>`,
+      candy: `<svg viewBox="0 0 100 100" class="game-asset-svg"><circle cx="50" cy="50" r="28" fill="#FF7675" stroke="#D63031" stroke-width="3"/><polygon points="24,50 5,30 5,70" fill="#74B9FF"/><polygon points="76,50 95,30 95,70" fill="#74B9FF"/></svg>`,
+      square: `<svg viewBox="0 0 100 100" class="game-asset-svg" style="width:85px;height:85px;"><rect x="15" y="15" width="70" height="70" rx="10" fill="#FF7675" stroke="#D63031" stroke-width="4"/></svg>`,
+      circle: `<svg viewBox="0 0 100 100" class="game-asset-svg" style="width:85px;height:85px;"><circle cx="50" cy="50" r="38" fill="#74B9FF" stroke="#0984E3" stroke-width="4"/></svg>`,
+      triangle: `<svg viewBox="0 0 100 100" class="game-asset-svg" style="width:85px;height:85px;"><polygon points="50,15 88,80 12,80" fill="#55EFC4" stroke="#00B894" stroke-width="4"/></svg>`,
+      rect: `<svg viewBox="0 0 100 100" class="game-asset-svg" style="width:110px;height:75px;"><rect x="10" y="25" width="80" height="50" rx="10" fill="#FDCB6E" stroke="#E17055" stroke-width="4"/></svg>`
+    };
+
+    function generateSingleHandSvg(fingersCount, isLeft = true, skinColor = '#FFB074') {
+      const f = Math.max(0, Math.min(5, fingersCount));
+      const foldColor = '#E2E8F0', foldStroke = '#CBD5E1', activeColor = skinColor, activeStroke = '#E67E22';
+      const up = [f >= 1, f >= 2, f >= 3, f >= 4, f >= 5];
+
+      const pinky = up[4] ? `<rect x="75" y="25" width="13" height="42" rx="6.5" fill="${activeColor}" stroke="${activeStroke}" stroke-width="2"/>` : `<circle cx="81" cy="56" r="6" fill="${foldColor}" stroke="${foldStroke}" stroke-width="2"/>`;
+      const ring = up[3] ? `<rect x="58" y="14" width="14" height="55" rx="7" fill="${activeColor}" stroke="${activeStroke}" stroke-width="2"/>` : `<circle cx="65" cy="55" r="7" fill="${foldColor}" stroke="${foldStroke}" stroke-width="2"/>`;
+      const middle = up[2] ? `<rect x="41" y="8" width="14" height="62" rx="7" fill="${activeColor}" stroke="${activeStroke}" stroke-width="2"/>` : `<circle cx="48" cy="54" r="7" fill="${foldColor}" stroke="${foldStroke}" stroke-width="2"/>`;
+      const index = up[1] ? `<rect x="24" y="16" width="14" height="54" rx="7" fill="${activeColor}" stroke="${activeStroke}" stroke-width="2"/>` : `<circle cx="31" cy="56" r="7" fill="${foldColor}" stroke="${foldStroke}" stroke-width="2"/>`;
+      const thumb = up[0] ? `<path d="M12,50 Q4,42 8,30 Q12,24 18,34 L25,52 Z" fill="${activeColor}" stroke="${activeStroke}" stroke-width="2"/>` : `<ellipse cx="18" cy="58" rx="6" ry="8" fill="${foldColor}" stroke="${foldStroke}" stroke-width="2"/>`;
+      const palm = `<path d="M18,52 L83,52 C86,68 82,88 68,96 C50,98 32,98 18,92 C14,84 14,64 18,52 Z" fill="${activeColor}" stroke="${activeStroke}" stroke-width="2.5"/>`;
+      const transformAttr = isLeft ? '' : 'transform="scale(-1, 1) translate(-100, 0)"';
+
+      return `<svg viewBox="0 0 100 110" class="hand-svg"><g ${transformAttr}>${pinky}${ring}${middle}${index}${thumb}${palm}</g></svg>`;
+    }
+
+    function renderTwoHandsNumber(n, skinColor = '#FF9F43') {
+      let leftFingers = n <= 5 ? n : 5;
+      let rightFingers = n <= 5 ? 0 : n - 5;
+      return `
+        <div class="hands-display-wrapper">
+          <div style="display:flex; flex-direction:column; align-items:center;">
+            ${generateSingleHandSvg(leftFingers, true, skinColor)}
+          </div>
+          ${n > 5 ? `<div style="display:flex; flex-direction:column; align-items:center;">${generateSingleHandSvg(rightFingers, false, skinColor)}</div>` : ''}
+        </div>
+      `;
+    }
+
+    // ==========================================
+    // 2. BỘ QUẢN LÝ CÂU HỎI TRÁNH TRÙNG LẶP
+    // ==========================================
+    const DECK_CONTAINER = {};
+    function getNextDeckItem(deckKey, sourceArray) {
+      if (!DECK_CONTAINER[deckKey] || DECK_CONTAINER[deckKey].length === 0) {
+        DECK_CONTAINER[deckKey] = [...sourceArray].sort(() => Math.random() - 0.5);
+      }
+      return DECK_CONTAINER[deckKey].pop();
+    }
+
+    // ==========================================
+    // 3. ÂM THANH & CẤU HÌNH GIỌNG NỮ VIỆT NAM
+    // ==========================================
+    let stars = 0, currentTopicFunc = null, currentAnswer = null, audioCtx = null;
+    const onlineAudioPlayer = new Audio();
+    let preferredFemaleVoice = null;
+
+    function initVoiceSetup() {
+      if ('speechSynthesis' in window) {
+        const loadVoices = () => {
+          const voices = window.speechSynthesis.getVoices();
+          preferredFemaleVoice = voices.find(v => 
+            v.lang.includes('vi') && (
+              v.name.includes('Google') || 
+              v.name.includes('HoaiMy') || 
+              v.name.includes('Linh') || 
+              v.name.toLowerCase().includes('female')
+            )
+          ) || voices.find(v => v.lang.includes('vi')) || null;
+        };
+        loadVoices();
+        if (window.speechSynthesis.onvoiceschanged !== undefined) {
+          window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+      }
+    }
+    initVoiceSetup();
+
+    function initAppAudio() {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) {
+        audioCtx = new AudioContext();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+      }
+      playTone('correct');
+      speakClear("Chào bé yêu! Cùng khám phá 10 chuyên đề Toán học vui nhé!");
+      document.getElementById('start-overlay').style.display = 'none';
+      renderHub();
+    }
+
+    function playTone(type) {
+      try {
+        if (!audioCtx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) audioCtx = new AudioContext();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        if (!audioCtx) return;
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        const now = audioCtx.currentTime;
+
+        if (type === 'correct') {
+          osc.frequency.setValueAtTime(523.25, now);
+          osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.15);
+          gain.gain.setValueAtTime(0.3, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.35);
+          osc.start(now);
+          osc.stop(now + 0.35);
+        } else {
+          osc.frequency.setValueAtTime(250, now);
+          osc.frequency.linearRampToValueAtTime(160, now + 0.22);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
+          osc.start(now);
+          osc.stop(now + 0.25);
+        }
+      } catch (e) {}
+    }
+
+    function speakClear(text) {
+      try {
+        onlineAudioPlayer.pause();
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+
+        let cleanText = text.replace(/\+/g, ' cộng ')
+                            .replace(/-/g, ' trừ ')
+                            .replace(/=/g, ' bằng ')
+                            .replace(/>/g, ' lớn hơn ')
+                            .replace(/</g, ' bé hơn ');
+
+        const encoded = encodeURIComponent(cleanText.trim());
+        const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=vi&client=tw-ob&q=${encoded}`;
+
+        onlineAudioPlayer.src = ttsUrl;
+        onlineAudioPlayer.playbackRate = 0.95;
+        const playPromise = onlineAudioPlayer.play();
+
+        if (playPromise !== undefined) {
+          playPromise.catch(() => { fallbackWebSpeech(cleanText); });
+        }
+      } catch (err) {
+        fallbackWebSpeech(text);
+      }
+    }
+
+    function fallbackWebSpeech(text) {
+      if (!('speechSynthesis' in window)) return;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'vi-VN';
+      utterance.rate = 0.92;
+      utterance.pitch = 1.05;
+      if (preferredFemaleVoice) utterance.voice = preferredFemaleVoice;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // ==========================================
+    // 4. HIỆU ỨNG PHÁO HOA CHÚC MỪNG
+    // ==========================================
+    const canvas = document.getElementById('fx-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function triggerConfetti() {
+      resizeCanvas();
+      particles = [];
+      const colors = ['#FF5A5F', '#00A699', '#FFB400', '#8E44AD', '#27AE60', '#2980B9'];
+      for (let i = 0; i < 40; i++) {
+        particles.push({
+          x: canvas.width / 2, y: canvas.height / 2,
+          vx: (Math.random() - 0.5) * 14, vy: (Math.random() - 0.5) * 14 - 3,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: Math.random() * 8 + 4, life: 1
+        });
+      }
+    }
+
+    function renderFX() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, idx) => {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.life -= 0.025;
+        ctx.fillStyle = p.color; ctx.globalAlpha = Math.max(0, p.life);
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+        if (p.life <= 0) particles.splice(idx, 1);
+      });
+      requestAnimationFrame(renderFX);
+    }
+    renderFX();
+
+    // ==========================================
+    // 5. TRANG CHỦ & 10 CHUYÊN ĐỀ TOÁN HỌC
+    // ==========================================
+    const container = document.getElementById('main-content');
+
+    function renderHub() {
+      currentTopicFunc = null;
+      container.innerHTML = `
+        <h1 class="hub-title">🔢 10 CHUYÊN ĐỀ TOÁN HỌC LỚP 1</h1>
+        <div class="topics-grid-10">
+          <div class="subject-card" onclick="startMathCount()"><div class="icon-wrap">🍎</div><div class="title">1. Đếm Số Lượng</div></div>
+          <div class="subject-card" onclick="startMathCompare()"><div class="icon-wrap">⚖️</div><div class="title">2. So Sánh &gt;, &lt;, =</div></div>
+          <div class="subject-card" onclick="startMathOperations()"><div class="icon-wrap">🖐️</div><div class="title">3. Finger Math (+, -)</div></div>
+          <div class="subject-card" onclick="startMathSequenceAndProperties()"><div class="icon-wrap">🎯</div><div class="title">4. Dãy Số & Lớn/Bé</div></div>
+          <div class="subject-card" onclick="startMathShapes()"><div class="icon-wrap">🔷</div><div class="title">5. Nhận Biết Hình Khối</div></div>
+          <div class="subject-card" onclick="startMathSpatial()"><div class="icon-wrap">🧭</div><div class="title">6. Vị Trí & Không Gian</div></div>
+          <div class="subject-card" onclick="startMathSplitJoin()"><div class="icon-wrap">🧩</div><div class="title">7. Tách - Gộp Số</div></div>
+          <div class="subject-card" onclick="startMathClock()"><div class="icon-wrap">⏰</div><div class="title">8. Xem Đồng Hồ Đúng</div></div>
+          <div class="subject-card" onclick="startMathMeasurement()"><div class="icon-wrap">📏</div><div class="title">9. Độ Dài & Tiền Tệ</div></div>
+          <div class="subject-card" onclick="startMathWordProblems()"><div class="icon-wrap">💡</div><div class="title">10. Toán Đố Có Lời Văn</div></div>
+        </div>
+      `;
+    }
+
+    // --- Chuyên đề 1: Đếm số lượng ---
+    function startMathCount() {
+      currentTopicFunc = startMathCount;
+      const count = getNextDeckItem('math_count', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+      currentAnswer = count;
+      let items = '';
+      for (let i = 0; i < count; i++) items += SVG_LIB.apple;
+      let choices = [count];
+      while (choices.length < 4) {
+        let r = Math.floor(Math.random() * 10) + 1;
+        if (!choices.includes(r)) choices.push(r);
+      }
+      choices.sort(() => Math.random() - 0.5);
+      const promptText = `Bé đếm xem có bao nhiêu quả táo nào?`;
+      container.innerHTML = `
+        <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
+        <div class="stage-box" style="flex-direction:row; flex-wrap:wrap; justify-content:center;">${items}</div>
+        <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, ${c})">${c}</button>`).join('')}</div>
+      `;
+      speakClear(promptText);
+    }
+
+    // --- Chuyên đề 2: So sánh >, <, = ---
+    function startMathCompare() {
+      currentTopicFunc = startMathCompare;
+      const [a, b] = getNextDeckItem('math_compare', [[3, 5], [7, 2], [4, 4], [8, 9], [6, 3], [5, 5], [2, 7], [9, 6], [1, 4], [8, 8]]);
+      currentAnswer = a > b ? '>' : (a < b ? '<' : '=');
+      let left = '', right = '';
+      for (let i = 0; i < a; i++) left += SVG_LIB.apple;
+      for (let i = 0; i < b; i++) right += SVG_LIB.star;
+      const promptText = `Bé chọn dấu thích hợp: ${a} ... ${b}`;
+      container.innerHTML = `
+        <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
+        <div class="stage-box" style="flex-direction:row; gap: 20px;">
+          <div style="background:#FFF; padding:10px 16px; border-radius:18px; border:2px solid #E2E8F0;"><div style="font-size:24px; font-weight:800; color:#E74C3C;">${a}</div><div style="display:flex; gap:2px; flex-wrap:wrap;">${left}</div></div>
+          <div style="font-size:34px; font-weight:900; color:#7F8C8D;">?</div>
+          <div style="background:#FFF; padding:10px 16px; border-radius:18px; border:2px solid #E2E8F0;"><div style="font-size:24px; font-weight:800; color:#F39C12;">${b}</div><div style="display:flex; gap:2px; flex-wrap:wrap;">${right}</div></div>
+        </div>
+        <div class="choices-grid" style="max-width:380px;">
+          <button class="choice-btn" onclick="checkAnswer(this, '>')">&gt;</button>
+          <button class="choice-btn" onclick="checkAnswer(this, '=')">=</button>
+          <button class="choice-btn" onclick="checkAnswer(this, '<')">&lt;</button>
+        </div>
+      `;
+      speakClear(promptText);
+    }
+
+    // --- Chuyên đề 3: Phép tính ngón tay (Finger Math) ---
+    function startMathOperations() {
+      currentTopicFunc = startMathOperations;
+      const op = getNextDeckItem('math_op', [
+        { type: '+', a: 3, b: 2 }, { type: '+', a: 4, b: 3 }, { type: '+', a: 5, b: 4 }, { type: '+', a: 2, b: 6 },
+        { type: '-', a: 8, b: 3 }, { type: '-', a: 9, b: 4 }, { type: '-', a: 7, b: 2 }, { type: '-', a: 6, b: 5 }
+      ]);
+      const res = (op.type === '+') ? (op.a + op.b) : (op.a - op.b);
+      currentAnswer = res;
+      const promptText = (op.type === '+') ? `Bé tính xem: ${op.a} cộng ${op.b} bằng bao nhiêu?` : `Bé tính xem: ${op.a} trừ ${op.b} bằng bao nhiêu?`;
+      const stageHtml = (op.type === '+') ? `
+        <div class="calc-row-wrapper">
+          <div style="display:flex; flex-direction:column; align-items:center;"><div style="font-size:17px; font-weight:900; color:#E67E22;">Có ${op.a} ngón:</div>${renderTwoHandsNumber(op.a, '#FF9F43')}</div>
+          <div style="font-size:32px; font-weight:900; color:var(--primary);">+</div>
+          <div style="display:flex; flex-direction:column; align-items:center;"><div style="font-size:17px; font-weight:900; color:#27AE60;">Thêm ${op.b} ngón:</div>${renderTwoHandsNumber(op.b, '#2ECC71')}</div>
+        </div>
+        <div class="kid-instruction-text">🖐️ Bé đếm gộp tất cả các ngón tay xòe ở 2 bên lại nhé!</div>
+      ` : `
+        <div class="calc-row-wrapper">
+          <div style="display:flex; flex-direction:column; align-items:center;"><div style="font-size:17px; font-weight:900; color:#E67E22;">Có ${op.a} ngón:</div>${renderTwoHandsNumber(op.a, '#FF9F43')}</div>
+          <div style="font-size:24px; font-weight:900; color:var(--dark); background:#FFF; padding:8px 14px; border-radius:14px; border:2px solid #E2E8F0;">${op.a} - ${op.b} = ?</div>
+          <div style="display:flex; flex-direction:column; align-items:center;"><div style="font-size:17px; font-weight:900; color:#E74C3C;">Bớt đi ${op.b} ngón:</div>${renderTwoHandsNumber(op.b, '#FF7675')}</div>
+        </div>
+        <div class="kid-instruction-text">🖐️ Bé nhìn ${op.a} ngón tay, rồi gập bớt ${op.b} ngón tay nhé!</div>
+      `;
+
+      let choices = [res];
+      while (choices.length < 4) {
+        let r = Math.floor(Math.random() * 10) + 1;
+        if (!choices.includes(r)) choices.push(r);
+      }
+      choices.sort(() => Math.random() - 0.5);
+
+      container.innerHTML = `
+        <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
+        <div class="stage-box">${stageHtml}</div>
+        <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, ${c})">${c}</button>`).join('')}</div>
+      `;
+      speakClear(promptText);
+    }
+
+    // --- Chuyên đề 4: Dãy số & Số lớn nhất / bé nhất ---
+    function startMathSequenceAndProperties() {
+      currentTopicFunc = startMathSequenceAndProperties;
+      const item = getNextDeckItem('math_prop', [
+        { mode: 'sequence', seq: [2, 3, 4, null, 6], ans: 5 },
+        { mode: 'sequence', seq: [10, 9, 8, null, 6], ans: 7 },
+        { mode: 'findMax', pool: [12, 7, 19, 15], ans: 19 },
+        { mode: 'findMin', pool: [8, 14, 5, 11], ans: 5 }
+      ]);
+      currentAnswer = item.ans;
+      if (item.mode === 'sequence') {
+        let choices = [item.ans, item.ans+1, item.ans-1, item.ans+2].filter(x => x > 0).sort(() => Math.random() - 0.5);
+        let seqHtml = item.seq.map(num => (num === null ? `<div class="seq-item target">?</div>` : `<div class="seq-item">${num}</div>`)).join('');
+        const promptText = `Bé tìm số thích hợp điền vào dấu hỏi chấm nhé!`;
+        container.innerHTML = `
+          <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
+          <div class="stage-box"><div class="sequence-container">${seqHtml}</div></div>
+          <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, ${c})">${c}</button>`).join('')}</div>
+        `;
+        speakClear(promptText);
+      } else {
+        const isMax = (item.mode === 'findMax');
+        const promptText = isMax ? `Trong các số dưới đây, số nào LỚN NHẤT?` : `Trong các số dưới đây, số nào BÉ NHẤT?`;
+        const choices = [...item.pool].sort(() => Math.random() - 0.5);
+        container.innerHTML = `
+          <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
+          <div class="stage-box"><div style="display:flex; gap:12px;">${item.pool.map(n => `<div style="background:#FFF; padding:10px 18px; border-radius:14px; font-size:26px; font-weight:900; color:var(--blue); border:2px solid #BFDBFE;">${n}</div>`).join('')}</div></div>
+          <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, ${c})">${c}</button>`).join('')}</div>
+        `;
+        speakClear(promptText);
+      }
+    }
+
+    // --- Chuyên đề 5: Nhận biết hình khối ---
+    function startMathShapes() {
+      currentTopicFunc = startMathShapes;
+      const target = getNextDeckItem('math_shapes', [
+        { name: 'Hình tròn', key: 'circle' }, { name: 'Hình vuông', key: 'square' },
+        { name: 'Hình tam giác', key: 'triangle' }, { name: 'Hình chữ nhật', key: 'rect' }
+      ]);
+      currentAnswer = target.name;
+      const choices = ['Hình tròn', 'Hình vuông', 'Hình tam giác', 'Hình chữ nhật'].sort(() => Math.random() - 0.5);
+      const promptText = `Đây là hình khối gì nào bé ơi?`;
+      container.innerHTML = `
+        <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
+        <div class="stage-box">${SVG_LIB[target.key]}</div>
+        <div class="choices-grid" style="grid-template-columns:1fr 1fr;">${choices.map(c => `<button class="choice-btn" style="font-size:18px;" onclick="checkAnswer(this, '${c}')">${c}</button>`).join('')}</div>
+      `;
+      speakClear(promptText);
+    }
+
+    // --- Chuyên đề 6: Vị trí & Không gian ---
+    function startMathSpatial() {
+      currentTopicFunc = startMathSpatial;
+      const target = getNextDeckItem('math_spatial', [
+        { question: 'Quả táo ở TRÊN hay ở DƯỚI chiếc hộp?', display: '🍎<br>━━━<br>📦', answer: 'Ở Trên', speech: 'Quả táo ở trên hay ở dưới chiếc hộp?' },
+        { question: 'Chiếc hộp ở TRÊN hay ở DƯỚI quả táo?', display: '🍎<br>━━━<br>📦', answer: 'Ở Dưới', speech: 'Chiếc hộp ở trên hay ở dưới quả táo?' },
+        { question: 'Chú mèo 🐱 đang ở BÊN TRÁI hay BÊN PHẢI cây dù ☂️?', display: '🐱 ➔ ☂️', answer: 'Bên Trái', speech: 'Chú mèo đang ở bên trái hay bên phải cây dù?' }
+      ]);
+      currentAnswer = target.answer;
+      const choices = (target.answer === 'Bên Trái' || target.answer === 'Bên Phải') ? ['Bên Trái', 'Bên Phải'] : ['Ở Trên', 'Ở Dưới'];
+      container.innerHTML = `
+        <div class="question-prompt">${target.question} <button class="speaker-btn" onclick="speakClear('${target.speech}')">🔊 Nghe</button></div>
+        <div class="stage-box"><div style="font-size:42px; line-height:1.4; font-weight:800;">${target.display}</div></div>
+        <div class="choices-grid" style="max-width:360px;">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, '${c}')">${c}</button>`).join('')}</div>
+      `;
+      speakClear(target.speech);
+    }
+
+    // --- Chuyên đề 7: Sơ đồ Tách - Gộp số ---
+    function startMathSplitJoin() {
+      currentTopicFunc = startMathSplitJoin;
+      const item = getNextDeckItem('math_split', [
+        { total: 5, p1: 2, p2: 3, speech: '5 gồm 2 và mấy?' },
+        { total: 4, p1: 1, p2: 3, speech: '4 gồm 1 và mấy?' },
+        { total: 6, p1: 4, p2: 2, speech: '6 gồm 4 và mấy?' },
+        { total: 8, p1: 5, p2: 3, speech: '8 gồm 5 và mấy?' },
+        { total: 10, p1: 7, p2: 3, speech: '10 gồm 7 và mấy?' }
+      ]);
+      currentAnswer = item.p2;
+      let choices = [item.p2, item.p2 + 1, item.p2 - 1, item.p2 + 2].filter(x => x >= 0).slice(0, 4).sort(() => Math.random() - 0.5);
+      const promptText = `Số ${item.total} gồm ${item.p1} và mấy?`;
+      container.innerHTML = `
+        <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${item.speech}')">🔊 Nghe</button></div>
+        <div class="stage-box">
+          <div style="font-size:32px; font-weight:900; color:var(--purple); background:#FFF; padding:12px 24px; border-radius:18px; border:2px dashed #8E44AD;">
+            ${item.total} ➔ ( ${item.p1} và <span style="color:#E74C3C;">?</span> )
+          </div>
+        </div>
+        <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, ${c})">${c}</button>`).join('')}</div>
+      `;
+      speakClear(item.speech);
+    }
+
+    // --- Chuyên đề 8: Xem giờ đúng ---
+    function startMathClock() {
+      currentTopicFunc = startMathClock;
+      const hour = getNextDeckItem('math_clock', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+      currentAnswer = `${hour} giờ`;
+      let choices = [`${hour} giờ`, `${(hour+2)%12 || 12} giờ`, `${(hour+4)%12 || 12} giờ`, `${(hour+1)%12 || 12} giờ`].sort(() => Math.random() - 0.5);
+      const promptText = `Đồng hồ đang chỉ mấy giờ đúng?`;
+      container.innerHTML = `
+        <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
+        <div class="stage-box">
+          <div style="font-size:64px;">⏰</div>
+          <div style="font-size:24px; font-weight:900; color:var(--dark);">Kim ngắn chỉ số ${hour}, Kim dài chỉ số 12</div>
+        </div>
+        <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, '${c}')">${c}</button>`).join('')}</div>
+      `;
+      speakClear(promptText);
+    }
+
+    // --- Chuyên đề 9: Độ dài & Tiền tệ ---
+    function startMathMeasurement() {
+      currentTopicFunc = startMathMeasurement;
+      const item = getNextDeckItem('math_measure', [
+        { question: 'Bút chì dài bao nhiêu cm?', display: '✏️ 0 ━━━━ 6 cm', ans: '6 cm', speech: 'Bút chì dài bao nhiêu xăng ti mét?' },
+        { question: 'Cây thước kẻ dài bao nhiêu cm?', display: '📏 0 ━━━━━━ 9 cm', ans: '9 cm', speech: 'Cây thước dài bao nhiêu xăng ti mét?' },
+        { question: 'Mệnh giá tờ tiền này là bao nhiêu?', display: '💵 5.000 Đồng', ans: '5000 đồng', speech: 'Tờ tiền có mệnh giá bao nhiêu?' },
+        { question: 'Mệnh giá tờ tiền này là bao nhiêu?', display: '💵 2.000 Đồng', ans: '2000 đồng', speech: 'Tờ tiền có mệnh giá bao nhiêu?' }
+      ]);
+      currentAnswer = item.ans;
+      const pool = ['6 cm', '9 cm', '10 cm', '5000 đồng', '2000 đồng', '1000 đồng'];
+      let choices = [item.ans, ...pool.filter(x => x !== item.ans).slice(0, 3)].sort(() => Math.random() - 0.5);
+      container.innerHTML = `
+        <div class="question-prompt">${item.question} <button class="speaker-btn" onclick="speakClear('${item.speech}')">🔊 Nghe</button></div>
+        <div class="stage-box"><div style="font-size:32px; font-weight:900; color:var(--blue);">${item.display}</div></div>
+        <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, '${c}')">${c}</button>`).join('')}</div>
+      `;
+      speakClear(item.speech);
+    }
+
+    // --- Chuyên đề 10: Toán đố có lời văn ---
+    function startMathWordProblems() {
+      currentTopicFunc = startMathWordProblems;
+      const item = getNextDeckItem('math_word_prob', [
+        { q: 'Cây có 3 quả táo 🍎, rụng thêm 2 quả 🍎. Hỏi có tất cả mấy quả táo?', ans: 5, speech: 'Cây có 3 quả táo, rụng thêm 2 quả. Hỏi có tất cả mấy quả táo?' },
+        { q: 'Hồ nước có 6 chú vịt 🦆, 2 chú bơi đi mất. Hỏi hồ nước còn mấy chú vịt?', ans: 4, speech: 'Hồ nước có 6 chú vịt, 2 chú bơi đi mất. Còn lại mấy chú vịt?' },
+        { q: 'Bé có 4 chiếc kẹo 🍬, mẹ cho thêm 3 chiếc 🍬. Hỏi bé có tất cả mấy chiếc kẹo?', ans: 7, speech: 'Bé có 4 chiếc kẹo, mẹ cho thêm 3 chiếc. Hỏi bé có mấy chiếc kẹo?' }
+      ]);
+      currentAnswer = item.ans;
+      let choices = [item.ans, item.ans + 1, item.ans - 1, item.ans + 2].filter(x => x > 0).sort(() => Math.random() - 0.5);
+      container.innerHTML = `
+        <div class="question-prompt">Toán đố thông minh <button class="speaker-btn" onclick="speakClear('${item.speech}')">🔊 Nghe bài toán</button></div>
+        <div class="stage-box"><div style="font-size:22px; font-weight:800; color:var(--dark); line-height:1.5;">${item.q}</div></div>
+        <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, ${c})">${c}</button>`).join('')}</div>
+      `;
+      speakClear(item.speech);
+    }
+
+    // ==========================================
+    // 6. KIỂM TRA ĐÁP ÁN CHUNG
+    // ==========================================
+    function checkAnswer(btnElement, selected) {
+      const allBtns = document.querySelectorAll('.choice-btn');
+      allBtns.forEach(b => b.disabled = true);
+
+      if (String(selected).trim().toLowerCase() === String(currentAnswer).trim().toLowerCase()) {
+        btnElement.classList.add('correct');
+        playTone('correct');
+        triggerConfetti();
+        stars += 1;
+        document.getElementById('stars-count').innerText = stars;
+        speakClear("Hoan hô! Bé giỏi quá!");
+
+        setTimeout(() => { if (currentTopicFunc) currentTopicFunc(); }, 1400);
+      } else {
+        btnElement.classList.add('wrong');
+        playTone('wrong');
+        speakClear("Bé thử lại nhé!");
+
+        setTimeout(() => {
+          btnElement.classList.remove('wrong');
+          allBtns.forEach(b => b.disabled = false);
+        }, 900);
+      }
+    }
+  </script>
+</body>
+</html>
