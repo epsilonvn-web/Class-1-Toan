@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>Toán lớp 1 - Cô giáo Thỏ Ngọc</title>
-    <link rel="icon" type="image/svg+xml" href="assets/img/logo_tho_ngoc.svg">
+    <title>Toán lớp 1 - Cô giáo Thỏ Hồng</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome 6 -->
@@ -97,11 +97,11 @@
         <!-- 1. MÀN HÌNH ĐĂNG NHẬP / ĐĂNG KÝ -->
         <div id="screen-login" class="w-full max-w-md pastel-card p-6 md:p-8 flex flex-col items-center text-center my-auto">
             <div class="mb-2">
-                <img src="assets/img/logo_tho_ngoc.svg" alt="Cô giáo Thỏ Ngọc" class="w-24 h-24 md:w-28 md:h-28 swaying select-none mx-auto">
+                <span class="text-7xl md:text-8xl swaying select-none">🐰</span>
             </div>
 
             <h1 class="text-2xl md:text-3xl font-extrabold text-pink-600 tracking-wide uppercase mb-1">Toán lớp 1</h1>
-            <p class="text-sm font-bold text-purple-600 mb-5">Cô giáo Thỏ Ngọc</p>
+            <p class="text-sm font-bold text-purple-600 mb-5">Cô giáo Thỏ Hồng</p>
 
             <div class="w-full grid grid-cols-2 bg-pink-50 rounded-2xl p-1 mb-5 border border-pink-200">
                 <button id="tab-btn-login" onclick="switchAuthTab('login')" class="py-2.5 rounded-xl font-extrabold text-sm pastel-btn bg-white text-pink-600 shadow-sm">Đăng nhập</button>
@@ -170,10 +170,10 @@
             <header class="w-full bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-sm border-2 border-pink-200 flex flex-col md:flex-row justify-between items-center gap-2">
                 <div class="flex items-center space-x-2 w-full md:w-auto justify-between md:justify-start overflow-x-auto pb-0.5">
                     <button id="btn-header-home" onclick="goHome()" title="Về trang chủ" class="h-12 flex items-center gap-1.5 bg-gradient-to-br from-pink-50 via-rose-50 to-purple-50 pl-2 pr-3 rounded-2xl border-2 border-pink-300 shadow-sm shrink-0 transition-all duration-200 hover:border-pink-400 hover:shadow-[0_0_18px_rgba(244,114,182,0.65)]">
-                        <span class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-inner border border-pink-200 shrink-0 overflow-hidden"><img src="assets/img/logo_tho_ngoc.svg" alt="Thỏ Ngọc" class="w-7 h-7 object-contain"></span>
+                        <span class="w-8 h-8 flex items-center justify-center bg-white rounded-full text-lg shadow-inner border border-pink-200 shrink-0">🐰</span>
                         <span class="flex flex-col items-start leading-none">
                             <span class="text-sm font-black bg-gradient-to-r from-pink-600 to-purple-500 bg-clip-text text-transparent uppercase tracking-wide whitespace-nowrap">Toán lớp 1</span>
-                            <span class="text-[10px] font-bold text-purple-500 mt-0.5 whitespace-nowrap">Cô giáo Thỏ Ngọc</span>
+                            <span class="text-[10px] font-bold text-purple-500 mt-0.5 whitespace-nowrap">Cô giáo Thỏ Hồng</span>
                         </span>
                     </button>
 
@@ -543,12 +543,12 @@
                                     <th class="py-2.5 px-2 whitespace-nowrap">Lần thi</th>
                                     <th class="py-2.5 px-2 whitespace-nowrap">Đề / Tuần</th>
                                     <th class="py-2.5 px-2 whitespace-nowrap text-rose-600">Tổng điểm</th>
-                                    <th class="py-2 px-1 leading-tight">C1: Nhận biết<br><span class="text-[10px] text-pink-700">(Số & hình)</span></th>
-                                    <th class="py-2 px-1 leading-tight">C2: Phép tính<br><span class="text-[10px] text-pink-700">(Tính nhẩm)</span></th>
+                                    <th class="py-2 px-1 leading-tight">C1: Số học<br><span class="text-[10px] text-pink-700">(& Hình học)</span></th>
+                                    <th class="py-2 px-1 leading-tight">C2: Phép tính<br><span class="text-[10px] text-pink-700">(Cộng & Trừ)</span></th>
                                     <th class="py-2 px-1 leading-tight">C3: Đo lường<br><span class="text-[10px] text-pink-700">(Thời gian)</span></th>
-                                    <th class="py-2 px-1 leading-tight">C4: Quy luật<br><span class="text-[10px] text-pink-700">(Tìm x)</span></th>
+                                    <th class="py-2 px-1 leading-tight">C4: Vị trí<br><span class="text-[10px] text-pink-700">(So sánh)</span></th>
                                     <th class="py-2 px-1 leading-tight">C5: Giải toán<br><span class="text-[10px] text-pink-700">(Lời văn)</span></th>
-                                    <th class="py-2 px-1 leading-tight">C6: Tư duy<br><span class="text-[10px] text-pink-700">(Logic IQ)</span></th>
+                                    <th class="py-2 px-1 leading-tight">C6: Dãy số<br><span class="text-[10px] text-pink-700">(Quy luật)</span></th>
                                     <th class="py-2.5 px-2 whitespace-nowrap">Ngày làm</th>
                                     <th class="py-2.5 px-2 whitespace-nowrap">Thời gian</th>
                                 </tr>
