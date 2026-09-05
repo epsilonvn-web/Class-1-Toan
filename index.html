@@ -1,832 +1,584 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>🔢 BÉ VUI HỌC TOÁN LỚP 1 🍎</title>
-  <style>
-    :root {
-      --primary: #FF5A5F;
-      --secondary: #00A699;
-      --accent: #FFB400;
-      --blue: #2980B9;
-      --purple: #8E44AD;
-      --green: #27AE60;
-      --dark: #2C3E50;
-      --bg: #F8FAFC;
-    }
-    * {
-      box-sizing: border-box;
-      user-select: none;
-      -webkit-user-select: none;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Segoe UI', 'Comic Sans MS', -apple-system, sans-serif;
-      background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 12px;
-      overflow-x: hidden;
-    }
-    #app-container {
-      background: rgba(255, 255, 255, 0.98);
-      width: 100%;
-      max-width: 960px;
-      min-height: 700px;
-      border-radius: 36px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.15);
-      border: 8px solid #FFF;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-    }
-    #start-overlay {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, #FF5A5F 0%, #FFB400 100%);
-      z-index: 999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      text-align: center;
-      color: white;
-    }
-    .big-start-btn {
-      background: #FFF;
-      color: #D35400;
-      font-size: 26px;
-      font-weight: 900;
-      padding: 16px 44px;
-      border-radius: 50px;
-      border: none;
-      box-shadow: 0 8px 0 #E67E22;
-      cursor: pointer;
-      margin-top: 24px;
-      animation: pulse 1.5s infinite;
-      transition: 0.15s;
-    }
-    .big-start-btn:active { transform: translateY(6px); box-shadow: 0 2px 0 #E67E22; }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-    header {
-      background: #F8FAFC;
-      padding: 12px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 3px dashed #E2E8F0;
-      gap: 12px;
-    }
-    .header-center-title {
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--primary);
-      text-transform: uppercase;
-      text-align: center;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    .score-badge {
-      background: linear-gradient(135deg, #FFE66D, #FFB400);
-      color: #7A3E00;
-      font-size: 18px;
-      font-weight: 800;
-      padding: 8px 18px;
-      border-radius: 50px;
-      box-shadow: 0 4px 0 #D48800;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-    .nav-btns { display: flex; gap: 8px; }
-    .btn-nav {
-      background: #EDF2F7;
-      border: none;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--dark);
-      padding: 8px 14px;
-      border-radius: 14px;
-      cursor: pointer;
-      box-shadow: 0 4px 0 #CBD5E1;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: 0.1s;
-      white-space: nowrap;
-    }
-    .btn-nav:active { transform: translateY(4px); box-shadow: none; }
-    #main-content {
-      flex: 1;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    .hub-title {
-      font-size: 28px;
-      font-weight: 900;
-      color: var(--dark);
-      margin-bottom: 20px;
-    }
-    .topics-grid-10 {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
-      width: 100%;
-      max-width: 920px;
-    }
-    @media (max-width: 860px) {
-      .topics-grid-10 { grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 550px) {
-      .topics-grid-10 { grid-template-columns: repeat(2, 1fr); }
-    }
-    .subject-card {
-      background: #FFF;
-      border: 3px solid var(--primary);
-      border-radius: 20px;
-      padding: 14px 10px;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      box-shadow: 0 5px 0 var(--primary);
-      min-height: 110px;
-    }
-    .subject-card:hover { transform: translateY(-5px); }
-    .subject-card:active { transform: translateY(2px); }
-    .subject-card .icon-wrap { font-size: 34px; }
-    .subject-card .title { font-size: 13.5px; font-weight: 800; color: var(--dark); line-height: 1.2; }
-    
-    .question-prompt {
-      font-size: 21px;
-      font-weight: 800;
-      color: var(--dark);
-      margin-bottom: 12px;
-      line-height: 1.4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .speaker-btn {
-      background: #E8F0FE;
-      border: 2px solid #3498DB;
-      font-size: 14px;
-      padding: 5px 12px;
-      border-radius: 12px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 700;
-      color: #2980B9;
-      box-shadow: 0 3px 0 #CBD5E1;
-    }
-    .speaker-btn:active { transform: translateY(2px); box-shadow: none; }
-    
-    .stage-box {
-      min-height: 180px;
-      background: #F8FAFC;
-      border-radius: 24px;
-      border: 3px dashed #CBD5E1;
-      width: 100%;
-      max-width: 900px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-    
-    .choices-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 12px;
-      width: 100%;
-      max-width: 720px;
-    }
-    .choice-btn {
-      background: #FFF;
-      border: 3px solid var(--secondary);
-      color: var(--dark);
-      font-size: 22px;
-      font-weight: 900;
-      padding: 12px 8px;
-      border-radius: 16px;
-      cursor: pointer;
-      box-shadow: 0 5px 0 #45B7AF;
-      transition: all 0.15s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .choice-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #45B7AF; }
-    .choice-btn.correct { background: #2ECC71 !important; color: white !important; border-color: #27AE60 !important; box-shadow: 0 5px 0 #219653 !important; }
-    .choice-btn.wrong { background: #E74C3C !important; color: white !important; border-color: #C0392B !important; box-shadow: 0 5px 0 #A93226 !important; }
-    
-    .game-asset-svg { width: 56px; height: 56px; }
-    .hand-svg { width: 76px; height: 86px; }
-    .hands-display-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: #FFF;
-      padding: 6px 12px;
-      border-radius: 18px;
-      border: 2px solid #E2E8F0;
-    }
-    .calc-row-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .kid-instruction-text {
-      font-size: 16px;
-      font-weight: 800;
-      color: #D35400;
-      background: #FFF9DB;
-      padding: 6px 14px;
-      border-radius: 14px;
-      border: 2px dashed #F59F00;
-    }
-    
-    .sequence-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .seq-item {
-      width: 58px;
-      height: 58px;
-      border-radius: 14px;
-      background: #FFF;
-      border: 3px solid #CBD5E1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      font-weight: 900;
-      color: var(--dark);
-    }
-    .seq-item.target {
-      background: #FFF9DB;
-      border: 3px dashed #F59F00;
-      color: #E67E22;
-      animation: pulse 1.2s infinite;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Toán lớp 1 - Cô giáo Thỏ Ngọc</title>
+    <link rel="icon" type="image/svg+xml" href="assets/img/logo_tho_ngoc.svg">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Quicksand & Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <!-- html2pdf.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Quicksand', 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #fdf2f8 0%, #fae8ff 50%, #f3e8ff 100%);
+            color: #4a4a4a;
+            user-select: none;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .pastel-card {
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 12px 30px rgba(236, 72, 153, 0.12);
+            border: 3px solid #fbcfe8;
+        }
+        .pastel-btn {
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        .pastel-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.09);
+        }
+        .pastel-btn:active { transform: translateY(1px); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .floating { animation: float 3s ease-in-out infinite; }
+        @keyframes sway {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(-7deg); }
+            75% { transform: translateY(-5px) rotate(7deg); }
+        }
+        .swaying {
+            animation: sway 2.4s ease-in-out infinite;
+            display: inline-block;
+            transform-origin: bottom center;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 6px rgba(236, 72, 153, 0.6)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 16px rgba(236, 72, 153, 0.9)); transform: scale(1.04); }
+        }
+        .node-current {
+            animation: pulse-glow 2s infinite ease-in-out;
+            transform-origin: center;
+        }
+        ::-webkit-scrollbar { width: 3px; height: 3px; }
+        ::-webkit-scrollbar-track { background: #fdf2f8; }
+        ::-webkit-scrollbar-thumb { background: #f472b6; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ec4899; }
 
-    #fx-canvas {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 99;
-    }
-  </style>
+        @media print {
+            body * { visibility: hidden; }
+            #printable-report-area, #printable-report-area * { visibility: visible; }
+            #printable-report-area {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                background: white !important;
+                padding: 10px !important;
+            }
+            .no-print { display: none !important; }
+            .page-break-1 { page-break-after: always; break-after: page; }
+            .page-break-2 { page-break-before: always; break-before: page; page-break-after: always; break-after: page; }
+            .page-break-3 { page-break-before: always; break-before: page; }
+        }
+    </style>
 </head>
-<body>
+<body class="p-1 md:p-2 w-full">
 
-  <div id="app-container">
-    <canvas id="fx-canvas"></canvas>
+    <div class="w-full flex justify-center items-center mt-4 md:mt-6">
+        <!-- 1. MÀN HÌNH ĐĂNG NHẬP / ĐĂNG KÝ -->
+        <div id="screen-login" class="w-full max-w-md pastel-card p-6 md:p-8 flex flex-col items-center text-center my-auto">
+            <div class="mb-2">
+                <img src="assets/img/logo_tho_ngoc.svg" alt="Cô giáo Thỏ Ngọc" class="w-24 h-24 md:w-28 md:h-28 swaying select-none mx-auto">
+            </div>
 
-    <div id="start-overlay">
-      <h1 style="font-size: 36px; font-weight: 900; margin-bottom: 12px;">🔢 BÉ VUI HỌC TOÁN LỚP 1 🍎</h1>
-      <p style="font-size: 19px; font-weight: 700; color: #FFF9DB; margin-bottom: 24px;">
-        Khám phá 10 chuyên đề Toán học trực quan, sinh động dành cho bé 5-6 tuổi!
-      </p>
-      <button class="big-start-btn" onclick="initAppAudio()">🚀 BẮT ĐẦU HỌC TOÁN</button>
+            <h1 class="text-2xl md:text-3xl font-extrabold text-pink-600 tracking-wide uppercase mb-1">Toán lớp 1</h1>
+            <p class="text-sm font-bold text-purple-600 mb-5">Cô giáo Thỏ Ngọc</p>
+
+            <div class="w-full grid grid-cols-2 bg-pink-50 rounded-2xl p-1 mb-5 border border-pink-200">
+                <button id="tab-btn-login" onclick="switchAuthTab('login')" class="py-2.5 rounded-xl font-extrabold text-sm pastel-btn bg-white text-pink-600 shadow-sm">Đăng nhập</button>
+                <button id="tab-btn-register" onclick="switchAuthTab('register')" class="py-2.5 rounded-xl font-extrabold text-sm pastel-btn text-gray-400">Đăng ký tài khoản</button>
+            </div>
+
+            <div id="form-login" class="w-full space-y-3">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-pink-400"><i class="fa-solid fa-id-card"></i></span>
+                    <input type="text" id="login-mahs" placeholder="Mã ID thẻ học sinh (ví dụ: 1A-09)" class="w-full pl-11 pr-4 py-3.5 rounded-2xl border-2 border-pink-200 focus:border-pink-400 focus:outline-none font-bold text-gray-700 placeholder-gray-300 bg-pink-50/20 text-sm">
+                </div>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-pink-400"><i class="fa-solid fa-lock"></i></span>
+                    <input type="password" id="login-mapin" maxlength="4" inputmode="numeric" placeholder="Mã PIN (4 số)" class="w-full pl-11 pr-4 py-3.5 rounded-2xl border-2 border-pink-200 focus:border-pink-400 focus:outline-none font-bold text-gray-700 placeholder-gray-300 bg-pink-50/20 text-sm">
+                </div>
+                <button onclick="doLogin()" id="btn-do-login" class="w-full py-3.5 bg-gradient-to-r from-pink-400 to-rose-400 text-white font-extrabold rounded-2xl text-sm pastel-btn shadow-md">
+                    <i class="fa-solid fa-right-to-bracket mr-1"></i> Đăng nhập
+                </button>
+            </div>
+
+            <div id="form-register" class="w-full space-y-3 hidden text-left">
+                <div>
+                    <label class="text-xs font-extrabold text-pink-600">Họ và tên học sinh <span class="text-rose-400">*</span></label>
+                    <input type="text" id="reg-hoten" placeholder="Ví dụ: Phùng Tường Vy" class="w-full mt-1 px-4 py-3 rounded-2xl border-2 border-pink-200 focus:border-pink-400 focus:outline-none font-bold text-gray-700 placeholder-gray-300 bg-pink-50/20 text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-xs font-extrabold text-pink-600">Ngày sinh <span class="text-rose-400">*</span></label>
+                        <input type="date" id="reg-ngaysinh" class="w-full mt-1 px-3 py-3 rounded-2xl border-2 border-pink-200 focus:border-pink-400 focus:outline-none font-bold text-gray-700 bg-pink-50/20 text-sm">
+                    </div>
+                    <div>
+                        <label class="text-xs font-extrabold text-pink-600">Tên lớp <span class="text-rose-400">*</span></label>
+                        <input type="text" id="reg-lop" placeholder="1A" oninput="updateMaHSPreview()" class="w-full mt-1 px-3 py-3 rounded-2xl border-2 border-pink-200 focus:border-pink-400 focus:outline-none font-bold text-gray-700 placeholder-gray-300 bg-pink-50/20 text-sm">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-xs font-extrabold text-pink-600">Số thứ tự <span class="text-rose-400">*</span></label>
+                        <input type="number" id="reg-stt" placeholder="09" min="1" max="99" oninput="updateMaHSPreview()" class="w-full mt-1 px-3 py-3 rounded-2xl border-2 border-pink-200 focus:border-pink-400 focus:outline-none font-bold text-gray-700 placeholder-gray-300 bg-pink-50/20 text-sm">
+                    </div>
+                    <div>
+                        <label class="text-xs font-extrabold text-pink-600">Mã PIN (4 số) <span class="text-rose-400">*</span></label>
+                        <input type="password" id="reg-mapin" maxlength="4" inputmode="numeric" placeholder="••••" class="w-full mt-1 px-3 py-3 rounded-2xl border-2 border-pink-200 focus:border-pink-400 focus:outline-none font-bold text-gray-700 placeholder-gray-300 bg-pink-50/20 text-sm">
+                    </div>
+                </div>
+                <div class="flex items-center justify-between bg-pink-50 border border-pink-200 rounded-xl px-3 py-2.5">
+                    <span class="text-xs font-bold text-gray-500">Mã ID thẻ học sinh:</span>
+                    <span id="mahs-preview" class="text-sm font-extrabold text-pink-600 bg-white px-2.5 py-1 rounded-lg border border-pink-200">--</span>
+                </div>
+                <button onclick="doRegister()" id="btn-do-register" class="w-full py-3.5 bg-gradient-to-r from-purple-400 to-indigo-400 text-white font-extrabold rounded-2xl text-sm pastel-btn shadow-md">
+                    <i class="fa-solid fa-user-plus mr-1"></i> Đăng ký ngay
+                </button>
+            </div>
+
+            <div class="w-full mt-4 pt-4 border-t border-pink-100">
+                <button onclick="handleGuestMode()" class="w-full py-3 bg-gradient-to-r from-pink-100 to-purple-100 text-purple-700 font-extrabold rounded-2xl text-xs md:text-sm pastel-btn hover:from-pink-200 hover:to-purple-200 border border-purple-200 flex items-center justify-center space-x-1.5">
+                    <i class="fa-solid fa-compass"></i><span>Vào học thử - không cần tài khoản (khách)</span>
+                </button>
+            </div>
+            <p id="auth-error-msg" class="text-xs font-bold text-rose-500 mt-3 hidden"></p>
+        </div>
+
+        <!-- 2. KHUNG CHÍNH CHUẨN TỶ LỆ 16:9 / 16:10 -->
+        <div id="screen-dashboard" class="w-full max-w-5xl hidden flex flex-col space-y-1.5 md:space-y-2 p-1 md:p-2">
+            
+            <header class="w-full bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-sm border-2 border-pink-200 flex flex-col md:flex-row justify-between items-center gap-2">
+                <div class="flex items-center space-x-2 w-full md:w-auto justify-between md:justify-start overflow-x-auto pb-0.5">
+                    <button id="btn-header-home" onclick="goHome()" title="Về trang chủ" class="h-12 flex items-center gap-1.5 bg-gradient-to-br from-pink-50 via-rose-50 to-purple-50 pl-2 pr-3 rounded-2xl border-2 border-pink-300 shadow-sm shrink-0 transition-all duration-200 hover:border-pink-400 hover:shadow-[0_0_18px_rgba(244,114,182,0.65)]">
+                        <span class="w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-inner border border-pink-200 shrink-0 overflow-hidden"><img src="assets/img/logo_tho_ngoc.svg" alt="Thỏ Ngọc" class="w-7 h-7 object-contain"></span>
+                        <span class="flex flex-col items-start leading-none">
+                            <span class="text-sm font-black bg-gradient-to-r from-pink-600 to-purple-500 bg-clip-text text-transparent uppercase tracking-wide whitespace-nowrap">Toán lớp 1</span>
+                            <span class="text-[10px] font-bold text-purple-500 mt-0.5 whitespace-nowrap">Cô giáo Thỏ Ngọc</span>
+                        </span>
+                    </button>
+
+                    <div id="header-level2-tab" class="hidden items-center">
+                        <button onclick="returnToTopicLecture()" class="h-10 px-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-extrabold rounded-xl text-xs md:text-sm flex items-center space-x-1.5 shadow-sm border border-pink-300 shrink-0 max-w-[200px] md:max-w-[260px] transition-shadow duration-200 hover:shadow-[0_0_14px_rgba(244,63,94,0.65)]">
+                            <span id="header-level2-icon">🔢</span>
+                            <span id="header-level2-title" class="truncate">Chủ đề học</span>
+                        </button>
+                    </div>
+
+                    <div id="header-level3-tab" class="hidden items-center space-x-1">
+                        <span class="text-pink-300 font-bold text-xs">/</span>
+                        <div class="h-10 px-2.5 bg-purple-50 border border-purple-200 text-purple-700 font-extrabold rounded-xl text-xs md:text-sm max-w-[170px] md:max-w-[210px] truncate shadow-inner flex items-center">
+                            <span id="header-level3-title" class="truncate">Mục nhỏ</span>
+                        </div>
+                    </div>
+
+                    <div id="header-level4-tab" class="hidden items-center space-x-1">
+                        <span class="text-pink-300 font-bold text-xs">/</span>
+                        <div class="h-10 px-2.5 bg-amber-50 border border-amber-200 text-amber-700 font-extrabold rounded-xl text-xs md:text-sm max-w-[200px] md:max-w-[260px] truncate shadow-inner flex items-center">
+                            <span id="header-level4-title" class="truncate">Chủ đề tuần</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-2 w-full md:w-auto justify-between md:justify-end ml-auto shrink-0">
+                    <button id="btn-toggle-autospeech" onclick="toggleAutoSpeech()" title="Bật/tắt tự động đọc câu hỏi" class="h-10 w-10 shrink-0 flex items-center justify-center bg-pink-50 text-pink-600 border border-pink-200 rounded-xl shadow-inner transition-colors">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+
+                    <div class="flex flex-col space-y-0.5 bg-pink-50/90 px-2.5 py-1 rounded-xl border border-pink-200 shadow-inner">
+                        <div class="flex items-center justify-between space-x-2 font-extrabold">
+                            <span class="px-1.5 py-0.2 bg-emerald-500 text-white rounded text-[10px] shadow-sm"><i class="fa-solid fa-star mr-0.5"></i> Đúng</span>
+                            <span class="text-emerald-600 font-extrabold text-xs" id="star-green-count">0</span>
+                        </div>
+                        <div class="flex items-center justify-between space-x-2 font-extrabold">
+                            <span class="px-1.5 py-0.2 bg-rose-500 text-white rounded text-[10px] shadow-sm"><i class="fa-solid fa-star mr-0.5"></i> Sai</span>
+                            <span class="text-rose-600 font-extrabold text-xs" id="star-red-count">0</span>
+                        </div>
+                    </div>
+
+                    <div id="user-info-box" class="text-xs font-bold text-gray-600 text-right"></div>
+
+                    <button onclick="clickProgressOrExam('progress')" class="h-10 px-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-extrabold rounded-xl text-xs md:text-sm shadow-md hover:from-purple-600 hover:to-indigo-600 flex items-center space-x-1.5 shrink-0 transition-shadow duration-200 hover:shadow-[0_0_14px_rgba(244,63,94,0.65)]">
+                        <i class="fa-solid fa-map-location-dot"></i><span>Bản đồ tuần</span>
+                    </button>
+                </div>
+            </header>
+
+            <main id="app-viewport" class="w-full">
+                
+                <!-- VIEW 1: TRANG CHỦ 12 CHỦ ĐỀ -->
+                <div id="view-dashboard-grid" class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5"></div>
+
+                <!-- VIEW 2: BÀI GIẢNG -->
+                <div id="view-lecture" class="w-full hidden pastel-card p-4 md:p-6 flex flex-col justify-between items-center min-h-[480px]">
+                    <div class="w-full max-w-4xl flex flex-col items-center">
+                        <h2 id="lecture-title" class="hidden"></h2>
+                        <div class="w-full bg-pink-50/40 p-3.5 md:p-4 rounded-2xl border-2 border-pink-100 mb-3">
+                            <p id="lecture-content" class="text-base md:text-lg text-gray-700 leading-relaxed whitespace-pre-line text-center"></p>
+                        </div>
+
+                        <button onclick="speakLecture()" class="w-full max-w-xs py-2 bg-purple-100 hover:bg-purple-200 text-purple-700 font-extrabold rounded-xl text-sm md:text-base pastel-btn flex items-center justify-center space-x-2 border-2 border-purple-200 shadow-sm mb-2.5">
+                            <i class="fa-solid fa-volume-high text-base"></i><span>Nghe cô đọc</span>
+                        </button>
+
+                        <div class="w-full pt-2 border-t border-pink-100 flex flex-col items-center">
+                            <div id="lecture-subtopics-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-2xl"></div>
+                        </div>
+                    </div>
+
+                    <div class="w-full flex justify-center mt-2.5 pt-1">
+                        <button onclick="selectSubtopic(null)" class="w-full max-w-xs py-2 bg-gradient-to-r from-purple-400 to-indigo-400 text-white font-extrabold rounded-xl text-xs md:text-sm pastel-btn shadow-md">
+                            🌟 Học trộn tất cả các mục
+                        </button>
+                    </div>
+                </div>
+
+                <!-- VIEW 3: PHÒNG LÀM BÀI / THI CHUẨN 16:9 -->
+                <div id="view-quiz" class="w-full hidden flex flex-col space-y-1.5">
+                    
+                    <!-- TOP BAR CỦA ĐỀ THI (ẨN HOÀN TOÀN TRONG CHẾ ĐỘ LUYỆN TẬP) -->
+                    <div id="quiz-top-bar" class="w-full bg-white rounded-2xl p-2.5 border-2 border-pink-200 flex flex-wrap items-center justify-between gap-2.5 shadow-xs">
+                        <div id="quiz-timer-container" class="flex items-center space-x-2">
+                            <div class="w-8 h-8 rounded-xl bg-pink-50 border border-pink-200 flex items-center justify-center text-pink-500 font-bold text-sm">
+                                <i class="fa-solid fa-stopwatch"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-gray-400 uppercase tracking-wider block">Thời gian</span>
+                                <span id="quiz-timer-display" class="text-base font-black text-rose-500 tracking-wider">40:00</span>
+                            </div>
+                        </div>
+
+                        <button id="btn-submit-quiz" onclick="triggerSubmitQuizPrompt()" class="ml-auto px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black text-xs md:text-sm flex items-center space-x-1.5 transition-all shadow-sm pastel-btn">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>Nộp bài thi</span>
+                        </button>
+                    </div>
+
+                    <!-- THẺ CARD LÀM BÀI CHÍNH -->
+                    <div class="w-full pastel-card p-3.5 md:p-5 flex flex-col justify-between min-h-[380px]">
+                        
+                        <!-- HEADER TRONG CARD (CHỈ HIỆN KHI THI) -->
+                        <div id="quiz-card-header" class="hidden items-center justify-between flex-wrap gap-2 border-b border-pink-100 pb-2">
+                            <div class="flex items-center space-x-2">
+                                <span id="q-badge-index" class="px-2.5 py-1 bg-pink-100 text-pink-800 text-sm font-black rounded-lg">CÂU 1 / 13</span>
+                                <span id="q-badge-skill" class="px-2.5 py-1 bg-pink-50 text-pink-700 border border-pink-200 text-sm font-bold rounded-lg flex items-center space-x-1">
+                                    <i class="fa-solid fa-tag text-xs"></i>
+                                    <span id="q-skill-text">Kiến thức cơ bản</span>
+                                </span>
+                                <span id="q-badge-score" class="px-2 py-1 bg-amber-50 text-amber-700 border border-amber-200 text-sm font-bold rounded-lg">(0.5 điểm)</span>
+                            </div>
+                            
+                            <button id="btn-roadmap-history" onclick="openHistoryModal('LichSuTienTrinhTuan')" class="hidden px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-sm font-extrabold items-center space-x-1.5 transition-shadow duration-200 hover:shadow-[0_0_10px_rgba(99,102,241,0.5)] shadow-xs">
+                                <i class="fa-solid fa-chart-line"></i>
+                                <span>Lịch sử tiến trình tuần</span>
+                            </button>
+
+                            <button onclick="speakCurrentQuestion()" class="px-3 py-1.5 bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 rounded-xl text-sm font-extrabold flex items-center space-x-1.5 transition-all pastel-btn shadow-xs">
+                                <i class="fa-solid fa-volume-high text-pink-600"></i>
+                                <span>Nghe câu hỏi</span>
+                            </button>
+                        </div>
+
+                        <!-- KHU VỰC CÂU HỎI & ĐÁP ÁN -->
+                        <div id="question-box" class="w-full flex flex-col justify-center items-center flex-1 my-0.5"></div>
+
+                        <!-- ĐIỀU HƯỚNG ĐÁY -->
+                        <div id="quiz-bottom-nav" class="w-full pt-1">
+                            <!-- 1. GIAO DIỆN LUYỆN TẬP -->
+                            <div id="nav-group-practice" class="flex items-center justify-center gap-3 w-full">
+                                <button id="btn-prev-q-prac" onclick="prevQuestion()" class="px-5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl text-xs md:text-sm pastel-btn border border-gray-200 flex items-center justify-center space-x-1.5 shadow-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                                    <i class="fa-solid fa-chevron-left"></i><span>Câu trước</span>
+                                </button>
+
+                                <div id="practice-step-indicator" class="px-5 py-1.5 bg-pink-50 border border-pink-200 text-pink-700 font-black rounded-full text-xs md:text-sm flex items-center justify-center space-x-1.5 shadow-xs select-none">
+                                    <span>🔢</span><span id="practice-step-text">Câu 1 / 59</span><span>🔢</span>
+                                </div>
+
+                                <button id="btn-next-q-prac" onclick="nextQuestion()" class="px-6 py-2 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-black rounded-2xl text-xs md:text-sm pastel-btn shadow-md flex items-center justify-center space-x-1.5 transition-all">
+                                    <span id="btn-next-text-prac">Câu tiếp theo</span>
+                                    <i id="btn-next-icon-prac" class="fa-solid fa-chevron-right ml-1"></i>
+                                </button>
+                            </div>
+
+                            <!-- 2. GIAO DIỆN ĐỀ THI -->
+                            <div id="nav-group-exam" class="hidden items-center justify-between w-full">
+                                <button id="btn-prev-q-exam" onclick="prevQuestion()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-extrabold rounded-xl text-xs md:text-sm pastel-btn border border-gray-200 flex items-center justify-center space-x-1.5 shadow-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                                    <i class="fa-solid fa-chevron-left"></i><span>Câu trước</span>
+                                </button>
+
+                                <div id="quiz-pallet-container" class="grid grid-cols-10 gap-1.5 max-w-xl mx-2"></div>
+
+                                <button id="btn-next-q-exam" onclick="nextQuestion()" class="px-5 py-2 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-black rounded-xl text-xs md:text-sm pastel-btn shadow-md flex items-center justify-center space-x-1.5 transition-all">
+                                    <span id="btn-next-text-exam">Câu tiếp theo</span>
+                                    <i id="btn-next-icon-exam" class="fa-solid fa-chevron-right ml-1"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- VIEW 4: BẢN ĐỒ LỘ TRÌNH 12 TUẦN SVG CHỮ S -->
+                <div id="view-roadmap" class="w-full hidden pastel-card p-3 md:p-5 flex flex-col justify-between items-center min-h-[480px]">
+                    <div class="w-full max-w-5xl flex flex-col items-center">
+                        <div class="flex flex-col sm:flex-row items-center justify-between w-full px-2 mb-2 gap-2">
+                            <div>
+                                <h2 class="text-base md:text-lg font-extrabold text-indigo-600 flex items-center space-x-2">
+                                    <span>🗺️</span><span>Bản đồ lộ trình 24 tuần bứt phá</span>
+                                </h2>
+                                <p class="text-[11px] md:text-xs text-gray-500 font-bold">Mỗi tuần 30 câu (tỷ lệ 3:4:3). Đạt từ 80% trở lên để mở khóa tuần kế tiếp!</p>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2 shrink-0">
+                                <button onclick="openHistoryModal('LichSuTienTrinhTuan')" class="px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-extrabold rounded-xl border border-indigo-200 text-xs pastel-btn flex items-center space-x-1.5 shadow-sm">
+                                    <i class="fa-solid fa-chart-line text-indigo-600"></i>
+                                    <span>📊 Xem lịch sử tiến trình</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="roadmap-svg-container" class="w-full flex justify-center items-center overflow-hidden bg-gradient-to-b from-pink-50/30 to-purple-50/30 rounded-2xl border-2 border-pink-100 p-1"></div>
+                    </div>
+                </div>
+
+                <!-- VIEW 5: ĐẤU TRƯỜNG ĐỀ THI (MỤC 12) -->
+                <div id="view-exam-hub" class="w-full hidden pastel-card p-5 md:p-7 flex flex-col justify-between items-center min-h-[480px]">
+                    <div class="w-full max-w-5xl">
+                        <div class="text-center mb-5">
+                            <h2 class="font-extrabold text-amber-600 text-lg md:text-xl flex items-center justify-center space-x-2">
+                                <span>🏆</span><span>Đấu trường đề thi thử</span>
+                            </h2>
+                            <p class="text-xs md:text-sm text-gray-500 font-bold mt-1">Thử sức các bộ đề thi chuẩn ma trận 13 câu - 6 nhóm năng lực</p>
+                        </div>
+                        <div id="exam-categories-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+                    </div>
+                </div>
+
+                <!-- VIEW 6: MÀN HÌNH KẾT QUẢ & BÁO CÁO -->
+                <div id="view-result" class="w-full hidden flex flex-col space-y-3">
+                    
+                    <div class="bg-gradient-to-tr from-rose-900 via-pink-950 to-rose-900 rounded-3xl p-4 sm:p-5 text-white shadow-xl relative overflow-hidden">
+                        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
+                            <div class="space-y-1 text-center md:text-left">
+                                <span class="px-3 py-0.5 bg-white/10 backdrop-blur-md rounded-full text-xs font-bold tracking-wider text-pink-200 border border-white/15 inline-block" id="report-exam-badge">
+                                    Kết quả bài thi
+                                </span>
+                                <h2 id="report-student-display" class="text-lg sm:text-xl font-black tracking-tight">Học sinh: --</h2>
+                                <p id="report-meta-display" class="text-xs text-pink-200">Lớp: -- | Mã số: -- | Thời gian: --</p>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 text-center">
+                                    <span class="text-[10px] uppercase tracking-wider text-pink-200 font-bold block mb-0.5">Tổng điểm</span>
+                                    <div class="text-2xl sm:text-3xl font-black font-math text-amber-300" id="report-total-score-val">0.0</div>
+                                    <span class="text-[9px] text-pink-200">Thang điểm 10</span>
+                                </div>
+                                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 text-center">
+                                    <span class="text-[10px] uppercase tracking-wider text-pink-200 font-bold block mb-0.5">Độ chính xác</span>
+                                    <div class="text-2xl sm:text-3xl font-black font-math text-emerald-300" id="report-correct-ratio-val">0/13</div>
+                                    <span class="text-[9px] text-pink-200">Câu đúng</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-4 sm:p-5 border border-pink-100 soft-shadow-pink space-y-2.5">
+                        <h3 class="text-sm sm:text-base font-black text-slate-800 tracking-tight flex items-center space-x-2">
+                            <i class="fa-solid fa-chart-bar text-pink-600"></i>
+                            <span>Bóc tách điểm số & đánh giá năng lực 6 chủ đề</span>
+                        </h3>
+                        <div id="report-topics-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-0.5">
+                        <button onclick="openReviewWrongModal()" class="py-2.5 px-3 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-black text-xs rounded-2xl shadow-xs transition-all flex items-center justify-center space-x-1.5 pastel-btn">
+                            <i class="fa-solid fa-circle-question text-rose-500"></i>
+                            <span>👉 Xem lại các câu làm sai</span>
+                        </button>
+
+                        <button id="report-history-btn" onclick="openHistoryModal('LichSuBaiThi_HK1')" class="py-2.5 px-3 bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 font-black text-xs rounded-2xl shadow-xs transition-all flex items-center justify-center space-x-1.5 pastel-btn">
+                            <i class="fa-solid fa-chart-line text-pink-600"></i>
+                            <span>📊 Lịch sử & biểu đồ tiến trình</span>
+                        </button>
+
+                        <button id="report-next-action-btn" onclick="handleNextExamFromReport()" class="py-2.5 px-3 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-black text-xs rounded-2xl shadow-sm transition-all flex items-center justify-center space-x-1.5 pastel-btn">
+                            <span id="report-next-action-label">🚀 Làm đề thi tiếp theo</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+            </main>
+        </div>
     </div>
 
-    <header>
-      <div class="nav-btns">
-        <button class="btn-nav" onclick="renderHub()">🏠 Danh mục chuyên đề</button>
-      </div>
-      <div class="header-center-title">🔢 TOÁN LỚP 1 TIỀN TIỂU HỌC</div>
-      <div class="score-badge">⭐ <span id="stars-count">0</span> Sao</div>
-    </header>
+    <!-- MODAL XEM LẠI CÂU SAI -->
+    <div id="modal-review-wrong" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-pink-100 overflow-hidden">
+            <div class="p-3.5 border-b border-pink-100 flex items-center justify-between bg-rose-50/50">
+                <div class="flex items-center space-x-2 text-rose-800">
+                    <i class="fa-solid fa-triangle-exclamation text-rose-600"></i>
+                    <h3 class="font-black text-sm">Chi tiết các câu trả lời chưa chính xác</h3>
+                </div>
+                <button onclick="closeReviewWrongModal()" class="w-7 h-7 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark"></i></button>
+            </div>
 
-    <div id="main-content"></div>
-  </div>
+            <div id="review-wrong-content" class="p-4 overflow-y-auto space-y-3 flex-grow text-xs sm:text-sm"></div>
 
-  <script>
-    // ==========================================
-    // 1. TÀI NGUYÊN HÌNH KHỐI SVG & FINGER MATH
-    // ==========================================
-    const SVG_LIB = {
-      apple: `<svg viewBox="0 0 100 100" class="game-asset-svg"><circle cx="50" cy="55" r="38" fill="#FF4D4D"/><path d="M50,18 Q55,5 65,10" stroke="#8D6E63" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse cx="62" cy="18" rx="8" ry="4" fill="#4CAF50" transform="rotate(-20, 62, 18)"/></svg>`,
-      star: `<svg viewBox="0 0 100 100" class="game-asset-svg"><polygon points="50,5 64,36 98,36 70,57 81,91 50,70 19,91 30,57 2,36 36,36" fill="#FDCB6E" stroke="#E17055" stroke-width="3"/></svg>`,
-      candy: `<svg viewBox="0 0 100 100" class="game-asset-svg"><circle cx="50" cy="50" r="28" fill="#FF7675" stroke="#D63031" stroke-width="3"/><polygon points="24,50 5,30 5,70" fill="#74B9FF"/><polygon points="76,50 95,30 95,70" fill="#74B9FF"/></svg>`,
-      square: `<svg viewBox="0 0 100 100" class="game-asset-svg" style="width:85px;height:85px;"><rect x="15" y="15" width="70" height="70" rx="10" fill="#FF7675" stroke="#D63031" stroke-width="4"/></svg>`,
-      circle: `<svg viewBox="0 0 100 100" class="game-asset-svg" style="width:85px;height:85px;"><circle cx="50" cy="50" r="38" fill="#74B9FF" stroke="#0984E3" stroke-width="4"/></svg>`,
-      triangle: `<svg viewBox="0 0 100 100" class="game-asset-svg" style="width:85px;height:85px;"><polygon points="50,15 88,80 12,80" fill="#55EFC4" stroke="#00B894" stroke-width="4"/></svg>`,
-      rect: `<svg viewBox="0 0 100 100" class="game-asset-svg" style="width:110px;height:75px;"><rect x="10" y="25" width="80" height="50" rx="10" fill="#FDCB6E" stroke="#E17055" stroke-width="4"/></svg>`
-    };
-
-    function generateSingleHandSvg(fingersCount, isLeft = true, skinColor = '#FFB074') {
-      const f = Math.max(0, Math.min(5, fingersCount));
-      const foldColor = '#E2E8F0', foldStroke = '#CBD5E1', activeColor = skinColor, activeStroke = '#E67E22';
-      const up = [f >= 1, f >= 2, f >= 3, f >= 4, f >= 5];
-
-      const pinky = up[4] ? `<rect x="75" y="25" width="13" height="42" rx="6.5" fill="${activeColor}" stroke="${activeStroke}" stroke-width="2"/>` : `<circle cx="81" cy="56" r="6" fill="${foldColor}" stroke="${foldStroke}" stroke-width="2"/>`;
-      const ring = up[3] ? `<rect x="58" y="14" width="14" height="55" rx="7" fill="${activeColor}" stroke="${activeStroke}" stroke-width="2"/>` : `<circle cx="65" cy="55" r="7" fill="${foldColor}" stroke="${foldStroke}" stroke-width="2"/>`;
-      const middle = up[2] ? `<rect x="41" y="8" width="14" height="62" rx="7" fill="${activeColor}" stroke="${activeStroke}" stroke-width="2"/>` : `<circle cx="48" cy="54" r="7" fill="${foldColor}" stroke="${foldStroke}" stroke-width="2"/>`;
-      const index = up[1] ? `<rect x="24" y="16" width="14" height="54" rx="7" fill="${activeColor}" stroke="${activeStroke}" stroke-width="2"/>` : `<circle cx="31" cy="56" r="7" fill="${foldColor}" stroke="${foldStroke}" stroke-width="2"/>`;
-      const thumb = up[0] ? `<path d="M12,50 Q4,42 8,30 Q12,24 18,34 L25,52 Z" fill="${activeColor}" stroke="${activeStroke}" stroke-width="2"/>` : `<ellipse cx="18" cy="58" rx="6" ry="8" fill="${foldColor}" stroke="${foldStroke}" stroke-width="2"/>`;
-      const palm = `<path d="M18,52 L83,52 C86,68 82,88 68,96 C50,98 32,98 18,92 C14,84 14,64 18,52 Z" fill="${activeColor}" stroke="${activeStroke}" stroke-width="2.5"/>`;
-      const transformAttr = isLeft ? '' : 'transform="scale(-1, 1) translate(-100, 0)"';
-
-      return `<svg viewBox="0 0 100 110" class="hand-svg"><g ${transformAttr}>${pinky}${ring}${middle}${index}${thumb}${palm}</g></svg>`;
-    }
-
-    function renderTwoHandsNumber(n, skinColor = '#FF9F43') {
-      let leftFingers = n <= 5 ? n : 5;
-      let rightFingers = n <= 5 ? 0 : n - 5;
-      return `
-        <div class="hands-display-wrapper">
-          <div style="display:flex; flex-direction:column; align-items:center;">
-            ${generateSingleHandSvg(leftFingers, true, skinColor)}
-          </div>
-          ${n > 5 ? `<div style="display:flex; flex-direction:column; align-items:center;">${generateSingleHandSvg(rightFingers, false, skinColor)}</div>` : ''}
+            <div class="p-3 border-t border-slate-100 flex justify-end bg-slate-50">
+                <button onclick="closeReviewWrongModal()" class="px-5 py-2 bg-slate-800 text-white font-bold rounded-xl text-xs pastel-btn">Đóng lại</button>
+            </div>
         </div>
-      `;
-    }
+    </div>
 
-    // ==========================================
-    // 2. BỘ QUẢN LÝ CÂU HỎI TRÁNH TRÙNG LẶP
-    // ==========================================
-    const DECK_CONTAINER = {};
-    function getNextDeckItem(deckKey, sourceArray) {
-      if (!DECK_CONTAINER[deckKey] || DECK_CONTAINER[deckKey].length === 0) {
-        DECK_CONTAINER[deckKey] = [...sourceArray].sort(() => Math.random() - 0.5);
-      }
-      return DECK_CONTAINER[deckKey].pop();
-    }
+    <!-- MODAL BÁO CÁO TIẾN TRÌNH & BIỂU ĐỒ (PHÂN TRANG 3 TRANG KHI XUẤT PDF) -->
+    <div id="modal-history-progress" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4">
+        <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[96vh] flex flex-col shadow-2xl border-2 border-pink-200 overflow-hidden">
+            
+            <div id="printable-report-area" class="p-4 sm:p-6 overflow-y-auto space-y-4 flex-grow bg-white">
+                
+                <!-- TRANG 1: THÔNG TIN & BIỂU ĐỒ -->
+                <div class="space-y-4 page-break-1">
+                    <div class="p-3.5 sm:p-4 rounded-2xl border border-pink-200 bg-pink-50/70 flex flex-col md:flex-row items-center justify-between gap-3 shadow-xs">
+                        <div class="flex items-center space-x-3 text-pink-950 flex-1">
+                            <div class="w-10 h-10 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center shadow-xs shrink-0">
+                                <i class="fa-solid fa-award text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-black text-base sm:text-lg text-pink-950" id="hist-modal-title">Kết quả tiến trình học tập</h3>
+                                <p class="text-xs font-bold text-pink-600 whitespace-nowrap">Phân tích chuyên sâu 6 chủ đề & nhận xét sư phạm chi tiết</p>
+                            </div>
+                        </div>
 
-    // ==========================================
-    // 3. ÂM THANH & CẤU HÌNH GIỌNG NỮ VIỆT NAM
-    // ==========================================
-    let stars = 0, currentTopicFunc = null, currentAnswer = null, audioCtx = null;
-    const onlineAudioPlayer = new Audio();
-    let preferredFemaleVoice = null;
+                        <div class="bg-white/95 border-2 border-pink-200 px-4 py-2 rounded-2xl shadow-xs text-left shrink-0">
+                            <div class="text-sm font-black text-slate-900 leading-tight">
+                                Học sinh: <span id="hist-info-name" class="text-pink-600">--</span>
+                            </div>
+                            <div class="text-xs font-bold text-slate-600 mt-0.5">
+                                Lớp: <span id="hist-info-class" class="text-slate-900 font-extrabold">--</span> &nbsp;|&nbsp; 
+                                Mã số: <span id="hist-info-code" class="text-slate-900 font-extrabold">--</span> &nbsp;|&nbsp; 
+                                Ngày sinh: <span id="hist-info-dob" class="text-slate-900 font-extrabold">--</span>
+                            </div>
+                        </div>
 
-    function initVoiceSetup() {
-      if ('speechSynthesis' in window) {
-        const loadVoices = () => {
-          const voices = window.speechSynthesis.getVoices();
-          preferredFemaleVoice = voices.find(v => 
-            v.lang.includes('vi') && (
-              v.name.includes('Google') || 
-              v.name.includes('HoaiMy') || 
-              v.name.includes('Linh') || 
-              v.name.toLowerCase().includes('female')
-            )
-          ) || voices.find(v => v.lang.includes('vi')) || null;
-        };
-        loadVoices();
-        if (window.speechSynthesis.onvoiceschanged !== undefined) {
-          window.speechSynthesis.onvoiceschanged = loadVoices;
-        }
-      }
-    }
-    initVoiceSetup();
+                        <div class="flex items-center space-x-2 shrink-0">
+                            <div class="text-xs font-bold text-slate-700 bg-white/95 px-3 py-2 rounded-xl border border-pink-200 text-center shadow-xs">
+                                Ngày báo cáo: <span id="hist-report-date" class="font-bold text-rose-600">03/09/2026</span>
+                            </div>
+                            <button onclick="closeHistoryModal()" class="w-8 h-8 rounded-full bg-white border border-pink-200 flex items-center justify-center text-pink-400 hover:text-rose-600 transition-all shadow-xs no-print">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
 
-    function initAppAudio() {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (AudioContext) {
-        audioCtx = new AudioContext();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-      }
-      playTone('correct');
-      speakClear("Chào bé yêu! Cùng khám phá 10 chuyên đề Toán học vui nhé!");
-      document.getElementById('start-overlay').style.display = 'none';
-      renderHub();
-    }
+                    <div class="flex flex-col md:flex-row gap-4 w-full">
+                        <div class="w-full md:w-[60%] bg-pink-50/40 border border-pink-100 rounded-2xl p-4 flex flex-col justify-between shadow-xs">
+                            <h4 class="text-xs sm:text-sm font-black text-slate-800 mb-2 flex items-center space-x-1.5">
+                                <i class="fa-solid fa-chart-line text-pink-600"></i>
+                                <span>Biến thiên tổng điểm các bài thi (/10)</span>
+                            </h4>
+                            <div class="h-64 w-full relative">
+                                <canvas id="progressChartCanvas"></canvas>
+                            </div>
+                        </div>
 
-    function playTone(type) {
-      try {
-        if (!audioCtx) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          if (AudioContext) audioCtx = new AudioContext();
-        }
-        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-        if (!audioCtx) return;
+                        <div class="w-full md:w-[40%] bg-pink-50/40 border border-pink-100 rounded-2xl p-4 flex flex-col justify-between shadow-xs">
+                            <h4 class="text-xs sm:text-sm font-black text-slate-800 mb-2 flex items-center space-x-1.5">
+                                <i class="fa-solid fa-chart-bar text-rose-600"></i>
+                                <span>Năng lực trung bình 6 chủ đề (%)</span>
+                            </h4>
+                            <div class="h-64 w-full relative">
+                                <canvas id="topicRadarChartCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        const now = audioCtx.currentTime;
+                <!-- TRANG 2: NHẬN XÉT SƯ PHẠM CHI TIẾT -->
+                <div class="space-y-4 page-break-2">
+                    <div class="bg-gradient-to-br from-amber-50/90 via-orange-50/60 to-rose-50/50 border border-amber-200/80 rounded-2xl p-4 space-y-3 shadow-xs">
+                        <div class="flex items-center space-x-2.5 border-b border-amber-200/60 pb-1.5">
+                            <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shadow-xs shrink-0">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-base font-black text-amber-950 leading-tight">Nhận xét sư phạm & kế hoạch bồi dưỡng của giáo viên</h4>
+                                <p class="text-xs font-bold text-amber-700">Đánh giá năng lực tư duy 6 chủ đề & lời khuyên phụ huynh đồng hành</p>
+                            </div>
+                        </div>
+                        <div id="pedagogical-evaluation-box" class="space-y-2.5 text-xs sm:text-sm text-slate-800 leading-normal font-semibold"></div>
+                    </div>
+                </div>
 
-        if (type === 'correct') {
-          osc.frequency.setValueAtTime(523.25, now);
-          osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.15);
-          gain.gain.setValueAtTime(0.3, now);
-          gain.gain.linearRampToValueAtTime(0.01, now + 0.35);
-          osc.start(now);
-          osc.stop(now + 0.35);
-        } else {
-          osc.frequency.setValueAtTime(250, now);
-          osc.frequency.linearRampToValueAtTime(160, now + 0.22);
-          gain.gain.setValueAtTime(0.25, now);
-          gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
-          osc.start(now);
-          osc.stop(now + 0.25);
-        }
-      } catch (e) {}
-    }
+                <!-- TRANG 3: BẢNG THỐNG KÊ CHI TIẾT TỪNG BÀI THI -->
+                <div class="space-y-3 page-break-3">
+                    <h4 class="text-base font-black text-slate-900 flex items-center space-x-2">
+                        <i class="fa-solid fa-table text-pink-600"></i>
+                        <span>Bảng thống kê điểm số chi tiết từng bài thi</span>
+                    </h4>
+                    <div class="border border-pink-200 rounded-2xl overflow-hidden shadow-xs bg-white overflow-x-auto">
+                        <table class="w-full text-center text-xs border-collapse">
+                            <thead class="bg-pink-100/70 text-pink-950 font-black border-b border-pink-200">
+                                <tr class="divide-x divide-pink-200">
+                                    <th class="py-2.5 px-2 whitespace-nowrap">Lần thi</th>
+                                    <th class="py-2.5 px-2 whitespace-nowrap">Đề / Tuần</th>
+                                    <th class="py-2.5 px-2 whitespace-nowrap text-rose-600">Tổng điểm</th>
+                                    <th class="py-2 px-1 leading-tight">C1: Nhận biết<br><span class="text-[10px] text-pink-700">(Số & hình)</span></th>
+                                    <th class="py-2 px-1 leading-tight">C2: Phép tính<br><span class="text-[10px] text-pink-700">(Tính nhẩm)</span></th>
+                                    <th class="py-2 px-1 leading-tight">C3: Đo lường<br><span class="text-[10px] text-pink-700">(Thời gian)</span></th>
+                                    <th class="py-2 px-1 leading-tight">C4: Quy luật<br><span class="text-[10px] text-pink-700">(Tìm x)</span></th>
+                                    <th class="py-2 px-1 leading-tight">C5: Giải toán<br><span class="text-[10px] text-pink-700">(Lời văn)</span></th>
+                                    <th class="py-2 px-1 leading-tight">C6: Tư duy<br><span class="text-[10px] text-pink-700">(Logic IQ)</span></th>
+                                    <th class="py-2.5 px-2 whitespace-nowrap">Ngày làm</th>
+                                    <th class="py-2.5 px-2 whitespace-nowrap">Thời gian</th>
+                                </tr>
+                            </thead>
+                            <tbody id="hist-table-body" class="divide-y divide-pink-100 font-bold text-slate-700"></tbody>
+                        </table>
+                    </div>
+                </div>
 
-    function speakClear(text) {
-      try {
-        onlineAudioPlayer.pause();
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            </div>
 
-        let cleanText = text.replace(/\+/g, ' cộng ')
-                            .replace(/-/g, ' trừ ')
-                            .replace(/=/g, ' bằng ')
-                            .replace(/>/g, ' lớn hơn ')
-                            .replace(/</g, ' bé hơn ');
+            <div class="p-3.5 border-t border-pink-100 flex items-center justify-between bg-pink-50/40 no-print">
+                <button onclick="exportReportToPDF()" class="px-5 py-2.5 bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-700 hover:to-red-700 text-white font-extrabold text-xs md:text-sm rounded-xl transition-all shadow-md pastel-btn flex items-center space-x-1.5">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span>Xuất PDF</span>
+                </button>
 
-        const encoded = encodeURIComponent(cleanText.trim());
-        const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=vi&client=tw-ob&q=${encoded}`;
-
-        onlineAudioPlayer.src = ttsUrl;
-        onlineAudioPlayer.playbackRate = 0.95;
-        const playPromise = onlineAudioPlayer.play();
-
-        if (playPromise !== undefined) {
-          playPromise.catch(() => { fallbackWebSpeech(cleanText); });
-        }
-      } catch (err) {
-        fallbackWebSpeech(text);
-      }
-    }
-
-    function fallbackWebSpeech(text) {
-      if (!('speechSynthesis' in window)) return;
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'vi-VN';
-      utterance.rate = 0.92;
-      utterance.pitch = 1.05;
-      if (preferredFemaleVoice) utterance.voice = preferredFemaleVoice;
-      window.speechSynthesis.speak(utterance);
-    }
-
-    // ==========================================
-    // 4. HIỆU ỨNG PHÁO HOA CHÚC MỪNG
-    // ==========================================
-    const canvas = document.getElementById('fx-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = canvas.parentElement.clientWidth;
-      canvas.height = canvas.parentElement.clientHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    function triggerConfetti() {
-      resizeCanvas();
-      particles = [];
-      const colors = ['#FF5A5F', '#00A699', '#FFB400', '#8E44AD', '#27AE60', '#2980B9'];
-      for (let i = 0; i < 40; i++) {
-        particles.push({
-          x: canvas.width / 2, y: canvas.height / 2,
-          vx: (Math.random() - 0.5) * 14, vy: (Math.random() - 0.5) * 14 - 3,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          size: Math.random() * 8 + 4, life: 1
-        });
-      }
-    }
-
-    function renderFX() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p, idx) => {
-        p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.life -= 0.025;
-        ctx.fillStyle = p.color; ctx.globalAlpha = Math.max(0, p.life);
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
-        if (p.life <= 0) particles.splice(idx, 1);
-      });
-      requestAnimationFrame(renderFX);
-    }
-    renderFX();
-
-    // ==========================================
-    // 5. TRANG CHỦ & 10 CHUYÊN ĐỀ TOÁN HỌC
-    // ==========================================
-    const container = document.getElementById('main-content');
-
-    function renderHub() {
-      currentTopicFunc = null;
-      container.innerHTML = `
-        <h1 class="hub-title">🔢 10 CHUYÊN ĐỀ TOÁN HỌC LỚP 1</h1>
-        <div class="topics-grid-10">
-          <div class="subject-card" onclick="startMathCount()"><div class="icon-wrap">🍎</div><div class="title">1. Đếm Số Lượng</div></div>
-          <div class="subject-card" onclick="startMathCompare()"><div class="icon-wrap">⚖️</div><div class="title">2. So Sánh &gt;, &lt;, =</div></div>
-          <div class="subject-card" onclick="startMathOperations()"><div class="icon-wrap">🖐️</div><div class="title">3. Finger Math (+, -)</div></div>
-          <div class="subject-card" onclick="startMathSequenceAndProperties()"><div class="icon-wrap">🎯</div><div class="title">4. Dãy Số & Lớn/Bé</div></div>
-          <div class="subject-card" onclick="startMathShapes()"><div class="icon-wrap">🔷</div><div class="title">5. Nhận Biết Hình Khối</div></div>
-          <div class="subject-card" onclick="startMathSpatial()"><div class="icon-wrap">🧭</div><div class="title">6. Vị Trí & Không Gian</div></div>
-          <div class="subject-card" onclick="startMathSplitJoin()"><div class="icon-wrap">🧩</div><div class="title">7. Tách - Gộp Số</div></div>
-          <div class="subject-card" onclick="startMathClock()"><div class="icon-wrap">⏰</div><div class="title">8. Xem Đồng Hồ Đúng</div></div>
-          <div class="subject-card" onclick="startMathMeasurement()"><div class="icon-wrap">📏</div><div class="title">9. Độ Dài & Tiền Tệ</div></div>
-          <div class="subject-card" onclick="startMathWordProblems()"><div class="icon-wrap">💡</div><div class="title">10. Toán Đố Có Lời Văn</div></div>
+                <button onclick="closeHistoryModal()" class="px-8 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl text-xs md:text-sm transition-all pastel-btn">
+                    Đóng lại
+                </button>
+            </div>
         </div>
-      `;
-    }
+    </div>
 
-    // --- Chuyên đề 1: Đếm số lượng ---
-    function startMathCount() {
-      currentTopicFunc = startMathCount;
-      const count = getNextDeckItem('math_count', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-      currentAnswer = count;
-      let items = '';
-      for (let i = 0; i < count; i++) items += SVG_LIB.apple;
-      let choices = [count];
-      while (choices.length < 4) {
-        let r = Math.floor(Math.random() * 10) + 1;
-        if (!choices.includes(r)) choices.push(r);
-      }
-      choices.sort(() => Math.random() - 0.5);
-      const promptText = `Bé đếm xem có bao nhiêu quả táo nào?`;
-      container.innerHTML = `
-        <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
-        <div class="stage-box" style="flex-direction:row; flex-wrap:wrap; justify-content:center;">${items}</div>
-        <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, ${c})">${c}</button>`).join('')}</div>
-      `;
-      speakClear(promptText);
-    }
+    <!-- CHÂN TRANG BẢN QUYỀN CHUẨN ĐỊNH DẠNG -->
+    <footer class="w-full mt-2 md:mt-3 pb-2 text-center text-sm font-bold text-pink-500 tracking-wider">
+        epsilon.vn@gmail.com
+    </footer>
 
-    // --- Chuyên đề 2: So sánh >, <, = ---
-    function startMathCompare() {
-      currentTopicFunc = startMathCompare;
-      const [a, b] = getNextDeckItem('math_compare', [[3, 5], [7, 2], [4, 4], [8, 9], [6, 3], [5, 5], [2, 7], [9, 6], [1, 4], [8, 8]]);
-      currentAnswer = a > b ? '>' : (a < b ? '<' : '=');
-      let left = '', right = '';
-      for (let i = 0; i < a; i++) left += SVG_LIB.apple;
-      for (let i = 0; i < b; i++) right += SVG_LIB.star;
-      const promptText = `Bé chọn dấu thích hợp: ${a} ... ${b}`;
-      container.innerHTML = `
-        <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
-        <div class="stage-box" style="flex-direction:row; gap: 20px;">
-          <div style="background:#FFF; padding:10px 16px; border-radius:18px; border:2px solid #E2E8F0;"><div style="font-size:24px; font-weight:800; color:#E74C3C;">${a}</div><div style="display:flex; gap:2px; flex-wrap:wrap;">${left}</div></div>
-          <div style="font-size:34px; font-weight:900; color:#7F8C8D;">?</div>
-          <div style="background:#FFF; padding:10px 16px; border-radius:18px; border:2px solid #E2E8F0;"><div style="font-size:24px; font-weight:800; color:#F39C12;">${b}</div><div style="display:flex; gap:2px; flex-wrap:wrap;">${right}</div></div>
-        </div>
-        <div class="choices-grid" style="max-width:380px;">
-          <button class="choice-btn" onclick="checkAnswer(this, '>')">&gt;</button>
-          <button class="choice-btn" onclick="checkAnswer(this, '=')">=</button>
-          <button class="choice-btn" onclick="checkAnswer(this, '<')">&lt;</button>
-        </div>
-      `;
-      speakClear(promptText);
-    }
-
-    // --- Chuyên đề 3: Phép tính ngón tay (Finger Math) ---
-    function startMathOperations() {
-      currentTopicFunc = startMathOperations;
-      const op = getNextDeckItem('math_op', [
-        { type: '+', a: 3, b: 2 }, { type: '+', a: 4, b: 3 }, { type: '+', a: 5, b: 4 }, { type: '+', a: 2, b: 6 },
-        { type: '-', a: 8, b: 3 }, { type: '-', a: 9, b: 4 }, { type: '-', a: 7, b: 2 }, { type: '-', a: 6, b: 5 }
-      ]);
-      const res = (op.type === '+') ? (op.a + op.b) : (op.a - op.b);
-      currentAnswer = res;
-      const promptText = (op.type === '+') ? `Bé tính xem: ${op.a} cộng ${op.b} bằng bao nhiêu?` : `Bé tính xem: ${op.a} trừ ${op.b} bằng bao nhiêu?`;
-      const stageHtml = (op.type === '+') ? `
-        <div class="calc-row-wrapper">
-          <div style="display:flex; flex-direction:column; align-items:center;"><div style="font-size:17px; font-weight:900; color:#E67E22;">Có ${op.a} ngón:</div>${renderTwoHandsNumber(op.a, '#FF9F43')}</div>
-          <div style="font-size:32px; font-weight:900; color:var(--primary);">+</div>
-          <div style="display:flex; flex-direction:column; align-items:center;"><div style="font-size:17px; font-weight:900; color:#27AE60;">Thêm ${op.b} ngón:</div>${renderTwoHandsNumber(op.b, '#2ECC71')}</div>
-        </div>
-        <div class="kid-instruction-text">🖐️ Bé đếm gộp tất cả các ngón tay xòe ở 2 bên lại nhé!</div>
-      ` : `
-        <div class="calc-row-wrapper">
-          <div style="display:flex; flex-direction:column; align-items:center;"><div style="font-size:17px; font-weight:900; color:#E67E22;">Có ${op.a} ngón:</div>${renderTwoHandsNumber(op.a, '#FF9F43')}</div>
-          <div style="font-size:24px; font-weight:900; color:var(--dark); background:#FFF; padding:8px 14px; border-radius:14px; border:2px solid #E2E8F0;">${op.a} - ${op.b} = ?</div>
-          <div style="display:flex; flex-direction:column; align-items:center;"><div style="font-size:17px; font-weight:900; color:#E74C3C;">Bớt đi ${op.b} ngón:</div>${renderTwoHandsNumber(op.b, '#FF7675')}</div>
-        </div>
-        <div class="kid-instruction-text">🖐️ Bé nhìn ${op.a} ngón tay, rồi gập bớt ${op.b} ngón tay nhé!</div>
-      `;
-
-      let choices = [res];
-      while (choices.length < 4) {
-        let r = Math.floor(Math.random() * 10) + 1;
-        if (!choices.includes(r)) choices.push(r);
-      }
-      choices.sort(() => Math.random() - 0.5);
-
-      container.innerHTML = `
-        <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
-        <div class="stage-box">${stageHtml}</div>
-        <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, ${c})">${c}</button>`).join('')}</div>
-      `;
-      speakClear(promptText);
-    }
-
-    // --- Chuyên đề 4: Dãy số & Số lớn nhất / bé nhất ---
-    function startMathSequenceAndProperties() {
-      currentTopicFunc = startMathSequenceAndProperties;
-      const item = getNextDeckItem('math_prop', [
-        { mode: 'sequence', seq: [2, 3, 4, null, 6], ans: 5 },
-        { mode: 'sequence', seq: [10, 9, 8, null, 6], ans: 7 },
-        { mode: 'findMax', pool: [12, 7, 19, 15], ans: 19 },
-        { mode: 'findMin', pool: [8, 14, 5, 11], ans: 5 }
-      ]);
-      currentAnswer = item.ans;
-      if (item.mode === 'sequence') {
-        let choices = [item.ans, item.ans+1, item.ans-1, item.ans+2].filter(x => x > 0).sort(() => Math.random() - 0.5);
-        let seqHtml = item.seq.map(num => (num === null ? `<div class="seq-item target">?</div>` : `<div class="seq-item">${num}</div>`)).join('');
-        const promptText = `Bé tìm số thích hợp điền vào dấu hỏi chấm nhé!`;
-        container.innerHTML = `
-          <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
-          <div class="stage-box"><div class="sequence-container">${seqHtml}</div></div>
-          <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, ${c})">${c}</button>`).join('')}</div>
-        `;
-        speakClear(promptText);
-      } else {
-        const isMax = (item.mode === 'findMax');
-        const promptText = isMax ? `Trong các số dưới đây, số nào LỚN NHẤT?` : `Trong các số dưới đây, số nào BÉ NHẤT?`;
-        const choices = [...item.pool].sort(() => Math.random() - 0.5);
-        container.innerHTML = `
-          <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
-          <div class="stage-box"><div style="display:flex; gap:12px;">${item.pool.map(n => `<div style="background:#FFF; padding:10px 18px; border-radius:14px; font-size:26px; font-weight:900; color:var(--blue); border:2px solid #BFDBFE;">${n}</div>`).join('')}</div></div>
-          <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, ${c})">${c}</button>`).join('')}</div>
-        `;
-        speakClear(promptText);
-      }
-    }
-
-    // --- Chuyên đề 5: Nhận biết hình khối ---
-    function startMathShapes() {
-      currentTopicFunc = startMathShapes;
-      const target = getNextDeckItem('math_shapes', [
-        { name: 'Hình tròn', key: 'circle' }, { name: 'Hình vuông', key: 'square' },
-        { name: 'Hình tam giác', key: 'triangle' }, { name: 'Hình chữ nhật', key: 'rect' }
-      ]);
-      currentAnswer = target.name;
-      const choices = ['Hình tròn', 'Hình vuông', 'Hình tam giác', 'Hình chữ nhật'].sort(() => Math.random() - 0.5);
-      const promptText = `Đây là hình khối gì nào bé ơi?`;
-      container.innerHTML = `
-        <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
-        <div class="stage-box">${SVG_LIB[target.key]}</div>
-        <div class="choices-grid" style="grid-template-columns:1fr 1fr;">${choices.map(c => `<button class="choice-btn" style="font-size:18px;" onclick="checkAnswer(this, '${c}')">${c}</button>`).join('')}</div>
-      `;
-      speakClear(promptText);
-    }
-
-    // --- Chuyên đề 6: Vị trí & Không gian ---
-    function startMathSpatial() {
-      currentTopicFunc = startMathSpatial;
-      const target = getNextDeckItem('math_spatial', [
-        { question: 'Quả táo ở TRÊN hay ở DƯỚI chiếc hộp?', display: '🍎<br>━━━<br>📦', answer: 'Ở Trên', speech: 'Quả táo ở trên hay ở dưới chiếc hộp?' },
-        { question: 'Chiếc hộp ở TRÊN hay ở DƯỚI quả táo?', display: '🍎<br>━━━<br>📦', answer: 'Ở Dưới', speech: 'Chiếc hộp ở trên hay ở dưới quả táo?' },
-        { question: 'Chú mèo 🐱 đang ở BÊN TRÁI hay BÊN PHẢI cây dù ☂️?', display: '🐱 ➔ ☂️', answer: 'Bên Trái', speech: 'Chú mèo đang ở bên trái hay bên phải cây dù?' }
-      ]);
-      currentAnswer = target.answer;
-      const choices = (target.answer === 'Bên Trái' || target.answer === 'Bên Phải') ? ['Bên Trái', 'Bên Phải'] : ['Ở Trên', 'Ở Dưới'];
-      container.innerHTML = `
-        <div class="question-prompt">${target.question} <button class="speaker-btn" onclick="speakClear('${target.speech}')">🔊 Nghe</button></div>
-        <div class="stage-box"><div style="font-size:42px; line-height:1.4; font-weight:800;">${target.display}</div></div>
-        <div class="choices-grid" style="max-width:360px;">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, '${c}')">${c}</button>`).join('')}</div>
-      `;
-      speakClear(target.speech);
-    }
-
-    // --- Chuyên đề 7: Sơ đồ Tách - Gộp số ---
-    function startMathSplitJoin() {
-      currentTopicFunc = startMathSplitJoin;
-      const item = getNextDeckItem('math_split', [
-        { total: 5, p1: 2, p2: 3, speech: '5 gồm 2 và mấy?' },
-        { total: 4, p1: 1, p2: 3, speech: '4 gồm 1 và mấy?' },
-        { total: 6, p1: 4, p2: 2, speech: '6 gồm 4 và mấy?' },
-        { total: 8, p1: 5, p2: 3, speech: '8 gồm 5 và mấy?' },
-        { total: 10, p1: 7, p2: 3, speech: '10 gồm 7 và mấy?' }
-      ]);
-      currentAnswer = item.p2;
-      let choices = [item.p2, item.p2 + 1, item.p2 - 1, item.p2 + 2].filter(x => x >= 0).slice(0, 4).sort(() => Math.random() - 0.5);
-      const promptText = `Số ${item.total} gồm ${item.p1} và mấy?`;
-      container.innerHTML = `
-        <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${item.speech}')">🔊 Nghe</button></div>
-        <div class="stage-box">
-          <div style="font-size:32px; font-weight:900; color:var(--purple); background:#FFF; padding:12px 24px; border-radius:18px; border:2px dashed #8E44AD;">
-            ${item.total} ➔ ( ${item.p1} và <span style="color:#E74C3C;">?</span> )
-          </div>
-        </div>
-        <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, ${c})">${c}</button>`).join('')}</div>
-      `;
-      speakClear(item.speech);
-    }
-
-    // --- Chuyên đề 8: Xem giờ đúng ---
-    function startMathClock() {
-      currentTopicFunc = startMathClock;
-      const hour = getNextDeckItem('math_clock', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-      currentAnswer = `${hour} giờ`;
-      let choices = [`${hour} giờ`, `${(hour+2)%12 || 12} giờ`, `${(hour+4)%12 || 12} giờ`, `${(hour+1)%12 || 12} giờ`].sort(() => Math.random() - 0.5);
-      const promptText = `Đồng hồ đang chỉ mấy giờ đúng?`;
-      container.innerHTML = `
-        <div class="question-prompt">${promptText} <button class="speaker-btn" onclick="speakClear('${promptText}')">🔊 Nghe</button></div>
-        <div class="stage-box">
-          <div style="font-size:64px;">⏰</div>
-          <div style="font-size:24px; font-weight:900; color:var(--dark);">Kim ngắn chỉ số ${hour}, Kim dài chỉ số 12</div>
-        </div>
-        <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, '${c}')">${c}</button>`).join('')}</div>
-      `;
-      speakClear(promptText);
-    }
-
-    // --- Chuyên đề 9: Độ dài & Tiền tệ ---
-    function startMathMeasurement() {
-      currentTopicFunc = startMathMeasurement;
-      const item = getNextDeckItem('math_measure', [
-        { question: 'Bút chì dài bao nhiêu cm?', display: '✏️ 0 ━━━━ 6 cm', ans: '6 cm', speech: 'Bút chì dài bao nhiêu xăng ti mét?' },
-        { question: 'Cây thước kẻ dài bao nhiêu cm?', display: '📏 0 ━━━━━━ 9 cm', ans: '9 cm', speech: 'Cây thước dài bao nhiêu xăng ti mét?' },
-        { question: 'Mệnh giá tờ tiền này là bao nhiêu?', display: '💵 5.000 Đồng', ans: '5000 đồng', speech: 'Tờ tiền có mệnh giá bao nhiêu?' },
-        { question: 'Mệnh giá tờ tiền này là bao nhiêu?', display: '💵 2.000 Đồng', ans: '2000 đồng', speech: 'Tờ tiền có mệnh giá bao nhiêu?' }
-      ]);
-      currentAnswer = item.ans;
-      const pool = ['6 cm', '9 cm', '10 cm', '5000 đồng', '2000 đồng', '1000 đồng'];
-      let choices = [item.ans, ...pool.filter(x => x !== item.ans).slice(0, 3)].sort(() => Math.random() - 0.5);
-      container.innerHTML = `
-        <div class="question-prompt">${item.question} <button class="speaker-btn" onclick="speakClear('${item.speech}')">🔊 Nghe</button></div>
-        <div class="stage-box"><div style="font-size:32px; font-weight:900; color:var(--blue);">${item.display}</div></div>
-        <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, '${c}')">${c}</button>`).join('')}</div>
-      `;
-      speakClear(item.speech);
-    }
-
-    // --- Chuyên đề 10: Toán đố có lời văn ---
-    function startMathWordProblems() {
-      currentTopicFunc = startMathWordProblems;
-      const item = getNextDeckItem('math_word_prob', [
-        { q: 'Cây có 3 quả táo 🍎, rụng thêm 2 quả 🍎. Hỏi có tất cả mấy quả táo?', ans: 5, speech: 'Cây có 3 quả táo, rụng thêm 2 quả. Hỏi có tất cả mấy quả táo?' },
-        { q: 'Hồ nước có 6 chú vịt 🦆, 2 chú bơi đi mất. Hỏi hồ nước còn mấy chú vịt?', ans: 4, speech: 'Hồ nước có 6 chú vịt, 2 chú bơi đi mất. Còn lại mấy chú vịt?' },
-        { q: 'Bé có 4 chiếc kẹo 🍬, mẹ cho thêm 3 chiếc 🍬. Hỏi bé có tất cả mấy chiếc kẹo?', ans: 7, speech: 'Bé có 4 chiếc kẹo, mẹ cho thêm 3 chiếc. Hỏi bé có mấy chiếc kẹo?' }
-      ]);
-      currentAnswer = item.ans;
-      let choices = [item.ans, item.ans + 1, item.ans - 1, item.ans + 2].filter(x => x > 0).sort(() => Math.random() - 0.5);
-      container.innerHTML = `
-        <div class="question-prompt">Toán đố thông minh <button class="speaker-btn" onclick="speakClear('${item.speech}')">🔊 Nghe bài toán</button></div>
-        <div class="stage-box"><div style="font-size:22px; font-weight:800; color:var(--dark); line-height:1.5;">${item.q}</div></div>
-        <div class="choices-grid">${choices.map(c => `<button class="choice-btn" onclick="checkAnswer(this, ${c})">${c}</button>`).join('')}</div>
-      `;
-      speakClear(item.speech);
-    }
-
-    // ==========================================
-    // 6. KIỂM TRA ĐÁP ÁN CHUNG
-    // ==========================================
-    function checkAnswer(btnElement, selected) {
-      const allBtns = document.querySelectorAll('.choice-btn');
-      allBtns.forEach(b => b.disabled = true);
-
-      if (String(selected).trim().toLowerCase() === String(currentAnswer).trim().toLowerCase()) {
-        btnElement.classList.add('correct');
-        playTone('correct');
-        triggerConfetti();
-        stars += 1;
-        document.getElementById('stars-count').innerText = stars;
-        speakClear("Hoan hô! Bé giỏi quá!");
-
-        setTimeout(() => { if (currentTopicFunc) currentTopicFunc(); }, 1400);
-      } else {
-        btnElement.classList.add('wrong');
-        playTone('wrong');
-        speakClear("Bé thử lại nhé!");
-
-        setTimeout(() => {
-          btnElement.classList.remove('wrong');
-          allBtns.forEach(b => b.disabled = false);
-        }, 900);
-      }
-    }
-  </script>
+    <!-- NẠP ENGINE JAVASCRIPT ĐỒNG BỘ -->
+    <script src="assets/js/app.js?v=6.6"></script>
 </body>
 </html>
