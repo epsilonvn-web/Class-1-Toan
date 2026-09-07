@@ -59,8 +59,8 @@ const TOTAL_ROADMAP_WEEKS = 24;
 // Toạ độ 35 mốc tuần dạng zigzag rắn bò (serpentine), 7 cột x 5 hàng, tự tính không cần khai báo tay từng điểm
 function getRoadmapCoord(weekNum) {
     const cols = 6;
-    const colWidth = 140, rowHeight = 105;
-    const startX = 90, startY = 80;
+    const colWidth = 122, rowHeight = 96;
+    const startX = 78, startY = 74;
     const idx = weekNum - 1;
     const row = Math.floor(idx / cols);
     const posInRow = idx % cols;
@@ -80,7 +80,7 @@ function buildRoadmapPathD(totalWeeks) {
         const nx = -dy / len, ny = dx / len;
         // Sóng uốn lượn xuống-lên LIÊN TỤC xuyên suốt toàn bộ đường đi (kể cả đoạn chuyển hàng),
         // không để đoạn nào thẳng đơ xen giữa — giống hệt kiểu bản đồ lộ trình game (Duolingo-style).
-        const bend = (i % 2 === 0 ? 1 : -1) * 45;
+        const bend = (i % 2 === 0 ? 1 : -1) * 36;
         const cx = midX + nx * bend, cy = midY + ny * bend;
         d += ` Q ${cx},${cy} ${p1.x},${p1.y}`;
     }
@@ -1000,7 +1000,7 @@ function renderRoadmapSVG() {
 
     const pathD = buildRoadmapPathD(TOTAL_ROADMAP_WEEKS);
     const svgHtml = `
-        <svg viewBox="0 0 900 490" class="w-full max-h-[74vh] select-none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 740 430" class="w-full max-h-[74vh] select-none" xmlns="http://www.w3.org/2000/svg">
             <path d="${pathD}" fill="none" stroke="#fbcfe8" stroke-width="12" stroke-dasharray="14,14" stroke-linecap="round"/>
             <path d="${pathD}" fill="none" stroke="#f472b6" stroke-width="4" stroke-dasharray="14,14" stroke-linecap="round"/>
             ${nodesHtml}
@@ -2026,6 +2026,13 @@ function renderPedagogicalEvaluation(rows, skillAverages, touchedSkills) {
         weaknessHtml = `Bé chưa có đủ dữ liệu luyện tập để đánh giá điểm cần khắc phục.`;
     }
 
+    const plainTextForSpeech =
+        `Đánh giá tổng quan năng lực và xu hướng tiến bộ. Học sinh ${currentUser.hoTen} đã hoàn thành ${count} bài kiểm tra với điểm số trung bình tích lũy đạt ${avgScoreStr} trên 10 điểm. ${overviewText} `
+        + `Khen ngợi và thế mạnh nổi trội. ${strengthHtml.replace(/<[^>]+>/g, '')} `
+        + `Điểm cần lưu ý và khắc phục. ${weaknessHtml.replace(/<[^>]+>/g, '')} `
+        + `Kế hoạch bồi dưỡng và hướng dẫn phụ huynh. Ba mẹ nên dành 15 phút mỗi tối cùng con ôn lại các phép tính, đặt câu hỏi gợi mở và khen ngợi kịp thời để giúp ${studentName} giữ vững niềm yêu thích môn Toán nhé!`;
+    currentPedagogicalText = plainTextForSpeech;
+
     box.innerHTML = `
         <div class="bg-white/80 p-3 rounded-xl border border-amber-200">
             <span class="text-amber-700 font-extrabold block mb-0.5">🌟 1. Đánh giá tổng quan năng lực & xu hướng tiến bộ:</span>
@@ -2243,6 +2250,12 @@ function speakCurrentQuestion() {
     if (!q) return;
     const textToRead = q.audio_text || q.reading_passage || q.question_text;
     speakVietnamese(textToRead, 0.96);
+}
+
+let currentPedagogicalText = '';
+function speakPedagogicalEvaluation() {
+    if (!currentPedagogicalText) return;
+    speakVietnamese(currentPedagogicalText, 0.96);
 }
 
 function playAudio(type) {
