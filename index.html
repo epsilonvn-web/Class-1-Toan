@@ -305,12 +305,14 @@
                         <i class="fa-solid fa-map-location-dot"></i>
                         <span class="md:hidden">Tuần</span>
                         <span class="hidden md:inline">Bản đồ tuần</span>
+                        <span id="btn-progress-lock" class="hidden absolute -top-2 -right-1 text-[11px] leading-none drop-shadow-sm">🔒</span>
                     </button>
 
                     <button id="btn-minigame-header" onclick="openMiniGameHub()" class="relative overflow-visible h-10 px-2.5 md:px-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-extrabold rounded-xl text-xs md:text-sm shadow-md hover:from-teal-600 hover:to-emerald-600 flex items-center space-x-1 md:space-x-1.5 shrink-0 transition-shadow duration-200 hover:shadow-[0_0_14px_rgba(20,184,166,0.65)]">
                         <i class="fa-solid fa-gamepad"></i>
-                        <span class="md:hidden">Game 🔒</span>
-                        <span class="hidden md:inline">Mini Game 🔒</span>
+                        <span class="md:hidden">Game</span>
+                        <span class="hidden md:inline">Mini Game</span>
+                        <span id="minigame-lock-icon" class="hidden absolute -top-2 -right-1 text-[11px] leading-none drop-shadow-sm">🔒</span>
                     </button>
                 </div>
             </header>
@@ -705,7 +707,7 @@
     </footer>
 
     <!-- NẠP ENGINE JAVASCRIPT ĐỒNG BỘ -->
-    <script src="assets/js/app.js?v=7.1-minigame"></script>
+    <script src="assets/js/app.js?v=7.2-lockui"></script>
 
     <script>
       if ('serviceWorker' in navigator) {
