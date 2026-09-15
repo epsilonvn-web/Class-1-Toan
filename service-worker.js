@@ -1,9 +1,11 @@
-const CACHE_NAME = 'toan1-static-v7-0';
+const CACHE_NAME = 'toan1-static-v8-0-logo-mobile';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './manifest.json',
-  './favicon.svg',
+  './icon-192.png',
+  './icon-512.png',
+  './apple-touch-icon.png',
   './assets/js/app.js'
 ];
 
@@ -21,13 +23,16 @@ self.addEventListener('activate', event => {
   );
 });
 
+self.addEventListener('message', event => {
+  if (event.data === 'SKIP_WAITING') self.skipWaiting();
+});
+
 self.addEventListener('fetch', event => {
   const req = event.request;
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
 
-  // Không cache API động / Google TTS / Apps Script.
   if (
     url.hostname.includes('script.google.com') ||
     url.hostname.includes('script.googleusercontent.com') ||
@@ -37,7 +42,6 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // HTML/JS/JSON: network-first để cập nhật code và dữ liệu nhanh.
   if (
     req.mode === 'navigate' ||
     url.pathname.endsWith('.js') ||
@@ -53,6 +57,5 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Tài nguyên tĩnh còn lại: cache-first.
   event.respondWith(caches.match(req).then(cached => cached || fetch(req)));
 });
