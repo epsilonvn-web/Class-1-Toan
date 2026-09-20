@@ -442,6 +442,7 @@ function updateExamTimerDisplay() {
 
 function openExamHub() {
     if (!requirePremium('Đấu trường đề thi')) return;
+    setAppShellRootMode_(true);
     setMainTabActive_('exams');
     stopSpeaking();
     activeBaiHocContext = null;
@@ -530,6 +531,23 @@ async function renderExamHubGrid() {
 // ĐIỀU HƯỚNG VIEW & BREADCRUMB
 // ==========================================
 function updateNavTabs(level2Title, level2Icon, level3Title, level4Title) {
+    // 6 tab chinh da nam co dinh tren header, breadcrumb chi hien cac cap noi dung ben trong.
+    const mainTabBreadcrumbAliases = {
+        discover: ['khám phá'],
+        lessons: ['bài học'],
+        exercises: ['bài tập'],
+        review: ['ôn tập'],
+        exams: ['đề thi'],
+        games: ['mini game', 'mini games', 'trò chơi']
+    };
+    const normalizeBreadcrumbLabel = (value) => String(value || '').trim().toLowerCase();
+    const aliases = mainTabBreadcrumbAliases[currentMainTab] || [];
+    if (level2Title && aliases.includes(normalizeBreadcrumbLabel(level2Title))) {
+        level2Title = level3Title || null;
+        level3Title = level4Title || null;
+        level4Title = null;
+    }
+
     const tab2 = document.getElementById('header-level2-tab');
     const tab3 = document.getElementById('header-level3-tab');
     const tab4 = document.getElementById('header-level4-tab');
@@ -581,6 +599,15 @@ function updateNavTabs(level2Title, level2Icon, level3Title, level4Title) {
     }
 }
 
+let appShellRootMode_ = true;
+function setAppShellRootMode_(isRoot) {
+    appShellRootMode_ = !!isRoot;
+    const mainBanner = document.getElementById('app-main-banner');
+    const contextBanner = document.getElementById('app-context-banner');
+    if (mainBanner) mainBanner.classList.toggle('hidden', !appShellRootMode_);
+    if (contextBanner) contextBanner.classList.toggle('hidden', appShellRootMode_);
+}
+
 let currentMainTab = 'discover';
 function setMainTabActive_(tabName) {
     currentMainTab = tabName || 'discover';
@@ -608,6 +635,7 @@ function openReviewTab() {
     if (!requirePremium('Ôn tập')) return;
     setMainTabActive_('review');
     openTopic(11, '11. Ôn tập', '🧠');
+    setAppShellRootMode_(true);
 }
 
 function openMainTab(tabName) {
@@ -627,7 +655,10 @@ function openMainTab(tabName) {
 function returnToTopicLecture() {
     stopSpeaking();
     clearInterval(quizTimerInterval);
-    if (currentMainTab === 'discover') return goHome();
+    if (currentMainTab === 'discover') {
+        if (activeTopicId) return returnToCurrentDiscoverTopic_();
+        return goHome();
+    }
     if (activeBaiHocContext?.bai) return openBaiHocHub(activeBaiHocContext.semester || 1);
     if (activeBaiHocContext) return openBaiHocHub(activeBaiHocContext.semester || 1);
     if (activeExamContext) return openExamHub();
@@ -648,6 +679,7 @@ function switchAppView(viewId) {
 }
 
 function goHome() {
+    setAppShellRootMode_(true);
     stopSpeaking();
     clearInterval(quizTimerInterval);
     activeBaiHocContext = null;
@@ -666,6 +698,7 @@ function goHome() {
 let inMiniGameFlow = false;
 function openMiniGameHub() {
     if (!requirePremium('Mini games')) return;
+    setAppShellRootMode_(true);
     setMainTabActive_('games');
     stopSpeaking();
     clearInterval(quizTimerInterval);
@@ -1154,6 +1187,7 @@ function findBaiHocByNumber_(data, baiNumber) {
 
 async function openBaiHocHub(semesterNumber = 1) {
     if (!requirePremium('Bài học')) return;
+    setAppShellRootMode_(true);
     setMainTabActive_('lessons');
     stopSpeaking();
     clearInterval(quizTimerInterval);
@@ -1197,6 +1231,7 @@ function renderBaiHocHub_(data, semesterNumber) {
 
 async function openBaiHocLesson(baiNumber, pageNo = 1) {
     if (!requirePremium('Bài học')) return;
+    setAppShellRootMode_(false);
     stopSpeaking();
     showLoadingOverlay('Đang mở bài học...');
     try {
@@ -1354,6 +1389,7 @@ function clickProgressOrExam(type) {
 // CHỦ ĐỀ 1: BẢNG CHỮ CÁI TƯƠNG TÁC (1.1 ĐẾN 1.4)
 // ==========================================
 function openTopic(topicNum, topicName, icon) {
+    setAppShellRootMode_(false);
     if (Number(topicNum) === 11 && !requirePremium('Ôn tập')) return;
     if (Number(topicNum) === 11) setMainTabActive_('review');
     else setMainTabActive_('discover');
@@ -1372,6 +1408,7 @@ function openTopic(topicNum, topicName, icon) {
         hideLoadingOverlay();
         // Tải lỗi thì đưa header về đúng trạng thái trang chủ (không để lại tab/gạch breadcrumb thừa)
         activeTopicId = null;
+        setAppShellRootMode_(true);
         updateNavTabs(null, null, null);
         showAppNotice(`Không thể tải chủ đề: ${err.message}`, { title: 'Khám phá', icon: '🧭', tone: 'rose' });
     });
@@ -1479,6 +1516,7 @@ function setCurrentExerciseIndex_(idx) {
 
 async function openRoadmap(semesterNumber = exerciseSemesterFilter || 1) {
     if (!requirePremium('Bài tập')) return;
+    setAppShellRootMode_(true);
     setMainTabActive_('exercises');
     stopSpeaking();
     clearInterval(quizTimerInterval);
@@ -1607,6 +1645,7 @@ function buildExerciseQuestions_(exercise, allQuestions) {
 }
 
 async function selectRoadmapWeek(sequenceIndex) {
+    setAppShellRootMode_(false);
     stopSpeaking();
     const data = await loadBaiHocData();
     const seq = data?.learning_sequence || [];
@@ -1658,6 +1697,7 @@ async function selectRoadmapWeek(sequenceIndex) {
 // LOGIC CHẤM ĐIỂM & ĐIỀU KHIỂN CÂU HỎI
 // ==========================================
 function startTopicQuiz(topicNum, topicName, questions, subLabel) {
+    setAppShellRootMode_(false);
     stopSpeaking();
     clearInterval(quizTimerInterval);
     activeQuestionsList = questions; 
