@@ -182,7 +182,16 @@
         }
         #header-info-zone{width:auto !important;min-width:0;margin-left:0 !important;justify-content:flex-end !important;gap:7px !important;}
         #btn-toggle-autospeech{display:none !important;}
-        #header-star-box{background:#fff7fb !important;}
+        #header-star-box{
+            background:#fff7fb !important;
+            height:62px !important;
+            min-height:62px !important;
+            padding:5px 8px !important;
+            justify-content:center !important;
+        }
+        #header-star-box > div > span:first-child{font-size:12px !important;padding:3px 7px !important;}
+        #header-star-box > div > span:first-child i{font-size:13px !important;}
+        #star-green-count,#star-red-count{font-size:15px !important;min-width:16px;text-align:center;}
 
         #main-module-tabs{width:100%;min-width:0;background:transparent !important;border:0 !important;border-radius:0 !important;padding:0 !important;box-shadow:none !important;}
         #main-module-tabs > div{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;}
@@ -258,7 +267,10 @@
             .main-module-tab{min-height:52px;flex-direction:row;gap:6px;font-size:12px;padding:6px 8px;border-radius:15px;}
             .main-module-tab > span:first-child{font-size:18px !important;}
             .main-module-tab::after{bottom:-4px;height:2px;}
-            #header-star-box{transform:none !important;margin-left:0 !important;padding:3px 5px !important;}
+            #header-star-box{transform:none !important;margin-left:0 !important;height:52px !important;min-height:52px !important;padding:3px 6px !important;}
+            #header-star-box > div > span:first-child{font-size:10px !important;padding:2px 5px !important;}
+            #header-star-box > div > span:first-child i{font-size:11px !important;}
+            #star-green-count,#star-red-count{font-size:13px !important;}
             #user-info-box{margin-left:0 !important;min-width:0;text-align:right;}
             #user-info-box .admin-manage-label{display:none !important;}
             #user-info-box button[title="Quản lý tài khoản"]{width:34px !important;padding-left:0 !important;padding-right:0 !important;justify-content:center !important;}
@@ -282,7 +294,10 @@
 
         /* Khám phá: giữ pastel nhẹ theo nhóm, bỏ shadow để nền trang thật sự thoáng. */
         #view-dashboard-grid .pastel-card,
-        #view-dashboard-grid .pastel-card:hover { box-shadow:none !important; }
+        #view-dashboard-grid .pastel-card:hover {
+            box-shadow:none !important;
+            border-width:1px !important;
+        }
         #view-dashboard-grid .pastel-card:has(h3.text-pink-700)    { background:rgba(253,242,248,.82) !important; }
         #view-dashboard-grid .pastel-card:has(h3.text-purple-700)  { background:rgba(250,245,255,.84) !important; }
         #view-dashboard-grid .pastel-card:has(h3.text-blue-700)    { background:rgba(239,246,255,.86) !important; }
