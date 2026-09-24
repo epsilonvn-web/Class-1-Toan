@@ -1762,21 +1762,21 @@ function getFoundationEmojiSeed(q) {
 function repeatFoundationEmoji(emoji, count, underlinedCount = 0) {
     const n = Number(count);
     const u = Math.max(0, Math.min(n, Number(underlinedCount) || 0));
-    if (!Number.isFinite(n) || n < 0 || n > 10) return '<span class="text-6xl md:text-7xl">❔</span>';
-    if (n === 0) return '<span class="text-6xl md:text-7xl font-black text-slate-300">∅</span>';
+    if (!Number.isFinite(n) || n < 0 || n > 10) return '<span class="text-4xl md:text-5xl">❔</span>';
+    if (n === 0) return '<span class="text-4xl md:text-5xl font-black text-slate-300">∅</span>';
 
-    // Luôn 1 hàng ngang. Với phép trừ, gạch chân từng vật bị bớt để bé đếm phần còn lại.
+    // Một hàng ngang duy nhất. Kích thước vừa phải để toàn bộ 0-10 luôn nằm gọn trong khung.
     const sizeClass = n >= 9
-        ? 'text-[34px] md:text-[42px] lg:text-[48px]'
+        ? 'text-[27px] md:text-[32px] lg:text-[36px]'
         : n >= 7
-            ? 'text-[38px] md:text-[48px] lg:text-[56px]'
-            : 'text-[44px] md:text-[56px] lg:text-[66px]';
+            ? 'text-[30px] md:text-[36px] lg:text-[40px]'
+            : 'text-[34px] md:text-[40px] lg:text-[44px]';
 
     return `<span class="inline-flex flex-nowrap items-end justify-center gap-1 md:gap-1.5 ${sizeClass} leading-none whitespace-nowrap">${Array.from({ length: n }, (_, i) => {
         const underline = i >= (n - u);
         return underline
-            ? `<span class="inline-flex items-end border-b-[5px] md:border-b-[6px] border-rose-500 pb-1">${emoji}</span>`
-            : `<span class="inline-flex items-end pb-[5px] md:pb-[6px]">${emoji}</span>`;
+            ? `<span class="inline-flex items-end border-b-[3px] md:border-b-[4px] border-rose-500 pb-1">${emoji}</span>`
+            : `<span class="inline-flex items-end pb-[4px] md:pb-[5px]">${emoji}</span>`;
     }).join('')}</span>`;
 }
 
@@ -1791,30 +1791,23 @@ function buildFoundationEquationVisual(q, expression) {
     const rightN = Number(right);
     const canUnderline = isMinus && Number.isFinite(leftN) && Number.isFinite(rightN) && rightN >= 0 && rightN <= leftN;
 
-    const group = (value, underlineCount = 0) => `
-        <div class="min-w-0 flex-1 flex flex-col items-center justify-center">
-            <div class="text-[60px] md:text-[76px] lg:text-[88px] font-black text-indigo-700 leading-none mb-3">${escapeHtml(value)}</div>
-            <div class="w-full min-h-[78px] md:min-h-[92px] flex items-center justify-center overflow-visible select-none">
-                ${value === '?' ? '<span class="text-6xl md:text-7xl">❔</span>' : repeatFoundationEmoji(emoji, value, underlineCount)}
+    // Mỗi số chỉ xuất hiện MỘT lần. Emoji đặt ngay dưới đúng số tương ứng.
+    // Với phép trừ, gạch chân đúng số vật bị bớt trong nhóm bên trái để bé đếm phần còn lại.
+    const operand = (value, underlineCount = 0, showEmoji = true) => `
+        <div class="min-w-0 flex flex-col items-center justify-start">
+            <div class="text-[46px] md:text-[54px] lg:text-[60px] font-black text-indigo-700 leading-none mb-3">${escapeHtml(value)}</div>
+            <div class="min-h-[54px] md:min-h-[62px] flex items-center justify-center">
+                ${showEmoji ? (value === '?' ? '<span class="text-4xl md:text-5xl">❔</span>' : repeatFoundationEmoji(emoji, value, underlineCount)) : ''}
             </div>
         </div>`;
 
     return `
-        <div class="w-full flex flex-col items-center justify-center gap-5 md:gap-7 px-1">
-            <div class="w-full flex items-center justify-center gap-3 md:gap-5 lg:gap-7">
-                <div class="text-[66px] md:text-[84px] lg:text-[96px] font-black text-indigo-700 leading-none">${escapeHtml(left)}</div>
-                <div class="text-[58px] md:text-[76px] lg:text-[88px] font-black ${isMinus ? 'text-rose-500' : 'text-emerald-500'} leading-none">${op}</div>
-                <div class="text-[66px] md:text-[84px] lg:text-[96px] font-black text-indigo-700 leading-none">${escapeHtml(right)}</div>
-                <div class="text-[58px] md:text-[76px] lg:text-[88px] font-black text-slate-300 leading-none">=</div>
-                <div class="min-w-[58px] text-center text-[66px] md:text-[84px] lg:text-[96px] font-black text-pink-600 leading-none">${escapeHtml(result)}</div>
-            </div>
-
-            <div class="w-full grid grid-cols-[1fr_auto_1fr] items-start gap-3 md:gap-5 lg:gap-7">
-                ${group(left, canUnderline ? rightN : 0)}
-                <div class="pt-4 md:pt-5 text-[34px] md:text-[42px] font-black ${isMinus ? 'text-rose-400' : 'text-emerald-400'}">${op}</div>
-                ${group(right, 0)}
-            </div>
-            ${canUnderline ? '<div class="-mt-2 text-xs md:text-sm font-extrabold text-rose-500">Các hình được gạch chân là phần bớt đi</div>' : ''}
+        <div class="w-full flex items-start justify-center gap-2 md:gap-4 lg:gap-5 px-1 overflow-hidden">
+            ${operand(left, canUnderline ? rightN : 0, true)}
+            <div class="pt-1 text-[42px] md:text-[50px] lg:text-[56px] font-black ${isMinus ? 'text-rose-500' : 'text-emerald-500'} leading-none">${op}</div>
+            ${operand(right, 0, true)}
+            <div class="pt-1 text-[42px] md:text-[50px] lg:text-[56px] font-black text-slate-300 leading-none">=</div>
+            <div class="pt-0 min-w-[52px] text-center text-[46px] md:text-[54px] lg:text-[60px] font-black text-pink-600 leading-none">${escapeHtml(result)}</div>
         </div>`;
 }
 
@@ -1935,7 +1928,10 @@ function getFoundationPrompt(q) {
         .replace(/^gộp hai nhóm\.\s*/i, '')
         .replace(/^nhìn hình rồi\s*/i, '')
         .replace(/^bé hãy\s*/i, '')
-        .replace(/^hãy\s*/i, '');
+        .replace(/^hãy\s*/i, '')
+        .replace(/\s*[+−-]\s*$/u, '')
+        .replace(/\s+/g, ' ')
+        .trim();
     return prompt || 'Con chọn đáp án đúng nhé!';
 }
 
