@@ -24,69 +24,7 @@ const SUBTOPIC_PALETTES = [
     { card: "bg-rose-50/80 hover:bg-rose-100 border-rose-300 text-rose-800", num: "text-rose-600", badge: "bg-white text-rose-600 border-rose-200" }
 ];
 
-// Lộ trình 24 tuần (Tỷ lệ Vàng 30/60) — mapping tới đúng chủ đề con (sub_id dạng "X.Y")
-// Tuần 18 = Đấu trường thi Học kỳ I | Tuần 35 = Đấu trường thi Học kỳ II + Học sinh giỏi
-const roadmapConfig = {
-    1:  { name: "Tuần 1: Khám Phá Không Gian", subIds: ["6.1", "6.2"], desc: "Định vị không gian toàn diện: trên - dưới, trái - phải, trước - sau, ở giữa, trong - ngoài.", icon: "🧭" },
-    2:  { name: "Tuần 2: Thế Giới Số 0 Đến 10", subIds: ["1.1"], desc: "Đếm, đọc, viết thành thạo các số từ 0 đến 10. Làm quen khái niệm Số 0 qua hình ảnh giỏ trống.", icon: "🔟" },
-    3:  { name: "Tuần 3: So Tài Và Xếp Hàng Số", subIds: ["1.2", "1.3"], desc: "So sánh số phạm vi 10 (nhiều hơn, ít hơn, bằng nhau, dấu >, <, =). Sắp xếp thứ tự dãy số xuôi ngược.", icon: "⚖️" },
-    4:  { name: "Tuần 4: Phép Cộng Kỳ Diệu", subIds: ["2.1"], desc: "Ý nghĩa phép cộng (gộp số). Sơ đồ Tách - Gộp số trong phạm vi 5. Học và luyện bảng cộng 10.", icon: "➕" },
-    5:  { name: "Tuần 5: Phép Trừ Vui Nhộn", subIds: ["2.1"], desc: "Ý nghĩa phép trừ (tách số). Sơ đồ Tách - Gộp số áp dụng cho phép trừ. Học và luyện bảng trừ 10.", icon: "➖" },
-    6:  { name: "Tuần 6: Luyện Tập Tính Nhẩm Nhanh", subIds: ["2.1"], desc: "Luyện tập tổng hợp cộng trừ phạm vi 10. Tính chất giao hoán (3+2 = 2+3). Tính nhẩm dãy tính 3 số.", icon: "⚡" },
-    7:  { name: "Tuần 7: Đấu Trường Giữa Học Kỳ I", isExam: true, subIds: [], desc: "Ôn tập số học, không gian và phép tính phạm vi 10. Thực hành Đấu trường Giữa Học kỳ I (13 câu chuẩn ma trận).", icon: "🏆" },
-    8:  { name: "Tuần 8: Hình Phẳng Ngộ Nghĩnh", subIds: ["4.1"], desc: "Nhận diện hình tròn, tam giác, vuông, chữ nhật. Xếp hình sáng tạo, đếm hình lồng nhau.", icon: "🔺" },
-    9:  { name: "Tuần 9: Hình Khối Vững Chãi", subIds: ["4.2"], desc: "Nhận biết khối lập phương, khối hộp chữ nhật qua đồ vật thực tế (hộp sữa, rubik, xúc xắc). Đếm khối xếp chồng.", icon: "🧊" },
-    10: { name: "Tuần 10: Tính Không Nhớ 10 Đến 20", subIds: ["2.2"], desc: "Phép cộng, trừ không nhớ phạm vi từ 10 đến 20 (dạng 14+3, 18-5 và các phép tính với số 10).", icon: "➕" },
-    11: { name: "Tuần 11: Tổng Duyệt Học Kỳ I", subIds: ["11.1"], desc: "Hệ thống hóa toàn bộ kiến thức, lý thuyết và các dạng bài tập trọng tâm đã học của Học kỳ I.", icon: "📘" },
-    12: { name: "Tuần 12: Đấu Trường Cuối Học Kỳ I", isExam: true, subIds: [], desc: "Đề thi tổng hợp Cuối Học kỳ I chuẩn 13 câu ma trận (40 phút, đạt >= 80% mở khóa học trình mới).", icon: "🏆" },
-    13: { name: "Tuần 13: Số Có Hai Chữ Số Đến 100", subIds: ["3.1", "3.2"], desc: "Đọc, viết số từ 11 đến 100. Cấu tạo số gồm chục và đơn vị. Nhận diện các số tròn chục.", icon: "💯" },
-    14: { name: "Tuần 14: Bảng Số Thần Kỳ", subIds: ["3.3", "3.4"], desc: "So sánh các số có hai chữ số. Tìm quy luật dòng, cột trên Bảng các số từ 1 đến 100.", icon: "📊" },
-    15: { name: "Tuần 15: Số Liền Trước, Liền Sau", subIds: ["5.1", "5.2", "5.3"], desc: "Xác định số liền trước, liền sau. Phân biệt số chẵn, số lẻ (qua đếm cặp). Tìm số lớn nhất/nhỏ nhất.", icon: "🔢" },
-    16: { name: "Tuần 16: Điền Số Bí Ẩn Theo Quy Luật", subIds: ["5.4"], desc: "Quy luật dãy số cách đều tăng dần, giảm dần (cách 2 đơn vị, cách 5 đơn vị). Điền số khuyết nâng cao.", icon: "🔗" },
-    17: { name: "Tuần 17: Cộng Trừ Không Nhớ Phạm Vi 100", subIds: ["2.3"], desc: "Phép cộng, phép trừ không nhớ phạm vi 100 (số có hai chữ số với số có một hoặc hai chữ số).", icon: "➕" },
-    18: { name: "Tuần 18: Đặt Tính Thẳng Cột", subIds: ["2.3"], desc: "Thực hành đặt tính thẳng hàng chục, hàng đơn vị. Tính nhẩm nhanh dãy biểu thức tính 3 số phạm vi 100.", icon: "📐" },
-    19: { name: "Tuần 19: Đấu Trường Giữa Học Kỳ II", isExam: true, subIds: [], desc: "Ôn tập số học và phép tính phạm vi 100. Thực hành Đấu trường Giữa Học kỳ II (13 câu chuẩn ma trận).", icon: "🏆" },
-    20: { name: "Tuần 20: Người Bạn Thước Kẻ (cm)", subIds: ["7.1", "7.2", "7.3"], desc: "Ước lượng độ dài bằng gang tay/bước chân. Làm quen xăng-ti-mét (cm). Tính toán & so sánh phép tính kèm cm.", icon: "📏" },
-    21: { name: "Tuần 21: Đồng Hồ, Lịch Tuần Lễ", subIds: ["8.1", "8.2", "8.3", "8.4"], desc: "Xem giờ đúng đồng hồ kim. Nhận biết thứ, ngày trong tuần, xem lịch. Kiểm đếm thu thập số liệu thống kê.", icon: "⏰" },
-    22: { name: "Tuần 22: Giải Toán Có Lời Văn", subIds: ["9.1", "9.2", "9.3"], desc: "Đọc hiểu đề toán đố, phân tích từ khóa 'thêm', 'bớt' để lập phép tính chính xác. Trình bày bài giải 3 phần.", icon: "📝" },
-    23: { name: "Tuần 23: Tư Duy IQ & Tổng Ôn Cuối Năm", subIds: ["10.1", "10.2", "10.3", "11.2"], desc: "Toán tư duy (điền chữ số khuyết, toán logic, đếm hình phức tạp). Luyện tập tổng hợp kiến thức cả năm.", icon: "🧠" },
-    24: { name: "Tuần 24: Đấu Trường Vượt Vũ Môn Cuối Năm", isExam: true, subIds: [], desc: "Đề thi thử cuối năm tổng hợp toàn bộ chương trình Toán lớp 1 chuẩn 13 câu ma trận điểm.", icon: "🏆" }
-};
-
-const TOTAL_ROADMAP_WEEKS = 24;
-
-
-// Toạ độ 35 mốc tuần dạng zigzag rắn bò (serpentine), 7 cột x 5 hàng, tự tính không cần khai báo tay từng điểm
-function getRoadmapCoord(weekNum) {
-    const cols = 6;
-    const colWidth = 122, rowHeight = 96;
-    const startX = 78, startY = 74;
-    const idx = weekNum - 1;
-    const row = Math.floor(idx / cols);
-    const posInRow = idx % cols;
-    const col = (row % 2 === 0) ? posInRow : (cols - 1 - posInRow);
-    return { x: startX + col * colWidth, y: startY + row * rowHeight };
-}
-
-function buildRoadmapPathD(totalWeeks) {
-    const pts = [];
-    for (let w = 1; w <= totalWeeks; w++) pts.push(getRoadmapCoord(w));
-    let d = `M ${pts[0].x},${pts[0].y}`;
-    for (let i = 1; i < pts.length; i++) {
-        const p0 = pts[i - 1], p1 = pts[i];
-        const midX = (p0.x + p1.x) / 2, midY = (p0.y + p1.y) / 2;
-        const dx = p1.x - p0.x, dy = p1.y - p0.y;
-        const len = Math.hypot(dx, dy) || 1;
-        const nx = -dy / len, ny = dx / len;
-        // Sóng uốn lượn xuống-lên LIÊN TỤC xuyên suốt toàn bộ đường đi (kể cả đoạn chuyển hàng),
-        // không để đoạn nào thẳng đơ xen giữa — giống hệt kiểu bản đồ lộ trình game (Duolingo-style).
-        const bend = (i % 2 === 0 ? 1 : -1) * 36;
-        const cx = midX + nx * bend, cy = midY + ny * bend;
-        d += ` Q ${cx},${cy} ${p1.x},${p1.y}`;
-    }
-    return d;
-}
-
+// Roadmap tuần cũ đã được thay bằng Bài tập theo từng bài SGK trong bai_hoc_toan_1.json.
 const examFileMap = {
     hocky1: { file: 'de_thi_toan_1.json', idPrefix: '12.1.', sheet: 'LichSuBaiThi_HK1', label: 'Học kỳ 1', color: 'pink' },
     hocky2: { file: 'de_thi_toan_1.json', idPrefix: '12.2.', sheet: 'LichSuBaiThi_HK2', label: 'Học kỳ 2', color: 'purple' },
@@ -132,6 +70,14 @@ let allQuestionsFlatCache = null;
 let autoSpeechEnabled = localStorage.getItem('autoSpeechEnabled') !== 'false';
 const examsCache = {};
 
+// ==========================================
+// BÀI HỌC & BÀI TẬP THEO SGK TOÁN 1
+// ==========================================
+const BAI_HOC_DATA_FILE = 'assets/data/bai_hoc_toan_1.json';
+let baiHocDataCache = null;
+let activeBaiHocContext = null;
+let exerciseSemesterFilter = 1;
+
 let currentUser = null;
 let starGreenCount = 0;
 let starRedCount = 0;
@@ -159,6 +105,79 @@ let histLineChartInstance = null;
 let histBarChartInstance = null;
 
 // ==========================================
+// HỘP THOẠI ĐẸP DÙNG CHUNG - thay toàn bộ alert()/confirm() trình duyệt
+// ==========================================
+let appDialogResolver_ = null;
+
+function showAppDialog(message, options = {}) {
+    const modal = document.getElementById('modal-app-dialog');
+    if (!modal) {
+        // Fallback hiếm gặp nếu HTML cũ chưa có modal.
+        console.warn('[Thông báo]', message);
+        return Promise.resolve(options.confirm ? false : true);
+    }
+
+    const title = options.title || (options.confirm ? 'Xác nhận' : 'Thông báo');
+    const icon = options.icon || (options.confirm ? '❓' : '🐰');
+    const okText = options.okText || (options.confirm ? 'Đồng ý' : 'Đã hiểu');
+    const cancelText = options.cancelText || 'Để sau';
+    const tone = options.tone || 'pink';
+
+    const iconEl = document.getElementById('app-dialog-icon');
+    const titleEl = document.getElementById('app-dialog-title');
+    const msgEl = document.getElementById('app-dialog-message');
+    const okBtn = document.getElementById('app-dialog-ok');
+    const cancelBtn = document.getElementById('app-dialog-cancel');
+    const panel = document.getElementById('app-dialog-panel');
+
+    if (iconEl) iconEl.textContent = icon;
+    if (titleEl) titleEl.textContent = title;
+    if (msgEl) msgEl.innerHTML = escapeHtml(String(message || '')).replace(/\n/g, '<br>');
+    if (okBtn) okBtn.textContent = okText;
+    if (cancelBtn) {
+        cancelBtn.textContent = cancelText;
+        cancelBtn.classList.toggle('hidden', !options.confirm);
+    }
+
+    if (panel) {
+        panel.classList.remove('ring-rose-200', 'ring-amber-200', 'ring-emerald-200', 'ring-purple-200', 'ring-pink-200');
+        const ring = tone === 'rose' ? 'ring-rose-200' : tone === 'amber' ? 'ring-amber-200' : tone === 'emerald' ? 'ring-emerald-200' : tone === 'purple' ? 'ring-purple-200' : 'ring-pink-200';
+        panel.classList.add(ring);
+    }
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+
+    return new Promise(resolve => {
+        appDialogResolver_ = resolve;
+        setTimeout(() => okBtn?.focus(), 20);
+    });
+}
+
+function closeAppDialog(result = true) {
+    const modal = document.getElementById('modal-app-dialog');
+    modal?.classList.add('hidden');
+    modal?.classList.remove('flex');
+    if (appDialogResolver_) {
+        const resolve = appDialogResolver_;
+        appDialogResolver_ = null;
+        resolve(!!result);
+    }
+}
+
+function showAppNotice(message, options = {}) {
+    return showAppDialog(message, { ...options, confirm: false });
+}
+
+function showAppConfirm(message, options = {}) {
+    return showAppDialog(message, { ...options, confirm: true });
+}
+
+function escapeJsString_(value) {
+    return String(value ?? '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\r?\n/g, ' ');
+}
+
+// ==========================================
 // HÀM TIỆN ÍCH DỮ LIỆU
 // ==========================================
 function getStudentFirstName() {
@@ -171,8 +190,8 @@ function normalizeQuestion(q) {
     if (!q) return null;
     return {
         question_id: q.id ?? q.question_id ?? q.question_no ?? 0,
-        // Kho dữ liệu Toán 2 (bản mới) đã tách riêng "sub" = TÊN đầy đủ chủ đề con và "sub_code" = MÃ "X.Y"
-        // (dùng để khớp roadmap 24 tuần). Vẫn dự phòng cho định dạng cũ (chỉ có "sub" là mã) để không vỡ dữ liệu cũ.
+        // Kho dữ liệu Toán 1 (bản mới) đã tách riêng "sub" = TÊN đầy đủ chủ đề con và "sub_code" = MÃ "X.Y"
+        // (dùng để khớp Bài tập theo SGK). Vẫn dự phòng cho định dạng cũ (chỉ có "sub" là mã) để không vỡ dữ liệu cũ.
         sub_topic: String(q.sub_code ?? q.sub ?? q.sub_topic ?? 'Câu hỏi chung').trim(),
         sub_topic_label: String(q.sub ?? q.sub_code ?? q.sub_topic ?? 'Câu hỏi chung').trim(),
         week: q.week ?? q.w ?? null,
@@ -224,28 +243,6 @@ function buildTrickyChoices(correctAnswer, sameGroupPool, allPool, count = 3) {
         picks = picks.concat(rest.slice(0, count - picks.length));
     }
     return shuffleArray([correctAnswer, ...picks]);
-}
-
-function getQuestionsForWeek343(weekNumber) {
-    const config = roadmapConfig[weekNumber];
-    if (!config || !allQuestionsFlatCache) return [];
-
-    // Gom toàn bộ câu hỏi thuộc đúng các chủ đề con (sub_id dạng "X.Y") của tuần này —
-    // mỗi câu đã tự mang theo skill_tag riêng (TOAN_C1-C6), không cần bảng TOPIC_TO_SKILL suy luận gián tiếp.
-    let pool = allQuestionsFlatCache.filter(q => config.subIds.includes(q.sub_topic));
-
-    if (pool.length < 30) return shuffleArray([...pool]);
-    
-    const size = pool.length;
-    const basket1 = pool.slice(0, Math.floor(size * 0.35));
-    const basket2 = pool.slice(Math.floor(size * 0.35), Math.floor(size * 0.75));
-    const basket3 = pool.slice(Math.floor(size * 0.75));
-    
-    const easy = shuffleArray([...basket1]).slice(0, 9);
-    const medium = shuffleArray([...basket2]).slice(0, 12);
-    const hard = shuffleArray([...basket3]).slice(0, 9);
-    
-    return shuffleArray([...easy, ...medium, ...hard]);
 }
 
 function capitalizeFirstLetter(val) {
@@ -340,7 +337,9 @@ async function renderDashboardGrid() {
     try { topicsData = await fetchAllTopicsData(); } catch (e) {}
 
     let html = '';
-    TOPICS_CONFIG.forEach(t => {
+    // Tab Khám phá chỉ hiển thị các chuyên mục 1-10.
+    // Mục 11 (Ôn tập) và 12 (Đề thi) đã có tab chính riêng trên header.
+    TOPICS_CONFIG.filter(t => ![11, 12].includes(Number(t.id))).forEach(t => {
         const topicObj = topicsData.find(item => Number(item.topic_id) === Number(t.id));
         const totalCount = topicObj && topicObj.questions ? topicObj.questions.length : 0;
         const countLabel = totalCount > 0 ? `${totalCount} câu` : 'Đang cập nhật';
@@ -363,24 +362,6 @@ async function renderDashboardGrid() {
         `;
     });
 
-    let totalExamsCount = 3;
-    try {
-        const examData = await loadExamDataFile('de_thi_toan_1.json');
-        if (examData && examData.exams) totalExamsCount = examData.exams.length;
-    } catch (e) {}
-
-    html += `
-        <div onclick="openExamHub()" class="pastel-card p-3 flex flex-col justify-between cursor-pointer hover:border-amber-400 transition-all group bg-gradient-to-br from-white to-amber-50/50 min-h-[92px]">
-            <div class="flex items-center space-x-2.5">
-                <div class="w-8 h-8 bg-amber-100 rounded-xl flex items-center justify-center text-sm font-extrabold text-amber-600 shadow-inner group-hover:scale-110 transition-transform shrink-0">🏆</div>
-                <h3 class="font-extrabold text-amber-700 text-sm md:text-base leading-tight">12. Đấu trường đề thi</h3>
-            </div>
-            <div class="flex justify-between items-center mt-1.5 pt-1 border-t border-amber-100 text-[11px] font-bold text-gray-500">
-                <span>HK1, HK2, HSG</span>
-                <span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">${totalExamsCount} đề thi</span>
-            </div>
-        </div>
-    `;
     container.innerHTML = html;
 }
 
@@ -398,7 +379,7 @@ async function startRandomExam(categoryKey) {
 
         const pool = (examData && Array.isArray(examData.exams)) ? examData.exams : [];
         let candidates = pool.filter(e => String(e.exam_id || '').startsWith(idPrefix));
-        if (!candidates.length) return alert('Đang cập nhật thêm đề thi cho mục này, bé quay lại sau nhé!');
+        if (!candidates.length) { showAppNotice('Đang cập nhật thêm đề thi cho mục này, bé quay lại sau nhé!', { title: 'Đề thi', icon: '🏆', tone: 'amber' }); return; }
 
         const exam = candidates[Math.floor(Math.random() * candidates.length)];
         const examIndex = pool.indexOf(exam);
@@ -410,13 +391,13 @@ async function startRandomExam(categoryKey) {
         pendingTopicQuiz = null;
 
         const questions = Array.isArray(exam.questions) && exam.questions.length ? exam.questions : [];
-        if (!questions.length) return alert('Đề thi này chưa có câu hỏi, bé chọn đề khác nhé!');
+        if (!questions.length) { showAppNotice('Đề thi này chưa có câu hỏi, bé chọn đề khác nhé!', { title: 'Đề thi', icon: '🏆', tone: 'amber' }); return; }
 
         updateNavTabs("12. Đấu trường đề thi", "🏆", examTitle);
         startTopicQuiz(0, examTitle, shuffleArray(questions), null);
     } catch (err) {
         hideLoadingOverlay();
-        alert(`Không thể tải đề thi: ${err.message}`);
+        showAppNotice(`Không thể tải đề thi: ${err.message}`, { title: 'Đề thi', icon: '🏆', tone: 'rose' });
     }
 }
 
@@ -429,7 +410,7 @@ function startExamCountdown() {
         updateExamTimerDisplay();
         if (quizRemainingSeconds <= 0) {
             clearInterval(quizTimerInterval);
-            alert('Đã hết giờ làm bài! Bài thi sẽ được nộp lại nhé bé.');
+            showAppNotice('Đã hết giờ làm bài! Bài thi sẽ được nộp lại nhé bé.', { title: 'Hết giờ', icon: '⏰', tone: 'amber' });
             showResultScreen();
         }
     }, 1000);
@@ -445,7 +426,10 @@ function updateExamTimerDisplay() {
 
 function openExamHub() {
     if (!requirePremium('Đấu trường đề thi')) return;
+    setAppShellRootMode_(true);
+    setMainTabActive_('exams');
     stopSpeaking();
+    activeBaiHocContext = null;
     activeExamContext = null;
     activeRoadmapContext = null;
     activeTopicId = null;
@@ -531,6 +515,23 @@ async function renderExamHubGrid() {
 // ĐIỀU HƯỚNG VIEW & BREADCRUMB
 // ==========================================
 function updateNavTabs(level2Title, level2Icon, level3Title, level4Title) {
+    // 6 tab chinh da nam co dinh tren header, breadcrumb chi hien cac cap noi dung ben trong.
+    const mainTabBreadcrumbAliases = {
+        discover: ['khám phá'],
+        lessons: ['bài học'],
+        exercises: ['bài tập'],
+        review: ['ôn tập'],
+        exams: ['đề thi'],
+        games: ['mini game', 'mini games', 'trò chơi']
+    };
+    const normalizeBreadcrumbLabel = (value) => String(value || '').trim().toLowerCase();
+    const aliases = mainTabBreadcrumbAliases[currentMainTab] || [];
+    if (level2Title && aliases.includes(normalizeBreadcrumbLabel(level2Title))) {
+        level2Title = level3Title || null;
+        level3Title = level4Title || null;
+        level4Title = null;
+    }
+
     const tab2 = document.getElementById('header-level2-tab');
     const tab3 = document.getElementById('header-level3-tab');
     const tab4 = document.getElementById('header-level4-tab');
@@ -552,7 +553,22 @@ function updateNavTabs(level2Title, level2Icon, level3Title, level4Title) {
         document.getElementById('header-level3-title').textContent = level3Title;
         tab3.classList.remove('hidden');
         tab3.classList.add('flex');
+        const box = tab3.querySelector('div');
+        if (box && currentMainTab === 'discover' && activeTopicId) {
+            box.setAttribute('role', 'button');
+            box.setAttribute('tabindex', '0');
+            box.setAttribute('title', 'Quay lại chuyên mục');
+            box.classList.add('cursor-pointer','hover:bg-purple-100','transition-colors');
+            box.onclick = returnToCurrentDiscoverTopic_;
+            box.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); returnToCurrentDiscoverTopic_(); } };
+        } else if (box) {
+            box.removeAttribute('role'); box.removeAttribute('tabindex'); box.removeAttribute('title');
+            box.classList.remove('cursor-pointer','hover:bg-purple-100','transition-colors');
+            box.onclick = null; box.onkeydown = null;
+        }
     } else {
+        const box = tab3.querySelector('div');
+        if (box) { box.onclick = null; box.onkeydown = null; box.removeAttribute('role'); box.removeAttribute('tabindex'); box.removeAttribute('title'); }
         tab3.classList.add('hidden');
         tab3.classList.remove('flex');
     }
@@ -567,22 +583,78 @@ function updateNavTabs(level2Title, level2Icon, level3Title, level4Title) {
     }
 }
 
+let appShellRootMode_ = true;
+function setAppShellRootMode_(isRoot) {
+    appShellRootMode_ = !!isRoot;
+    const mainBanner = document.getElementById('app-main-banner');
+    const contextBanner = document.getElementById('app-context-banner');
+    if (mainBanner) mainBanner.classList.toggle('hidden', !appShellRootMode_);
+    if (contextBanner) contextBanner.classList.toggle('hidden', appShellRootMode_);
+}
+
+let currentMainTab = 'discover';
+function setMainTabActive_(tabName) {
+    currentMainTab = tabName || 'discover';
+    document.querySelectorAll('.main-module-tab').forEach(btn => {
+        const active = btn.dataset.tab === currentMainTab;
+        btn.classList.toggle('is-active', active);
+        btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+}
+
+function updateDiscoverBreadcrumb_(topicTitle = null, topicIcon = '🔢', subTitle = null) {
+    updateNavTabs('Khám phá', '🧭', topicTitle || null, subTitle || null);
+}
+
+function returnToCurrentDiscoverTopic_() {
+    stopSpeaking();
+    clearInterval(quizTimerInterval);
+    const topicId = Number(activeTopicId || pendingTopicQuiz?.topicNum || 0);
+    if (!topicId) return goHome();
+    const cfg = TOPICS_CONFIG.find(t => Number(t.id) === topicId);
+    openTopic(topicId, pendingTopicQuiz?.topicName || cfg?.title || `Chủ đề ${topicId}`, cfg?.icon || '🔢');
+}
+
+function openReviewTab() {
+    if (!requirePremium('Ôn tập')) return;
+    setMainTabActive_('review');
+    openTopic(11, '11. Ôn tập', '🧠');
+    setAppShellRootMode_(true);
+}
+
+function openMainTab(tabName) {
+    stopSpeaking();
+    clearInterval(quizTimerInterval);
+    switch (tabName) {
+        case 'discover': goHome(); break;
+        case 'lessons': openBaiHocHub(1); break;
+        case 'exercises': openRoadmap(1); break;
+        case 'review': openReviewTab(); break;
+        case 'exams': openExamHub(); break;
+        case 'games': openMiniGameHub(); break;
+        default: goHome();
+    }
+}
+
 function returnToTopicLecture() {
     stopSpeaking();
     clearInterval(quizTimerInterval);
-    if (activeExamContext) {
-        openExamHub();
-    } else if (activeRoadmapContext) {
-        openRoadmap();
-    } else if (pendingTopicQuiz) {
-        updateNavTabs(pendingTopicQuiz.topicName, TOPICS_CONFIG.find(t => t.id === pendingTopicQuiz.topicNum)?.icon, null);
-        switchAppView('view-lecture');
+    if (currentMainTab === 'discover') {
+        if (activeTopicId) return returnToCurrentDiscoverTopic_();
+        return goHome();
     }
+    if (activeBaiHocContext?.bai) return openBaiHocHub(activeBaiHocContext.semester || 1);
+    if (activeBaiHocContext) return openBaiHocHub(activeBaiHocContext.semester || 1);
+    if (activeExamContext) return openExamHub();
+    if (activeRoadmapContext) return openRoadmap(exerciseSemesterFilter || 1);
+    if (typeof inMiniGameFlow !== 'undefined' && inMiniGameFlow) return openMiniGameHub();
+    if (pendingTopicQuiz) return switchAppView('view-lecture');
+    goHome();
 }
 
 function switchAppView(viewId) {
     stopSpeaking();
-    ['view-dashboard-grid', 'view-lecture', 'view-quiz', 'view-roadmap', 'view-exam-hub', 'view-result'].forEach(id => {
+    ['view-dashboard-grid', 'view-bai-hoc-hub', 'view-bai-hoc-lesson', 'view-lecture', 'view-quiz', 'view-roadmap', 'view-minigame-hub', 'view-game-play', 'view-exam-hub', 'view-result'].forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
         if (id === viewId) el.classList.remove('hidden');
@@ -591,10 +663,41 @@ function switchAppView(viewId) {
 }
 
 function goHome() {
+    setAppShellRootMode_(true);
     stopSpeaking();
     clearInterval(quizTimerInterval);
-    updateNavTabs(null, null, null);
+    activeBaiHocContext = null;
+    activeRoadmapContext = null;
+    activeExamContext = null;
+    activeTopicId = null;
+    pendingTopicQuiz = null;
+    updateNavTabs('Khám phá', '🧭', null);
+    setMainTabActive_('discover');
     switchAppView('view-dashboard-grid');
+}
+
+// ==========================================
+// MINI GAMES - giữ entry point ổn định trong UI 6 tab
+// ==========================================
+let inMiniGameFlow = false;
+function openMiniGameHub() {
+    if (!requirePremium('Mini games')) return;
+    setAppShellRootMode_(true);
+    setMainTabActive_('games');
+    stopSpeaking();
+    clearInterval(quizTimerInterval);
+    inMiniGameFlow = true;
+    activeBaiHocContext = null;
+    activeRoadmapContext = null;
+    activeExamContext = null;
+    activeTopicId = null;
+    pendingTopicQuiz = null;
+    updateNavTabs('Mini games', '🎮', null);
+    switchAppView('view-minigame-hub');
+    const grid = document.getElementById('minigame-grid');
+    if (grid && !grid.children.length) {
+        grid.innerHTML = '<div class="col-span-full rounded-2xl border-2 border-teal-100 bg-teal-50/60 p-5 text-center"><div class="text-3xl">🎮</div><div class="mt-2 font-black text-teal-700">Kho Mini games Toán 1</div><div class="mt-1 text-xs md:text-sm font-bold text-slate-500">Nội dung Mini game hiện tại sẽ được giữ độc lập và nối vào khu vực này.</div></div>';
+    }
 }
 
 // ==========================================
@@ -832,7 +935,7 @@ async function doRegister() {
         document.getElementById('login-mahs').value = result.student.maHS;
         document.getElementById('login-mapin').value = '';
         switchAuthTab('login');
-        alert(`Đăng ký thành công!\nMã ID thực tế của bé là: ${result.student.maHS}\nTài khoản mới ở hạng Regular.`);
+        showAppNotice(`Đăng ký thành công!\nMã ID thực tế của bé là: ${result.student.maHS}\nTài khoản mới ở hạng Regular.`, { title: 'Đăng ký thành công', icon: '🎉', tone: 'emerald' });
     } catch (err) {
         showAuthError('Lỗi kết nối: ' + err.message);
     } finally {
@@ -882,6 +985,7 @@ function enterDashboard(isSilent = false) {
     document.getElementById('screen-login')?.classList.add('hidden');
     document.getElementById('screen-dashboard')?.classList.remove('hidden');
     updateUserInfoBox();
+    updatePremiumLockDecorations();
     resetStars();
     Promise.resolve(renderDashboardGrid()).then(updatePremiumLockDecorations);
     Promise.resolve(renderExamHubGrid()).catch(() => {});
@@ -924,26 +1028,13 @@ function updateUserInfoBox() {
 
 function updatePremiumLockDecorations() {
     const locked = !hasPremiumAccess();
-    const roadmapBtn = document.querySelector('button[onclick*="clickProgressOrExam(\'progress\')"]');
-    if (roadmapBtn) {
-        const span = roadmapBtn.querySelector('span');
-        if (span) span.innerHTML = `Bản đồ tuần${locked ? ' <i class="fa-solid fa-lock ml-1"></i>' : ''}`;
-    }
+    ['bai-hoc-lock-icon','roadmap-lock-icon','review-lock-icon','exam-lock-icon','minigame-lock-icon'].forEach(id => {
+        document.getElementById(id)?.classList.toggle('hidden', !locked);
+    });
+
     const grid = document.getElementById('view-dashboard-grid');
     if (!grid) return;
     grid.querySelectorAll('[data-premium-lock-badge]').forEach(x => x.remove());
-    if (!locked) return;
-    const selectors = ['[onclick^="openTopic(11,"]', '[onclick="openExamHub()"]'];
-    selectors.forEach(sel => {
-        grid.querySelectorAll(sel).forEach(card => {
-            card.style.position = 'relative';
-            const badge = document.createElement('span');
-            badge.setAttribute('data-premium-lock-badge', '1');
-            badge.className = 'absolute top-2 right-2 text-slate-400 text-xs';
-            badge.innerHTML = '<i class="fa-solid fa-lock"></i>';
-            card.appendChild(badge);
-        });
-    });
 }
 
 function ensureAdminModal() {
@@ -1008,7 +1099,7 @@ async function loadAdminStudents(showBusy = false) {
     } catch (e) {
         adminStudentsCache = [];
         if (tbody) tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-rose-500 font-bold">Không tải được danh sách: ${escapeHtml(e.message)}</td></tr>`;
-        alert('Không thể tải danh sách tài khoản: ' + e.message);
+        showAppNotice('Không thể tải danh sách tài khoản: ' + e.message, { title: 'Quản lý tài khoản', icon: '⚠️', tone: 'rose' });
     } finally { if (showBusy) hideLoadingOverlay(); }
 }
 
@@ -1053,7 +1144,7 @@ async function changeAccountTier(maHS, tier) {
         if (idx >= 0) adminStudentsCache[idx] = { ...adminStudentsCache[idx], ...res.student };
         renderAdminTable();
     } catch (e) {
-        alert('Cập nhật thất bại: ' + e.message);
+        showAppNotice('Cập nhật thất bại: ' + e.message, { title: 'Cập nhật tài khoản', icon: '⚠️', tone: 'rose' });
         await loadAdminStudents();
     }
 }
@@ -1066,6 +1157,213 @@ function resetStars() {
     if (redEl) redEl.textContent = 0;
 }
 
+async function loadBaiHocData() {
+    if (baiHocDataCache) return baiHocDataCache;
+    const res = await fetch(BAI_HOC_DATA_FILE);
+    if (!res.ok) throw new Error('Không thể tải dữ liệu Bài học Toán 1');
+    baiHocDataCache = await res.json();
+    return baiHocDataCache;
+}
+
+function findBaiHocByNumber_(data, baiNumber) {
+    return (data?.bai_hoc || []).find(x => Number(x.bai) === Number(baiNumber)) || null;
+}
+
+async function openBaiHocHub(semesterNumber = 1) {
+    if (!requirePremium('Bài học')) return;
+    setAppShellRootMode_(true);
+    setMainTabActive_('lessons');
+    stopSpeaking();
+    clearInterval(quizTimerInterval);
+    activeBaiHocContext = { semester: Number(semesterNumber) || 1, bai: null, pageNo: 1 };
+    activeRoadmapContext = null;
+    activeExamContext = null;
+    pendingTopicQuiz = null;
+    updateNavTabs('Bài học', '📖', null);
+    switchAppView('view-bai-hoc-hub');
+    showLoadingOverlay('Đang mở Bài học Toán 1...');
+    try {
+        const data = await loadBaiHocData();
+        renderBaiHocHub_(data, activeBaiHocContext.semester);
+    } catch (err) {
+        showAppNotice(`Không thể mở Bài học: ${err.message}`, { title: 'Bài học', icon: '📖', tone: 'rose' });
+    } finally {
+        hideLoadingOverlay();
+    }
+}
+
+function renderBaiHocHub_(data, semesterNumber) {
+    const tabs = document.getElementById('bai-hoc-semester-tabs');
+    const grid = document.getElementById('bai-hoc-grid');
+    const subtitle = document.getElementById('bai-hoc-hub-subtitle');
+    if (!tabs || !grid) return;
+
+    const semesters = [1, 2].filter(sem => (data?.bai_hoc || []).some(x => Number(x.semester) === sem));
+    tabs.innerHTML = semesters.map(sem => `<button onclick="openBaiHocHub(${sem})" class="semester-switch-btn ${Number(sem) === Number(semesterNumber) ? 'is-active' : 'is-inactive'}">Học kỳ ${sem}</button>`).join('');
+
+    const lessons = (data?.bai_hoc || []).filter(x => Number(x.semester) === Number(semesterNumber));
+    if (subtitle) subtitle.textContent = `Học kỳ ${semesterNumber} · ${lessons.length} bài`;
+    grid.className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2';
+    grid.innerHTML = lessons.map((lesson, idx) => {
+        const alt = idx % 2 === 0;
+        return `<button onclick="openBaiHocLesson(${lesson.bai},1)" class="text-left min-h-[82px] rounded-2xl border-2 ${alt ? 'border-pink-200 bg-gradient-to-br from-white to-pink-50' : 'border-purple-200 bg-gradient-to-br from-white to-purple-50'} px-3 py-2.5 hover:border-fuchsia-400 hover:shadow-md transition-shadow">
+            <div class="font-black text-purple-700 text-base">Bài ${lesson.bai}</div>
+            <div class="mt-1 text-[12px] md:text-[13px] leading-5 font-bold text-slate-700 line-clamp-2">${escapeHtml(lesson.source_title || '')}</div>
+        </button>`;
+    }).join('');
+}
+
+async function openBaiHocLesson(baiNumber, pageNo = 1) {
+    if (!requirePremium('Bài học')) return;
+    setAppShellRootMode_(false);
+    stopSpeaking();
+    showLoadingOverlay('Đang mở bài học...');
+    try {
+        const data = await loadBaiHocData();
+        const lesson = findBaiHocByNumber_(data, baiNumber);
+        if (!lesson) throw new Error(`Không tìm thấy Bài ${baiNumber}`);
+        const safePage = Math.min(3, Math.max(1, Number(pageNo) || 1));
+        activeBaiHocContext = { semester: Number(lesson.semester), bai: Number(lesson.bai), pageNo: safePage };
+        setMainTabActive_('lessons');
+        updateNavTabs('Bài học', '📖', `Bài ${lesson.bai}`, lesson.source_title || '');
+        renderBaiHocLesson_(lesson, safePage);
+        switchAppView('view-bai-hoc-lesson');
+    } catch (err) {
+        showAppNotice(`Không thể mở bài học: ${err.message}`, { title: 'Bài học', icon: '📖', tone: 'rose' });
+    } finally {
+        hideLoadingOverlay();
+    }
+}
+
+function renderBaiHocLesson_(lesson, pageNo) {
+    const title = document.getElementById('bai-hoc-lesson-title');
+    const meta = document.getElementById('bai-hoc-lesson-meta');
+    const tabs = document.getElementById('bai-hoc-page-tabs');
+    const content = document.getElementById('bai-hoc-page-content');
+    if (!content) return;
+    if (title) { title.textContent = ''; title.className = 'hidden'; }
+    if (meta) { meta.textContent = `Bài ${lesson.bai} · ${lesson.theme || ''}`; meta.className = 'text-base md:text-lg font-extrabold text-purple-600'; }
+    const back = document.getElementById('btn-back-bai-hoc-list');
+    if (back) back.onclick = () => openBaiHocHub(lesson.semester);
+
+    const labels = [['🔎','Khám phá'], ['✏️','Luyện cùng cô'], ['🌟','Ghi nhớ & Vận dụng']];
+    if (tabs) tabs.innerHTML = labels.map((x, i) => {
+        const n = i + 1, active = n === Number(pageNo);
+        return `<button onclick="openBaiHocLesson(${lesson.bai}, ${n})" class="h-10 rounded-xl border font-black text-[11px] md:text-xs ${active ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white border-purple-400 shadow-md' : 'bg-pink-50/70 text-purple-700 border-pink-200 hover:bg-purple-50'}">${x[0]} ${x[1]}</button>`;
+    }).join('');
+
+    const page = (lesson.pages || []).find(p => Number(p.page_no) === Number(pageNo)) || lesson.pages?.[pageNo - 1] || {};
+    if (page.page_type === 'guided_practice') content.innerHTML = renderMathGuidedPage_(page, lesson);
+    else if (page.page_type === 'summary') content.innerHTML = renderMathSummaryPage_(page, lesson);
+    else content.innerHTML = renderMathDiscoveryPage_(page, lesson);
+
+    const nav = document.getElementById('bai-hoc-bottom-nav');
+    if (nav) {
+        const prev = pageNo > 1 ? `<button onclick="openBaiHocLesson(${lesson.bai}, ${pageNo - 1})" class="px-4 py-2.5 rounded-xl bg-white border border-purple-200 text-purple-700 font-black text-xs">← Trang trước</button>` : '<span></span>';
+        const next = pageNo < 3 ? `<button onclick="openBaiHocLesson(${lesson.bai}, ${pageNo + 1})" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-purple-500 text-white font-black text-xs shadow-sm">Trang tiếp →</button>` : `<button onclick="openRoadmap(${lesson.semester})" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-black text-xs shadow-sm">✏️ Sang Bài tập</button>`;
+        nav.innerHTML = `${prev}<div class="text-[11px] font-black text-slate-400">${pageNo}/3</div>${next}`;
+    }
+}
+
+function renderMathDiscoveryPage_(page, lesson) {
+    const blocks = (page.concept_blocks || []).map((b, i) => `
+        <div class="rounded-2xl border ${i % 2 ? 'border-purple-100 bg-purple-50/60' : 'border-pink-100 bg-pink-50/60'} p-3.5">
+            <div class="font-black text-slate-800 text-sm md:text-base">${i + 1}. ${escapeHtml(b.heading || '')}</div>
+            <div class="text-sm md:text-base text-slate-700 font-semibold leading-7 mt-1">${escapeHtml(b.text || '')}</div>
+            ${b.example ? `<div class="mt-2 px-3 py-2 rounded-xl bg-white border border-white text-purple-700 font-bold text-sm">💡 Ví dụ: ${escapeHtml(b.example)}</div>` : ''}
+        </div>`).join('');
+    const models = (page.visual_models || []).map(m => `<div class="rounded-xl bg-white border border-emerald-100 px-3 py-2.5 text-sm font-semibold text-slate-700">🧩 ${escapeHtml(m.instruction || '')}</div>`).join('');
+    return `<div class="space-y-3">
+        <section class="rounded-2xl bg-gradient-to-r from-pink-50 to-purple-50 border border-pink-200 p-4 text-center">
+            <div class="text-[11px] font-black text-pink-600">🎯 MỤC TIÊU BÀI HỌC</div>
+            <div class="font-black text-slate-800 text-base md:text-lg leading-7 mt-1">${escapeHtml(page.goal || page.intro || lesson.source_title || '')}</div>
+        </section>
+        <section class="grid gap-3">${blocks}</section>
+        ${models ? `<section class="rounded-2xl bg-emerald-50/60 border border-emerald-100 p-3.5"><div class="font-black text-emerald-700 mb-2">👀 Mô hình trực quan</div><div class="grid gap-2">${models}</div></section>` : ''}
+    </div>`;
+}
+
+function renderMathGuidedPage_(page, lesson) {
+    const items = (page.items || []).map((item, i) => renderMathLessonItem_(item, i, lesson)).join('');
+    return `<div class="space-y-3">
+        <section class="rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 p-3.5">
+            <div class="font-black text-purple-700">🐰 Cùng Cô Thỏ Hồng làm từng bước</div>
+            <div class="text-sm md:text-base font-semibold text-slate-700 mt-1 leading-7">${escapeHtml(page.recall || '')}</div>
+        </section>
+        <section class="space-y-3">${items}</section>
+    </div>`;
+}
+
+function renderMathLessonItem_(item, index, lesson) {
+    const id = `bh-${lesson.bai}-${index}`;
+    if (item.type === 'choice') {
+        return `<div id="${id}" class="rounded-2xl bg-pink-50/60 border border-pink-100 p-3.5">
+            <div class="font-black text-slate-800 text-sm md:text-base mb-2">${index + 1}. ${escapeHtml(item.prompt || '')}</div>
+            <div class="grid gap-2">${(item.options || []).map((op, j) => `<button onclick="checkMathLessonChoice_('${id}', ${j}, ${Number(item.answer || 0)}, '${escapeJsString_(item.explanation || '')}')" class="bh-choice w-full text-left px-3 py-2.5 rounded-xl bg-white border border-pink-200 font-bold text-sm md:text-base">${String.fromCharCode(65 + j)}. ${escapeHtml(op)}</button>`).join('')}</div>
+            <div class="bh-feedback hidden mt-2 text-sm font-bold"></div>
+        </div>`;
+    }
+    if (item.type === 'fill') {
+        return `<div id="${id}" class="rounded-2xl bg-sky-50/60 border border-sky-100 p-3.5">
+            <div class="font-black text-slate-800 text-sm md:text-base">${index + 1}. ${escapeHtml(item.prompt || '')}</div>
+            <div class="flex gap-2 mt-2"><input class="bh-fill flex-1 min-w-0 px-3 py-2 rounded-xl border border-sky-200 bg-white font-black text-center" inputmode="numeric" placeholder="Điền đáp án"><button onclick="checkMathLessonFill_('${id}', '${escapeJsString_(String(item.answer ?? ''))}', '${escapeJsString_(item.hint || '')}')" class="px-4 py-2 rounded-xl bg-sky-500 text-white font-black text-xs">Kiểm tra</button></div>
+            <div class="bh-feedback hidden mt-2 text-sm font-bold"></div>
+        </div>`;
+    }
+    if (item.type === 'sequence') {
+        return `<div id="${id}" class="rounded-2xl bg-purple-50/60 border border-purple-100 p-3.5"><div class="font-black text-slate-800 text-sm md:text-base">${index + 1}. ${escapeHtml(item.prompt || '')}</div><button onclick="toggleMathLessonAnswer_('${id}', '${escapeJsString_(String(item.answer ?? ''))}')" class="mt-2 px-3 py-2 rounded-xl bg-white border border-purple-200 text-purple-700 font-black text-xs">💡 Kiểm tra cách làm</button><div class="bh-feedback hidden mt-2 text-sm font-bold text-emerald-700"></div></div>`;
+    }
+    return `<div class="rounded-2xl bg-emerald-50/60 border border-emerald-100 p-3.5"><div class="font-black text-slate-800 text-sm md:text-base">${index + 1}. 🌱 ${escapeHtml(item.prompt || '')}</div><div class="text-xs text-emerald-700 font-bold mt-1">Con nói hoặc làm bằng đồ vật thật quanh mình nhé.</div></div>`;
+}
+
+function checkMathLessonChoice_(boxId, selected, answer, explanation) {
+    const box = document.getElementById(boxId);
+    if (!box) return;
+    const buttons = [...box.querySelectorAll('.bh-choice')];
+    buttons.forEach((b, i) => {
+        b.disabled = true;
+        if (i === Number(answer)) b.classList.add('bg-emerald-100','border-emerald-400','text-emerald-800');
+        else if (i === Number(selected)) b.classList.add('bg-rose-100','border-rose-400','text-rose-800');
+    });
+    const ok = Number(selected) === Number(answer);
+    const fb = box.querySelector('.bh-feedback');
+    if (fb) {
+        fb.textContent = ok ? `✅ Chính xác! ${explanation || ''}` : `💡 Chưa đúng. ${explanation || 'Con xem lại phần Khám phá rồi thử lại nhé.'}`;
+        fb.className = `bh-feedback mt-2 text-sm font-bold ${ok ? 'text-emerald-700' : 'text-rose-700'}`;
+    }
+}
+
+function checkMathLessonFill_(boxId, answer, hint) {
+    const box = document.getElementById(boxId);
+    const input = box?.querySelector('.bh-fill');
+    const fb = box?.querySelector('.bh-feedback');
+    if (!box || !input || !fb) return;
+    const ok = String(input.value || '').trim().toLowerCase() === String(answer || '').trim().toLowerCase();
+    input.classList.toggle('border-emerald-400', ok);
+    input.classList.toggle('border-rose-400', !ok);
+    fb.textContent = ok ? '✅ Đúng rồi!' : `💡 Con thử lại nhé. ${hint || ''}`;
+    fb.className = `bh-feedback mt-2 text-sm font-bold ${ok ? 'text-emerald-700' : 'text-rose-700'}`;
+}
+
+function toggleMathLessonAnswer_(boxId, answer) {
+    const fb = document.getElementById(boxId)?.querySelector('.bh-feedback');
+    if (!fb) return;
+    fb.textContent = `✅ Đáp án để con tự kiểm tra: ${answer}`;
+    fb.classList.remove('hidden');
+}
+
+function renderMathSummaryPage_(page, lesson) {
+    const points = (page.key_points || []).map(x => `<li>${escapeHtml(x)}</li>`).join('');
+    const mistakes = (page.common_mistakes || []).map(x => `<li>${escapeHtml(x)}</li>`).join('');
+    const checks = (page.self_check || []).map(x => `<label class="flex gap-2 items-start text-sm font-semibold text-slate-700"><input type="checkbox" class="mt-1 accent-emerald-500"><span>${escapeHtml(x)}</span></label>`).join('');
+    return `<div class="space-y-3">
+        <section class="rounded-3xl bg-gradient-to-br from-amber-50 via-pink-50 to-purple-50 border-2 border-amber-200 p-4 md:p-5"><div class="text-[11px] font-black text-amber-600">🌟 CON CẦN NHỚ</div><ul class="list-disc pl-5 mt-3 space-y-2 text-sm md:text-base text-slate-700 font-semibold leading-7">${points}</ul></section>
+        ${mistakes ? `<section class="rounded-2xl bg-rose-50/70 border border-rose-100 p-4"><div class="font-black text-rose-700 mb-2">⚠️ Lỗi dễ mắc</div><ul class="list-disc pl-5 space-y-1.5 text-sm font-semibold text-slate-700">${mistakes}</ul></section>` : ''}
+        <section class="rounded-2xl bg-emerald-50/70 border border-emerald-100 p-4"><div class="font-black text-emerald-700 mb-2">✅ Con tự kiểm tra</div><div class="grid gap-2">${checks}</div></section>
+        <section class="rounded-2xl bg-purple-50 border border-purple-100 p-4"><div class="font-black text-purple-700">🌱 Vận dụng</div><div class="text-sm md:text-base font-semibold text-slate-700 mt-1 leading-7">${escapeHtml(page.finish_prompt || '')}</div></section>
+    </div>`;
+}
+
 function clickProgressOrExam(type) {
     if (type === 'progress') openRoadmap();
     else if (type === 'exam') openExamHub();
@@ -1075,10 +1373,14 @@ function clickProgressOrExam(type) {
 // CHỦ ĐỀ 1: BẢNG CHỮ CÁI TƯƠNG TÁC (1.1 ĐẾN 1.4)
 // ==========================================
 function openTopic(topicNum, topicName, icon) {
+    setAppShellRootMode_(false);
     if (Number(topicNum) === 11 && !requirePremium('Ôn tập')) return;
+    if (Number(topicNum) === 11) setMainTabActive_('review');
+    else setMainTabActive_('discover');
     stopSpeaking();
-    activeTopicId = topicNum; activeExamContext = null; activeRoadmapContext = null;
-    updateNavTabs(topicName, icon || '🐰', null);
+    activeBaiHocContext = null; activeTopicId = topicNum; activeExamContext = null; activeRoadmapContext = null;
+    if (Number(topicNum) === 11) updateNavTabs('Ôn tập', '🧠', null);
+    else updateDiscoverBreadcrumb_(topicName, icon || '🔢', null);
 
     showLoadingOverlay(`Đang tải chủ đề "${topicName}"...`);
     fetchAllTopicsData().then(topics => {
@@ -1090,8 +1392,9 @@ function openTopic(topicNum, topicName, icon) {
         hideLoadingOverlay();
         // Tải lỗi thì đưa header về đúng trạng thái trang chủ (không để lại tab/gạch breadcrumb thừa)
         activeTopicId = null;
+        setAppShellRootMode_(true);
         updateNavTabs(null, null, null);
-        alert(`Không thể tải chủ đề: ${err.message}`);
+        showAppNotice(`Không thể tải chủ đề: ${err.message}`, { title: 'Khám phá', icon: '🧭', tone: 'rose' });
     });
 }
 
@@ -1137,7 +1440,8 @@ function showLectureAndSubtopics(topicNum, topicName, topicObj) {
     setSubtopicGridColumns(groups.length);
     document.getElementById('lecture-subtopics-list').innerHTML = subHtml;
 
-    updateNavTabs(topicName, TOPICS_CONFIG.find(t => t.id === topicNum)?.icon || '🔢', null);
+    if (Number(topicNum) === 11) updateNavTabs('Ôn tập', '🧠', topicName);
+    else updateDiscoverBreadcrumb_(topicName, TOPICS_CONFIG.find(t => t.id === topicNum)?.icon || '🔢', null);
     switchAppView('view-lecture');
 }
 
@@ -1157,18 +1461,19 @@ function selectSubtopic(idx) {
     practiceCycleRawPool = [...pool];
     const firstCycleQuestions = shuffleArray([...pool]);
 
-    updateNavTabs(topicName, TOPICS_CONFIG.find(t => t.id === topicNum)?.icon || '🔢', displayLabel || 'Tất cả các mục');
+    if (Number(topicNum) === 11) updateNavTabs('Ôn tập', '🧠', topicName, displayLabel || 'Tất cả các mục');
+    else updateDiscoverBreadcrumb_(topicName, TOPICS_CONFIG.find(t => t.id === topicNum)?.icon || '🔢', displayLabel || 'Tất cả các mục');
     startTopicQuiz(topicNum, finalTitle, firstCycleQuestions, subLabel);
 }
 
 // ==========================================
-// TIẾN TRÌNH TUẦN: BẢN ĐỒ SVG
+// BÀI TẬP THEO TỪNG BÀI SGK - thay roadmap tuần cũ
 // ==========================================
 function handleNextExamFromReport() {
     stopSpeaking();
     if (activeRoadmapContext) {
         activeRoadmapContext = null;
-        openRoadmap();
+        openRoadmap(exerciseSemesterFilter || 1);
     } else if (activeExamContext) {
         activeExamContext = null;
         openExamHub();
@@ -1177,114 +1482,198 @@ function handleNextExamFromReport() {
     }
 }
 
-function openRoadmap() {
-    if (!requirePremium('Bản đồ tuần')) return;
+function getExerciseProgressKey_() {
+    const id = String(currentUser?.maHS || 'KHACH').toUpperCase();
+    return `toan1_bai_tap_unlocked_${id}`;
+}
+
+function getCurrentExerciseIndex_() {
+    if (!currentUser || currentUser.isGuest) return 1;
+    const stored = Number(localStorage.getItem(getExerciseProgressKey_()) || 1);
+    return Math.max(1, Number.isFinite(stored) ? stored : 1);
+}
+
+function setCurrentExerciseIndex_(idx) {
+    if (!currentUser || currentUser.isGuest) return;
+    try { localStorage.setItem(getExerciseProgressKey_(), String(Math.max(1, Number(idx) || 1))); } catch (e) {}
+}
+
+async function openRoadmap(semesterNumber = exerciseSemesterFilter || 1) {
+    if (!requirePremium('Bài tập')) return;
+    setAppShellRootMode_(true);
+    setMainTabActive_('exercises');
     stopSpeaking();
-    updateNavTabs("Bản đồ tiến trình tuần", "🗺️", null);
-    renderRoadmapSVG();
+    clearInterval(quizTimerInterval);
+    exerciseSemesterFilter = Number(semesterNumber) || 1;
+    activeBaiHocContext = null;
+    activeExamContext = null;
+    pendingTopicQuiz = null;
+    updateNavTabs('Bài tập', '✏️', null);
     switchAppView('view-roadmap');
+    showLoadingOverlay('Đang mở Bài tập theo SGK...');
+    try {
+        const data = await loadBaiHocData();
+        renderRoadmapSVG(data);
+    } catch (err) {
+        showAppNotice(`Không thể mở Bài tập: ${err.message}`, { title: 'Bài tập', icon: '✏️', tone: 'rose' });
+    } finally {
+        hideLoadingOverlay();
+    }
 }
 
-function wrapCaptionLines(text, maxLen = 24, maxLines = 3) {
-    const words = String(text || '').split(' ');
-    const lines = [''];
-    for (const w of words) {
-        const cur = lines[lines.length - 1];
-        const candidate = (cur + ' ' + w).trim();
-        if (candidate.length <= maxLen) {
-            lines[lines.length - 1] = candidate;
-        } else if (lines.length < maxLines) {
-            lines.push(w);
-        } else {
-            lines[lines.length - 1] = candidate;
-        }
-    }
-    while (lines.length < maxLines) lines.push('');
-    if (lines[maxLines - 1].length > maxLen) {
-        lines[maxLines - 1] = lines[maxLines - 1].slice(0, maxLen - 1) + '…';
-    }
-    return lines.slice(0, maxLines);
-}
-
-function renderRoadmapSVG() {
+function renderRoadmapSVG(data) {
     const container = document.getElementById('roadmap-svg-container');
     if (!container) return;
-    const tuanHienTai = Number(currentUser?.tuanHienTai) || 1;
-
-    let nodesHtml = '';
-    for (let w = 1; w <= TOTAL_ROADMAP_WEEKS; w++) {
-        const item = roadmapConfig[w];
-        const coord = getRoadmapCoord(w);
-        const isDone = w < tuanHienTai;
-        const isCurrent = w === tuanHienTai;
-        const isLocked = w > tuanHienTai;
-
-        let nodeColor = isDone ? "#10b981" : (isCurrent ? "#ec4899" : "#cbd5e1");
-        let strokeColor = isDone ? "#34d399" : (isCurrent ? "#f43f5e" : "#94a3b8");
-        let badgeHtml = '';
-
-        if (isDone) {
-            badgeHtml = `<text x="${coord.x}" y="${coord.y + 40}" text-anchor="middle" font-size="16" fill="#f59e0b">⭐⭐⭐</text>`;
-        } else if (isCurrent) {
-            badgeHtml = `<text x="${coord.x}" y="${coord.y + 40}" text-anchor="middle" font-size="12" font-weight="900" fill="#ec4899">Đang học</text>`;
-        } else {
-            badgeHtml = `<text x="${coord.x}" y="${coord.y + 38}" text-anchor="middle" font-size="14" fill="#94a3b8">🔒 Khóa</text>`;
-        }
-
-        const cursorCls = isLocked ? "cursor-not-allowed opacity-60" : "cursor-pointer hover:scale-105 transition-transform";
-        const animCls = isCurrent ? "node-current" : "";
-
-        nodesHtml += `
-            <g class="${cursorCls} ${animCls}" onclick="selectRoadmapWeek(${w})" id="svg-node-week-${w}">
-                <circle cx="${coord.x}" cy="${coord.y}" r="40" fill="#ffffff" stroke="${strokeColor}" stroke-width="4" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.08))"/>
-                <circle cx="${coord.x}" cy="${coord.y}" r="34" fill="${nodeColor}" opacity="${isLocked ? '0.25' : '0.15'}"/>
-                <text x="${coord.x}" y="${coord.y - 4}" text-anchor="middle" font-size="24">${item.icon || '🔢'}</text>
-                <text x="${coord.x}" y="${coord.y + 18}" text-anchor="middle" font-size="13" font-weight="800" fill="${isLocked ? '#64748b' : '#1e293b'}">Tuần ${w}</text>
-                ${badgeHtml}
-            </g>
-        `;
+    const lessons = (data?.bai_tap || []).filter(x => Number(x.semester) === Number(exerciseSemesterFilter));
+    const seq = data?.learning_sequence || [];
+    const unlockedIndex = getCurrentExerciseIndex_();
+    const tabHost = document.getElementById('roadmap-semester-tabs');
+    if (tabHost) {
+        tabHost.innerHTML = [1,2].filter(sem => (data?.bai_tap || []).some(x => Number(x.semester) === sem)).map(sem => `<button onclick="openRoadmap(${sem})" class="semester-switch-btn ${Number(sem) === Number(exerciseSemesterFilter) ? 'is-active' : 'is-inactive'}">Học kỳ ${sem}</button>`).join('');
     }
 
-    const pathD = buildRoadmapPathD(TOTAL_ROADMAP_WEEKS);
-    const svgHtml = `
-        <svg viewBox="0 0 740 430" class="w-full max-h-[74vh] select-none" xmlns="http://www.w3.org/2000/svg">
-            <path d="${pathD}" fill="none" stroke="#fbcfe8" stroke-width="12" stroke-dasharray="14,14" stroke-linecap="round"/>
-            <path d="${pathD}" fill="none" stroke="#f472b6" stroke-width="4" stroke-dasharray="14,14" stroke-linecap="round"/>
-            ${nodesHtml}
-        </svg>
-    `;
-    container.innerHTML = svgHtml;
+    container.className = 'w-full bg-gradient-to-br from-pink-50/70 via-white to-purple-50/70 rounded-3xl border-2 border-pink-200 p-3 shadow-sm';
+    container.innerHTML = `<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2">${lessons.map((ex, idx) => {
+        const seqIndex = seq.indexOf(Number(ex.bai)) + 1;
+        const locked = seqIndex > unlockedIndex;
+        const open = !locked;
+        return `<button onclick="${open ? `selectRoadmapWeek(${seqIndex})` : `showLockedExercise_(${ex.bai})`}" class="relative text-left min-h-[92px] rounded-2xl border-2 p-3 ${open ? (idx % 2 ? 'bg-purple-50 border-purple-200 hover:border-purple-400' : 'bg-pink-50 border-pink-200 hover:border-pink-400') : 'bg-slate-50 border-slate-200 opacity-60'} hover:shadow-md transition-shadow">
+            <div class="flex justify-between gap-2"><span class="font-black ${open ? 'text-purple-700' : 'text-slate-500'}">Bài ${ex.bai}</span><span>${open ? '' : '🔒'}</span></div>
+            <div class="text-[12px] md:text-[13px] font-bold text-slate-600 mt-1 line-clamp-2">${escapeHtml(ex.title || '')}</div>
+            <div class="text-[10px] mt-1 ${open ? 'text-emerald-600' : 'text-slate-400'} font-black">${open ? '20 câu' : 'Cần ≥80% bài trước'}</div>
+        </button>`;
+    }).join('')}</div>`;
 }
 
-async function selectRoadmapWeek(weekNum) {
-    stopSpeaking();
-    const config = roadmapConfig[weekNum];
-    if (!config) return;
-    
-    const tuanHienTai = Number(currentUser?.tuanHienTai) || 1;
-    if (weekNum > tuanHienTai) {
-        return alert(`Tuần ${weekNum} đang bị khóa. Bé hãy hoàn thành Tuần ${tuanHienTai} đạt từ 80% trở lên để mở khóa nhé!`);
+function showLockedExercise_(bai) {
+    showAppNotice(`Bài tập ${bai} chưa mở. Bé cần đạt từ 80% ở Bài tập trước để mở khóa nhé!`, { title:'Bài tập đang khóa', icon:'🔒', tone:'amber' });
+}
+
+function questionMatchesFilter_(q, filter) {
+    if (!q || !filter) return false;
+    if (filter.sub_id && String(q.sub_topic) !== String(filter.sub_id)) return false;
+    const c = filter.constraints || {};
+    const text = `${q.question_text || ''} ${(q.options || []).join(' ')} ${q.answer || ''}`.toLowerCase();
+    const nums = [...text.matchAll(/\b\d+\b/g)].map(m => Number(m[0])).filter(Number.isFinite);
+    const answerNum = Number(String(q.answer || '').replace(',', '.'));
+
+    if (c.number_min != null && Number.isFinite(answerNum) && answerNum < Number(c.number_min)) return false;
+    if (c.number_max != null && Number.isFinite(answerNum) && answerNum > Number(c.number_max)) return false;
+
+    if (c.operation) {
+        const op = String(c.operation);
+        const hasPlus = /\+|cộng|thêm|tất cả|gộp/.test(text);
+        const hasMinus = /-|−|trừ|bớt|còn lại|lấy đi/.test(text);
+        if (op === 'addition' && !hasPlus) return false;
+        if (op === 'subtraction' && !hasMinus) return false;
+        if (op === 'add_subtract_facts' && !(hasPlus || hasMinus)) return false;
     }
 
-    if (config.isExam) return openExamHub();
+    if (c.left_digits || c.right_digits || c.no_carry || c.no_borrow) {
+        const m = String(q.question_text || '').match(/(\d+)\s*([+\-−])\s*(\d+)/);
+        if (m) {
+            const a = Number(m[1]), op = m[2], b = Number(m[3]);
+            if (c.left_digits && String(a).length !== Number(c.left_digits)) return false;
+            if (c.right_digits && String(b).length !== Number(c.right_digits)) return false;
+            if (c.no_carry && op === '+' && ((a % 10) + (b % 10) >= 10)) return false;
+            if (c.no_borrow && (op === '-' || op === '−') && ((a % 10) < (b % 10))) return false;
+        }
+    }
 
-    activeRoadmapContext = { week: weekNum, topicId: config.subIds[0] || '1.1', chuDe: config.name };
-    pendingTopicQuiz = null; activeExamContext = null;
-    const topicLabel = config.name.replace(/^Tuần\s*\d+:\s*/i, '');
-    updateNavTabs("Tiến trình tuần", "📅", `Tuần ${weekNum}`, topicLabel);
+    if (Array.isArray(c.operators) && c.operators.length && !c.operators.some(op => text.includes(op))) {
+        // Một số câu so sánh viết bằng lời; vẫn cho qua nếu chứa từ khóa so sánh.
+        if (!/so sánh|lớn hơn|bé hơn|nhỏ hơn|bằng nhau/.test(text)) return false;
+    }
 
-    showLoadingOverlay(`Đang bốc 30 câu hỏi Tuần ${weekNum} (tỷ lệ 3:4:3)...`);
+    if (Array.isArray(c.units) && c.units.length && !c.units.some(u => text.includes(String(u).toLowerCase()))) {
+        return false;
+    }
+
+    if (c.time_mode === 'whole_hour' && !/giờ|đồng hồ/.test(text)) return false;
+    if (c.calendar_mode && !/ngày|tuần|thứ|lịch|hôm qua|hôm nay|ngày mai|giờ/.test(text)) return false;
+
+    return true;
+}
+
+function buildExerciseQuestions_(exercise, allQuestions) {
+    const selected = [];
+    const used = new Set();
+    const filters = [...(exercise?.question_bank_filters || [])].sort((a,b) => Number(a.priority || 9) - Number(b.priority || 9));
+
+    for (const filter of filters) {
+        const pool = shuffleArray(allQuestions.filter(q => questionMatchesFilter_(q, filter)));
+        for (const q of pool) {
+            const key = String(q.question_id);
+            if (used.has(key)) continue;
+            used.add(key);
+            selected.push(q);
+            if (selected.length >= Number(exercise.question_count || 20)) break;
+        }
+        if (selected.length >= Number(exercise.question_count || 20)) break;
+    }
+
+    // Nếu bộ lọc chi tiết quá chặt, bù từ đúng sub_id của bài, tuyệt đối không lấy ngoài phạm vi chủ đề.
+    if (selected.length < Number(exercise.question_count || 20)) {
+        const allowed = new Set((exercise.sub_ids || []).map(String));
+        const fallback = shuffleArray(allQuestions.filter(q => allowed.has(String(q.sub_topic))));
+        for (const q of fallback) {
+            const key = String(q.question_id);
+            if (used.has(key)) continue;
+            used.add(key);
+            selected.push(q);
+            if (selected.length >= Number(exercise.question_count || 20)) break;
+        }
+    }
+
+    return shuffleArray(selected).slice(0, Number(exercise.question_count || 20));
+}
+
+async function selectRoadmapWeek(sequenceIndex) {
+    setAppShellRootMode_(false);
+    stopSpeaking();
+    const data = await loadBaiHocData();
+    const seq = data?.learning_sequence || [];
+    const baiNumber = seq[Number(sequenceIndex) - 1];
+    const exercise = (data?.bai_tap || []).find(x => Number(x.bai) === Number(baiNumber));
+    if (!exercise) return;
+
+    const unlockedIndex = getCurrentExerciseIndex_();
+    if (Number(sequenceIndex) > unlockedIndex) {
+        const currentBai = seq[unlockedIndex - 1] || seq[0];
+        showAppNotice(`Bài tập ${exercise.bai} đang được khóa. Con hãy hoàn thành Bài tập ${currentBai} đạt từ 80% trở lên để mở bài tiếp theo nhé!`, { title: 'Bài tập chưa mở', icon: '🔒', tone: 'purple' });
+        return;
+    }
+
+    activeRoadmapContext = {
+        week: Number(sequenceIndex),
+        bai: Number(exercise.bai),
+        topicId: exercise.sub_ids?.[0] || '',
+        chuDe: `Bài ${exercise.bai}. ${exercise.title}`,
+        exerciseId: exercise.exercise_id,
+        semester: Number(exercise.semester)
+    };
+    exerciseSemesterFilter = Number(exercise.semester) || exerciseSemesterFilter;
+    activeBaiHocContext = null;
+    pendingTopicQuiz = null;
+    activeExamContext = null;
+    updateNavTabs('Bài tập', '✏️', `Bài ${exercise.bai}`, exercise.title);
+
+    showLoadingOverlay(`Đang chuẩn bị 20 câu Bài tập ${exercise.bai}...`);
     try {
-        await fetchAllTopicsData();
-        hideLoadingOverlay();
-
-        const weekQuestions = getQuestionsForWeek343(weekNum);
-        if (!weekQuestions.length) return alert('Tuần này đang chuẩn bị thêm câu hỏi, bé quay lại sau nhé!');
-
-        startTopicQuiz(weekNum, config.name, weekQuestions, null);
+        const allQuestions = await fetchAllQuestionsFlat();
+        const questions = buildExerciseQuestions_(exercise, allQuestions);
+        if (!questions.length) {
+            showAppNotice('Bài này đang được bổ sung thêm câu hỏi phù hợp, bé quay lại sau nhé!', { title: 'Bài tập', icon: '✏️', tone: 'amber' });
+            return;
+        }
+        if (questions.length < Number(exercise.question_count || 20)) {
+            showAppNotice(`Hiện bài này có ${questions.length} câu phù hợp trong kho. Hệ thống sẽ cho bé luyện các câu đã được kiểm tra trước nhé!`, { title: 'Kho câu hỏi', icon: '🧩', tone: 'amber' });
+        }
+        startTopicQuiz(sequenceIndex, activeRoadmapContext.chuDe, questions, null);
     } catch (err) {
+        showAppNotice(`Không thể tải Bài tập: ${err.message}`, { title: 'Bài tập', icon: '✏️', tone: 'rose' });
+    } finally {
         hideLoadingOverlay();
-        alert(`Lỗi tải dữ liệu tuần: ${err.message}`);
     }
 }
 
@@ -1292,6 +1681,7 @@ async function selectRoadmapWeek(weekNum) {
 // LOGIC CHẤM ĐIỂM & ĐIỀU KHIỂN CÂU HỎI
 // ==========================================
 function startTopicQuiz(topicNum, topicName, questions, subLabel) {
+    setAppShellRootMode_(false);
     stopSpeaking();
     clearInterval(quizTimerInterval);
     activeQuestionsList = questions; 
@@ -1347,19 +1737,236 @@ function startTopicQuiz(topicNum, topicName, questions, subLabel) {
     loadQuestion();
 }
 
-function renderMathFoundationQuestion(questionText) {
-    const lines = String(questionText || '').split(/\n/).map(s => s.trim()).filter(Boolean);
-    if (!lines.length) return '';
 
-    const last = lines[lines.length - 1];
-    const isExpression = /(?:\d+|\?)\s*[+−-]\s*(?:\d+|\?)\s*=\s*(?:\d+|\?)/.test(last);
-    if (!isExpression) {
-        return `<span class="whitespace-pre-line">${escapeHtml(lines.join('\n'))}</span>`;
+// ==========================================
+// FOUNDATION UI - MUC 1 & 2: TRUC QUAN CHO BE LOP 1
+// Giữ engine/breadcrumb hiện tại, chỉ thay cách trình bày câu luyện tập.
+// ==========================================
+function getFoundationEmojiSeed(q) {
+    const text = String(q?.question_text || '').toLowerCase();
+    const matches = String(q?.question_text || '').match(/\p{Extended_Pictographic}/gu) || [];
+    const ignored = new Set(['❌','❓','❔','➕','➖','✖️','✔️','✅','🧺','📦','🏠','🅿️']);
+    const found = matches.find(x => !ignored.has(x));
+    if (found) return found;
+
+    const rules = [
+        [/bút|bút chì|viết/, '✏️'], [/táo/, '🍎'], [/cam/, '🍊'], [/dâu/, '🍓'],
+        [/kẹo/, '🍬'], [/bánh/, '🍪'], [/cá/, '🐟'], [/chim/, '🐦'], [/thỏ/, '🐰'],
+        [/gà|gà con/, '🐥'], [/hoa/, '🌼'], [/bóng bay|quả bóng/, '🎈'], [/ô tô|xe/, '🚗'],
+        [/cà rốt/, '🥕'], [/bướm/, '🦋'], [/sao/, '⭐'], [/quả/, '🍎']
+    ];
+    for (const [re, emoji] of rules) if (re.test(text)) return emoji;
+    return '⭐';
+}
+
+function repeatFoundationEmoji(emoji, count, underlinedCount = 0) {
+    const n = Number(count);
+    const u = Math.max(0, Math.min(n, Number(underlinedCount) || 0));
+    if (!Number.isFinite(n) || n < 0 || n > 10) return '<span class="text-6xl md:text-7xl">❔</span>';
+    if (n === 0) return '<span class="text-6xl md:text-7xl font-black text-slate-300">∅</span>';
+
+    // Luôn 1 hàng ngang. Với phép trừ, gạch chân từng vật bị bớt để bé đếm phần còn lại.
+    const sizeClass = n >= 9
+        ? 'text-[34px] md:text-[42px] lg:text-[48px]'
+        : n >= 7
+            ? 'text-[38px] md:text-[48px] lg:text-[56px]'
+            : 'text-[44px] md:text-[56px] lg:text-[66px]';
+
+    return `<span class="inline-flex flex-nowrap items-end justify-center gap-1 md:gap-1.5 ${sizeClass} leading-none whitespace-nowrap">${Array.from({ length: n }, (_, i) => {
+        const underline = i >= (n - u);
+        return underline
+            ? `<span class="inline-flex items-end border-b-[5px] md:border-b-[6px] border-rose-500 pb-1">${emoji}</span>`
+            : `<span class="inline-flex items-end pb-[5px] md:pb-[6px]">${emoji}</span>`;
+    }).join('')}</span>`;
+}
+
+function buildFoundationEquationVisual(q, expression) {
+    const m = String(expression || '').match(/(\d+|\?)\s*([+−-])\s*(\d+|\?)\s*=\s*(\d+|\?)/);
+    if (!m) return '';
+    const [, left, opRaw, right, result] = m;
+    const op = opRaw === '-' ? '−' : opRaw;
+    const emoji = getFoundationEmojiSeed(q);
+    const isMinus = op === '−';
+    const leftN = Number(left);
+    const rightN = Number(right);
+    const canUnderline = isMinus && Number.isFinite(leftN) && Number.isFinite(rightN) && rightN >= 0 && rightN <= leftN;
+
+    const group = (value, underlineCount = 0) => `
+        <div class="min-w-0 flex-1 flex flex-col items-center justify-center">
+            <div class="text-[60px] md:text-[76px] lg:text-[88px] font-black text-indigo-700 leading-none mb-3">${escapeHtml(value)}</div>
+            <div class="w-full min-h-[78px] md:min-h-[92px] flex items-center justify-center overflow-visible select-none">
+                ${value === '?' ? '<span class="text-6xl md:text-7xl">❔</span>' : repeatFoundationEmoji(emoji, value, underlineCount)}
+            </div>
+        </div>`;
+
+    return `
+        <div class="w-full flex flex-col items-center justify-center gap-5 md:gap-7 px-1">
+            <div class="w-full flex items-center justify-center gap-3 md:gap-5 lg:gap-7">
+                <div class="text-[66px] md:text-[84px] lg:text-[96px] font-black text-indigo-700 leading-none">${escapeHtml(left)}</div>
+                <div class="text-[58px] md:text-[76px] lg:text-[88px] font-black ${isMinus ? 'text-rose-500' : 'text-emerald-500'} leading-none">${op}</div>
+                <div class="text-[66px] md:text-[84px] lg:text-[96px] font-black text-indigo-700 leading-none">${escapeHtml(right)}</div>
+                <div class="text-[58px] md:text-[76px] lg:text-[88px] font-black text-slate-300 leading-none">=</div>
+                <div class="min-w-[58px] text-center text-[66px] md:text-[84px] lg:text-[96px] font-black text-pink-600 leading-none">${escapeHtml(result)}</div>
+            </div>
+
+            <div class="w-full grid grid-cols-[1fr_auto_1fr] items-start gap-3 md:gap-5 lg:gap-7">
+                ${group(left, canUnderline ? rightN : 0)}
+                <div class="pt-4 md:pt-5 text-[34px] md:text-[42px] font-black ${isMinus ? 'text-rose-400' : 'text-emerald-400'}">${op}</div>
+                ${group(right, 0)}
+            </div>
+            ${canUnderline ? '<div class="-mt-2 text-xs md:text-sm font-extrabold text-rose-500">Các hình được gạch chân là phần bớt đi</div>' : ''}
+        </div>`;
+}
+
+function buildFoundationEmptyScene(q) {
+    const text = String(q?.question_text || '').toLowerCase();
+    const objectEmoji = getFoundationEmojiSeed(q);
+    let container = '';
+    if (/giỏ/.test(text)) container = '🧺';
+    else if (/hộp/.test(text)) container = '📦';
+    else if (/phòng/.test(text)) container = '🏠';
+    else if (/bãi đỗ/.test(text)) container = '🅿️';
+    else if (/đĩa/.test(text)) container = '🍽️';
+    else if (/bể cá/.test(text)) container = '🫙';
+    else if (/cành/.test(text)) container = '🌿';
+    else if (/chậu|luống/.test(text)) container = '🪴';
+
+    return `
+        <div class="flex flex-col items-center justify-center gap-4">
+            <div class="text-[110px] md:text-[145px] lg:text-[170px] leading-none">${container || '∅'}</div>
+            <div class="flex items-center gap-4 md:gap-6">
+                <span class="text-[70px] md:text-[88px] font-black text-indigo-700 leading-none">0</span>
+                <span class="text-4xl md:text-5xl font-black text-slate-300">×</span>
+                <span class="text-[64px] md:text-[82px] leading-none opacity-45">${objectEmoji}</span>
+            </div>
+        </div>`;
+}
+
+function buildFoundationSceneVisual(q) {
+    const text = String(q?.question_text || '');
+    const lower = text.toLowerCase();
+    const lines = text.split(/\n/).map(x => x.trim()).filter(Boolean);
+
+    // Câu về số 0: minh họa đúng ngữ nghĩa, tuyệt đối không dùng emoji ngẫu nhiên.
+    if (/không có|trống|hết sạch|đã hết|không còn|rỗng|số 0|“không có”|"không có"/.test(lower) && !/giỏ a.*giỏ b/i.test(lower)) {
+        return buildFoundationEmptyScene(q);
     }
 
-    const intro = lines.slice(0, -1);
-    return `${intro.length ? `<span class="block text-sm md:text-base lg:text-lg font-black text-slate-800 whitespace-pre-line leading-relaxed mb-2">${escapeHtml(intro.join('\n'))}</span>` : ''}
-        <span class="block text-3xl md:text-4xl lg:text-5xl font-black text-indigo-700 tracking-wide leading-tight">${escapeHtml(last)}</span>`;
+    const groupLine = lines.find(line => /nhìn nhóm hình\s*:/i.test(line));
+    if (groupLine) {
+        const scene = groupLine.replace(/^.*?:\s*/, '').trim();
+        return `<div class="w-full flex items-center justify-center text-[78px] md:text-[105px] lg:text-[128px] leading-[1.25] break-words select-none">${escapeHtml(scene)}</div>`;
+    }
+
+    const emojiLines = lines.filter(line => /\p{Extended_Pictographic}/u.test(line));
+    if (emojiLines.length) {
+        return emojiLines.map(line => {
+            let scene = line;
+            const colon = line.indexOf(':');
+            if (colon >= 0 && colon < 28) scene = line.slice(colon + 1).trim();
+            const parts = scene.split(/\s+và\s+/i);
+            if (parts.length === 2) {
+                return `<div class="w-full flex items-center justify-center gap-4 md:gap-8 my-2">
+                    <div class="flex-1 text-center text-[60px] md:text-[78px] lg:text-[92px] leading-[1.22] break-words select-none">${escapeHtml(parts[0])}</div>
+                    <div class="text-2xl md:text-3xl font-black text-pink-500">và</div>
+                    <div class="flex-1 text-center text-[60px] md:text-[78px] lg:text-[92px] leading-[1.22] break-words select-none">${escapeHtml(parts[1])}</div>
+                </div>`;
+            }
+            return `<div class="w-full text-center text-[60px] md:text-[80px] lg:text-[96px] leading-[1.24] break-words select-none">${escapeHtml(scene)}</div>`;
+        }).join('');
+    }
+
+    // Hai giỏ / hai nhóm đặc biệt.
+    if (/giỏ a.*giỏ b/i.test(lower)) {
+        return `<div class="w-full flex items-end justify-center gap-10 md:gap-16">
+            <div class="text-center"><div class="text-2xl font-black text-slate-600 mb-2">A</div><div class="text-[110px] md:text-[145px]">🧺</div><div class="text-5xl font-black text-indigo-700">0</div></div>
+            <div class="text-center"><div class="text-2xl font-black text-slate-600 mb-2">B</div><div class="text-[110px] md:text-[145px]">🧺</div><div class="text-[70px] md:text-[88px]">🍎</div></div>
+        </div>`;
+    }
+
+    const comparison = text.match(/(?:chọn dấu thích hợp:\s*)?(\d+)\s*\?\s*(\d+)/i);
+    if (comparison) {
+        return `<div class="text-[82px] md:text-[105px] lg:text-[126px] font-black text-indigo-700 tracking-[0.06em]">${comparison[1]} <span class="text-pink-500">?</span> ${comparison[2]}</div>`;
+    }
+
+    const seq = text.match(/(?:điền số[^:]*:\s*)?([0-9?,\s]+)/i);
+    if (seq && /\d/.test(seq[1]) && (seq[1].includes(',') || seq[1].includes('?'))) {
+        return `<div class="px-4 text-[52px] md:text-[68px] lg:text-[82px] font-black text-indigo-700 leading-relaxed tracking-wide">${escapeHtml(seq[1].trim())}</div>`;
+    }
+
+    const quoted = text.match(/[“"]([^”"]+)[”"]/);
+    if (quoted) {
+        return `<div class="flex flex-col items-center gap-4"><div class="text-[95px] md:text-[120px]">👂</div><div class="text-[58px] md:text-[76px] lg:text-[90px] font-black text-indigo-700">${escapeHtml(quoted[1])}</div></div>`;
+    }
+
+    // Fallback có nghĩa: vật thể được suy ra từ từ khóa, không random theo ID.
+    const icon = getFoundationEmojiSeed(q);
+    const nums = text.match(/\b(?:10|[0-9])\b/g) || [];
+    return `<div class="flex flex-col items-center justify-center gap-4">
+        <div class="text-[120px] md:text-[155px] lg:text-[180px] leading-none">${icon}</div>
+        ${nums.length ? `<div class="text-[58px] md:text-[76px] font-black text-indigo-700">${escapeHtml(nums.slice(0, 3).join('   '))}</div>` : ''}
+    </div>`;
+}
+
+function getFoundationPrompt(q) {
+    const text = String(q?.question_text || '');
+    const lines = text.split(/\n/).map(x => x.trim()).filter(Boolean);
+    const expressionRe = /(?:\d+|\?)\s*[+−-]\s*(?:\d+|\?)\s*=\s*(?:\d+|\?)/;
+    const cleaned = [];
+    for (const line of lines) {
+        if (expressionRe.test(line)) continue;
+        if (/^\s*[\p{Extended_Pictographic}∅\s❌]+\s*$/u.test(line)) continue;
+        if (/^(ban đầu|bớt đi)\s*:/i.test(line)) continue;
+        if (/nhìn nhóm hình\s*:/i.test(line)) {
+            const after = line.replace(/^.*?:\s*/, '').replace(/\p{Extended_Pictographic}/gu, '').replace(/∅/g,'').trim();
+            if (after) cleaned.push(after);
+            continue;
+        }
+        if (/\p{Extended_Pictographic}/u.test(line)) {
+            const noEmoji = line.replace(/\p{Extended_Pictographic}/gu, '').replace(/[|]+/g, ' ').replace(/\s+/g, ' ').trim();
+            if (noEmoji && !/^(và|a:|b:)$/i.test(noEmoji)) cleaned.push(noEmoji);
+            continue;
+        }
+        cleaned.push(line);
+    }
+    let prompt = [...new Set(cleaned)].join(' ').replace(/\s+/g,' ').trim();
+    // Rút gọn vài câu nền tảng để bé tập trung vào hình.
+    prompt = prompt
+        .replace(/^gộp hai nhóm\.\s*/i, '')
+        .replace(/^nhìn hình rồi\s*/i, '')
+        .replace(/^bé hãy\s*/i, '')
+        .replace(/^hãy\s*/i, '');
+    return prompt || 'Con chọn đáp án đúng nhé!';
+}
+
+function buildFoundationQuestionLayout(q, speakerHtml) {
+    const text = String(q?.question_text || '');
+    const expressionMatch = text.match(/(?:\d+|\?)\s*[+−-]\s*(?:\d+|\?)\s*=\s*(?:\d+|\?)/);
+    const visual = expressionMatch ? buildFoundationEquationVisual(q, expressionMatch[0]) : buildFoundationSceneVisual(q);
+    const prompt = getFoundationPrompt(q);
+
+    let optionsHtml = '';
+    q.options.forEach((opt, idx) => {
+        const formattedOpt = capitalizeFirstLetter(opt);
+        const letter = String.fromCharCode(65 + idx);
+        optionsHtml += `
+            <button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${opt.replace(/'/g, "\\'")}')" class="option-btn w-full min-h-[72px] md:min-h-[84px] px-3 py-3 bg-pink-50/40 hover:bg-pink-100/70 border-2 border-pink-200 rounded-2xl font-extrabold text-gray-800 transition-all flex items-center justify-center text-center shadow-xs pastel-btn">
+                <span class="flex items-center justify-center gap-2 leading-tight"><strong class="text-pink-600 text-lg md:text-xl">${letter}.</strong><span class="opt-text text-2xl md:text-3xl lg:text-[34px]">${escapeHtml(formattedOpt)}</span></span>
+                <span class="option-icon text-pink-500 text-lg md:text-xl ml-1"></span>
+            </button>`;
+    });
+
+    return `
+        <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-[1.22fr_0.78fr] gap-4 md:gap-6 items-stretch py-1">
+            <div class="min-h-[300px] md:min-h-[360px] rounded-[28px] border-2 border-pink-100 bg-gradient-to-br from-amber-50 via-white to-sky-50 px-3 py-5 md:px-6 md:py-7 flex flex-col items-center justify-center overflow-hidden shadow-sm">
+                ${visual}
+            </div>
+            <div class="rounded-[28px] border border-pink-100 bg-white/95 px-3 py-4 md:px-5 md:py-5 flex flex-col justify-center shadow-sm">
+                <h3 class="text-lg md:text-xl lg:text-2xl font-black text-slate-900 leading-snug text-center mb-1">${escapeHtml(prompt)}</h3>
+                ${speakerHtml}
+                <div class="w-full grid grid-cols-2 gap-2.5 md:gap-3 mt-2">${optionsHtml}</div>
+            </div>
+        </div>`;
 }
 
 function loadQuestion() {
@@ -1368,7 +1975,7 @@ function loadQuestion() {
     if (!q) return;
 
     const isEvaluationMode = !!activeExamContext || !!activeRoadmapContext;
-    const isEarlyArithmetic = /^2\.(?:[1-9]|10)$/.test(String(q.sub_topic || ''));
+    const isFoundationPractice = !isEvaluationMode && /^[12]\./.test(String(q.sub_topic || ''));
 
     if (isEvaluationMode) {
         document.getElementById('q-badge-index').textContent = `CÂU ${currentQIndex + 1} / ${activeQuestionsList.length}`;
@@ -1421,7 +2028,9 @@ function loadQuestion() {
     const isLetterListen = q.render_style === 'letter_listen';
 
     let html;
-    if (isLetterListen) {
+    if (isFoundationPractice) {
+        html = buildFoundationQuestionLayout(q, practiceSpeakerBtnHtml);
+    } else if (isLetterListen) {
         html = `
             ${mediaHtml}
             <div class="w-full max-w-3xl border-2 border-dashed border-pink-200 bg-pink-50/40 rounded-3xl px-4 py-4 md:py-5 flex flex-col items-center text-center mb-3">
@@ -1453,8 +2062,8 @@ function loadQuestion() {
         ${mediaHtml}
         ${passageHtml}
         <div class="flex flex-col items-center justify-center max-w-3xl text-center px-2 mb-0.5">
-            <h3 class="${isEarlyArithmetic ? 'w-full' : 'text-sm md:text-base lg:text-lg'} font-black text-slate-900 leading-snug">
-                ${isEarlyArithmetic ? renderMathFoundationQuestion(q.question_text) : escapeHtml(q.question_text)}
+            <h3 class="text-sm md:text-base lg:text-lg font-black text-slate-900 leading-snug">
+                ${escapeHtml(q.question_text)}
             </h3>
             ${practiceSpeakerBtnHtml}
         </div>
@@ -1678,7 +2287,14 @@ function checkAnswer(selectedOpt) {
 
         playAudio('correct');
         confetti({ particleCount: 30, spread: 55, origin: { y: 0.7 } });
-        setTimeout(() => speakVietnamese(`${q.answer}`), 180);
+
+        // Riêng Mục 1-2: trả lời đúng thì tự chuyển câu để giữ nhịp học liên tục cho bé.
+        const isFoundationPractice = /^[12]\./.test(String(q.sub_topic || ''));
+        if (isFoundationPractice) {
+            setTimeout(() => nextQuestion(), 650);
+        } else {
+            setTimeout(() => speakVietnamese(`${q.answer}`), 180);
+        }
     } else {
         if (!wrongAttemptsByQ[currentQIndex]) wrongAttemptsByQ[currentQIndex] = [];
         if (!wrongAttemptsByQ[currentQIndex].includes(selectedOpt)) {
@@ -1714,7 +2330,7 @@ function nextQuestion() {
     const isEvaluationMode = !!activeExamContext || !!activeRoadmapContext;
 
     if (!isEvaluationMode && userAnswers[currentQIndex] === undefined) {
-        alert('Bé hãy tìm đáp án đúng để hoàn thành câu này nhé!');
+        showAppNotice('Bé hãy tìm đáp án đúng để hoàn thành câu này nhé!', { title: 'Cố lên bé!', icon: '🐰', tone: 'pink' });
         return;
     }
 
@@ -1727,7 +2343,7 @@ function nextQuestion() {
         } else {
             confetti({ particleCount: 75, spread: 75, origin: { y: 0.6 } });
             playAudio('win');
-            alert(`🎉 Chúc mừng bé đã hoàn thành trọn vẹn 1 vòng luyện tập (${activeQuestionsList.length} câu)!\nBây giờ cô giáo Thỏ Hồng sẽ xáo trộn ngẫu nhiên để con bước vào vòng luyện tập tiếp theo nhé!`);
+            showAppNotice(`🎉 Chúc mừng bé đã hoàn thành trọn vẹn 1 vòng luyện tập (${activeQuestionsList.length} câu)!\nBây giờ Cô Thỏ Hồng sẽ xáo trộn để con bước vào vòng luyện tập tiếp theo nhé!`, { title: 'Hoàn thành vòng luyện tập', icon: '🎉', tone: 'emerald' });
 
             const basePool = practiceCycleRawPool.length ? practiceCycleRawPool : activeQuestionsList;
             activeQuestionsList = shuffleArray([...basePool]);
@@ -1739,12 +2355,13 @@ function nextQuestion() {
     }
 }
 
-function triggerSubmitQuizPrompt() {
+async function triggerSubmitQuizPrompt() {
     const answeredCount = Object.keys(userAnswers).length;
     const total = activeQuestionsList.length;
-    if (confirm(`Bé đã làm ${answeredCount}/${total} câu. Bé có chắc chắn muốn nộp bài thi ngay không?`)) {
-        showResultScreen();
-    }
+    const ok = await showAppConfirm(`Bé đã làm ${answeredCount}/${total} câu. Bé có chắc chắn muốn nộp bài thi ngay không?`, {
+        title: 'Nộp bài thi', icon: '✅', okText: 'Nộp bài', cancelText: 'Làm tiếp', tone: 'purple'
+    });
+    if (ok) showResultScreen();
 }
 
 function showResultScreen() {
@@ -1790,7 +2407,7 @@ function showResultScreen() {
     const totalQ = activeQuestionsList.length;
     const percent = Math.round((correctCount / totalQ) * 100);
 
-    // Tiến trình tuần: điểm tính riêng theo công thức 10/tổng số câu (không dùng điểm từng câu để tránh lệch)
+    // Bài tập theo SGK: điểm tính riêng theo công thức 10/tổng số câu
     const displayScore = activeRoadmapContext
         ? Math.round((correctCount * 10 / totalQ) * 10) / 10
         : score;
@@ -1807,7 +2424,7 @@ function showResultScreen() {
 
     const nextActionLabel = document.getElementById('report-next-action-label');
     if (nextActionLabel) {
-        nextActionLabel.textContent = activeRoadmapContext ? '🔙 Quay lại tiến trình tuần' : '🚀 Làm đề thi tiếp theo';
+        nextActionLabel.textContent = activeRoadmapContext ? '🔙 Quay lại Bài tập' : '🚀 Làm đề thi tiếp theo';
     }
 
     const historyBtn = document.getElementById('report-history-btn');
@@ -2019,10 +2636,14 @@ async function saveWeeklyProgressToSheet(percent, starCount, scoreVal) {
     try {
         await callAppsScript('saveWeeklyProgress', payload);
         if (percent >= 80) {
-            const nextWeek = week + 1;
-            if (nextWeek > (Number(currentUser.tuanHienTai) || 1) && nextWeek <= TOTAL_ROADMAP_WEEKS) {
-                currentUser.tuanHienTai = nextWeek;
-                setTimeout(() => alert(`🎉 Chúc mừng bé đạt ${percent}% điểm! Tuần ${nextWeek} đã được mở khóa trên bản đồ!`), 500);
+            const data = await loadBaiHocData();
+            const seq = data?.learning_sequence || [];
+            const nextIndex = Number(week) + 1;
+            const currentUnlocked = getCurrentExerciseIndex_();
+            if (nextIndex > currentUnlocked && nextIndex <= seq.length) {
+                setCurrentExerciseIndex_(nextIndex);
+                const nextBai = seq[nextIndex - 1];
+                setTimeout(() => showAppNotice(`🎉 Chúc mừng bé đạt ${percent}%! Bài tập ${nextBai} đã được mở khóa.`, { title: 'Mở khóa bài mới', icon: '🌟', tone: 'emerald' }), 350);
             }
         }
     } catch (e) {}
@@ -2030,7 +2651,7 @@ async function saveWeeklyProgressToSheet(percent, starCount, scoreVal) {
 
 async function openHistoryModal(sheetName = 'LichSuTienTrinhTuan') {
     if (!currentUser || currentUser.isGuest) {
-        return alert('Bé vui lòng đăng nhập để xem lịch sử tiến trình nhé!');
+        showAppNotice('Bé vui lòng đăng nhập để xem lịch sử Bài tập nhé!', { title: 'Cần đăng nhập', icon: '🔐', tone: 'purple' }); return;
     }
 
     const modal = document.getElementById('modal-history-progress');
@@ -2043,7 +2664,7 @@ async function openHistoryModal(sheetName = 'LichSuTienTrinhTuan') {
     document.getElementById('hist-report-date').textContent = new Date().toLocaleDateString('vi-VN');
 
     const titleMap = {
-        LichSuTienTrinhTuan: "Báo cáo tiến trình 24 tuần học tập",
+        LichSuTienTrinhTuan: "Báo cáo tiến trình Bài tập theo SGK",
         LichSuBaiThi_HK1: "Báo cáo kết quả đấu trường — Học kỳ 1",
         LichSuBaiThi_HK2: "Báo cáo kết quả đấu trường — Học kỳ 2",
         LichSuBaiThi_HSG: "Báo cáo kết quả đấu trường — Học sinh giỏi"
@@ -2058,7 +2679,7 @@ async function openHistoryModal(sheetName = 'LichSuTienTrinhTuan') {
         renderHistoryReport(rows, sheetName);
     } catch (err) {
         hideLoadingOverlay();
-        alert('Không thể tải lịch sử: ' + err.message);
+        showAppNotice('Không thể tải lịch sử: ' + err.message, { title: 'Lịch sử học tập', icon: '📊', tone: 'rose' });
     }
 }
 
@@ -2096,7 +2717,7 @@ function renderHistoryReport(rows, sheetName) {
     const isWeekly = sheetName === 'LichSuTienTrinhTuan';
     const labels = rows.map((r, i) => {
         const dm = formatDateShort(r.Timestamp || r.ngayLam);
-        const label = isWeekly ? `Tuần ${r.tuan || i + 1}` : (r.deSo ? `Đề ${r.deSo}` : `Tuần ${r.tuan || i + 1}`);
+        const label = isWeekly ? (r.chuDe || r.chude || `Bài tập ${r.tuan || i + 1}`) : (r.deSo ? `Đề ${r.deSo}` : `Bài tập ${r.tuan || i + 1}`);
         return dm ? `${dm} ${label}` : label;
     });
     const scores = rows.map(r => Number(r.score || r.tongDiem || ((r.soCauDung / (r.tongCauHoi || 30)) * 10).toFixed(1)));
@@ -2152,7 +2773,7 @@ function renderHistoryReport(rows, sheetName) {
     const touchedSkills = [];
 
     if (rows.length && isWeekly) {
-        // Tiến trình tuần: % = tổng số câu đúng / tổng số câu đã làm THẬT của nhóm kỹ năng đó
+        // Bài tập: % = tổng số câu đúng / tổng số câu đã làm THẬT của nhóm kỹ năng đó
         skillKeys.forEach((k) => {
             let sumCorrect = 0, sumTotal = 0;
             rows.forEach(r => {
@@ -2283,7 +2904,7 @@ function renderPedagogicalEvaluation(rows, skillAverages, touchedSkills) {
     } else if (sortedValid.length === 1) {
         const only1 = sortedValid[0];
         strengthHtml = `Con đạt ${skillAverages[only1]}% ở nhóm <strong>${escapeHtml(SKILL_TAXONOMY[only1].name)}</strong> — mảng duy nhất bé đã luyện tập tới thời điểm này.`;
-        weaknessHtml = `Bé mới luyện tập 1 nhóm kỹ năng, cô chưa đủ dữ liệu để đánh giá toàn diện. Ba mẹ khuyến khích con hoàn thành thêm các tuần khác nhé!`;
+        weaknessHtml = `Bé mới luyện tập 1 nhóm kỹ năng, cô chưa đủ dữ liệu để đánh giá toàn diện. Ba mẹ khuyến khích con hoàn thành thêm các Bài tập khác nhé!`;
     } else {
         strengthHtml = `Bé chưa có đủ dữ liệu luyện tập để đánh giá thế mạnh.`;
         weaknessHtml = `Bé chưa có đủ dữ liệu luyện tập để đánh giá điểm cần khắc phục.`;
@@ -2379,7 +3000,7 @@ function renderHistoryTable(rows, sheetName) {
             bodyRows += `
                 <tr class="hover:bg-pink-50/30 transition-colors">
                     <td class="py-2.5 px-2">${idx + 1}</td>
-                    <td class="py-2.5 px-2 font-black">Tuần ${r.tuan || (idx + 1)}</td>
+                    <td class="py-2.5 px-2 font-black">${escapeHtml(r.chuDe || r.chude || `Bài tập ${r.tuan || (idx + 1)}`)}</td>
                     <td class="py-2.5 px-2 font-black text-rose-600">${itemDiem}</td>
                     ${skillCells}
                     <td class="py-2.5 px-2 text-gray-500">${dateStr}</td>
@@ -2406,7 +3027,7 @@ function renderHistoryTable(rows, sheetName) {
             bodyRows += `
                 <tr class="hover:bg-pink-50/30 transition-colors">
                     <td class="py-2.5 px-2">${idx + 1}</td>
-                    <td class="py-2.5 px-2 font-black">${r.deSo ? `Đề ${r.deSo}` : `Tuần ${r.tuan || (idx + 1)}`}</td>
+                    <td class="py-2.5 px-2 font-black">${r.deSo ? `Đề ${r.deSo}` : `Bài tập ${r.tuan || (idx + 1)}`}</td>
                     <td class="py-2.5 px-2 font-black text-rose-600">${itemDiem}</td>
                     ${examSkillCells}
                     <td class="py-2.5 px-2 text-gray-500">${dateStr}</td>
