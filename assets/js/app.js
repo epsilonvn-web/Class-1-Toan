@@ -267,7 +267,7 @@ const TOPICS_DATA_FILES = [
     'assets/data/kho_hoc_toan_1_part2.json'
 ];
 
-// Kho học liệu Toán 2 là MẢNG PHẲNG câu hỏi (mỗi câu tự mang "sub": "X.Y" và "tag": "TOAN_Cx"),
+// Kho học liệu Toán 1 là MẢNG PHẲNG câu hỏi (mỗi câu tự mang "sub": "X.Y" và "tag": "TOAN_Cx"),
 // không bọc sẵn theo từng Mục lớn như bản gốc — nên cần tự gom nhóm theo số Mục (phần trước dấu chấm của "sub").
 async function fetchAllQuestionsFlat() {
     if (allQuestionsFlatCache) return allQuestionsFlatCache;
@@ -367,7 +367,7 @@ async function renderDashboardGrid() {
 
 async function startRandomExam(categoryKey) {
     stopSpeaking();
-    // Dữ liệu đề thi Toán 2 không có field "exam_category" dạng chữ — phân loại HK1/HK2/HSG
+    // Dữ liệu đề thi Toán 1 phân loại HK1/HK2/HSG theo tiền tố exam_id
     // dựa đúng theo TIỀN TỐ của "exam_id" (12.1.x = HK1, 12.2.x = HK2, 12.3.x = HSG),
     // khớp với ma trận exam_id đã chuẩn hoá trong file dữ liệu.
     const idPrefix = examFileMap[categoryKey]?.idPrefix || '';
@@ -1940,22 +1940,37 @@ function buildFoundationQuestionLayout(q, speakerHtml) {
     const expressionMatch = text.match(/(?:\d+|\?)\s*[+−-]\s*(?:\d+|\?)\s*=\s*(?:\d+|\?)/);
     const visual = expressionMatch ? buildFoundationEquationVisual(q, expressionMatch[0]) : buildFoundationSceneVisual(q);
     const prompt = getFoundationPrompt(q);
+    // Mục 1 chủ yếu là nhận biết/đếm số 0-10: thu gọn để hình, câu hỏi và đáp án
+    // cùng nằm cân đối trên màn hình laptop; không ảnh hưởng Foundation UI của Mục 2.
+    const isMuc1Compact = /^1\./.test(String(q?.sub_topic || ''));
+    const visualWrapClass = isMuc1Compact
+        ? 'w-full flex items-center justify-center origin-center scale-[0.72] md:scale-[0.76] lg:scale-[0.80]'
+        : 'w-full flex items-center justify-center';
+    const visualPanelClass = isMuc1Compact
+        ? 'min-h-[220px] md:min-h-[260px]'
+        : 'min-h-[300px] md:min-h-[360px]';
+    const optionSizeClass = isMuc1Compact
+        ? 'min-h-[58px] md:min-h-[64px] py-2'
+        : 'min-h-[72px] md:min-h-[84px] py-3';
+    const optionTextClass = isMuc1Compact
+        ? 'text-xl md:text-2xl lg:text-[26px]'
+        : 'text-2xl md:text-3xl lg:text-[34px]';
 
     let optionsHtml = '';
     q.options.forEach((opt, idx) => {
         const formattedOpt = capitalizeFirstLetter(opt);
         const letter = String.fromCharCode(65 + idx);
         optionsHtml += `
-            <button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${opt.replace(/'/g, "\\'")}')" class="option-btn w-full min-h-[72px] md:min-h-[84px] px-3 py-3 bg-pink-50/40 hover:bg-pink-100/70 border-2 border-pink-200 rounded-2xl font-extrabold text-gray-800 transition-all flex items-center justify-center text-center shadow-xs pastel-btn">
-                <span class="flex items-center justify-center gap-2 leading-tight"><strong class="text-pink-600 text-lg md:text-xl">${letter}.</strong><span class="opt-text text-2xl md:text-3xl lg:text-[34px]">${escapeHtml(formattedOpt)}</span></span>
+            <button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${opt.replace(/'/g, "\\'")}')" class="option-btn w-full ${optionSizeClass} px-3 bg-pink-50/40 hover:bg-pink-100/70 border-2 border-pink-200 rounded-2xl font-extrabold text-gray-800 transition-all flex items-center justify-center text-center shadow-xs pastel-btn">
+                <span class="flex items-center justify-center gap-2 leading-tight"><strong class="text-pink-600 text-lg md:text-xl">${letter}.</strong><span class="opt-text ${optionTextClass}">${escapeHtml(formattedOpt)}</span></span>
                 <span class="option-icon text-pink-500 text-lg md:text-xl ml-1"></span>
             </button>`;
     });
 
     return `
         <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-[1.22fr_0.78fr] gap-4 md:gap-6 items-stretch py-1">
-            <div class="min-h-[300px] md:min-h-[360px] rounded-[28px] border-2 border-pink-100 bg-gradient-to-br from-amber-50 via-white to-sky-50 px-3 py-5 md:px-6 md:py-7 flex flex-col items-center justify-center overflow-hidden shadow-sm">
-                ${visual}
+            <div class="${visualPanelClass} rounded-[28px] border-2 border-pink-100 bg-gradient-to-br from-amber-50 via-white to-sky-50 px-3 py-5 md:px-6 md:py-7 flex flex-col items-center justify-center overflow-hidden shadow-sm">
+                <div class="${visualWrapClass}">${visual}</div>
             </div>
             <div class="rounded-[28px] border border-pink-100 bg-white/95 px-3 py-4 md:px-5 md:py-5 flex flex-col justify-center shadow-sm">
                 <h3 class="text-lg md:text-xl lg:text-2xl font-black text-slate-900 leading-snug text-center mb-1">${escapeHtml(prompt)}</h3>
