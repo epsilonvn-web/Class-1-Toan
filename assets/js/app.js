@@ -1857,6 +1857,17 @@ function buildFoundationSceneVisual(q) {
             let scene = line;
             const colon = line.indexOf(':');
             if (colon >= 0 && colon < 28) scene = line.slice(colon + 1).trim();
+
+            const hasQuestionWords = /(có bao nhiêu|chọn số|đếm|quan sát|con hãy|hãy|tất cả|biểu diễn đúng)/i.test(line);
+            const emojisOnly = (scene.match(/\p{Extended_Pictographic}/gu) || []).join(' ');
+            const nonEmojiText = scene.replace(/\p{Extended_Pictographic}/gu, '').replace(/[\s?.,:;!"'“”‘’()+\-]/g, '').trim();
+
+            // Dòng câu hỏi có lẫn emoji chỉ thuộc prompt bên phải, không đưa vào khung trực quan.
+            if (hasQuestionWords && nonEmojiText.length > 6 && colon < 0) return '';
+
+            // Nếu một dòng vừa có chữ mô tả vừa có emoji, ưu tiên chỉ giữ hình để tránh chữ bị phóng lớn.
+            if (emojisOnly && nonEmojiText.length > 0) scene = emojisOnly;
+
             const parts = scene.split(/\s+và\s+/i);
             if (parts.length === 2) {
                 return `<div class="w-full flex items-center justify-center gap-4 md:gap-8 my-2">
@@ -1866,7 +1877,7 @@ function buildFoundationSceneVisual(q) {
                 </div>`;
             }
             return `<div class="w-full text-center text-[60px] md:text-[80px] lg:text-[96px] leading-[1.24] break-words select-none">${escapeHtml(scene)}</div>`;
-        }).join('');
+        }).filter(Boolean).join('');
     }
 
     // Hai giỏ / hai nhóm đặc biệt.
@@ -1944,16 +1955,16 @@ function buildFoundationQuestionLayout(q, speakerHtml) {
     // cùng nằm cân đối trên màn hình laptop; không ảnh hưởng Foundation UI của Mục 2.
     const isMuc1Compact = /^1\./.test(String(q?.sub_topic || ''));
     const visualWrapClass = isMuc1Compact
-        ? 'w-full flex items-center justify-center origin-center scale-[0.72] md:scale-[0.76] lg:scale-[0.80]'
+        ? 'w-full flex items-center justify-center origin-center scale-[0.58] md:scale-[0.62] lg:scale-[0.68]'
         : 'w-full flex items-center justify-center';
     const visualPanelClass = isMuc1Compact
-        ? 'min-h-[220px] md:min-h-[260px]'
+        ? 'min-h-[180px] md:min-h-[210px]'
         : 'min-h-[300px] md:min-h-[360px]';
     const optionSizeClass = isMuc1Compact
-        ? 'min-h-[58px] md:min-h-[64px] py-2'
+        ? 'min-h-[50px] md:min-h-[56px] py-1.5'
         : 'min-h-[72px] md:min-h-[84px] py-3';
     const optionTextClass = isMuc1Compact
-        ? 'text-xl md:text-2xl lg:text-[26px]'
+        ? 'text-lg md:text-xl lg:text-[22px]'
         : 'text-2xl md:text-3xl lg:text-[34px]';
 
     let optionsHtml = '';
@@ -1968,12 +1979,12 @@ function buildFoundationQuestionLayout(q, speakerHtml) {
     });
 
     return `
-        <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-[1.22fr_0.78fr] gap-4 md:gap-6 items-stretch py-1">
+        <div class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-4 md:gap-5 items-stretch py-1">
             <div class="${visualPanelClass} rounded-[28px] border-2 border-pink-100 bg-gradient-to-br from-amber-50 via-white to-sky-50 px-3 py-5 md:px-6 md:py-7 flex flex-col items-center justify-center overflow-hidden shadow-sm">
                 <div class="${visualWrapClass}">${visual}</div>
             </div>
             <div class="rounded-[28px] border border-pink-100 bg-white/95 px-3 py-4 md:px-5 md:py-5 flex flex-col justify-center shadow-sm">
-                <h3 class="text-lg md:text-xl lg:text-2xl font-black text-slate-900 leading-snug text-center mb-1">${escapeHtml(prompt)}</h3>
+                <h3 class="text-base md:text-lg lg:text-xl font-black text-slate-900 leading-snug text-center mb-1">${escapeHtml(prompt)}</h3>
                 ${speakerHtml}
                 <div class="w-full grid grid-cols-2 gap-2.5 md:gap-3 mt-2">${optionsHtml}</div>
             </div>
