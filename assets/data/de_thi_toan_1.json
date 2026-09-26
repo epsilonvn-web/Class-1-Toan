@@ -83,7 +83,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 1] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 1] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -92,7 +92,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -119,7 +119,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 1] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương màu xanh?",
+          "question_text": "[Đề 1] Bé hãy đếm các khối lập phương sau: 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "2",
             "4",
@@ -128,7 +128,7 @@
           ],
           "answer": "2",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương màu xanh để tìm ra đáp số 2 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 2 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -196,9 +196,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 1 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "7 ngôi sao",
-            "6ngôi sao",
-            "8ngôi sao",
-            "9ngôi sao"
+            "6 ngôi sao",
+            "8 ngôi sao",
+            "9 ngôi sao"
           ],
           "answer": "7 ngôi sao",
           "image_url": "",
@@ -292,7 +292,7 @@
         },
         {
           "question_id": 3,
-          "question_text": "Bé hãy đếm thật cẩn thận các hình dưới đây: 🟦 🟦 🟦. Có tất cả bao nhiêu hình vuông màu đỏ?",
+          "question_text": "Bé hãy đếm thật cẩn thận các hình dưới đây: 🟦 🟦 🟦. Có tất cả bao nhiêu hình vuông màu xanh dương?",
           "options": [
             "8",
             "0",
@@ -301,7 +301,7 @@
           ],
           "answer": "3",
           "image_url": "",
-          "hint": "Bé hãy đếm lần lượt từ trái sang phải. Có tất cả 3 hình vuông màu đỏ.",
+          "hint": "Bé hãy đếm lần lượt từ trái sang phải. Có tất cả 3 hình vuông màu xanh dương.",
           "tag": "TOAN_C1",
           "diem": 0.5,
           "sub_code": "4.1",
@@ -328,7 +328,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 2] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 2] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -337,7 +337,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -364,7 +364,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 2] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật màu đỏ?",
+          "question_text": "[Đề 2] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "6",
             "3",
@@ -373,7 +373,7 @@
           ],
           "answer": "3",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật màu đỏ để tìm ra đáp số 3 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 3 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -441,9 +441,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 2 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "9 ngôi sao",
-            "8ngôi sao",
-            "10ngôi sao",
-            "11ngôi sao"
+            "8 ngôi sao",
+            "10 ngôi sao",
+            "11 ngôi sao"
           ],
           "answer": "9 ngôi sao",
           "image_url": "",
@@ -573,7 +573,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 3] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 3] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -582,7 +582,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -609,7 +609,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 3] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương nhỏ?",
+          "question_text": "[Đề 3] Bé hãy đếm các khối lập phương sau: 🧊 🧊 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "2",
             "4",
@@ -618,7 +618,7 @@
           ],
           "answer": "4",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương nhỏ để tìm ra đáp số 4 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 4 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -686,9 +686,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 3 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "11 ngôi sao",
-            "10ngôi sao",
-            "12ngôi sao",
-            "13ngôi sao"
+            "10 ngôi sao",
+            "12 ngôi sao",
+            "13 ngôi sao"
           ],
           "answer": "11 ngôi sao",
           "image_url": "",
@@ -818,7 +818,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 4] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 4] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -827,7 +827,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -854,7 +854,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 4] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật to?",
+          "question_text": "[Đề 4] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "7",
             "3",
@@ -863,7 +863,7 @@
           ],
           "answer": "2",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật to để tìm ra đáp số 2 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 2 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -931,9 +931,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 4 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "10 ngôi sao",
-            "9ngôi sao",
-            "11ngôi sao",
-            "12ngôi sao"
+            "9 ngôi sao",
+            "11 ngôi sao",
+            "12 ngôi sao"
           ],
           "answer": "10 ngôi sao",
           "image_url": "",
@@ -1063,7 +1063,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 5] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 5] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -1072,7 +1072,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -1099,7 +1099,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 5] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương màu xanh?",
+          "question_text": "[Đề 5] Bé hãy đếm các khối lập phương sau: 🧊 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "1",
             "4",
@@ -1108,7 +1108,7 @@
           ],
           "answer": "3",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương màu xanh để tìm ra đáp số 3 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 3 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -1175,10 +1175,10 @@
           "passage_text": "Buổi sáng, Cô giáo Thỏ Hồng tặng cho cả lớp 9 ngôi sao học tập tốt. Buổi chiều, Cô giáo Thỏ Hồng tặng thêm 3 ngôi sao chuyên cần nữa.",
           "question_text": "Hỏi cả ngày lớp học của đề 5 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
-            "11ngôi sao",
+            "11 ngôi sao",
             "12 ngôi sao",
-            "13ngôi sao",
-            "14ngôi sao"
+            "13 ngôi sao",
+            "14 ngôi sao"
           ],
           "answer": "12 ngôi sao",
           "image_url": "",
@@ -1308,7 +1308,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 6] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 6] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -1317,7 +1317,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -1344,7 +1344,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 6] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật màu đỏ?",
+          "question_text": "[Đề 6] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "3",
             "4",
@@ -1353,7 +1353,7 @@
           ],
           "answer": "4",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật màu đỏ để tìm ra đáp số 4 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 4 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -1421,9 +1421,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 6 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "9 ngôi sao",
-            "8ngôi sao",
-            "10ngôi sao",
-            "11ngôi sao"
+            "8 ngôi sao",
+            "10 ngôi sao",
+            "11 ngôi sao"
           ],
           "answer": "9 ngôi sao",
           "image_url": "",
@@ -1553,7 +1553,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 7] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 7] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -1562,7 +1562,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -1589,7 +1589,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 7] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương nhỏ?",
+          "question_text": "[Đề 7] Bé hãy đếm các khối lập phương sau: 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "1",
             "3",
@@ -1598,7 +1598,7 @@
           ],
           "answer": "2",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương nhỏ để tìm ra đáp số 2 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 2 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -1666,9 +1666,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 7 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "8 ngôi sao",
-            "7ngôi sao",
-            "9ngôi sao",
-            "10ngôi sao"
+            "7 ngôi sao",
+            "9 ngôi sao",
+            "10 ngôi sao"
           ],
           "answer": "8 ngôi sao",
           "image_url": "",
@@ -1762,7 +1762,7 @@
         },
         {
           "question_id": 3,
-          "question_text": "Bé hãy đếm thật cẩn thận các hình dưới đây: 🟦 🟦 🟦 🟦 🟦. Có tất cả bao nhiêu hình vuông màu đỏ?",
+          "question_text": "Bé hãy đếm thật cẩn thận các hình dưới đây: 🟦 🟦 🟦 🟦 🟦. Có tất cả bao nhiêu hình vuông màu xanh dương?",
           "options": [
             "5",
             "6",
@@ -1771,7 +1771,7 @@
           ],
           "answer": "5",
           "image_url": "",
-          "hint": "Bé hãy đếm lần lượt từ trái sang phải. Có tất cả 5 hình vuông màu đỏ.",
+          "hint": "Bé hãy đếm lần lượt từ trái sang phải. Có tất cả 5 hình vuông màu xanh dương.",
           "tag": "TOAN_C1",
           "diem": 0.5,
           "sub_code": "4.1",
@@ -1798,7 +1798,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 8] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 8] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -1807,7 +1807,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -1834,7 +1834,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 8] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật to?",
+          "question_text": "[Đề 8] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "3",
             "13",
@@ -1843,7 +1843,7 @@
           ],
           "answer": "3",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật to để tìm ra đáp số 3 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 3 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -1910,10 +1910,10 @@
           "passage_text": "Buổi sáng, Cô giáo Thỏ Hồng tặng cho cả lớp 7 ngôi sao học tập tốt. Buổi chiều, Cô giáo Thỏ Hồng tặng thêm 3 ngôi sao chuyên cần nữa.",
           "question_text": "Hỏi cả ngày lớp học của đề 8 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
-            "9ngôi sao",
+            "9 ngôi sao",
             "10 ngôi sao",
-            "11ngôi sao",
-            "12ngôi sao"
+            "11 ngôi sao",
+            "12 ngôi sao"
           ],
           "answer": "10 ngôi sao",
           "image_url": "",
@@ -2043,7 +2043,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 9] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 9] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -2052,7 +2052,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -2079,7 +2079,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 9] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương màu xanh?",
+          "question_text": "[Đề 9] Bé hãy đếm các khối lập phương sau: 🧊 🧊 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "4",
             "14",
@@ -2088,7 +2088,7 @@
           ],
           "answer": "4",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương màu xanh để tìm ra đáp số 4 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 4 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -2156,9 +2156,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 9 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "12 ngôi sao",
-            "11ngôi sao",
-            "13ngôi sao",
-            "14ngôi sao"
+            "11 ngôi sao",
+            "13 ngôi sao",
+            "14 ngôi sao"
           ],
           "answer": "12 ngôi sao",
           "image_url": "",
@@ -2288,7 +2288,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 10] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 10] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -2297,7 +2297,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -2324,7 +2324,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 10] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật màu đỏ?",
+          "question_text": "[Đề 10] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "2",
             "7",
@@ -2333,7 +2333,7 @@
           ],
           "answer": "2",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật màu đỏ để tìm ra đáp số 2 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 2 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -2400,10 +2400,10 @@
           "passage_text": "Buổi sáng, Cô giáo Thỏ Hồng tặng cho cả lớp 9 ngôi sao học tập tốt. Buổi chiều, Cô giáo Thỏ Hồng tặng thêm 2 ngôi sao chuyên cần nữa.",
           "question_text": "Hỏi cả ngày lớp học của đề 10 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
-            "10ngôi sao",
+            "10 ngôi sao",
             "11 ngôi sao",
-            "12ngôi sao",
-            "13ngôi sao"
+            "12 ngôi sao",
+            "13 ngôi sao"
           ],
           "answer": "11 ngôi sao",
           "image_url": "",
@@ -2533,7 +2533,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 11] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 11] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -2542,7 +2542,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -2569,7 +2569,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 11] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương nhỏ?",
+          "question_text": "[Đề 11] Bé hãy đếm các khối lập phương sau: 🧊 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "13",
             "2",
@@ -2578,7 +2578,7 @@
           ],
           "answer": "3",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương nhỏ để tìm ra đáp số 3 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 3 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -2645,10 +2645,10 @@
           "passage_text": "Buổi sáng, Cô giáo Thỏ Hồng tặng cho cả lớp 5 ngôi sao học tập tốt. Buổi chiều, Cô giáo Thỏ Hồng tặng thêm 3 ngôi sao chuyên cần nữa.",
           "question_text": "Hỏi cả ngày lớp học của đề 11 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
-            "7ngôi sao",
+            "7 ngôi sao",
             "8 ngôi sao",
-            "9ngôi sao",
-            "10ngôi sao"
+            "9 ngôi sao",
+            "10 ngôi sao"
           ],
           "answer": "8 ngôi sao",
           "image_url": "",
@@ -2778,7 +2778,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 12] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 12] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -2787,7 +2787,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -2814,7 +2814,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 12] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật to?",
+          "question_text": "[Đề 12] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "6",
             "3",
@@ -2823,7 +2823,7 @@
           ],
           "answer": "4",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật to để tìm ra đáp số 4 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 4 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -2891,9 +2891,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 12 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "10 ngôi sao",
-            "9ngôi sao",
-            "11ngôi sao",
-            "12ngôi sao"
+            "9 ngôi sao",
+            "11 ngôi sao",
+            "12 ngôi sao"
           ],
           "answer": "10 ngôi sao",
           "image_url": "",
@@ -3023,7 +3023,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 13] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 13] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -3032,7 +3032,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -3059,7 +3059,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 13] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương màu xanh?",
+          "question_text": "[Đề 13] Bé hãy đếm các khối lập phương sau: 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "7",
             "0",
@@ -3068,7 +3068,7 @@
           ],
           "answer": "2",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương màu xanh để tìm ra đáp số 2 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 2 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -3136,9 +3136,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 13 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "9 ngôi sao",
-            "8ngôi sao",
-            "10ngôi sao",
-            "11ngôi sao"
+            "8 ngôi sao",
+            "10 ngôi sao",
+            "11 ngôi sao"
           ],
           "answer": "9 ngôi sao",
           "image_url": "",
@@ -3232,7 +3232,7 @@
         },
         {
           "question_id": 3,
-          "question_text": "Bé hãy đếm thật cẩn thận các hình dưới đây: 🟦 🟦 🟦. Có tất cả bao nhiêu hình vuông màu đỏ?",
+          "question_text": "Bé hãy đếm thật cẩn thận các hình dưới đây: 🟦 🟦 🟦. Có tất cả bao nhiêu hình vuông màu xanh dương?",
           "options": [
             "0",
             "8",
@@ -3241,7 +3241,7 @@
           ],
           "answer": "3",
           "image_url": "",
-          "hint": "Bé hãy đếm lần lượt từ trái sang phải. Có tất cả 3 hình vuông màu đỏ.",
+          "hint": "Bé hãy đếm lần lượt từ trái sang phải. Có tất cả 3 hình vuông màu xanh dương.",
           "tag": "TOAN_C1",
           "diem": 0.5,
           "sub_code": "4.1",
@@ -3268,7 +3268,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 14] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 14] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -3277,7 +3277,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -3304,7 +3304,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 14] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật màu đỏ?",
+          "question_text": "[Đề 14] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "5",
             "2",
@@ -3313,7 +3313,7 @@
           ],
           "answer": "3",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật màu đỏ để tìm ra đáp số 3 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 3 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -3381,9 +3381,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 14 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "11 ngôi sao",
-            "10ngôi sao",
-            "12ngôi sao",
-            "13ngôi sao"
+            "10 ngôi sao",
+            "12 ngôi sao",
+            "13 ngôi sao"
           ],
           "answer": "11 ngôi sao",
           "image_url": "",
@@ -3513,7 +3513,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 15] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 15] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -3522,7 +3522,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -3549,7 +3549,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 15] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương nhỏ?",
+          "question_text": "[Đề 15] Bé hãy đếm các khối lập phương sau: 🧊 🧊 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "4",
             "5",
@@ -3558,7 +3558,7 @@
           ],
           "answer": "4",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương nhỏ để tìm ra đáp số 4 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 4 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -3626,9 +3626,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 15 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "13 ngôi sao",
-            "12ngôi sao",
-            "14ngôi sao",
-            "15ngôi sao"
+            "12 ngôi sao",
+            "14 ngôi sao",
+            "15 ngôi sao"
           ],
           "answer": "13 ngôi sao",
           "image_url": "",
@@ -3758,7 +3758,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 16] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 16] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -3767,7 +3767,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -3794,7 +3794,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 16] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật to?",
+          "question_text": "[Đề 16] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "1",
             "2",
@@ -3803,7 +3803,7 @@
           ],
           "answer": "2",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật to để tìm ra đáp số 2 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 2 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -3871,9 +3871,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 16 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "7 ngôi sao",
-            "6ngôi sao",
-            "8ngôi sao",
-            "9ngôi sao"
+            "6 ngôi sao",
+            "8 ngôi sao",
+            "9 ngôi sao"
           ],
           "answer": "7 ngôi sao",
           "image_url": "",
@@ -4003,7 +4003,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 17] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 17] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -4012,7 +4012,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -4039,7 +4039,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 17] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương màu xanh?",
+          "question_text": "[Đề 17] Bé hãy đếm các khối lập phương sau: 🧊 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "6",
             "0",
@@ -4048,7 +4048,7 @@
           ],
           "answer": "3",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương màu xanh để tìm ra đáp số 3 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 3 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -4115,10 +4115,10 @@
           "passage_text": "Buổi sáng, Cô giáo Thỏ Hồng tặng cho cả lớp 6 ngôi sao học tập tốt. Buổi chiều, Cô giáo Thỏ Hồng tặng thêm 3 ngôi sao chuyên cần nữa.",
           "question_text": "Hỏi cả ngày lớp học của đề 17 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
-            "8ngôi sao",
+            "8 ngôi sao",
             "9 ngôi sao",
-            "10ngôi sao",
-            "11ngôi sao"
+            "10 ngôi sao",
+            "11 ngôi sao"
           ],
           "answer": "9 ngôi sao",
           "image_url": "",
@@ -4248,7 +4248,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 18] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 18] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -4257,7 +4257,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -4284,7 +4284,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 18] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật màu đỏ?",
+          "question_text": "[Đề 18] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "7",
             "4",
@@ -4293,7 +4293,7 @@
           ],
           "answer": "4",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật màu đỏ để tìm ra đáp số 4 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 4 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -4361,9 +4361,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 18 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "11 ngôi sao",
-            "10ngôi sao",
-            "12ngôi sao",
-            "13ngôi sao"
+            "10 ngôi sao",
+            "12 ngôi sao",
+            "13 ngôi sao"
           ],
           "answer": "11 ngôi sao",
           "image_url": "",
@@ -4493,7 +4493,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 19] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 19] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -4502,7 +4502,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -4529,7 +4529,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 19] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương nhỏ?",
+          "question_text": "[Đề 19] Bé hãy đếm các khối lập phương sau: 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "2",
             "4",
@@ -4538,7 +4538,7 @@
           ],
           "answer": "2",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương nhỏ để tìm ra đáp số 2 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 2 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -4606,9 +4606,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 19 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "10 ngôi sao",
-            "9ngôi sao",
-            "11ngôi sao",
-            "12ngôi sao"
+            "9 ngôi sao",
+            "11 ngôi sao",
+            "12 ngôi sao"
           ],
           "answer": "10 ngôi sao",
           "image_url": "",
@@ -4702,7 +4702,7 @@
         },
         {
           "question_id": 3,
-          "question_text": "Bé hãy đếm thật cẩn thận các hình dưới đây: 🟦 🟦 🟦 🟦 🟦. Có tất cả bao nhiêu hình vuông màu đỏ?",
+          "question_text": "Bé hãy đếm thật cẩn thận các hình dưới đây: 🟦 🟦 🟦 🟦 🟦. Có tất cả bao nhiêu hình vuông màu xanh dương?",
           "options": [
             "5",
             "6",
@@ -4711,7 +4711,7 @@
           ],
           "answer": "5",
           "image_url": "",
-          "hint": "Bé hãy đếm lần lượt từ trái sang phải. Có tất cả 5 hình vuông màu đỏ.",
+          "hint": "Bé hãy đếm lần lượt từ trái sang phải. Có tất cả 5 hình vuông màu xanh dương.",
           "tag": "TOAN_C1",
           "diem": 0.5,
           "sub_code": "4.1",
@@ -4738,7 +4738,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 20] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 20] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -4747,7 +4747,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -4774,7 +4774,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 20] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật to?",
+          "question_text": "[Đề 20] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "5",
             "1",
@@ -4783,7 +4783,7 @@
           ],
           "answer": "3",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật to để tìm ra đáp số 3 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 3 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -4851,9 +4851,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 20 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "12 ngôi sao",
-            "11ngôi sao",
-            "13ngôi sao",
-            "14ngôi sao"
+            "11 ngôi sao",
+            "13 ngôi sao",
+            "14 ngôi sao"
           ],
           "answer": "12 ngôi sao",
           "image_url": "",
@@ -4983,7 +4983,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 21] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 21] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -4992,7 +4992,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -5019,7 +5019,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 21] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương màu xanh?",
+          "question_text": "[Đề 21] Bé hãy đếm các khối lập phương sau: 🧊 🧊 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "4",
             "2",
@@ -5028,7 +5028,7 @@
           ],
           "answer": "4",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương màu xanh để tìm ra đáp số 4 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 4 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -5096,9 +5096,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 21 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "9 ngôi sao",
-            "8ngôi sao",
-            "10ngôi sao",
-            "11ngôi sao"
+            "8 ngôi sao",
+            "10 ngôi sao",
+            "11 ngôi sao"
           ],
           "answer": "9 ngôi sao",
           "image_url": "",
@@ -5228,7 +5228,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 22] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 22] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -5237,7 +5237,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -5264,7 +5264,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 22] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật màu đỏ?",
+          "question_text": "[Đề 22] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "3",
             "1",
@@ -5273,7 +5273,7 @@
           ],
           "answer": "2",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật màu đỏ để tìm ra đáp số 2 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 2 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -5341,9 +5341,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 22 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "8 ngôi sao",
-            "7ngôi sao",
-            "9ngôi sao",
-            "10ngôi sao"
+            "7 ngôi sao",
+            "9 ngôi sao",
+            "10 ngôi sao"
           ],
           "answer": "8 ngôi sao",
           "image_url": "",
@@ -5473,7 +5473,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 23] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 23] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -5482,7 +5482,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -5509,7 +5509,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 23] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương nhỏ?",
+          "question_text": "[Đề 23] Bé hãy đếm các khối lập phương sau: 🧊 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "1",
             "3",
@@ -5518,7 +5518,7 @@
           ],
           "answer": "3",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương nhỏ để tìm ra đáp số 3 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 3 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -5586,9 +5586,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 23 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "10 ngôi sao",
-            "9ngôi sao",
-            "11ngôi sao",
-            "12ngôi sao"
+            "9 ngôi sao",
+            "11 ngôi sao",
+            "12 ngôi sao"
           ],
           "answer": "10 ngôi sao",
           "image_url": "",
@@ -5718,7 +5718,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 24] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 24] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -5727,7 +5727,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -5754,7 +5754,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 24] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật to?",
+          "question_text": "[Đề 24] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "7",
             "4",
@@ -5763,7 +5763,7 @@
           ],
           "answer": "4",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật to để tìm ra đáp số 4 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 4 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -5831,9 +5831,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 24 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "12 ngôi sao",
-            "11ngôi sao",
-            "13ngôi sao",
-            "14ngôi sao"
+            "11 ngôi sao",
+            "13 ngôi sao",
+            "14 ngôi sao"
           ],
           "answer": "12 ngôi sao",
           "image_url": "",
@@ -5963,7 +5963,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 25] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 25] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -5972,7 +5972,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -5999,7 +5999,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 25] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương màu xanh?",
+          "question_text": "[Đề 25] Bé hãy đếm các khối lập phương sau: 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "7",
             "1",
@@ -6008,7 +6008,7 @@
           ],
           "answer": "2",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương màu xanh để tìm ra đáp số 2 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 2 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -6076,9 +6076,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 25 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "11 ngôi sao",
-            "10ngôi sao",
-            "12ngôi sao",
-            "13ngôi sao"
+            "10 ngôi sao",
+            "12 ngôi sao",
+            "13 ngôi sao"
           ],
           "answer": "11 ngôi sao",
           "image_url": "",
@@ -6172,7 +6172,7 @@
         },
         {
           "question_id": 3,
-          "question_text": "Bé hãy đếm thật cẩn thận các hình dưới đây: 🟦 🟦 🟦. Có tất cả bao nhiêu hình vuông màu đỏ?",
+          "question_text": "Bé hãy đếm thật cẩn thận các hình dưới đây: 🟦 🟦 🟦. Có tất cả bao nhiêu hình vuông màu xanh dương?",
           "options": [
             "6",
             "4",
@@ -6181,7 +6181,7 @@
           ],
           "answer": "3",
           "image_url": "",
-          "hint": "Bé hãy đếm lần lượt từ trái sang phải. Có tất cả 3 hình vuông màu đỏ.",
+          "hint": "Bé hãy đếm lần lượt từ trái sang phải. Có tất cả 3 hình vuông màu xanh dương.",
           "tag": "TOAN_C1",
           "diem": 0.5,
           "sub_code": "4.1",
@@ -6208,7 +6208,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 26] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 26] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -6217,7 +6217,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -6244,7 +6244,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 26] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật màu đỏ?",
+          "question_text": "[Đề 26] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "3",
             "2",
@@ -6253,7 +6253,7 @@
           ],
           "answer": "3",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật màu đỏ để tìm ra đáp số 3 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 3 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -6321,9 +6321,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 26 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "8 ngôi sao",
-            "7ngôi sao",
-            "9ngôi sao",
-            "10ngôi sao"
+            "7 ngôi sao",
+            "9 ngôi sao",
+            "10 ngôi sao"
           ],
           "answer": "8 ngôi sao",
           "image_url": "",
@@ -6453,7 +6453,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 27] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 27] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -6462,7 +6462,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -6489,7 +6489,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 27] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương nhỏ?",
+          "question_text": "[Đề 27] Bé hãy đếm các khối lập phương sau: 🧊 🧊 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "2",
             "1",
@@ -6498,7 +6498,7 @@
           ],
           "answer": "4",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương nhỏ để tìm ra đáp số 4 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 4 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -6566,9 +6566,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 27 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "10 ngôi sao",
-            "9ngôi sao",
-            "11ngôi sao",
-            "12ngôi sao"
+            "9 ngôi sao",
+            "11 ngôi sao",
+            "12 ngôi sao"
           ],
           "answer": "10 ngôi sao",
           "image_url": "",
@@ -6698,7 +6698,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 28] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 28] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -6707,7 +6707,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -6734,7 +6734,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 28] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật to?",
+          "question_text": "[Đề 28] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "3",
             "2",
@@ -6743,7 +6743,7 @@
           ],
           "answer": "2",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật to để tìm ra đáp số 2 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 2 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -6810,10 +6810,10 @@
           "passage_text": "Buổi sáng, Cô giáo Thỏ Hồng tặng cho cả lớp 7 ngôi sao học tập tốt. Buổi chiều, Cô giáo Thỏ Hồng tặng thêm 2 ngôi sao chuyên cần nữa.",
           "question_text": "Hỏi cả ngày lớp học của đề 28 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
-            "8ngôi sao",
+            "8 ngôi sao",
             "9 ngôi sao",
-            "10ngôi sao",
-            "11ngôi sao"
+            "10 ngôi sao",
+            "11 ngôi sao"
           ],
           "answer": "9 ngôi sao",
           "image_url": "",
@@ -6943,7 +6943,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 29] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 29] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -6952,7 +6952,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -6979,7 +6979,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 29] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối lập phương màu xanh?",
+          "question_text": "[Đề 29] Bé hãy đếm các khối lập phương sau: 🧊 🧊 🧊. Có tất cả bao nhiêu khối lập phương?",
           "options": [
             "2",
             "3",
@@ -6988,7 +6988,7 @@
           ],
           "answer": "3",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối lập phương màu xanh để tìm ra đáp số 3 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 3 khối lập phương.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -7056,9 +7056,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 29 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "11 ngôi sao",
-            "10ngôi sao",
-            "12ngôi sao",
-            "13ngôi sao"
+            "10 ngôi sao",
+            "12 ngôi sao",
+            "13 ngôi sao"
           ],
           "answer": "11 ngôi sao",
           "image_url": "",
@@ -7188,7 +7188,7 @@
         },
         {
           "question_id": 5,
-          "question_text": "[Đề 30] Quan sát bức vẽ lớp học: Bảng đen đang nằm ở phía trên hay phía dưới so với các bộ bàn ghế?",
+          "question_text": "[Đề 30] Trong lớp học, bảng đen thường được treo cao hơn các bộ bàn ghế. Bảng đen ở phía trên hay phía dưới so với các bộ bàn ghế?",
           "options": [
             "phía trên",
             "phía dưới",
@@ -7197,7 +7197,7 @@
           ],
           "answer": "phía trên",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng gợi ý: Chiếc bảng viết của cô luôn treo cao ở phía trên bục giảng đó bé yêu!",
+          "hint": "Bảng đen thường được treo cao hơn bàn ghế, nên bảng đen ở phía trên.",
           "tag": "TOAN_C4",
           "diem": 0.5,
           "sub_code": "6.1",
@@ -7224,7 +7224,7 @@
         },
         {
           "question_id": 7,
-          "question_text": "[Đề 30] Đố bé đếm xem trong mô hình lâu đài đồ chơi xếp chồng bên dưới có bao nhiêu khối hộp chữ nhật màu đỏ?",
+          "question_text": "[Đề 30] Bé hãy đếm các khối hộp chữ nhật sau: 📦 📦 📦 📦. Có tất cả bao nhiêu khối hộp chữ nhật?",
           "options": [
             "6",
             "1",
@@ -7233,7 +7233,7 @@
           ],
           "answer": "4",
           "image_url": "",
-          "hint": "Cô giáo Thỏ Hồng mách bé: Hãy nhìn kỹ mô hình, đếm các hình khối có hình dạng là khối hộp chữ nhật màu đỏ để tìm ra đáp số 4 nhé!",
+          "hint": "Bé hãy chỉ vào từng khối và đếm mỗi khối một lần. Có tất cả 4 khối hộp chữ nhật.",
           "tag": "TOAN_C1",
           "diem": 1.0,
           "sub_code": "4.2",
@@ -7301,9 +7301,9 @@
           "question_text": "Hỏi cả ngày lớp học của đề 30 đã nhận được tất cả bao nhiêu ngôi sao khen thưởng từ Cô giáo Thỏ Hồng?",
           "options": [
             "13 ngôi sao",
-            "12ngôi sao",
-            "14ngôi sao",
-            "15ngôi sao"
+            "12 ngôi sao",
+            "14 ngôi sao",
+            "15 ngôi sao"
           ],
           "answer": "13 ngôi sao",
           "image_url": "",
