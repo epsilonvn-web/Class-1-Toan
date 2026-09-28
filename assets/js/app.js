@@ -1,5 +1,5 @@
 // ==========================================
-// CẤU HÌNH 11 MỤC KHO HỌC LIỆU & MA TRẬN NĂNG LỰC TOAN_C1-C6 (TOÁN LỚP 1)
+// CẤU HÌNH 12 MỤC KHÁM PHÁ & MA TRẬN NĂNG LỰC TOAN_C1-C6 (TOÁN LỚP 1)
 // ==========================================
 const TOPICS_CONFIG = [
     { id: 1, title: "1. Các số đến 10", desc: "Đọc, viết, đếm số 0-10, so sánh nhiều hơn ít hơn, sắp xếp thứ tự dãy số", icon: "🔢", color: "pink" },
@@ -12,7 +12,8 @@ const TOPICS_CONFIG = [
     { id: 8, title: "8. Thời gian, lịch và kiểm đếm", desc: "Xem giờ đúng, các ngày trong tuần, hôm qua-hôm nay-ngày mai, thống kê", icon: "⏰", color: "blue" },
     { id: 9, title: "9. Giải toán có lời văn", desc: "Đọc hiểu đề, phân tích từ khóa thêm/bớt, trình bày bài giải 3 phần", icon: "📝", color: "rose" },
     { id: 10, title: "10. Toán tư duy nâng cao và IQ", desc: "Điền số khuyết, toán logic cân thăng bằng, đếm hình lồng ghép nâng cao", icon: "🧠", color: "yellow" },
-    { id: 11, title: "11. Ôn tập", desc: "Ôn tập học kỳ I, học kỳ II và tổng ôn tập cuối năm", icon: "📚", color: "purple" }
+    { id: 11, title: "11. Ôn tập", desc: "Ôn tập học kỳ I, học kỳ II và tổng ôn tập cuối năm", icon: "📚", color: "purple" },
+    { id: 12, title: "12. Học Toán theo phương pháp mới", desc: "Hiểu bản chất qua thao tác, trực quan, diễn đạt rồi mới đi tới ký hiệu và tính thành thạo", icon: "✨", color: "fuchsia", engine: "epsilon-method" }
 ];
 
 const SUBTOPIC_PALETTES = [
@@ -205,7 +206,8 @@ function normalizeQuestion(q) {
         reading_passage: q.r_passage ?? q.reading_passage ?? q.passage_text ?? '',
         skill_tag: q.skill_tag ?? q.tag ?? 'TOAN_C1',
         diem: Number(q.diem ?? q.score ?? 0.5),
-        explanation: q.explanation ?? q.h ?? 'Không có giải thích chi tiết.'
+        explanation: q.explanation ?? q.h ?? 'Không có giải thích chi tiết.',
+        muc1_type: q.muc1_type ?? ''
     };
 }
 
@@ -337,26 +339,26 @@ async function renderDashboardGrid() {
     try { topicsData = await fetchAllTopicsData(); } catch (e) {}
 
     let html = '';
-    // Tab Khám phá chỉ hiển thị các chuyên mục 1-10.
-    // Mục 11 (Ôn tập) và 12 (Đề thi) đã có tab chính riêng trên header.
-    TOPICS_CONFIG.filter(t => ![11, 12].includes(Number(t.id))).forEach(t => {
+    // Tab Khám phá hiển thị Mục 1-10 và Mục 12 (Epsilon Method).
+    // Mục 11 (Ôn tập) vẫn có tab chính riêng trên header.
+    TOPICS_CONFIG.filter(t => Number(t.id) !== 11).forEach(t => {
         const topicObj = topicsData.find(item => Number(item.topic_id) === Number(t.id));
         const totalCount = topicObj && topicObj.questions ? topicObj.questions.length : 0;
-        const countLabel = totalCount > 0 ? `${totalCount} câu` : 'Đang cập nhật';
+        const countLabel = t.engine === 'epsilon-method' ? '2 chuyên đề' : (totalCount > 0 ? `${totalCount} câu` : 'Đang cập nhật');
 
         const iconHtml = t.isCustomTextIcon 
             ? `<div class="w-8 h-8 bg-rose-100 rounded-xl flex items-center justify-center text-[11px] font-black text-rose-600 shadow-inner group-hover:scale-110 transition-transform shrink-0 tracking-tight">S/X</div>`
             : `<div class="w-8 h-8 bg-${t.color}-100 rounded-xl flex items-center justify-center text-sm font-extrabold text-${t.color}-600 shadow-inner group-hover:scale-110 transition-transform shrink-0">${t.icon}</div>`;
 
         html += `
-            <div onclick="openTopic(${t.id}, '${t.title}', '${t.icon}')" class="pastel-card p-3 flex flex-col justify-between cursor-pointer hover:border-${t.color}-400 transition-all group min-h-[92px]">
-                <div class="flex items-center space-x-2.5">
+            <div onclick="openTopic(${t.id}, '${t.title}', '${t.icon}')" class="pastel-card p-3.5 md:p-4 flex flex-col justify-between cursor-pointer hover:border-${t.color}-400 transition-all group min-h-[128px] md:min-h-[142px]">
+                <div class="flex items-start space-x-2.5">
                     ${iconHtml}
-                    <h3 class="font-extrabold text-${t.color}-700 text-sm md:text-base leading-tight">${t.title}</h3>
+                    <h3 class="font-extrabold text-${t.color}-700 text-base md:text-lg leading-snug overflow-hidden" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${t.title}</h3>
                 </div>
-                <div class="flex justify-between items-center mt-1.5 pt-1 border-t border-pink-100 text-[11px] font-bold text-gray-500">
-                    <span>${t.desc}</span>
-                    <span class="bg-${t.color}-50 text-${t.color}-600 px-2 py-0.5 rounded-full">${countLabel}</span>
+                <div class="flex justify-between items-end gap-2 mt-2.5 pt-2 border-t border-pink-100 font-bold text-gray-600">
+                    <span class="flex-1 text-sm md:text-[15px] leading-snug overflow-hidden" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;">${t.desc}</span>
+                    <span class="shrink-0 bg-${t.color}-50 text-${t.color}-600 px-2.5 py-1 rounded-full text-xs md:text-sm font-extrabold">${countLabel}</span>
                 </div>
             </div>
         `;
@@ -654,7 +656,7 @@ function returnToTopicLecture() {
 
 function switchAppView(viewId) {
     stopSpeaking();
-    ['view-dashboard-grid', 'view-bai-hoc-hub', 'view-bai-hoc-lesson', 'view-lecture', 'view-quiz', 'view-roadmap', 'view-minigame-hub', 'view-game-play', 'view-exam-hub', 'view-result'].forEach(id => {
+    ['view-dashboard-grid', 'view-epsilon-method-hub', 'view-number-sense', 'view-operation-sense', 'view-bai-hoc-hub', 'view-bai-hoc-lesson', 'view-lecture', 'view-quiz', 'view-roadmap', 'view-minigame-hub', 'view-game-play', 'view-exam-hub', 'view-result'].forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
         if (id === viewId) el.classList.remove('hidden');
@@ -1369,10 +1371,867 @@ function clickProgressOrExam(type) {
     else if (type === 'exam') openExamHub();
 }
 
+
 // ==========================================
-// CHỦ ĐỀ 1: BẢNG CHỮ CÁI TƯƠNG TÁC (1.1 ĐẾN 1.4)
+// EPSILON METHOD - MỤC 12: HỌC TOÁN THEO PHƯƠNG PHÁP MỚI
+// 12.1/12.2 chỉ là mã HIỂN THỊ. ID nội bộ là EPSILON_NUMBER_SENSE / EPSILON_OPERATION_SENSE.
+// ==========================================
+async function openEpsilonMethodHub_() {
+    setAppShellRootMode_(false);
+    setMainTabActive_('discover');
+    stopSpeaking();
+    clearInterval(quizTimerInterval);
+    activeBaiHocContext = null;
+    activeExamContext = null;
+    activeRoadmapContext = null;
+    activeTopicId = 12;
+    pendingTopicQuiz = null;
+    activeNumberSense = null;
+    activeOperationSense = null;
+    updateDiscoverBreadcrumb_('12. Học Toán theo phương pháp mới', '✨', null);
+    switchAppView('view-epsilon-method-hub');
+    const host = document.getElementById('epsilon-method-content');
+    if (host) host.innerHTML = '<div class="py-16 text-center font-black text-purple-600">✨ Đang mở không gian học theo phương pháp Epsilon...</div>';
+    try {
+        const data = await loadEpsilonMuc12Data_();
+        renderEpsilonMethodHub_(data);
+    } catch (err) {
+        if (host) host.innerHTML = `<div class="rounded-3xl border-2 border-rose-200 bg-rose-50 p-6 text-center font-bold text-rose-700">${escapeHtml(err.message)}</div>`;
+    }
+}
+
+function renderEpsilonMethodHub_(data) {
+    const host = document.getElementById('epsilon-method-content');
+    if (!host) return;
+    const cards = (data.tracks || []).map(track => {
+        const content = track.content || {};
+        const journeyCount = Array.isArray(content.journeys) ? content.journeys.length : 0;
+        const activityCount = (content.journeys || []).reduce((sum, j) => sum + (Array.isArray(j.activities) ? j.activities.length : 0), 0);
+        const action = track.engine === 'number_sense' ? 'openNumberSenseHub()' : track.engine === 'operation_sense' ? 'openOperationSenseHub()' : '';
+        return `<button onclick="${action}" class="em-track-card text-left">
+            <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="em-track-icon">${escapeHtml(track.icon || '✨')}</div>
+                    <div class="min-w-0">
+                        <div class="text-xs font-black uppercase tracking-wider text-fuchsia-600">${escapeHtml(track.display_code || '')}</div>
+                        <h3 class="font-black text-slate-900 text-lg md:text-xl leading-tight mt-0.5">${escapeHtml(track.title || '')}</h3>
+                    </div>
+                </div>
+                <span class="em-method-badge">Epsilon Method</span>
+            </div>
+            <p class="mt-3 text-sm md:text-base font-bold text-slate-600 leading-relaxed">${escapeHtml(track.description || '')}</p>
+            <div class="mt-4 flex flex-wrap gap-2 text-[11px] font-black text-slate-500">
+                <span class="em-stat-pill">${journeyCount} hành trình</span>
+                <span class="em-stat-pill">${activityCount} hoạt động</span>
+                <span class="em-stat-pill">Có âm thanh hướng dẫn</span>
+            </div>
+        </button>`;
+    }).join('');
+
+    host.innerHTML = `<div class="w-full max-w-6xl mx-auto">
+        <section class="em-hero">
+            <div class="min-w-0">
+                <div class="text-xs md:text-sm font-black uppercase tracking-[.18em] text-fuchsia-600">✨ Epsilon Method</div>
+                <h2 class="mt-1 text-2xl md:text-4xl font-black text-slate-900">Học Toán theo phương pháp mới</h2>
+                <p class="mt-2 max-w-4xl text-sm md:text-base font-bold text-slate-600 leading-relaxed">Trẻ được hiểu ý nghĩa, tự tay thao tác, nhìn thấy toán học và diễn đạt cách nghĩ trước khi đi tới ký hiệu và tính thành thạo.</p>
+                <div class="mt-3 text-sm md:text-base font-black text-fuchsia-700">Hiểu bản chất trước → thành thạo sau → tiến bộ từng ngày.</div>
+            </div>
+            <div class="em-hero-flow">Tình huống → Thao tác → Mô hình → Diễn đạt → Ký hiệu → Luyện → Vận dụng</div>
+        </section>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">${cards}</div>
+    </div>`;
+}
+
+function epsilonActivityNarration_(activity) {
+    if (!activity) return '';
+    const teacher = String(activity.teacher_audio || activity.teacher || '').trim();
+    const instruction = String(activity.instruction_audio || activity.prompt || '').trim();
+    if (!teacher) return instruction;
+    if (!instruction || instruction === teacher) return teacher;
+    return `${teacher} ${instruction}`;
+}
+
+function speakNumberSenseActivity_() {
+    speakVietnamese(epsilonActivityNarration_(currentNumberSenseActivity_()), 0.94);
+}
+
+function speakOperationSenseActivity_() {
+    speakVietnamese(epsilonActivityNarration_(currentOperationSenseActivity_()), 0.94);
+}
+
+// EPSILON METHOD 12.1 - NUMBER SENSE
+// Trải nghiệm -> thao tác -> nhìn thấy -> diễn đạt -> ký hiệu -> transfer
+// ==========================================
+const EPSILON_MUC12_DATA_FILE = 'assets/data/Toan 1 - Muc 12 part 1.json';
+let epsilonMuc12DataCache = null;
+let numberSenseDataCache = null;
+let activeNumberSense = null;
+let numberSenseHintLevel = 0;
+let numberSenseTouched = new Set();
+let numberSenseBuildCount = 0;
+let numberSenseFrameFilled = new Set();
+let numberSenseFlashTimer = null;
+
+async function loadEpsilonMuc12Data_() {
+    if (epsilonMuc12DataCache) return epsilonMuc12DataCache;
+    const res = await fetch(EPSILON_MUC12_DATA_FILE, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Không thể tải dữ liệu Mục 12');
+    const data = await res.json();
+    if (!data || Number(data.topic_id) !== 12 || !Array.isArray(data.tracks)) throw new Error('Dữ liệu Mục 12 chưa đúng cấu trúc');
+    epsilonMuc12DataCache = data;
+    return data;
+}
+
+async function loadNumberSenseData_() {
+    if (numberSenseDataCache) return numberSenseDataCache;
+    const root = await loadEpsilonMuc12Data_();
+    const track = root.tracks.find(t => t.internal_id === 'EPSILON_NUMBER_SENSE' || t.engine === 'number_sense');
+    const data = track?.content;
+    if (!data || !Array.isArray(data.journeys)) throw new Error('Dữ liệu 12.1 chưa đúng cấu trúc');
+    numberSenseDataCache = data;
+    return data;
+}
+
+function numberSenseEvidenceKey_() {
+    const id = String(currentUser?.maHS || 'KHACH').toUpperCase();
+    return `epsilon_ns1_evidence_${id}`;
+}
+
+function readNumberSenseEvidence_() {
+    try { return JSON.parse(localStorage.getItem(numberSenseEvidenceKey_()) || '{}') || {}; }
+    catch (e) { return {}; }
+}
+
+function writeNumberSenseEvidence_(data) {
+    try { localStorage.setItem(numberSenseEvidenceKey_(), JSON.stringify(data || {})); } catch (e) {}
+}
+
+function getNumberSenseJourneyState_(journeyId) {
+    const ev = readNumberSenseEvidence_();
+    return ev[journeyId] || { mastery: 'not_observed', completed: [], attempts: 0, hint_uses: 0, transfer_correct: 0 };
+}
+
+function numberSenseMasteryLabel_(state) {
+    const map = {
+        not_observed: 'Chưa học',
+        emerging: 'Đang hình thành',
+        supported: 'Làm được khi có hỗ trợ',
+        independent: 'Làm được độc lập',
+        generalized: 'Hiểu ở dạng khác',
+        retained: 'Ghi nhớ bền vững'
+    };
+    return map[state] || map.not_observed;
+}
+
+function numberSenseMasteryClass_(state) {
+    if (state === 'generalized' || state === 'retained') return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+    if (state === 'independent') return 'bg-sky-100 text-sky-700 border-sky-200';
+    if (state === 'supported') return 'bg-amber-100 text-amber-700 border-amber-200';
+    if (state === 'emerging') return 'bg-purple-100 text-purple-700 border-purple-200';
+    return 'bg-slate-100 text-slate-500 border-slate-200';
+}
+
+async function openNumberSenseHub() {
+    setAppShellRootMode_(false);
+    setMainTabActive_('discover');
+    stopSpeaking();
+    clearInterval(quizTimerInterval);
+    clearTimeout(numberSenseFlashTimer);
+    activeBaiHocContext = null;
+    activeExamContext = null;
+    activeRoadmapContext = null;
+    activeTopicId = 12;
+    pendingTopicQuiz = null;
+    activeNumberSense = null;
+    updateNavTabs('12. Học Toán theo phương pháp mới', '✨', '12.1 Hiểu số và số lượng', null);
+    switchAppView('view-number-sense');
+    const host = document.getElementById('number-sense-content');
+    if (host) host.innerHTML = '<div class="py-16 text-center font-black text-purple-600">🌱 Đang mở thế giới số lượng...</div>';
+    try {
+        const data = await loadNumberSenseData_();
+        renderNumberSenseHub_(data);
+    } catch (err) {
+        if (host) host.innerHTML = `<div class="rounded-3xl border-2 border-rose-200 bg-rose-50 p-6 text-center font-bold text-rose-700">${escapeHtml(err.message)}</div>`;
+    }
+}
+
+function renderNumberSenseHub_(data) {
+    const host = document.getElementById('number-sense-content');
+    if (!host) return;
+    const evidence = readNumberSenseEvidence_();
+    const cards = data.journeys.map(j => {
+        const st = evidence[j.id] || { mastery: 'not_observed', completed: [] };
+        const done = Array.isArray(st.completed) ? st.completed.length : 0;
+        const total = Array.isArray(j.activities) ? j.activities.length : 0;
+        return `<button onclick="startNumberSenseJourney_('${escapeJsString_(j.id)}')" class="ns-journey-card text-left">
+            <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="ns-journey-icon">${escapeHtml(j.icon || '🌱')}</div>
+                    <div class="min-w-0">
+                        <div class="text-[11px] font-black uppercase tracking-wider text-purple-500">Hành trình ${j.order}</div>
+                        <h3 class="font-black text-slate-800 text-base md:text-lg leading-tight mt-0.5">${escapeHtml(j.title)}</h3>
+                    </div>
+                </div>
+                <span class="shrink-0 rounded-full border px-2 py-1 text-[10px] md:text-xs font-black ${numberSenseMasteryClass_(st.mastery)}">${escapeHtml(numberSenseMasteryLabel_(st.mastery))}</span>
+            </div>
+            <p class="mt-3 text-xs md:text-sm font-bold text-slate-500 leading-relaxed">${escapeHtml(j.goal)}</p>
+            <div class="mt-3 flex items-center gap-2">
+                <div class="h-2 flex-1 rounded-full bg-slate-100 overflow-hidden"><div class="h-full rounded-full bg-gradient-to-r from-pink-400 to-purple-500" style="width:${total ? Math.round(done/total*100) : 0}%"></div></div>
+                <span class="text-[11px] font-black text-slate-400">${done}/${total}</span>
+            </div>
+        </button>`;
+    }).join('');
+
+    host.innerHTML = `<div class="w-full max-w-6xl mx-auto">
+        <div class="mb-3"><button onclick="openEpsilonMethodHub_()" class="ns-secondary-btn">← Mục 12 · Phương pháp mới</button></div>
+        <section class="ns-hero">
+            <div>
+                <div class="text-xs md:text-sm font-black uppercase tracking-[.16em] text-pink-500">Epsilon Number Sense</div>
+                <h2 class="mt-1 text-2xl md:text-3xl font-black text-slate-900">Con hiểu số nghĩa là gì</h2>
+                <p class="mt-2 max-w-3xl text-sm md:text-base font-bold text-slate-600 leading-relaxed">Không bắt đầu bằng ký hiệu. Con nhìn lượng, thao tác, đếm có ý nghĩa, tự tạo nhóm, rồi mới nối với từ số và chữ số.</p>
+            </div>
+            <div class="ns-hero-flow">Trải nghiệm → Thao tác → Nhìn thấy → Diễn đạt → Ký hiệu</div>
+        </section>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 mt-4">${cards}</div>
+    </div>`;
+}
+
+async function startNumberSenseJourney_(journeyId) {
+    clearTimeout(numberSenseFlashTimer);
+    const data = await loadNumberSenseData_();
+    const journey = data.journeys.find(j => j.id === journeyId);
+    if (!journey) return;
+    activeNumberSense = { journeyId, journey, activityIndex: 0, activityStartedAt: Date.now() };
+    const st = getNumberSenseJourneyState_(journeyId);
+    if (Array.isArray(st.completed) && st.completed.length) {
+        const firstOpen = journey.activities.findIndex(a => !st.completed.includes(a.id));
+        activeNumberSense.activityIndex = firstOpen >= 0 ? firstOpen : 0;
+    }
+    updateNavTabs('12. Học Toán theo phương pháp mới', '✨', '12.1 Hiểu số và số lượng', `${journey.order}. ${journey.title}`);
+    renderNumberSenseActivity_();
+}
+
+function currentNumberSenseActivity_() {
+    return activeNumberSense?.journey?.activities?.[activeNumberSense.activityIndex] || null;
+}
+
+function resetNumberSenseInteraction_() {
+    clearTimeout(numberSenseFlashTimer);
+    numberSenseHintLevel = 0;
+    numberSenseTouched = new Set();
+    numberSenseBuildCount = 0;
+    numberSenseFrameFilled = new Set();
+    if (activeNumberSense) activeNumberSense.activityStartedAt = Date.now();
+}
+
+function renderNumberSenseActivity_() {
+    const host = document.getElementById('number-sense-content');
+    const activity = currentNumberSenseActivity_();
+    const journey = activeNumberSense?.journey;
+    if (!host || !activity || !journey) return;
+    resetNumberSenseInteraction_();
+    const step = activeNumberSense.activityIndex + 1;
+    const total = journey.activities.length;
+    const evidenceList = (journey.evidence || []).map(x => `<span class="ns-evidence-pill">✓ ${escapeHtml(x)}</span>`).join('');
+    host.innerHTML = `<div class="w-full max-w-5xl mx-auto">
+        <div class="flex items-center justify-between gap-3 mb-3">
+            <button onclick="openNumberSenseHub()" class="ns-secondary-btn">← 12 hành trình</button>
+            <div class="text-center min-w-0">
+                <div class="text-xs font-black text-purple-500">${escapeHtml(journey.icon)} Hành trình ${journey.order} · Bước ${step}/${total}</div>
+                <h2 class="text-lg md:text-xl font-black text-slate-800 truncate">${escapeHtml(journey.title)}</h2>
+            </div>
+            <div class="w-[108px] text-right text-xs font-black text-slate-400">${Math.round(step/total*100)}%</div>
+        </div>
+        <div class="h-2 bg-slate-100 rounded-full overflow-hidden mb-3"><div class="h-full bg-gradient-to-r from-pink-400 via-purple-400 to-sky-400" style="width:${Math.round(step/total*100)}%"></div></div>
+        <section class="ns-teacher-bubble"><span class="text-2xl">🐰</span><div class="flex-1 min-w-0"><div class="text-[10px] font-black uppercase tracking-wider text-pink-500">Cô Thỏ Hồng</div><div class="font-extrabold text-slate-700 leading-relaxed">${escapeHtml(activity.teacher || '')}</div></div><button onclick="speakNumberSenseActivity_()" class="ns-listen-btn" title="Nghe lại hướng dẫn">🔊 <span>Nghe cô nói</span></button></section>
+        <section class="ns-workspace mt-3">
+            <h3 class="text-center text-lg md:text-xl font-black text-slate-900 mb-3">${escapeHtml(activity.prompt || '')}</h3>
+            <div id="ns-activity-stage" class="w-full">${renderNumberSenseActivityBody_(activity)}</div>
+            <div id="ns-feedback" class="hidden mt-3 rounded-2xl border-2 p-3 text-center font-black"></div>
+            <div id="ns-hint" class="hidden mt-3 rounded-2xl border border-amber-200 bg-amber-50 p-3 text-center font-bold text-amber-800"></div>
+        </section>
+        <div class="mt-3 flex flex-wrap justify-center gap-2">${evidenceList}</div>
+        <div class="mt-4 flex items-center justify-between gap-2">
+            <button onclick="numberSenseShowHint_()" class="ns-secondary-btn">💡 Gợi ý</button>
+            <button onclick="renderNumberSenseActivity_()" class="ns-secondary-btn">↻ Làm lại</button>
+            <button id="ns-next-btn" onclick="numberSenseNext_()" class="hidden ns-primary-btn">Tiếp tục →</button>
+        </div>
+    </div>`;
+    activateNumberSenseActivity_(activity);
+    if (autoSpeechEnabled) setTimeout(() => speakNumberSenseActivity_(), 120);
+}
+
+function nsChoiceButtons_(choices) {
+    return `<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 max-w-2xl mx-auto">${(choices || []).map(c => {
+        const value = typeof c === 'object' ? c.value : c;
+        const label = typeof c === 'object' ? c.label : c;
+        return `<button class="ns-choice" onclick="numberSenseChoose_('${escapeJsString_(String(value))}', this)">${escapeHtml(String(label))}</button>`;
+    }).join('')}</div>`;
+}
+
+function nsObjects_(count, object, extraClass = '') {
+    return Array.from({length: Number(count) || 0}, (_, i) => `<span class="ns-static-object ${extraClass}" data-i="${i}">${escapeHtml(object || '●')}</span>`).join('');
+}
+
+function renderNumberSenseActivityBody_(a) {
+    if (a.type === 'flash_quantity') {
+        return `<div class="text-center"><div id="ns-flash-box" class="ns-visual-box"><div class="ns-object-row">${nsObjects_(a.quantity,a.object)}</div></div><div id="ns-choice-zone" class="hidden mt-4">${nsChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'touch_count') {
+        const positions = a.scatter ? ['translate-y-2','-translate-y-3','translate-y-5','-translate-y-1','translate-y-1','-translate-y-4'] : [];
+        const objs = Array.from({length:a.quantity},(_,i)=>`<button class="ns-touch-object ${positions[i%positions.length]||''}" onclick="numberSenseTouchCount_(this,${i})"><span>${escapeHtml(a.object)}</span><b class="ns-count-badge hidden"></b></button>`).join('');
+        return `<div class="ns-visual-box"><div class="flex flex-wrap justify-center items-center gap-3 md:gap-5">${objs}</div></div><div id="ns-touch-summary" class="mt-3 text-center text-sm font-black text-slate-500">Đã chạm: 0/${a.quantity}</div>`;
+    }
+    if (a.type === 'build_quantity') {
+        const model = a.target_mode === 'model' ? `<div class="mb-3 text-center"><div class="text-xs font-black text-purple-500 mb-1">NHÓM MẪU</div><div class="ns-object-row">${nsObjects_(a.target,a.model_object||'⭐')}</div></div>` : '';
+        const bank = Array.from({length: Math.max(6,a.target+3)},(_,i)=>`<button draggable="true" ondragstart="numberSenseDragStart_(event)" onclick="numberSenseAddObject_()" class="ns-bank-object">${escapeHtml(a.object)}</button>`).join('');
+        return `${model}<div class="grid md:grid-cols-[1fr_1.2fr] gap-3"><div class="ns-bank"><div class="text-xs font-black text-slate-500 mb-2">KHO ĐỒ VẬT</div><div class="flex flex-wrap justify-center gap-2">${bank}</div></div><div id="ns-build-tray" class="ns-tray" ondragover="event.preventDefault()" ondrop="numberSenseDropObject_(event)"><div class="text-xs font-black text-pink-500">NHÓM CỦA CON</div><div id="ns-build-items" class="flex flex-wrap justify-center gap-2 mt-2 min-h-[62px]"></div><button onclick="numberSenseRemoveObject_()" class="mt-2 text-xs font-black text-slate-400 hover:text-rose-500">Bớt 1 vật</button></div></div><div class="text-center mt-3"><button onclick="numberSenseCheckBuild_()" class="ns-primary-btn">Con làm xong rồi</button></div>`;
+    }
+    if (a.type === 'hidden_cardinality') {
+        return `<div class="text-center"><div id="ns-hidden-group" class="ns-visual-box"><div class="ns-object-row">${nsObjects_(a.quantity,a.object)}</div></div><button id="ns-hide-btn" onclick="numberSenseHideGroup_()" class="mt-3 ns-primary-btn">🙈 Che lại</button><div id="ns-hidden-choices" class="hidden mt-4">${nsChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'conservation') {
+        const before = nsObjects_(a.quantity,a.object);
+        return `<div class="text-center"><div class="text-xs font-black text-slate-400 mb-1">TRƯỚC KHI XẾP LẠI</div><div class="ns-visual-box"><div class="ns-object-row">${before}</div></div><button id="ns-rearrange-btn" onclick="numberSenseRearrange_()" class="mt-3 ns-primary-btn">🔄 Xếp lại</button><div id="ns-conservation-after" class="hidden mt-3"></div><div id="ns-conservation-choices" class="hidden mt-4">${nsChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'representation_choice') {
+        return `<div class="text-center"><div class="ns-symbol-card whitespace-pre-line">${escapeHtml(a.stimulus || '')}</div><div class="mt-4">${nsChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'frame_build') {
+        const cells = Array.from({length:a.frame_size},(_,i)=>`<button class="ns-frame-cell" onclick="numberSenseToggleFrame_(this,${i})"></button>`).join('');
+        return `<div class="text-center"><div class="ns-frame ${a.frame_size===10?'ns-frame-10':''}">${cells}</div><div id="ns-frame-count" class="mt-2 text-xs font-black text-slate-400">Đã đặt 0 chấm</div><button onclick="numberSenseCheckFrame_()" class="mt-3 ns-primary-btn">Con làm xong rồi</button></div>`;
+    }
+    if (a.type === 'compare_groups') {
+        const leftGap = a.left?.spread ? 'gap-7 md:gap-10' : 'gap-2 md:gap-3';
+        const rightGap = a.right?.spread ? 'gap-7 md:gap-10' : 'gap-2 md:gap-3';
+        return `<div class="grid md:grid-cols-2 gap-3"><div class="ns-group-card"><div class="text-xs font-black text-sky-600 mb-2">${escapeHtml(a.left.label||'Nhóm A')}</div><div class="flex flex-wrap justify-center ${leftGap}">${nsObjects_(a.left.count,a.left.object)}</div></div><div class="ns-group-card"><div class="text-xs font-black text-amber-600 mb-2">${escapeHtml(a.right.label||'Nhóm B')}</div><div class="flex flex-wrap justify-center ${rightGap}">${nsObjects_(a.right.count,a.right.object)}</div></div></div><div class="mt-4">${nsChoiceButtons_(a.choices)}</div>`;
+    }
+    if (a.type === 'one_more_less') {
+        const after = a.action === 'more' ? a.start + 1 : a.start - 1;
+        return `<div class="text-center"><div class="ns-visual-box"><div class="ns-object-row">${nsObjects_(a.start,a.object)}</div></div><div class="my-2 text-sm font-black ${a.action==='more'?'text-emerald-600':'text-rose-500'}">${a.action==='more'?'➕ thêm 1':'➖ bớt 1'}</div><div class="ns-visual-box bg-white"><div class="ns-object-row">${nsObjects_(after,a.object)}</div></div><div class="mt-4">${nsChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'part_whole') {
+        const known = nsObjects_(a.part,a.object);
+        const unknownCount = Math.max(0,a.whole-a.part);
+        const unknown = nsObjects_(unknownCount,a.object);
+        return `<div class="text-center"><div class="ns-whole-card"><div class="text-xs font-black text-purple-500">CẢ NHÓM</div><div class="ns-object-row mt-2">${nsObjects_(a.whole,a.object)}</div></div><div class="text-2xl my-2">↙️ &nbsp; ↘️</div><div class="grid grid-cols-2 gap-3 max-w-xl mx-auto"><div class="ns-part-card"><div class="text-xs font-black text-sky-600">PHẦN ĐÃ BIẾT</div><div class="ns-object-row mt-2">${known}</div></div><div class="ns-part-card"><div class="text-xs font-black text-pink-600">PHẦN CÒN LẠI</div><div class="text-3xl md:text-5xl font-black text-pink-400 mt-3">?</div><div class="hidden">${unknown}</div></div></div><div class="mt-4">${nsChoiceButtons_(a.choices)}</div></div>`;
+    }
+    return '<div class="text-center font-bold text-slate-500">Hoạt động đang được hoàn thiện.</div>';
+}
+
+function activateNumberSenseActivity_(a) {
+    if (a.type === 'flash_quantity') {
+        const box = document.getElementById('ns-flash-box');
+        const choices = document.getElementById('ns-choice-zone');
+        numberSenseFlashTimer = setTimeout(() => {
+            if (box) box.innerHTML = '<div class="text-5xl">☁️</div><div class="mt-2 text-base md:text-lg font-black text-slate-400">Hình đã được che</div>';
+            choices?.classList.remove('hidden');
+        }, Math.max(700, Number(a.display_ms)||1000));
+    }
+}
+
+function numberSenseShowHint_() {
+    const a = currentNumberSenseActivity_();
+    if (!a) return;
+    numberSenseHintLevel = Math.min(3, numberSenseHintLevel + 1);
+    const hint = (a.hints || [])[numberSenseHintLevel - 1] || 'Con thử quan sát lại từng bước nhé.';
+    const box = document.getElementById('ns-hint');
+    if (box) { box.textContent = `💡 ${hint}`; box.classList.remove('hidden'); }
+    speakVietnamese((a.hints_audio || [])[operationSenseHintLevel - 1] || hint, 0.94);
+    speakVietnamese((a.hints_audio || [])[numberSenseHintLevel - 1] || hint, 0.94);
+    if (a.type === 'flash_quantity' && numberSenseHintLevel >= 2) {
+        const flash = document.getElementById('ns-flash-box');
+        if (flash) flash.innerHTML = `<div class="ns-object-row">${nsObjects_(a.quantity,a.object)}</div>`;
+    }
+    if (a.type === 'hidden_cardinality' && numberSenseHintLevel >= 3) {
+        const group = document.getElementById('ns-hidden-group');
+        if (group) group.innerHTML = `<div class="ns-object-row">${nsObjects_(a.quantity,a.object)}</div>`;
+    }
+}
+
+function numberSenseChoose_(value, btn) {
+    const a = currentNumberSenseActivity_();
+    if (!a) return;
+    document.querySelectorAll('#ns-activity-stage .ns-choice').forEach(x => x.classList.remove('ring-4','ring-pink-200'));
+    btn?.classList.add('ring-4','ring-pink-200');
+    const ok = String(value) === String(a.answer);
+    if (ok) numberSenseCompleteActivity_();
+    else numberSenseWrong_();
+}
+
+function numberSenseTouchCount_(btn, index) {
+    const a = currentNumberSenseActivity_();
+    if (!a || numberSenseTouched.has(index)) return;
+    numberSenseTouched.add(index);
+    btn.classList.add('is-counted');
+    const badge = btn.querySelector('.ns-count-badge');
+    if (badge) { badge.textContent = String(numberSenseTouched.size); badge.classList.remove('hidden'); }
+    const summary = document.getElementById('ns-touch-summary');
+    if (summary) summary.textContent = `Đã chạm: ${numberSenseTouched.size}/${a.quantity}`;
+    speakVietnamese(String(numberSenseTouched.size), 0.98);
+    if (numberSenseTouched.size === Number(a.quantity)) numberSenseCompleteActivity_();
+}
+
+function numberSenseDragStart_(event) {
+    if (event?.dataTransfer) event.dataTransfer.setData('text/plain','ns-object');
+}
+function numberSenseDropObject_(event) { event.preventDefault(); numberSenseAddObject_(); }
+function numberSenseAddObject_() {
+    const a = currentNumberSenseActivity_();
+    if (!a || a.type !== 'build_quantity' || numberSenseBuildCount >= 10) return;
+    numberSenseBuildCount++;
+    renderNumberSenseBuildItems_();
+    speakVietnamese(String(numberSenseBuildCount), 0.98);
+}
+function numberSenseRemoveObject_() {
+    numberSenseBuildCount = Math.max(0, numberSenseBuildCount - 1);
+    renderNumberSenseBuildItems_();
+}
+function renderNumberSenseBuildItems_() {
+    const a = currentNumberSenseActivity_();
+    const host = document.getElementById('ns-build-items');
+    if (!a || !host) return;
+    host.innerHTML = nsObjects_(numberSenseBuildCount,a.object);
+}
+function numberSenseCheckBuild_() {
+    const a = currentNumberSenseActivity_();
+    if (!a) return;
+    if (numberSenseBuildCount === Number(a.target)) numberSenseCompleteActivity_();
+    else numberSenseWrong_(numberSenseBuildCount < Number(a.target) ? 'Nhóm của con còn ít hơn nhóm cần tạo.' : 'Nhóm của con đang nhiều hơn nhóm cần tạo.');
+}
+
+function numberSenseHideGroup_() {
+    const a = currentNumberSenseActivity_();
+    const group = document.getElementById('ns-hidden-group');
+    if (group) group.innerHTML = '<div class="text-5xl">🙈</div><div class="mt-2 text-base md:text-lg font-black text-slate-400">Cô đã che nhóm lại</div>';
+    document.getElementById('ns-hide-btn')?.classList.add('hidden');
+    document.getElementById('ns-hidden-choices')?.classList.remove('hidden');
+}
+
+function numberSenseRearrange_() {
+    const a = currentNumberSenseActivity_();
+    const after = document.getElementById('ns-conservation-after');
+    if (!a || !after) return;
+    const cls = a.compact ? 'gap-0.5 md:gap-1' : 'gap-7 md:gap-12';
+    after.innerHTML = `<div class="text-xs font-black text-slate-400 mb-1">SAU KHI XẾP LẠI</div><div class="ns-visual-box"><div class="flex flex-wrap justify-center items-center ${cls}">${nsObjects_(a.quantity,a.object)}</div></div>`;
+    after.classList.remove('hidden');
+    document.getElementById('ns-rearrange-btn')?.classList.add('hidden');
+    document.getElementById('ns-conservation-choices')?.classList.remove('hidden');
+}
+
+function numberSenseToggleFrame_(btn, index) {
+    if (numberSenseFrameFilled.has(index)) {
+        numberSenseFrameFilled.delete(index); btn.classList.remove('is-filled'); btn.textContent = '';
+    } else {
+        numberSenseFrameFilled.add(index); btn.classList.add('is-filled'); btn.textContent = '●';
+    }
+    const label = document.getElementById('ns-frame-count');
+    if (label) label.textContent = `Đã đặt ${numberSenseFrameFilled.size} chấm`;
+    speakVietnamese(String(numberSenseFrameFilled.size), 0.98);
+}
+function numberSenseCheckFrame_() {
+    const a = currentNumberSenseActivity_();
+    if (!a) return;
+    if (numberSenseFrameFilled.size === Number(a.target)) numberSenseCompleteActivity_();
+    else numberSenseWrong_(`Con đang có ${numberSenseFrameFilled.size} chấm. Hãy quan sát lại yêu cầu.`);
+}
+
+function numberSenseWrong_(message = '') {
+    const a = currentNumberSenseActivity_();
+    const fb = document.getElementById('ns-feedback');
+    if (fb) {
+        fb.className = 'mt-3 rounded-2xl border-2 border-amber-200 bg-amber-50 p-3 text-center font-black text-amber-800';
+        fb.textContent = `Chưa khớp rồi. ${message || 'Con thử quan sát lại nhé.'}`;
+    }
+    speakVietnamese(a?.wrong_audio || message || 'Chưa khớp rồi. Con thử quan sát lại nhé.', 0.94);
+    const ev = readNumberSenseEvidence_();
+    const jid = activeNumberSense?.journeyId;
+    if (jid) {
+        const st = ev[jid] || { mastery:'not_observed', completed:[], attempts:0, hint_uses:0, transfer_correct:0 };
+        st.attempts = Number(st.attempts||0) + 1;
+        if (st.mastery === 'not_observed') st.mastery = 'emerging';
+        ev[jid] = st; writeNumberSenseEvidence_(ev);
+    }
+}
+
+function numberSenseCompleteActivity_() {
+    const a = currentNumberSenseActivity_();
+    if (!a || !activeNumberSense) return;
+    const fb = document.getElementById('ns-feedback');
+    if (fb) {
+        fb.className = 'mt-3 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-3 text-center font-black text-emerald-700';
+        fb.textContent = `✅ ${a.success || 'Con làm đúng rồi!'}`;
+    }
+    speakVietnamese(a.success_audio || a.success || 'Con làm đúng rồi!', 0.94);
+    document.getElementById('ns-next-btn')?.classList.remove('hidden');
+    document.querySelectorAll('#ns-activity-stage button').forEach(b => { if (!b.id?.includes('next')) b.disabled = true; });
+
+    const ev = readNumberSenseEvidence_();
+    const jid = activeNumberSense.journeyId;
+    const st = ev[jid] || { mastery:'not_observed', completed:[], attempts:0, hint_uses:0, transfer_correct:0 };
+    st.attempts = Number(st.attempts||0) + 1;
+    st.hint_uses = Number(st.hint_uses||0) + numberSenseHintLevel;
+    st.completed = Array.isArray(st.completed) ? st.completed : [];
+    if (!st.completed.includes(a.id)) st.completed.push(a.id);
+    if (a.transfer && numberSenseHintLevel === 0) st.transfer_correct = Number(st.transfer_correct||0) + 1;
+    const allDone = activeNumberSense.journey.activities.every(x => st.completed.includes(x.id));
+    if (allDone && Number(st.transfer_correct||0) > 0) st.mastery = 'generalized';
+    else if (allDone && numberSenseHintLevel === 0) st.mastery = 'independent';
+    else if (allDone) st.mastery = 'supported';
+    else if (numberSenseHintLevel === 0) st.mastery = 'independent';
+    else st.mastery = 'supported';
+    st.last_seen = new Date().toISOString();
+    st.last_activity = a.id;
+    st.last_hint_level = numberSenseHintLevel;
+    st.last_latency_ms = Math.max(0, Date.now() - Number(activeNumberSense.activityStartedAt||Date.now()));
+    ev[jid] = st;
+    writeNumberSenseEvidence_(ev);
+}
+
+function numberSenseNext_() {
+    if (!activeNumberSense) return;
+    const journey = activeNumberSense.journey;
+    if (activeNumberSense.activityIndex < journey.activities.length - 1) {
+        activeNumberSense.activityIndex++;
+        renderNumberSenseActivity_();
+        return;
+    }
+    const host = document.getElementById('number-sense-content');
+    const state = getNumberSenseJourneyState_(journey.id);
+    if (host) host.innerHTML = `<div class="w-full max-w-3xl mx-auto text-center py-6"><div class="text-6xl">🌟</div><h2 class="mt-3 text-2xl md:text-3xl font-black text-purple-700">Con vừa hoàn thành một hành trình!</h2><p class="mt-2 font-bold text-slate-600">${escapeHtml(journey.goal)}</p><div class="mt-4 inline-flex rounded-full border px-4 py-2 text-sm font-black ${numberSenseMasteryClass_(state.mastery)}">${escapeHtml(numberSenseMasteryLabel_(state.mastery))}</div><div class="mt-6 flex flex-wrap justify-center gap-3"><button onclick="openNumberSenseHub()" class="ns-secondary-btn">← Bản đồ 12.1</button>${journey.order < 12 ? `<button onclick="startNumberSenseJourney_('NS1.${journey.order+1}')" class="ns-primary-btn">Hành trình tiếp theo →</button>` : ''}</div></div>`;
+}
+
+
+// ==========================================
+// EPSILON METHOD 12.2 - OPERATIONAL SENSE
+// Tình huống -> thao tác -> nhìn thấy -> diễn đạt -> ký hiệu -> chiến lược -> transfer
+// ==========================================
+let operationSenseDataCache = null;
+let activeOperationSense = null;
+let operationSenseHintLevel = 0;
+let operationSenseMovedCount = 0;
+let operationSenseRemoved = new Set();
+let operationSenseSplit = new Set();
+let operationSensePathCount = 0;
+let operationSenseMakeTenMoved = 0;
+
+async function loadOperationSenseData_() {
+    if (operationSenseDataCache) return operationSenseDataCache;
+    const root = await loadEpsilonMuc12Data_();
+    const track = root.tracks.find(t => t.internal_id === 'EPSILON_OPERATION_SENSE' || t.engine === 'operation_sense');
+    const data = track?.content;
+    if (!data || !Array.isArray(data.journeys)) throw new Error('Dữ liệu 12.2 chưa đúng cấu trúc');
+    operationSenseDataCache = data;
+    return data;
+}
+
+function operationSenseEvidenceKey_() {
+    const id = String(currentUser?.maHS || 'KHACH').toUpperCase();
+    return `epsilon_os2_evidence_${id}`;
+}
+function readOperationSenseEvidence_() {
+    try { return JSON.parse(localStorage.getItem(operationSenseEvidenceKey_()) || '{}') || {}; }
+    catch (e) { return {}; }
+}
+function writeOperationSenseEvidence_(data) {
+    try { localStorage.setItem(operationSenseEvidenceKey_(), JSON.stringify(data || {})); } catch (e) {}
+}
+function getOperationSenseJourneyState_(journeyId) {
+    const ev = readOperationSenseEvidence_();
+    return ev[journeyId] || { mastery:'not_observed', completed:[], attempts:0, hint_uses:0, transfer_correct:0 };
+}
+function operationSenseMasteryLabel_(state) { return numberSenseMasteryLabel_(state); }
+function operationSenseMasteryClass_(state) { return numberSenseMasteryClass_(state); }
+
+async function openOperationSenseHub() {
+    setAppShellRootMode_(false);
+    setMainTabActive_('discover');
+    stopSpeaking();
+    clearInterval(quizTimerInterval);
+    activeBaiHocContext = null;
+    activeExamContext = null;
+    activeRoadmapContext = null;
+    activeTopicId = 12;
+    pendingTopicQuiz = null;
+    activeOperationSense = null;
+    updateNavTabs('12. Học Toán theo phương pháp mới', '✨', '12.2 Hiểu phép cộng và phép trừ', null);
+    switchAppView('view-operation-sense');
+    const host = document.getElementById('operation-sense-content');
+    if (host) host.innerHTML = '<div class="py-16 text-center font-black text-purple-600">🧩 Đang mở thế giới của những thay đổi...</div>';
+    try {
+        const data = await loadOperationSenseData_();
+        renderOperationSenseHub_(data);
+    } catch (err) {
+        if (host) host.innerHTML = `<div class="rounded-3xl border-2 border-rose-200 bg-rose-50 p-6 text-center font-bold text-rose-700">${escapeHtml(err.message)}</div>`;
+    }
+}
+
+function renderOperationSenseHub_(data) {
+    const host = document.getElementById('operation-sense-content');
+    if (!host) return;
+    const evidence = readOperationSenseEvidence_();
+    const cards = data.journeys.map(j => {
+        const st = evidence[j.id] || { mastery:'not_observed', completed:[] };
+        const done = Array.isArray(st.completed) ? st.completed.length : 0;
+        const total = Array.isArray(j.activities) ? j.activities.length : 0;
+        return `<button onclick="startOperationSenseJourney_('${escapeJsString_(j.id)}')" class="ns-journey-card text-left">
+            <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="os-journey-icon">${escapeHtml(j.icon || '🧩')}</div>
+                    <div class="min-w-0">
+                        <div class="text-[11px] font-black uppercase tracking-wider text-indigo-500">Hành trình ${j.order}</div>
+                        <h3 class="font-black text-slate-800 text-base md:text-lg leading-tight mt-0.5">${escapeHtml(j.title)}</h3>
+                    </div>
+                </div>
+                <span class="shrink-0 rounded-full border px-2 py-1 text-[10px] md:text-xs font-black ${operationSenseMasteryClass_(st.mastery)}">${escapeHtml(operationSenseMasteryLabel_(st.mastery))}</span>
+            </div>
+            <p class="mt-3 text-xs md:text-sm font-bold text-slate-500 leading-relaxed">${escapeHtml(j.goal)}</p>
+            <div class="mt-3 flex items-center gap-2"><div class="h-2 flex-1 rounded-full bg-slate-100 overflow-hidden"><div class="h-full rounded-full bg-gradient-to-r from-violet-400 via-indigo-400 to-sky-400" style="width:${total ? Math.round(done/total*100) : 0}%"></div></div><span class="text-[11px] font-black text-slate-400">${done}/${total}</span></div>
+        </button>`;
+    }).join('');
+    host.innerHTML = `<div class="w-full max-w-6xl mx-auto">
+        <div class="mb-3"><button onclick="openEpsilonMethodHub_()" class="ns-secondary-btn">← Mục 12 · Phương pháp mới</button></div>
+        <section class="os-hero">
+            <div>
+                <div class="text-xs md:text-sm font-black uppercase tracking-[.16em] text-violet-500">Epsilon Operational Sense</div>
+                <h2 class="mt-1 text-2xl md:text-3xl font-black text-slate-900">Con hiểu điều gì xảy ra khi số lượng thay đổi</h2>
+                <p class="mt-2 max-w-3xl text-sm md:text-base font-bold text-slate-600 leading-relaxed">Không bắt đầu bằng 3 + 2 = ?. Con thêm, bớt, gộp, tách, so sánh và kể lại điều mình thấy; ký hiệu chỉ xuất hiện sau khi ý nghĩa đã rõ.</p>
+            </div>
+            <div class="os-hero-flow">Câu chuyện → Hành động → Mô hình → Lời nói → Ký hiệu → Chiến lược</div>
+        </section>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 mt-4">${cards}</div>
+    </div>`;
+}
+
+async function startOperationSenseJourney_(journeyId) {
+    const data = await loadOperationSenseData_();
+    const journey = data.journeys.find(j => j.id === journeyId);
+    if (!journey) return;
+    activeOperationSense = { journeyId, journey, activityIndex:0, activityStartedAt:Date.now() };
+    const st = getOperationSenseJourneyState_(journeyId);
+    if (Array.isArray(st.completed) && st.completed.length) {
+        const firstOpen = journey.activities.findIndex(a => !st.completed.includes(a.id));
+        activeOperationSense.activityIndex = firstOpen >= 0 ? firstOpen : 0;
+    }
+    updateNavTabs('12. Học Toán theo phương pháp mới', '✨', '12.2 Hiểu phép cộng và phép trừ', `${journey.order}. ${journey.title}`);
+    renderOperationSenseActivity_();
+}
+
+function currentOperationSenseActivity_() {
+    return activeOperationSense?.journey?.activities?.[activeOperationSense.activityIndex] || null;
+}
+function resetOperationSenseInteraction_() {
+    operationSenseHintLevel = 0;
+    operationSenseMovedCount = 0;
+    operationSenseRemoved = new Set();
+    operationSenseSplit = new Set();
+    operationSensePathCount = 0;
+    operationSenseMakeTenMoved = 0;
+    if (activeOperationSense) activeOperationSense.activityStartedAt = Date.now();
+}
+
+function renderOperationSenseActivity_() {
+    const host = document.getElementById('operation-sense-content');
+    const activity = currentOperationSenseActivity_();
+    const journey = activeOperationSense?.journey;
+    if (!host || !activity || !journey) return;
+    resetOperationSenseInteraction_();
+    const step = activeOperationSense.activityIndex + 1;
+    const total = journey.activities.length;
+    const evidenceList = (journey.evidence || []).map(x => `<span class="ns-evidence-pill">✓ ${escapeHtml(x)}</span>`).join('');
+    host.innerHTML = `<div class="w-full max-w-5xl mx-auto">
+        <div class="flex items-center justify-between gap-3 mb-3">
+            <button onclick="openOperationSenseHub()" class="ns-secondary-btn">← 14 hành trình</button>
+            <div class="text-center min-w-0"><div class="text-xs font-black text-indigo-500">${escapeHtml(journey.icon)} Hành trình ${journey.order} · Bước ${step}/${total}</div><h2 class="text-lg md:text-xl font-black text-slate-800 truncate">${escapeHtml(journey.title)}</h2></div>
+            <div class="w-[108px] text-right text-xs font-black text-slate-400">${Math.round(step/total*100)}%</div>
+        </div>
+        <div class="h-2 bg-slate-100 rounded-full overflow-hidden mb-3"><div class="h-full bg-gradient-to-r from-violet-400 via-indigo-400 to-sky-400" style="width:${Math.round(step/total*100)}%"></div></div>
+        <section class="ns-teacher-bubble os-teacher-bubble"><span class="text-2xl">🐰</span><div class="flex-1 min-w-0"><div class="text-[10px] font-black uppercase tracking-wider text-violet-500">Cô Thỏ Hồng</div><div class="font-extrabold text-slate-700 leading-relaxed">${escapeHtml(activity.teacher || '')}</div></div><button onclick="speakOperationSenseActivity_()" class="ns-listen-btn" title="Nghe lại hướng dẫn">🔊 <span>Nghe cô nói</span></button></section>
+        <section class="ns-workspace mt-3">
+            <h3 class="text-center text-lg md:text-xl font-black text-slate-900 mb-3">${escapeHtml(activity.prompt || '')}</h3>
+            <div id="os-activity-stage" class="w-full">${renderOperationSenseActivityBody_(activity)}</div>
+            <div id="os-feedback" class="hidden mt-3 rounded-2xl border-2 p-3 text-center font-black"></div>
+            <div id="os-hint" class="hidden mt-3 rounded-2xl border border-amber-200 bg-amber-50 p-3 text-center font-bold text-amber-800"></div>
+        </section>
+        <div class="mt-3 flex flex-wrap justify-center gap-2">${evidenceList}</div>
+        <div class="mt-4 flex items-center justify-between gap-2"><button onclick="operationSenseShowHint_()" class="ns-secondary-btn">💡 Gợi ý</button><button onclick="renderOperationSenseActivity_()" class="ns-secondary-btn">↻ Làm lại</button><button id="os-next-btn" onclick="operationSenseNext_()" class="hidden ns-primary-btn">Tiếp tục →</button></div>
+    </div>`;
+    if (autoSpeechEnabled) setTimeout(() => speakOperationSenseActivity_(), 120);
+}
+
+function osChoiceButtons_(choices) {
+    return `<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 max-w-3xl mx-auto">${(choices || []).map(c => `<button class="ns-choice" onclick="operationSenseChoose_('${escapeJsString_(String(c))}', this)">${escapeHtml(String(c))}</button>`).join('')}</div>`;
+}
+function osObjects_(count, object, cls='') { return nsObjects_(count, object, cls); }
+function osStoryStrip_(a) {
+    const opText = a.operation === 'take' ? 'BỚT ĐI' : 'THÊM VÀO';
+    const start = a.start == null ? '?' : a.start;
+    const change = a.change == null ? '?' : a.change;
+    const result = a.result == null ? '?' : a.result;
+    return `<div class="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-2 max-w-3xl mx-auto">
+        <div class="os-story-card"><div class="os-story-label">LÚC ĐẦU</div><div class="os-story-value">${escapeHtml(String(start))}</div></div>
+        <div class="text-[10px] md:text-xs font-black ${a.operation==='take'?'text-rose-500':'text-emerald-600'}"><div class="text-2xl mb-1">${a.operation==='take'?'↘':'↗'}</div>${opText}</div>
+        <div class="os-story-card"><div class="os-story-label">THAY ĐỔI</div><div class="os-story-value">${escapeHtml(String(change))}</div></div>
+        <div class="text-2xl text-slate-300">→</div>
+        <div class="os-story-card"><div class="os-story-label">KẾT QUẢ</div><div class="os-story-value">${escapeHtml(String(result))}</div></div>
+    </div>`;
+}
+
+function renderOperationSenseActivityBody_(a) {
+    if (a.type === 'join_story') {
+        const bank = Array.from({length:Number(a.bank||a.change||3)},(_,i)=>`<button class="os-bank-object" onclick="operationSenseAddJoinObject_(this)">${escapeHtml(a.object)}</button>`).join('');
+        return `<div><div class="text-center text-xs font-black text-slate-400 mb-2">LÚC ĐẦU</div><div class="ns-visual-box"><div id="os-join-group" class="ns-object-row">${osObjects_(a.start,a.object)}</div></div><div class="mt-3 grid md:grid-cols-[1fr_1.2fr] gap-3"><div class="ns-bank"><div class="text-xs font-black text-violet-500 mb-2">CÁC BẠN CÓ THỂ ĐẾN THÊM</div><div class="flex flex-wrap justify-center gap-2">${bank}</div></div><div class="ns-tray"><div class="text-xs font-black text-pink-500">NHÓM SAU KHI THÊM</div><div id="os-join-final" class="ns-object-row mt-2">${osObjects_(a.start,a.object)}</div><div id="os-join-count" class="mt-2 text-xs font-black text-slate-400">Đã thêm: 0</div></div></div><div class="text-center mt-3"><button onclick="operationSenseCheckJoin_()" class="ns-primary-btn">Con làm xong rồi</button></div></div>`;
+    }
+    if (a.type === 'take_story') {
+        const objs = Array.from({length:Number(a.start)},(_,i)=>`<button class="os-action-object" onclick="operationSenseToggleRemove_(this,${i})"><span>${escapeHtml(a.object)}</span><span class="os-away-mark hidden">↗</span></button>`).join('');
+        return `<div><div class="ns-visual-box"><div class="flex flex-wrap justify-center gap-3">${objs}</div></div><div id="os-take-summary" class="mt-2 text-center text-xs font-black text-slate-400">Đã lấy ra: 0/${a.change}</div><div class="text-center mt-3"><button onclick="operationSenseCheckTake_()" class="ns-primary-btn">Con làm xong rồi</button></div></div>`;
+    }
+    if (a.type === 'combine_story') {
+        return `<div><div id="os-combine-before" class="grid grid-cols-2 gap-3 max-w-3xl mx-auto"><div class="ns-group-card"><div class="text-xs font-black text-rose-500 mb-2">PHẦN 1</div><div class="ns-object-row">${osObjects_(a.left,a.left_object)}</div></div><div class="ns-group-card"><div class="text-xs font-black text-emerald-600 mb-2">PHẦN 2</div><div class="ns-object-row">${osObjects_(a.right,a.right_object)}</div></div></div><div class="text-center mt-3"><button id="os-combine-btn" onclick="operationSenseCombine_()" class="ns-primary-btn">🤲 Gộp hai nhóm</button></div><div id="os-combine-after" class="hidden mt-3"></div><div id="os-combine-choices" class="hidden mt-4">${osChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'split_story') {
+        const objs = Array.from({length:Number(a.whole)},(_,i)=>`<button class="os-action-object" onclick="operationSenseToggleSplit_(this,${i})"><span>${escapeHtml(a.object)}</span></button>`).join('');
+        return `<div class="grid md:grid-cols-2 gap-3"><div class="ns-group-card"><div class="text-xs font-black text-violet-500 mb-2">WHOLE ${a.whole}</div><div class="flex flex-wrap justify-center gap-2">${objs}</div></div><div class="ns-part-card"><div class="text-xs font-black text-pink-500">PHẦN ĐƯỢC TÁCH RA</div><div id="os-split-target" class="ns-object-row min-h-[70px] mt-2"></div><div id="os-split-count" class="text-xs font-black text-slate-400 mt-2">Đã tách: 0/${a.target_part}</div></div><div class="md:col-span-2 text-center"><button onclick="operationSenseCheckSplit_()" class="ns-primary-btn">Con tách xong rồi</button></div></div>`;
+    }
+    if (a.type === 'missing_part') {
+        return `<div class="text-center"><div class="ns-whole-card max-w-3xl mx-auto"><div class="text-xs font-black text-violet-500">CẢ NHÓM CÓ ${a.whole}</div><div class="ns-object-row mt-2">${osObjects_(a.whole,a.object)}</div></div><div class="text-2xl my-2">↙️ &nbsp; ↘️</div><div class="grid grid-cols-2 gap-3 max-w-2xl mx-auto"><div class="ns-part-card"><div class="text-xs font-black text-sky-600">PHẦN NHÌN THẤY</div><div class="ns-object-row mt-2">${osObjects_(a.known,a.object)}</div></div><div class="ns-part-card"><div class="text-xs font-black text-pink-600">PHẦN BỊ CHE</div><div class="text-5xl mt-3">📦</div><div class="text-3xl font-black text-pink-500">?</div></div></div><div class="mt-4">${osChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'compare_difference') {
+        const max = Math.max(Number(a.left),Number(a.right));
+        const row = (n,obj) => Array.from({length:max},(_,i)=>`<div class="os-pair-cell">${i<n?`<span>${escapeHtml(obj)}</span>`:'<span class="text-slate-200">○</span>'}</div>`).join('');
+        return `<div><div class="max-w-3xl mx-auto rounded-2xl border border-indigo-100 bg-indigo-50/40 p-3"><div class="grid gap-2"><div class="os-pair-row">${row(a.left,a.left_object)}</div><div class="os-pair-row">${row(a.right,a.right_object)}</div></div><div class="mt-2 text-center text-[11px] font-black text-slate-500">Ghép theo từng cột. Phần không có cặp chính là độ chênh.</div></div><div class="mt-4">${osChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'story_unknown') {
+        return `<div>${osStoryStrip_(a)}<div class="mt-4">${osChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'equation_choice') {
+        const symbol = a.operation === 'take' ? '−' : '+';
+        return `<div class="text-center"><div class="ns-visual-box"><div><div class="ns-object-row">${osObjects_(a.start,a.object)}</div><div class="my-2 text-2xl font-black ${a.operation==='take'?'text-rose-500':'text-emerald-600'}">${symbol} ${a.change}</div><div class="text-sm font-black text-slate-500">Kết quả của câu chuyện: ${a.result}</div></div></div><div class="mt-4">${osChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'equality_balance') {
+        return `<div class="text-center"><div class="os-balance"><div class="os-balance-pan"><span>${escapeHtml(a.left)}</span></div><div class="text-5xl">⚖️</div><div class="os-balance-pan"><span>${escapeHtml(a.right)}</span></div></div><div class="mt-4">${osChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'equality_missing') {
+        return `<div class="text-center"><div class="ns-symbol-card">3 + 2 &nbsp; = &nbsp; □ + 1</div><div class="mt-4">${osChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'fact_family') {
+        return `<div class="text-center"><div class="max-w-xl mx-auto"><div class="ns-whole-card"><div class="text-xs font-black text-violet-500">WHOLE</div><div class="text-4xl font-black text-violet-700">${a.whole}</div></div><div class="text-2xl my-1">↙️ &nbsp; ↘️</div><div class="grid grid-cols-2 gap-3"><div class="ns-part-card"><div class="text-xs font-black text-sky-600">PART</div><div class="text-3xl font-black">${a.part1}</div></div><div class="ns-part-card"><div class="text-xs font-black text-pink-600">PART</div><div class="text-3xl font-black">${a.part2}</div></div></div></div><div class="mt-4">${osChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'count_path') {
+        const min = Math.max(0, Number(a.start) - 4), max = Math.min(20, Number(a.start) + Math.max(6,Number(a.steps)+3));
+        const cells = Array.from({length:max-min+1},(_,k)=>{ const n=min+k; return `<div id="os-path-${n}" class="os-path-cell ${n===Number(a.start)?'is-current':''}">${n}</div>`; }).join('');
+        return `<div class="text-center"><div class="flex flex-wrap justify-center gap-1.5">${cells}</div><div id="os-path-status" class="mt-3 font-black text-indigo-600">Bắt đầu ở ${a.start} · đã đi 0/${a.steps} bước</div><button onclick="operationSensePathStep_()" class="mt-3 ns-primary-btn">${Number(a.direction)>0?'➡️ Tiến 1 bước':'⬅️ Lùi 1 bước'}</button></div>`;
+    }
+    if (a.type === 'strategy_choice') {
+        return `<div class="text-center"><div class="ns-symbol-card">${escapeHtml(a.problem || '')}</div><div class="mt-4">${osChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'structured_choice') {
+        const max=Math.max(Number(a.a),Number(a.b));
+        const row=(n)=>Array.from({length:max},(_,i)=>`<span class="ns-static-object ${i<n?'':'opacity-0'}">${escapeHtml(a.object||'●')}</span>`).join('');
+        return `<div class="text-center"><div class="max-w-2xl mx-auto rounded-2xl border border-indigo-100 bg-indigo-50/40 p-4"><div class="ns-object-row">${row(a.a)}</div><div class="ns-object-row mt-2">${row(a.b)}</div></div><div class="mt-4">${osChoiceButtons_(a.choices)}</div></div>`;
+    }
+    if (a.type === 'make_ten') {
+        const cells = Array.from({length:10},(_,i)=>`<div class="ns-frame-cell ${i<Number(a.start)?'is-filled':''}" id="os-ten-cell-${i}">${i<Number(a.start)?'●':''}</div>`).join('');
+        const bank = Array.from({length:Number(a.addend)},(_,i)=>`<button id="os-ten-bank-${i}" class="os-bank-object" onclick="operationSenseMakeTenMove_(this)">●</button>`).join('');
+        return `<div><div class="ns-frame ns-frame-10">${cells}</div><div class="mt-3 ns-bank max-w-xl mx-auto"><div class="text-xs font-black text-indigo-500 mb-2">NHÓM ${a.addend} Ở NGOÀI KHUNG</div><div class="flex justify-center gap-2">${bank}</div></div><div id="os-ten-status" class="mt-2 text-center text-xs font-black text-slate-500">Đã chuyển 0 chấm vào khung.</div><div class="text-center mt-3"><button onclick="operationSenseCheckMakeTen_()" class="ns-primary-btn">Con làm đầy 10 rồi</button></div></div>`;
+    }
+    return '<div class="text-center font-bold text-slate-500">Hoạt động đang được cập nhật.</div>';
+}
+
+function operationSenseShowHint_() {
+    const a = currentOperationSenseActivity_();
+    if (!a) return;
+    operationSenseHintLevel = Math.min(3, operationSenseHintLevel + 1);
+    const hint = (a.hints || [])[operationSenseHintLevel - 1] || 'Con thử dựng lại câu chuyện bằng đồ vật nhé.';
+    const box = document.getElementById('os-hint');
+    if (box) { box.textContent = `💡 ${hint}`; box.classList.remove('hidden'); }
+}
+function operationSenseChoose_(value, btn) {
+    const a = currentOperationSenseActivity_();
+    if (!a) return;
+    document.querySelectorAll('#os-activity-stage .ns-choice').forEach(x=>x.classList.remove('ring-4','ring-violet-200'));
+    btn?.classList.add('ring-4','ring-violet-200');
+    if (String(value) === String(a.answer)) operationSenseCompleteActivity_();
+    else operationSenseWrong_();
+}
+
+function operationSenseAddJoinObject_(btn) {
+    const a=currentOperationSenseActivity_();
+    if(!a || a.type!=='join_story' || btn.disabled) return;
+    if(operationSenseMovedCount >= Number(a.bank||10)) return;
+    operationSenseMovedCount++;
+    btn.disabled=true; btn.classList.add('opacity-30','scale-90');
+    const final=document.getElementById('os-join-final');
+    if(final) final.innerHTML=osObjects_(Number(a.start)+operationSenseMovedCount,a.object);
+    const label=document.getElementById('os-join-count');
+    if(label) label.textContent=`Đã thêm: ${operationSenseMovedCount}`;
+    speakVietnamese(`Thêm ${operationSenseMovedCount}`, 0.98);
+}
+function operationSenseCheckJoin_() {
+    const a=currentOperationSenseActivity_(); if(!a) return;
+    if(operationSenseMovedCount===Number(a.change)) operationSenseCompleteActivity_();
+    else operationSenseWrong_(operationSenseMovedCount<Number(a.change)?'Con mới thêm chưa đủ số vật của câu chuyện.':'Con đã thêm nhiều hơn câu chuyện nói.');
+}
+
+function operationSenseToggleRemove_(btn,index) {
+    if(operationSenseRemoved.has(index)){operationSenseRemoved.delete(index);btn.classList.remove('is-removed');btn.querySelector('.os-away-mark')?.classList.add('hidden');}
+    else {operationSenseRemoved.add(index);btn.classList.add('is-removed');btn.querySelector('.os-away-mark')?.classList.remove('hidden');}
+    const a=currentOperationSenseActivity_(); const label=document.getElementById('os-take-summary');
+    if(a&&label) label.textContent=`Đã lấy ra: ${operationSenseRemoved.size}/${a.change}`;
+    if (a) speakVietnamese(`Đã lấy ra ${operationSenseRemoved.size}`, 0.98);
+}
+function operationSenseCheckTake_(){const a=currentOperationSenseActivity_();if(!a)return;if(operationSenseRemoved.size===Number(a.change))operationSenseCompleteActivity_();else operationSenseWrong_(`Con đang lấy ra ${operationSenseRemoved.size} vật; câu chuyện cần lấy ra ${a.change}.`);}
+
+function operationSenseCombine_(){const a=currentOperationSenseActivity_();if(!a)return;document.getElementById('os-combine-btn')?.classList.add('hidden');const after=document.getElementById('os-combine-after');if(after){after.innerHTML=`<div class="ns-visual-box"><div class="ns-object-row">${osObjects_(a.left,a.left_object)}${osObjects_(a.right,a.right_object)}</div></div>`;after.classList.remove('hidden');}document.getElementById('os-combine-choices')?.classList.remove('hidden');}
+
+function operationSenseToggleSplit_(btn,index){const a=currentOperationSenseActivity_();if(!a)return;if(operationSenseSplit.has(index)){operationSenseSplit.delete(index);btn.classList.remove('is-selected');}else{operationSenseSplit.add(index);btn.classList.add('is-selected');}const target=document.getElementById('os-split-target');if(target)target.innerHTML=osObjects_(operationSenseSplit.size,a.object);const label=document.getElementById('os-split-count');if(label)label.textContent=`Đã tách: ${operationSenseSplit.size}/${a.target_part}`;speakVietnamese(`Đã tách ${operationSenseSplit.size}`,0.98);}
+function operationSenseCheckSplit_(){const a=currentOperationSenseActivity_();if(!a)return;if(operationSenseSplit.size===Number(a.target_part))operationSenseCompleteActivity_();else operationSenseWrong_(`Con đang tách ${operationSenseSplit.size} vật; cần tách ${a.target_part}.`);}
+
+function operationSensePathStep_(){const a=currentOperationSenseActivity_();if(!a||operationSensePathCount>=Number(a.steps))return;const old=Number(a.start)+operationSensePathCount*Number(a.direction);document.getElementById(`os-path-${old}`)?.classList.remove('is-current');operationSensePathCount++;const now=Number(a.start)+operationSensePathCount*Number(a.direction);document.getElementById(`os-path-${now}`)?.classList.add('is-current');const st=document.getElementById('os-path-status');if(st)st.textContent=`Đang ở ${now} · đã đi ${operationSensePathCount}/${a.steps} bước`;speakVietnamese(String(now),0.98);if(operationSensePathCount===Number(a.steps)&&now===Number(a.answer))operationSenseCompleteActivity_();}
+
+function operationSenseMakeTenMove_(btn){const a=currentOperationSenseActivity_();if(!a||btn.disabled)return;const needed=10-Number(a.start);if(operationSenseMakeTenMoved>=needed)return;operationSenseMakeTenMoved++;btn.disabled=true;btn.classList.add('opacity-30','scale-90');const idx=Number(a.start)+operationSenseMakeTenMoved-1;const cell=document.getElementById(`os-ten-cell-${idx}`);if(cell){cell.textContent='●';cell.classList.add('is-filled');}const st=document.getElementById('os-ten-status');if(st)st.textContent=`Đã chuyển ${operationSenseMakeTenMoved} chấm vào khung · còn ${Number(a.addend)-operationSenseMakeTenMoved} chấm ở ngoài.`;speakVietnamese(`Chuyển ${operationSenseMakeTenMoved}`,0.98);}
+function operationSenseCheckMakeTen_(){const a=currentOperationSenseActivity_();if(!a)return;if(operationSenseMakeTenMoved===Number(a.answer_needed))operationSenseCompleteActivity_();else operationSenseWrong_(`Khung 10 cần đúng ${a.answer_needed} chấm nữa để đầy.`);}
+
+function operationSenseWrong_(message='') {
+    const fb=document.getElementById('os-feedback');
+    if(fb){fb.className='mt-3 rounded-2xl border-2 border-amber-200 bg-amber-50 p-3 text-center font-black text-amber-800';fb.textContent=`Chưa khớp với câu chuyện rồi. ${message || 'Con thử dựng lại điều đang xảy ra nhé.'}`;}
+    const a=currentOperationSenseActivity_(); speakVietnamese(a?.wrong_audio || message || 'Chưa khớp với câu chuyện rồi. Con thử dựng lại điều đang xảy ra nhé.',0.94);
+    const ev=readOperationSenseEvidence_(); const jid=activeOperationSense?.journeyId;
+    if(jid){const st=ev[jid]||{mastery:'not_observed',completed:[],attempts:0,hint_uses:0,transfer_correct:0};st.attempts=Number(st.attempts||0)+1;if(st.mastery==='not_observed')st.mastery='emerging';st.last_error_activity=currentOperationSenseActivity_()?.id||'';ev[jid]=st;writeOperationSenseEvidence_(ev);}
+}
+
+function operationSenseCompleteActivity_() {
+    const a=currentOperationSenseActivity_(); if(!a||!activeOperationSense)return;
+    const fb=document.getElementById('os-feedback');
+    if(fb){fb.className='mt-3 rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-3 text-center font-black text-emerald-700';fb.textContent=`✅ ${a.success || 'Con đã hiểu đúng điều đang xảy ra!'}`;}
+    speakVietnamese(a.success_audio || a.success || 'Con đã hiểu đúng điều đang xảy ra!',0.94);
+    document.getElementById('os-next-btn')?.classList.remove('hidden');
+    document.querySelectorAll('#os-activity-stage button').forEach(b=>b.disabled=true);
+    const ev=readOperationSenseEvidence_(); const jid=activeOperationSense.journeyId;
+    const st=ev[jid]||{mastery:'not_observed',completed:[],attempts:0,hint_uses:0,transfer_correct:0};
+    st.attempts=Number(st.attempts||0)+1; st.hint_uses=Number(st.hint_uses||0)+operationSenseHintLevel; st.completed=Array.isArray(st.completed)?st.completed:[];
+    if(!st.completed.includes(a.id))st.completed.push(a.id); if(a.transfer&&operationSenseHintLevel===0)st.transfer_correct=Number(st.transfer_correct||0)+1;
+    const allDone=activeOperationSense.journey.activities.every(x=>st.completed.includes(x.id));
+    if(allDone&&Number(st.transfer_correct||0)>0)st.mastery='generalized'; else if(allDone&&operationSenseHintLevel===0)st.mastery='independent'; else if(allDone)st.mastery='supported'; else if(operationSenseHintLevel===0)st.mastery='independent'; else st.mastery='supported';
+    st.last_seen=new Date().toISOString();st.last_activity=a.id;st.last_hint_level=operationSenseHintLevel;st.last_latency_ms=Math.max(0,Date.now()-Number(activeOperationSense.activityStartedAt||Date.now()));
+    st.last_evidence_type = a.transfer ? 'transfer' : (a.type.includes('story') ? 'meaning_action' : (['equation_choice','equality_balance','equality_missing','fact_family'].includes(a.type)?'representation':'strategy'));
+    ev[jid]=st;writeOperationSenseEvidence_(ev);
+}
+
+function operationSenseNext_() {
+    if(!activeOperationSense)return; const journey=activeOperationSense.journey;
+    if(activeOperationSense.activityIndex<journey.activities.length-1){activeOperationSense.activityIndex++;renderOperationSenseActivity_();return;}
+    const host=document.getElementById('operation-sense-content');const state=getOperationSenseJourneyState_(journey.id);
+    if(host)host.innerHTML=`<div class="w-full max-w-3xl mx-auto text-center py-6"><div class="text-6xl">🌟</div><h2 class="mt-3 text-2xl md:text-3xl font-black text-indigo-700">Con vừa hiểu thêm một mảnh của phép cộng và phép trừ!</h2><p class="mt-2 font-bold text-slate-600">${escapeHtml(journey.goal)}</p><div class="mt-4 inline-flex rounded-full border px-4 py-2 text-sm font-black ${operationSenseMasteryClass_(state.mastery)}">${escapeHtml(operationSenseMasteryLabel_(state.mastery))}</div><div class="mt-6 flex flex-wrap justify-center gap-3"><button onclick="openOperationSenseHub()" class="ns-secondary-btn">← Bản đồ 12.2</button>${journey.order<14?`<button onclick="startOperationSenseJourney_('OS2.${journey.order+1}')" class="ns-primary-btn">Hành trình tiếp theo →</button>`:''}</div></div>`;
+}
+
+
+
+// ==========================================
+// MỞ CÁC MỤC KHÁM PHÁ
 // ==========================================
 function openTopic(topicNum, topicName, icon) {
+    if (Number(topicNum) === 12) return openEpsilonMethodHub_();
     setAppShellRootMode_(false);
     if (Number(topicNum) === 11 && !requirePremium('Ôn tập')) return;
     if (Number(topicNum) === 11) setMainTabActive_('review');
@@ -1413,6 +2272,7 @@ function showLectureAndSubtopics(topicNum, topicName, topicObj) {
     
     document.getElementById('lecture-title').textContent = topicObj.lecture_title || topicName;
     document.getElementById('lecture-content').textContent = topicObj.lecture_content || topicObj.description || 'Chào mừng bé yêu! Hãy chọn một mục nhỏ bên dưới để bắt đầu luyện tập nhé.';
+    document.getElementById('lecture-content')?.classList.add('text-base', 'md:text-lg');
     document.getElementById('view-lecture').dataset.audioText = topicObj.lecture_audio_text || topicObj.lecture_content || topicObj.description || '';
 
     const groups = [], groupMap = {}, groupLabels = {};
@@ -1420,6 +2280,17 @@ function showLectureAndSubtopics(topicNum, topicName, topicObj) {
         const k = (q.sub_topic || 'Câu hỏi chung').trim();
         if (!groupMap[k]) { groupMap[k] = []; groups.push(k); groupLabels[k] = q.sub_topic_label || k; }
         groupMap[k].push(q);
+    });
+    groups.sort((a, b) => {
+        const pa = String(a).split('.').map(x => Number(x));
+        const pb = String(b).split('.').map(x => Number(x));
+        const len = Math.max(pa.length, pb.length);
+        for (let i = 0; i < len; i++) {
+            const va = Number.isFinite(pa[i]) ? pa[i] : 9999;
+            const vb = Number.isFinite(pb[i]) ? pb[i] : 9999;
+            if (va !== vb) return va - vb;
+        }
+        return String(a).localeCompare(String(b), 'vi');
     });
     pendingTopicQuiz.groups = groups; 
     pendingTopicQuiz.groupMap = groupMap;
@@ -1433,8 +2304,8 @@ function showLectureAndSubtopics(topicNum, topicName, topicObj) {
 
         subHtml += `
             <button onclick="selectSubtopic(${idx})" class="p-3 ${style.card} border-2 rounded-xl font-bold text-left transition-all flex items-center justify-between shadow-sm pastel-btn">
-                <span class="text-sm md:text-base leading-snug"><strong class="${style.num} mr-1.5">${idx + 1}.</strong> ${escapeHtml(displayTitle)}</span>
-                <span class="text-xs font-extrabold ${style.badge} px-2.5 py-0.5 rounded-full border shrink-0 ml-1.5 shadow-inner">${count} câu</span>
+                <span class="text-base md:text-lg lg:text-xl leading-snug"><strong class="${style.num} mr-1.5">${idx + 1}.</strong> ${escapeHtml(displayTitle)}</span>
+                <span class="text-sm md:text-base font-extrabold ${style.badge} px-2.5 py-0.5 rounded-full border shrink-0 ml-1.5 shadow-inner">${count} câu</span>
             </button>`;
     });
     setSubtopicGridColumns(groups.length);
@@ -1946,6 +2817,462 @@ function getFoundationPrompt(q) {
     return prompt || 'Con chọn đáp án đúng nhé!';
 }
 
+
+
+let muc1UiState = null;
+
+function getMuc1QuestionKey_(q) {
+    return `${q?.id ?? 'q'}::${q?.sub_topic || ''}::${q?.question_text || ''}`;
+}
+
+function extractEmojiTokens_(text) {
+    return String(text || '').match(/\p{Extended_Pictographic}/gu) || [];
+}
+
+function getMuc1NumericAnswer_(q) {
+    const raw = String(q?.answer ?? '').trim();
+    if (!raw) return null;
+    const n = Number(raw.replace(',', '.'));
+    return Number.isFinite(n) ? n : null;
+}
+
+function getMuc1ReadablePrompt(q) {
+    const lines = String(q?.question_text || '').split('\n').map(x => x.trim()).filter(Boolean);
+    const sub = String(q?.sub_topic || '');
+    if (sub === '1.1' || sub === '1.2') {
+        const lastQuestionLine = [...lines].reverse().find(line => /\?$/.test(line)) || lines[lines.length - 1] || 'Con hãy đếm thật kĩ nhé!';
+        return lastQuestionLine.replace(/^Số nào biểu diễn đúng số lượng này\??\s*/i, 'Có bao nhiêu hình? ');
+    }
+    if (sub === '1.3') return lines[lines.length - 1] || 'Con hãy so sánh hai nhóm nhé!';
+    if (sub === '1.4') return lines[lines.length - 1] || lines[0] || 'Con hãy so sánh thật kĩ nhé!';
+    if (sub === '1.5') return lines.find(line => /\?$/.test(line)) || lines[0] || 'Con hãy tìm phần còn lại nhé!';
+    return getFoundationPrompt(q);
+}
+
+function initMuc1UiState_(q) {
+    const key = getMuc1QuestionKey_(q);
+    if (muc1UiState && muc1UiState.key === key) return muc1UiState;
+
+    const sub = String(q?.sub_topic || '');
+    const state = { key, sub, mode: sub, dragType: null };
+
+    if (sub === '1.1' || sub === '1.2') {
+        let target = getMuc1NumericAnswer_(q);
+        if (!Number.isFinite(target)) {
+            const emojiCount = extractEmojiTokens_(q?.question_text || '').length;
+            target = emojiCount;
+        }
+        const frameSize = sub === '1.1' ? 5 : 10;
+        state.frameSize = frameSize;
+        state.target = Math.max(0, Math.min(frameSize, Number(target) || 0));
+        state.placed = 0;
+        state.emoji = getFoundationEmojiSeed(q);
+    } else if (sub === '1.5') {
+        const text = String(q?.question_text || '');
+        const nums = [...text.matchAll(/\d+/g)].map(m => Number(m[0]));
+        const whole = Number(nums[0] || getMuc1NumericAnswer_(q) || 0);
+        const known = Number(nums[1] || 0);
+        state.whole = Math.max(0, Math.min(10, whole));
+        state.known = Math.max(0, Math.min(state.whole, known));
+        state.missing = Math.max(0, state.whole - state.known);
+        state.placed = 0;
+        state.emoji = getFoundationEmojiSeed(q);
+    }
+
+    muc1UiState = state;
+    return state;
+}
+
+function resetMuc1UiState_() {
+    muc1UiState = null;
+}
+
+function buildMuc1TopNumberStrip_(count, showFilledOnly = true) {
+    return Array.from({ length: count }, (_, i) => `
+        <div class="w-11 md:w-12 text-center text-sm md:text-base font-black ${showFilledOnly ? 'text-slate-400' : 'text-violet-500'}">
+            ${showFilledOnly ? '' : i + 1}
+        </div>`).join('');
+}
+
+function getMuc1FrameCellTone_(index, frameSize) {
+    if (frameSize !== 10) return 'bg-pink-50 border-pink-200';
+    return index < 5 ? 'bg-amber-50 border-amber-200' : 'bg-sky-50 border-sky-200';
+}
+
+function buildMuc1CountingVisual_(q) {
+    const state = initMuc1UiState_(q);
+    const cellSizeClass = state.frameSize === 10 ? 'w-11 h-12 md:w-12 md:h-12 lg:w-[52px] lg:h-[54px]' : 'w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16';
+    const emojiSizeClass = 'text-[24px] md:text-[26px] lg:text-[28px]';
+    const slots = Array.from({ length: state.frameSize }, (_, i) => {
+        const filled = i < state.placed;
+        const tone = getMuc1FrameCellTone_(i, state.frameSize);
+        return `
+            <div class="flex flex-col items-center gap-1 shrink-0">
+                <div class="h-8 md:h-9 text-lg md:text-xl lg:text-2xl font-black leading-none ${filled ? 'text-violet-700' : 'text-transparent'}">${i + 1}</div>
+                <button type="button" onclick="muc1PlaceCountItem()" ondragover="event.preventDefault()" ondrop="muc1HandleDrop(event, 'count')" class="${cellSizeClass} rounded-xl border-2 ${tone} flex items-center justify-center shadow-inner">
+                    ${filled ? `<span class="${emojiSizeClass} leading-none">${state.emoji}</span>` : '<span class="text-pink-200 text-lg font-black">+</span>'}
+                </button>
+            </div>`;
+    }).join('');
+
+    const remaining = Math.max(0, state.target - state.placed);
+    const sourceItems = Array.from({ length: remaining }, (_, i) => `
+        <button type="button" draggable="true" ondragstart="muc1HandleDragStart(event, 'count', ${i})" onclick="muc1PlaceCountItem()" class="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full bg-white border-2 border-violet-200 hover:border-violet-400 shadow-sm flex items-center justify-center text-[24px] md:text-[26px] lg:text-[28px] leading-none transition-transform hover:scale-105">${state.emoji}</button>
+    `).join('');
+
+    const doneHtml = state.placed >= state.target
+        ? `<div class="text-center text-sm md:text-base font-black text-emerald-600 mt-2">Con đã đếm xong rồi. Bây giờ con chọn đáp án nhé!</div>`
+        : `<div class="text-center text-base md:text-lg font-black text-violet-600 mt-2">Con kéo từng hình lên các ô từ trái sang phải nhé.</div>`;
+
+    return `
+        <div class="w-full flex flex-col items-center justify-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 border border-violet-200 text-violet-700 text-base md:text-lg font-black mb-3 shadow-sm">
+                <span>🐰</span><span>Bước 1: Kéo từng hình lên hàng ô để đếm.</span>
+            </div>
+            <div class="flex flex-nowrap items-end justify-between gap-1 md:gap-1.5 w-full max-w-[760px] px-1 md:px-2 overflow-visible">${slots}</div>
+            <div class="w-full max-w-[640px] h-px bg-pink-100 my-4"></div>
+            <div class="flex flex-wrap items-center justify-center gap-3 md:gap-4 min-h-[70px] w-full px-2">${sourceItems || '<span class="text-base md:text-lg font-black text-slate-400">Không còn hình nào để kéo.</span>'}</div>
+            <div class="mt-3 flex items-center gap-2">
+                <button type="button" onclick="muc1ResetInteraction()" class="px-3 py-1.5 rounded-full border border-pink-200 bg-pink-50 text-pink-700 text-base md:text-lg font-black pastel-btn shadow-xs">Làm lại</button>
+                <div class="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-base md:text-lg font-black shadow-xs">Đã kéo: ${state.placed} / ${state.target}</div>
+            </div>
+            ${doneHtml}
+        </div>`;
+}
+
+function parseMuc1CompareFrameData_(q) {
+    const text = String(q?.question_text || '');
+    const lines = text.split('\n').map(x => x.trim()).filter(Boolean);
+    const emojiLines = lines.filter(line => extractEmojiTokens_(line).length > 0);
+    let topTokens = extractEmojiTokens_(emojiLines[0] || '');
+    let bottomTokens = extractEmojiTokens_(emojiLines[1] || '');
+    if (!topTokens.length || !bottomTokens.length) {
+        const nums = [...text.matchAll(/\d+/g)].map(m => Number(m[0]));
+        const a = Number(nums[0] || 0), b = Number(nums[1] || 0);
+        topTokens = Array.from({ length: a }, () => '🍊');
+        bottomTokens = Array.from({ length: b }, () => '🍎');
+    }
+    return {
+        topEmoji: topTokens[0] || '🍊',
+        bottomEmoji: bottomTokens[0] || '🍎',
+        topCount: topTokens.length,
+        bottomCount: bottomTokens.length
+    };
+}
+
+function buildMuc1CompareWithFrameVisual_(q) {
+    const data = parseMuc1CompareFrameData_(q);
+    const numbers = Array.from({ length: 10 }, (_, i) => `<div class="w-11 md:w-12 lg:w-[52px] text-center text-lg md:text-xl lg:text-2xl font-black text-violet-700">${i + 1}</div>`).join('');
+    const buildRow = (count, emoji, rowTone) => Array.from({ length: 10 }, (_, i) => {
+        const filled = i < count;
+        const tone = i < 5 ? rowTone[0] : rowTone[1];
+        return `<div class="w-11 h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] rounded-xl border-2 ${tone} flex items-center justify-center shadow-inner">${filled ? `<span class="text-[24px] md:text-[26px] lg:text-[28px] leading-none">${emoji}</span>` : ''}</div>`;
+    }).join('');
+
+    return `
+        <div class="w-full flex flex-col items-center justify-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-base md:text-lg font-black mb-3 shadow-sm">
+                <span>👀</span><span>Con nhìn xem hàng nào dài hơn nhé.</span>
+            </div>
+            <div class="flex items-center justify-between gap-1 w-full max-w-[760px] px-1 md:px-2 mb-1">${numbers}</div>
+            <div class="flex items-center justify-between gap-1 w-full max-w-[760px] px-1 md:px-2 mb-3">${buildRow(data.topCount, data.topEmoji, ['bg-amber-50 border-amber-200','bg-orange-50 border-orange-200'])}</div>
+            <div class="flex items-center justify-between gap-1 w-full max-w-[760px] px-1 md:px-2">${buildRow(data.bottomCount, data.bottomEmoji, ['bg-sky-50 border-sky-200','bg-violet-50 border-violet-200'])}</div>
+            <div class="mt-3 text-center text-base md:text-lg font-black text-slate-700">Hàng nào dài hơn thì nhóm đó nhiều hơn.</div>
+        </div>`;
+}
+
+function parseMuc1CompareNumbers_(q) {
+    const text = String(q?.question_text || '');
+    let m = text.match(/số\s+(\d+)\s+và\s+(\d+)/i);
+    if (!m) m = text.match(/(\d+)\s*\?\s*(\d+)/);
+    if (!m) {
+        const nums = [...text.matchAll(/\d+/g)].map(x => Number(x[0]));
+        if (nums.length >= 2) m = [null, nums[0], nums[1]];
+    }
+    const a = Number(m?.[1] || 0);
+    const b = Number(m?.[2] || 0);
+    return { a, b, topEmoji: '🍊', bottomEmoji: '🍎' };
+}
+
+function buildMuc1EmojiRowWithoutFrame_(count, emoji) {
+    const n = Math.max(0, Math.min(10, Number(count) || 0));
+    const sizeClass = 'text-[24px] md:text-[26px] lg:text-[28px]';
+    // Giữ 10 vị trí cố định để số lượng ít hay nhiều đều có cùng kích thước emoji.
+    return `<div class="grid grid-cols-10 items-center w-full max-w-[660px] px-1 md:px-2 ${sizeClass}">${Array.from({ length: 10 }, (_, i) => `
+        <div class="min-w-0 h-[50px] md:h-[58px] flex items-center justify-center">${i < n ? `<span class="leading-none">${emoji}</span>` : ''}</div>
+    `).join('')}</div>`;
+}
+
+function buildMuc1CompareWithoutFrameVisual_(q) {
+    const data = parseMuc1CompareNumbers_(q);
+    return `
+        <div class="w-full flex flex-col items-center justify-center gap-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-700 text-base md:text-lg font-black shadow-sm">
+                <span>🧠</span><span>Con tự đếm từng hàng rồi so sánh nhé.</span>
+            </div>
+            <div class="w-full max-w-[660px] rounded-2xl bg-white/85 border border-pink-100 px-4 md:px-6 py-4 shadow-sm">
+                <div class="flex justify-center mb-3">${buildMuc1EmojiRowWithoutFrame_(data.a, data.topEmoji)}</div>
+                <div class="w-3/4 mx-auto h-px bg-pink-100 mb-3"></div>
+                <div class="flex justify-center">${buildMuc1EmojiRowWithoutFrame_(data.b, data.bottomEmoji)}</div>
+            </div>
+        </div>`;
+}
+
+function buildMuc1PartWholeVisual_(q) {
+    const state = initMuc1UiState_(q);
+    // Khi bé chọn/kéo từng hình vào phần còn lại, gạch chân tương ứng trên NHÓM BAN ĐẦU
+    // từ PHẢI sang TRÁI để bé nhìn thấy từng phần đang được tách ra khỏi toàn thể.
+    const underlineFrom = Math.max(0, state.whole - state.placed);
+    const wholeStrip = Array.from({ length: state.whole }, (_, i) => {
+        const selected = i >= underlineFrom && state.placed > 0;
+        return `<span class="inline-flex items-end text-[24px] md:text-[26px] lg:text-[28px] leading-none ${selected ? 'border-b-[4px] md:border-b-[5px] border-rose-500 pb-1' : 'pb-[5px] md:pb-[6px]'}">${state.emoji}</span>`;
+    }).join('');
+    const knownStrip = Array.from({ length: state.known }, () => `<span class="text-[24px] md:text-[26px] lg:text-[28px]">${state.emoji}</span>`).join('');
+    const basketSlots = Array.from({ length: state.missing }, (_, i) => {
+        const filled = i < state.placed;
+        return `<button type="button" onclick="muc1PlacePartItem()" ondragover="event.preventDefault()" ondrop="muc1HandleDrop(event, 'part')" class="w-12 h-12 md:w-14 md:h-14 rounded-xl border-2 bg-pink-50 border-pink-200 flex items-center justify-center shadow-inner">${filled ? `<span class="text-[24px] md:text-[26px] lg:text-[28px]">${state.emoji}</span>` : '<span class="text-pink-200 font-black">+</span>'}</button>`;
+    }).join('');
+    const remaining = Math.max(0, state.missing - state.placed);
+    const sourceItems = Array.from({ length: remaining }, (_, i) => `<button type="button" draggable="true" ondragstart="muc1HandleDragStart(event, 'part', ${i})" onclick="muc1PlacePartItem()" class="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-violet-200 bg-white hover:border-violet-400 flex items-center justify-center text-[24px] md:text-[26px] lg:text-[28px] shadow-sm transition-transform hover:scale-105">${state.emoji}</button>`).join('');
+
+    return `
+        <div class="w-full flex flex-col items-center justify-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-700 text-base md:text-lg font-black mb-3 shadow-sm">
+                <span>🧺</span><span>Con kéo các hình còn lại vào rổ bên phải nhé.</span>
+            </div>
+            <div class="rounded-2xl border border-amber-200 bg-amber-50/70 px-4 py-3 shadow-sm mb-4 w-full max-w-[640px]">
+                <div class="text-center text-base md:text-lg font-black text-amber-700 mb-2">Nhóm ban đầu</div>
+                <div class="flex flex-wrap items-center justify-center gap-1.5">${wholeStrip}</div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 md:gap-5 w-full max-w-[640px]">
+                <div class="rounded-2xl border border-emerald-200 bg-emerald-50/70 px-3 py-3 shadow-sm">
+                    <div class="text-center text-base md:text-lg font-black text-emerald-700 mb-2">Nhóm đã biết</div>
+                    <div class="text-center text-4xl mb-2">🧺</div>
+                    <div class="flex flex-wrap items-center justify-center gap-1.5 min-h-[44px]">${knownStrip || '<span class="text-xs font-black text-slate-400">0 hình</span>'}</div>
+                </div>
+                <div class="rounded-2xl border border-pink-200 bg-pink-50/70 px-3 py-3 shadow-sm">
+                    <div class="text-center text-base md:text-lg font-black text-pink-700 mb-2">Nhóm còn lại</div>
+                    <div class="text-center text-4xl mb-2">🧺</div>
+                    <div class="flex flex-wrap items-center justify-center gap-1.5 min-h-[44px]">${basketSlots || '<span class="text-xs font-black text-slate-400">Không còn hình</span>'}</div>
+                </div>
+            </div>
+            <div class="w-full max-w-md h-px bg-pink-100 my-4"></div>
+            <div class="flex flex-wrap items-center justify-center gap-2 min-h-[50px]">${sourceItems || '<span class="text-base md:text-lg font-black text-slate-400">Con đã kéo đủ rồi.</span>'}</div>
+            <div class="mt-3 flex items-center gap-2">
+                <button type="button" onclick="muc1ResetInteraction()" class="px-3 py-1.5 rounded-full border border-pink-200 bg-pink-50 text-pink-700 text-base md:text-lg font-black pastel-btn shadow-xs">Làm lại</button>
+                <div class="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-base md:text-lg font-black shadow-xs">Đã kéo: ${state.placed} / ${state.missing}</div>
+            </div>
+        </div>`;
+}
+
+
+function parseMuc1PartWholeStaticData_(q) {
+    const text = String(q?.question_text || '');
+    const nums = [...text.matchAll(/\d+/g)].map(m => Number(m[0]));
+    const whole = Math.max(0, Math.min(10, Number(nums[0] || 0)));
+    const known = Math.max(0, Math.min(whole, Number(nums[1] || 0)));
+    return {
+        whole,
+        known,
+        missing: Math.max(0, whole - known),
+        emoji: getFoundationEmojiSeed(q)
+    };
+}
+
+function isMuc1PartWholeStaticQuestion_(q) {
+    const text = String(q?.question_text || '').toLowerCase();
+    const hasWhole = /có\s+\d+/.test(text);
+    const hasKnownPart = /một nhóm có\s+\d+/.test(text) || /đã xếp\s+\d+/.test(text);
+    const asksMissing = /nhóm còn lại/.test(text) && /(mấy|bao nhiêu)/.test(text);
+    return hasWhole && hasKnownPart && asksMissing;
+}
+
+function buildMuc1StaticTenFrame_(count, emoji) {
+    const n = Math.max(0, Math.min(10, Number(count) || 0));
+    return `
+        <div class="grid grid-cols-10 gap-1 md:gap-1.5 w-full max-w-[660px] px-1 md:px-2">
+            ${Array.from({ length: 10 }, (_, i) => {
+                const tone = i < 5
+                    ? 'bg-pink-50 border-pink-200'
+                    : 'bg-sky-50 border-sky-200';
+                return `
+                    <div class="w-11 h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] rounded-xl border-2 ${tone} flex items-center justify-center shadow-inner">
+                        ${i < n ? `<span class="text-[24px] md:text-[26px] lg:text-[28px] leading-none">${emoji}</span>` : ''}
+                    </div>`;
+            }).join('')}
+        </div>`;
+}
+
+function buildMuc1StaticNumberBond_(whole, known) {
+    // Nút tròn có đường kính đúng bằng ô của ten-frame bên trên.
+    const nodeClass = 'w-11 h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] rounded-full border-[3px] flex items-center justify-center text-xl md:text-2xl lg:text-[28px] font-black shadow-sm z-10';
+    return `
+        <div class="relative w-[260px] md:w-[300px] h-[145px] md:h-[160px]">
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 300 160" preserveAspectRatio="none" aria-hidden="true">
+                <line x1="150" y1="36" x2="95" y2="112" stroke="#4f46e5" stroke-width="4" stroke-linecap="round"></line>
+                <line x1="150" y1="36" x2="205" y2="112" stroke="#4f46e5" stroke-width="4" stroke-linecap="round"></line>
+            </svg>
+            <div class="absolute left-1/2 top-0 -translate-x-1/2 ${nodeClass} bg-violet-50 border-violet-600 text-violet-700">${whole}</div>
+            <div class="absolute left-[44px] md:left-[55px] bottom-0 ${nodeClass} bg-pink-50 border-pink-500 text-violet-700">${known}</div>
+            <div class="absolute right-[44px] md:right-[55px] bottom-0 ${nodeClass} bg-amber-50 border-amber-400 text-violet-700"></div>
+        </div>`;
+}
+
+function buildMuc1PartWholeStaticVisual_(q) {
+    const data = parseMuc1PartWholeStaticData_(q);
+    return `
+        <div class="w-full flex flex-col items-center justify-center gap-5 md:gap-6">
+            ${buildMuc1StaticTenFrame_(data.whole, data.emoji)}
+            ${buildMuc1StaticNumberBond_(data.whole, data.known)}
+        </div>`;
+}
+
+function getMuc1EmojiLines_(q) {
+    return String(q?.question_text || '')
+        .split('\n')
+        .map(x => x.trim())
+        .filter(Boolean)
+        .filter(line => extractEmojiTokens_(line).length > 0);
+}
+
+function buildMuc1UniformEmojiLinesVisual_(q) {
+    const emojiLines = getMuc1EmojiLines_(q);
+    if (!emojiLines.length) return buildFoundationSceneVisual(q);
+
+    const rows = emojiLines.slice(0, 2).map((line) => {
+        const tokens = extractEmojiTokens_(line).slice(0, 10);
+        return `
+            <div class="flex flex-wrap items-center justify-center gap-1.5 md:gap-2 w-full max-w-[660px] px-1 md:px-2">
+                ${tokens.map(token => `
+                    <div class="w-9 h-9 md:w-11 md:h-11 lg:w-12 lg:h-12 flex items-center justify-center shrink-0">
+                        <span class="text-[24px] md:text-[26px] lg:text-[28px] leading-none">${token}</span>
+                    </div>`).join('')}
+            </div>`;
+    }).join('<div class="w-3/4 h-px bg-pink-100"></div>');
+
+    return `<div class="w-full flex flex-col items-center justify-center gap-3">${rows}</div>`;
+}
+
+function buildMuc1TipText_(q) {
+    const sub = String(q?.sub_topic || '');
+    const state = initMuc1UiState_(q);
+    if (sub === '1.1' || sub === '1.2') {
+        if (state.placed < state.target) return 'Cô Thỏ Hồng: Con đếm lần lượt từng hình một nhé. Mỗi hình ứng với một số đếm.';
+        return 'Cô Thỏ Hồng: Số cuối cùng con đếm được chính là số lượng của cả nhóm đó.';
+    }
+    if (sub === '1.3') return 'Cô Thỏ Hồng: Con nhìn xem hàng nào dài hơn. Hàng dài hơn là nhóm nhiều hơn.';
+    if (sub === '1.4') return 'Cô Thỏ Hồng: Con tự đếm từng hàng rồi so sánh nhé. Không cần khung ô nữa đâu!';
+    if (sub === '1.5') {
+        if (state.placed < state.missing) return 'Cô Thỏ Hồng: Một phần đã biết rồi. Con tìm nốt phần còn lại nhé!';
+        return 'Cô Thỏ Hồng: Giỏi lắm! Một số có thể tách thành hai phần nhỏ hơn.';
+    }
+    if (sub === '1.6' && isMuc1PartWholeStaticQuestion_(q)) {
+        const data = parseMuc1PartWholeStaticData_(q);
+        return `Cô Thỏ Hồng: Cả nhóm có ${data.whole}. Một phần là ${data.known}. Con tìm phần còn lại nhé!`;
+    }
+    return 'Cô Thỏ Hồng: Con suy nghĩ thật kĩ rồi chọn đáp án đúng nhé!';
+}
+
+function buildMuc1VisualOnly_(q) {
+    const sub = String(q?.sub_topic || '');
+    if (sub === '1.1' || sub === '1.2') return buildMuc1CountingVisual_(q);
+    if (sub === '1.3') return buildMuc1CompareWithFrameVisual_(q);
+    if (sub === '1.4') return buildMuc1CompareWithoutFrameVisual_(q);
+    if (sub === '1.5') return buildMuc1PartWholeVisual_(q);
+    if (sub === '1.6') {
+        if (isMuc1PartWholeStaticQuestion_(q)) return buildMuc1PartWholeStaticVisual_(q);
+        if (getMuc1EmojiLines_(q).length) return buildMuc1UniformEmojiLinesVisual_(q);
+    }
+    return buildFoundationSceneVisual(q);
+}
+
+function refreshMuc1InteractiveZone_() {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q) return;
+    const host = document.getElementById('muc1-visual-host');
+    if (host) host.innerHTML = buildMuc1VisualOnly_(q);
+    const tipHost = document.getElementById('muc1-tip-host');
+    if (tipHost) tipHost.innerHTML = `<div class="mt-2 bg-amber-50 border border-amber-200 rounded-2xl px-3 py-2 text-base md:text-lg font-black text-amber-800 text-center shadow-xs">${escapeHtml(buildMuc1TipText_(q))}</div>`;
+}
+
+function muc1HandleDragStart(event, type, index) {
+    if (!event?.dataTransfer) return;
+    event.dataTransfer.setData('text/plain', `${type}:${index}`);
+    event.dataTransfer.effectAllowed = 'move';
+}
+
+function muc1HandleDrop(event, type) {
+    event.preventDefault();
+    if (type === 'count') muc1PlaceCountItem();
+    if (type === 'part') muc1PlacePartItem();
+}
+
+function muc1PlaceCountItem() {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q) return;
+    const state = initMuc1UiState_(q);
+    if (state.placed >= state.target) return;
+    state.placed += 1;
+    refreshMuc1InteractiveZone_();
+    try { speakVietnamese(String(state.placed), 0.94); } catch (e) {}
+}
+
+function muc1PlacePartItem() {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q) return;
+    const state = initMuc1UiState_(q);
+    if (state.placed >= state.missing) return;
+    state.placed += 1;
+    refreshMuc1InteractiveZone_();
+}
+
+function muc1ResetInteraction() {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q) return;
+    const state = initMuc1UiState_(q);
+    state.placed = 0;
+    refreshMuc1InteractiveZone_();
+}
+
+function formatMuc1PromptHtml_(q, prompt) {
+    const safe = escapeHtml(prompt);
+    if (String(q?.sub_topic || '') !== '1.4') return safe;
+    // Ở Mục 1.4, làm nổi bật chính hai số cần so sánh để trẻ 4-6 tuổi
+    // tập trung vào lượng/số thay vì bị lẫn với dấu hỏi hoặc câu dẫn.
+    return safe.replace(/\d+/g, m => `<span class="text-rose-600 font-black">${m}</span>`);
+}
+
+function buildMuc1QuestionLayout(q, speakerHtml) {
+    initMuc1UiState_(q);
+    const prompt = getMuc1ReadablePrompt(q);
+    const optionSizeClass = 'min-h-[50px] md:min-h-[56px] py-1.5';
+    const optionTextClass = 'text-lg md:text-xl lg:text-[22px]';
+
+    let optionsHtml = '';
+    q.options.forEach((opt, idx) => {
+        const formattedOpt = capitalizeFirstLetter(opt);
+        const letter = String.fromCharCode(65 + idx);
+        optionsHtml += `
+            <button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${opt.replace(/'/g, "\\'")}')" class="option-btn w-full ${optionSizeClass} px-3 bg-pink-50/40 hover:bg-pink-100/70 border-2 border-pink-200 rounded-2xl font-extrabold text-gray-800 transition-all flex items-center justify-center text-center shadow-xs pastel-btn">
+                <span class="flex items-center justify-center gap-2 leading-tight"><strong class="text-pink-600 text-lg md:text-xl">${letter}.</strong><span class="opt-text ${optionTextClass}">${escapeHtml(formattedOpt)}</span></span>
+                <span class="option-icon text-pink-500 text-lg md:text-xl ml-1"></span>
+            </button>`;
+    });
+
+    return `
+        <div class="w-full max-w-none grid grid-cols-1 md:grid-cols-[1.38fr_0.62fr] gap-3 md:gap-4 items-stretch py-1">
+            <div class="min-h-[250px] md:min-h-[300px] rounded-[28px] border-2 border-pink-100 bg-gradient-to-br from-amber-50 via-white to-sky-50 px-3 py-4 md:px-5 md:py-6 flex flex-col items-center justify-center overflow-hidden shadow-sm">
+                <div id="muc1-visual-host" class="w-full flex items-center justify-center">${buildMuc1VisualOnly_(q)}</div>
+            </div>
+            <div class="rounded-[28px] border border-pink-100 bg-white/95 px-3 py-4 md:px-4 md:py-5 flex flex-col justify-center shadow-sm">
+                <h3 class="text-lg md:text-xl lg:text-[22px] font-black text-slate-900 leading-snug text-center mb-1">${escapeHtml(prompt)}</h3>
+                ${speakerHtml}
+                <div id="muc1-tip-host">${`<div class="mt-2 bg-amber-50 border border-amber-200 rounded-2xl px-3 py-2 text-base md:text-lg font-black text-amber-800 text-center shadow-xs">${escapeHtml(buildMuc1TipText_(q))}</div>`}</div>
+                <div class="w-full grid grid-cols-2 gap-2.5 md:gap-3 mt-3">${optionsHtml}</div>
+            </div>
+        </div>`;
+}
+
 function buildFoundationQuestionLayout(q, speakerHtml) {
     const text = String(q?.question_text || '');
     const expressionMatch = text.match(/(?:\d+|\?)\s*[+−-]\s*(?:\d+|\?)\s*=\s*(?:\d+|\?)/);
@@ -1953,7 +3280,7 @@ function buildFoundationQuestionLayout(q, speakerHtml) {
     const prompt = getFoundationPrompt(q);
     // Mục 1 chủ yếu là nhận biết/đếm số 0-10: thu gọn để hình, câu hỏi và đáp án
     // cùng nằm cân đối trên màn hình laptop; không ảnh hưởng Foundation UI của Mục 2.
-    const isMuc1Compact = /^1\./.test(String(q?.sub_topic || ''));
+    const isMuc1Compact = Number(activeTopicId) === 1 || /^1\./.test(String(q?.sub_topic || ''));
     const visualWrapClass = isMuc1Compact
         ? 'w-full flex items-center justify-center origin-center scale-[0.58] md:scale-[0.62] lg:scale-[0.68]'
         : 'w-full flex items-center justify-center';
@@ -1979,12 +3306,12 @@ function buildFoundationQuestionLayout(q, speakerHtml) {
     });
 
     return `
-        <div class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-4 md:gap-5 items-stretch py-1">
+        <div class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-[1.08fr_0.92fr] gap-4 md:gap-5 items-stretch py-1">
             <div class="${visualPanelClass} rounded-[28px] border-2 border-pink-100 bg-gradient-to-br from-amber-50 via-white to-sky-50 px-3 py-5 md:px-6 md:py-7 flex flex-col items-center justify-center overflow-hidden shadow-sm">
                 <div class="${visualWrapClass}">${visual}</div>
             </div>
             <div class="rounded-[28px] border border-pink-100 bg-white/95 px-3 py-4 md:px-5 md:py-5 flex flex-col justify-center shadow-sm">
-                <h3 class="text-base md:text-lg lg:text-xl font-black text-slate-900 leading-snug text-center mb-1">${escapeHtml(prompt)}</h3>
+                <h3 class="text-base md:text-lg lg:text-xl font-black text-slate-900 leading-snug text-center mb-1">${formatMuc1PromptHtml_(q, prompt)}</h3>
                 ${speakerHtml}
                 <div class="w-full grid grid-cols-2 gap-2.5 md:gap-3 mt-2">${optionsHtml}</div>
             </div>
@@ -1997,7 +3324,7 @@ function loadQuestion() {
     if (!q) return;
 
     const isEvaluationMode = !!activeExamContext || !!activeRoadmapContext;
-    const isFoundationPractice = !isEvaluationMode && /^[12]\./.test(String(q.sub_topic || ''));
+    const isFoundationPractice = !isEvaluationMode && ([1, 2].includes(Number(activeTopicId)) || /^[12]\./.test(String(q.sub_topic || '')));
 
     if (isEvaluationMode) {
         document.getElementById('q-badge-index').textContent = `CÂU ${currentQIndex + 1} / ${activeQuestionsList.length}`;
@@ -2051,7 +3378,11 @@ function loadQuestion() {
 
     let html;
     if (isFoundationPractice) {
-        html = buildFoundationQuestionLayout(q, practiceSpeakerBtnHtml);
+        if (Number(activeTopicId) === 1 && /^1\./.test(String(q.sub_topic || ''))) {
+            html = buildMuc1QuestionLayout(q, practiceSpeakerBtnHtml);
+        } else {
+            html = buildFoundationQuestionLayout(q, practiceSpeakerBtnHtml);
+        }
     } else if (isLetterListen) {
         html = `
             ${mediaHtml}
