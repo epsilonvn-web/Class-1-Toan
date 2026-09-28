@@ -2,18 +2,18 @@
 // CẤU HÌNH 12 MỤC KHÁM PHÁ & MA TRẬN NĂNG LỰC TOAN_C1-C6 (TOÁN LỚP 1)
 // ==========================================
 const TOPICS_CONFIG = [
-    { id: 1, title: "1. Các số đến 10", desc: "Đọc, viết, đếm số 0-10, so sánh nhiều hơn ít hơn, sắp xếp thứ tự dãy số", icon: "🔢", color: "pink" },
-    { id: 2, title: "2. Phép cộng và phép trừ", desc: "Tách - gộp số, bảng cộng trừ, giao hoán, cộng trừ không nhớ đến 100", icon: "➕", color: "purple" },
-    { id: 3, title: "3. Các số trong phạm vi 100", desc: "Đọc viết số 11-100, cấu tạo số chục & đơn vị, bảng số, số tròn chục", icon: "💯", color: "indigo" },
-    { id: 4, title: "4. Hình học", desc: "Hình tròn, tam giác, vuông, chữ nhật; khối lập phương, khối hộp chữ nhật", icon: "📐", color: "amber" },
-    { id: 5, title: "5. Dãy số và quy luật", desc: "Số liền trước liền sau, số lớn nhất nhỏ nhất, chẵn lẻ, quy luật dãy số", icon: "🔗", color: "cyan" },
-    { id: 6, title: "6. Vị trí và không gian", desc: "Trên dưới, trái phải, trước sau, ở giữa, trong ngoài", icon: "🧭", color: "violet" },
-    { id: 7, title: "7. Độ dài và đơn vị đo", desc: "Ước lượng độ dài, đơn vị xăng-ti-mét (cm), tính toán & so sánh kèm cm", icon: "📏", color: "emerald" },
-    { id: 8, title: "8. Thời gian, lịch và kiểm đếm", desc: "Xem giờ đúng, các ngày trong tuần, hôm qua-hôm nay-ngày mai, thống kê", icon: "⏰", color: "blue" },
-    { id: 9, title: "9. Giải toán có lời văn", desc: "Đọc hiểu đề, phân tích từ khóa thêm/bớt, trình bày bài giải 3 phần", icon: "📝", color: "rose" },
-    { id: 10, title: "10. Toán tư duy nâng cao và IQ", desc: "Điền số khuyết, toán logic cân thăng bằng, đếm hình lồng ghép nâng cao", icon: "🧠", color: "yellow" },
-    { id: 11, title: "11. Ôn tập", desc: "Ôn tập học kỳ I, học kỳ II và tổng ôn tập cuối năm", icon: "📚", color: "purple" },
-    { id: 12, title: "12. Học Toán theo phương pháp mới", desc: "Hiểu bản chất qua thao tác, trực quan, diễn đạt rồi mới đi tới ký hiệu và tính thành thạo", icon: "✨", color: "fuchsia", engine: "epsilon-method" }
+    { id: 1, title: "1. Các số đến 10", desc: "Đọc, viết, đếm và so sánh số 0-10", icon: "🔢", color: "pink" },
+    { id: 2, title: "2. Phép cộng và phép trừ", desc: "Tách - gộp và thực hiện phép cộng, phép trừ", icon: "➕", color: "purple" },
+    { id: 3, title: "3. Các số trong phạm vi 100", desc: "Đọc, viết và cấu tạo các số đến 100", icon: "💯", color: "indigo" },
+    { id: 4, title: "4. Hình học", desc: "Nhận biết hình phẳng và một số hình khối", icon: "📐", color: "amber" },
+    { id: 5, title: "5. Dãy số và quy luật", desc: "Số liền trước, liền sau và quy luật dãy số", icon: "🔗", color: "cyan" },
+    { id: 6, title: "6. Vị trí và không gian", desc: "Xác định vị trí và quan hệ trong không gian", icon: "🧭", color: "violet" },
+    { id: 7, title: "7. Độ dài và đơn vị đo", desc: "So sánh, ước lượng và đo độ dài bằng cm", icon: "📏", color: "emerald" },
+    { id: 8, title: "8. Thời gian, lịch và kiểm đếm", desc: "Xem giờ, ngày trong tuần và kiểm đếm", icon: "⏰", color: "blue" },
+    { id: 9, title: "9. Giải toán có lời văn", desc: "Đọc hiểu, chọn phép tính và trình bày bài giải", icon: "📝", color: "rose" },
+    { id: 10, title: "10. Toán tư duy nâng cao và IQ", desc: "Suy luận logic, quy luật và bài toán nâng cao", icon: "🧠", color: "yellow" },
+    { id: 11, title: "11. Ôn tập", desc: "Ôn tập theo học kỳ và tổng ôn cuối năm", icon: "📚", color: "purple" },
+    { id: 12, title: "12. Học Toán theo phương pháp mới", desc: "Hiểu bản chất qua thao tác, trực quan và diễn đạt", icon: "✨", color: "fuchsia", engine: "epsilon-method" }
 ];
 
 const SUBTOPIC_PALETTES = [
@@ -357,7 +357,7 @@ async function renderDashboardGrid() {
                     <h3 class="font-extrabold text-${t.color}-700 text-base md:text-lg leading-snug overflow-hidden" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${t.title}</h3>
                 </div>
                 <div class="flex justify-between items-end gap-2 mt-2.5 pt-2 border-t border-pink-100 font-bold text-gray-600">
-                    <span class="flex-1 text-sm md:text-[15px] leading-snug overflow-hidden" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;">${t.desc}</span>
+                    <span class="flex-1 text-sm md:text-[15px] leading-snug overflow-hidden" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${t.desc}</span>
                     <span class="shrink-0 bg-${t.color}-50 text-${t.color}-600 px-2.5 py-1 rounded-full text-xs md:text-sm font-extrabold">${countLabel}</span>
                 </div>
             </div>
@@ -2263,12 +2263,57 @@ function setSubtopicGridColumns(count) {
     if (count > 6) {
         el.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 w-full max-w-4xl';
     } else {
-        el.className = 'grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-2xl';
+        el.className = 'grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-5xl';
     }
 }
 
+
+function formatSubtopicLabelWithCode_(code, label) {
+    const safeCode = String(code || '').trim();
+    const safeLabel = beautifySubtopicName(label || safeCode || '');
+    if (!safeCode) return safeLabel;
+    if (safeLabel.startsWith(`${safeCode} `) || safeLabel.startsWith(`${safeCode}.`) || safeLabel.startsWith(`${safeCode} -`)) return safeLabel;
+    return `${safeCode} ${safeLabel}`.trim();
+}
+
+function mapMuc2Stage_(q) {
+    const src = String(q?._source_sub_topic || q?.sub_topic || '');
+    const id = Number(q?.question_id ?? q?.id ?? 0);
+
+    if (['2.1', '2.2', '2.3'].includes(src)) return { code: '2.1', name: 'Hiểu phép cộng' };
+    if (src === '2.4') return { code: '2.2', name: 'Phép cộng trong phạm vi 10' };
+    if (['2.6', '2.7', '2.8'].includes(src)) return { code: '2.3', name: 'Hiểu phép trừ' };
+    if (src === '2.9') return { code: '2.4', name: 'Phép trừ trong phạm vi 10' };
+    if (src === '2.5') return { code: '2.5', name: 'Luyện tập có hỗ trợ' };
+
+    // Ngân hàng tổng hợp cũ: các câu trừ tìm số thiếu được đưa vào 2.5
+    // để phần luyện có hỗ trợ có cả cộng và trừ. Phần còn lại là thực hành độc lập.
+    if (src === '2.10' && [2291, 2293, 2295, 2297, 2299].includes(id)) {
+        return { code: '2.5', name: 'Luyện tập có hỗ trợ' };
+    }
+    if (src === '2.10') return { code: '2.6', name: 'Thực hành tổng hợp' };
+
+    return { code: src || '2.6', name: q?.sub_topic_label || 'Thực hành tổng hợp' };
+}
+
+function remapMuc2Questions_(questions) {
+    return (questions || []).map(q => {
+        const stage = mapMuc2Stage_(q);
+        return {
+            ...q,
+            _source_sub_topic: String(q?._source_sub_topic || q?.sub_topic || ''),
+            _muc2_stage: stage.code,
+            sub_topic: stage.code,
+            sub_topic_label: stage.name
+        };
+    });
+}
+
 function showLectureAndSubtopics(topicNum, topicName, topicObj) {
-    pendingTopicQuiz = { topicNum, topicName, questions: topicObj.questions };
+    const topicQuestions = Number(topicNum) === 2
+        ? remapMuc2Questions_(topicObj.questions)
+        : (topicObj.questions || []);
+    pendingTopicQuiz = { topicNum, topicName, questions: topicQuestions };
     
     document.getElementById('lecture-title').textContent = topicObj.lecture_title || topicName;
     document.getElementById('lecture-content').textContent = topicObj.lecture_content || topicObj.description || 'Chào mừng bé yêu! Hãy chọn một mục nhỏ bên dưới để bắt đầu luyện tập nhé.';
@@ -2276,7 +2321,7 @@ function showLectureAndSubtopics(topicNum, topicName, topicObj) {
     document.getElementById('view-lecture').dataset.audioText = topicObj.lecture_audio_text || topicObj.lecture_content || topicObj.description || '';
 
     const groups = [], groupMap = {}, groupLabels = {};
-    topicObj.questions.forEach(q => {
+    topicQuestions.forEach(q => {
         const k = (q.sub_topic || 'Câu hỏi chung').trim();
         if (!groupMap[k]) { groupMap[k] = []; groups.push(k); groupLabels[k] = q.sub_topic_label || k; }
         groupMap[k].push(q);
@@ -2299,12 +2344,12 @@ function showLectureAndSubtopics(topicNum, topicName, topicObj) {
     let subHtml = '';
     groups.forEach((subName, idx) => {
         const style = SUBTOPIC_PALETTES[idx % SUBTOPIC_PALETTES.length];
-        const displayTitle = beautifySubtopicName(groupLabels[subName]);
+        const displayTitle = [3, 4].includes(Number(topicNum)) ? beautifySubtopicName(groupLabels[subName]) : formatSubtopicLabelWithCode_(subName, groupLabels[subName]);
         const count = groupMap[subName].length;
 
         subHtml += `
-            <button onclick="selectSubtopic(${idx})" class="p-3 ${style.card} border-2 rounded-xl font-bold text-left transition-all flex items-center justify-between shadow-sm pastel-btn">
-                <span class="text-base md:text-lg lg:text-xl leading-snug"><strong class="${style.num} mr-1.5">${idx + 1}.</strong> ${escapeHtml(displayTitle)}</span>
+            <button onclick="selectSubtopic(${idx})" class="px-3 py-2.5 ${style.card} border-2 rounded-xl font-bold text-left transition-all flex items-center justify-between gap-2 shadow-sm pastel-btn">
+                <span class="text-base md:text-lg leading-tight sm:whitespace-nowrap"><strong class="${style.num} mr-1.5">${idx + 1}.</strong> ${escapeHtml(displayTitle)}</span>
                 <span class="text-sm md:text-base font-extrabold ${style.badge} px-2.5 py-0.5 rounded-full border shrink-0 ml-1.5 shadow-inner">${count} câu</span>
             </button>`;
     });
@@ -2326,7 +2371,7 @@ function selectSubtopic(idx) {
     const { topicNum, topicName, questions, groups, groupMap, groupLabels } = pendingTopicQuiz;
     const subLabel = idx !== null ? groups[idx] : null;
     const pool = idx !== null ? groupMap[subLabel] : questions;
-    const displayLabel = subLabel ? beautifySubtopicName(groupLabels[subLabel]) : null;
+    const displayLabel = subLabel ? formatSubtopicLabelWithCode_(subLabel, groupLabels[subLabel]) : null;
     const finalTitle = displayLabel ? `${topicName} - ${displayLabel}` : topicName;
 
     practiceCycleRawPool = [...pool];
@@ -2929,7 +2974,7 @@ function buildMuc1CountingVisual_(q) {
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 border border-violet-200 text-violet-700 text-base md:text-lg font-black mb-3 shadow-sm">
                 <span>🐰</span><span>Bước 1: Kéo từng hình lên hàng ô để đếm.</span>
             </div>
-            <div class="flex flex-nowrap items-end justify-between gap-1 md:gap-1.5 w-full max-w-[760px] px-1 md:px-2 overflow-visible">${slots}</div>
+            <div class="grid grid-cols-5 md:grid-cols-10 gap-1 md:gap-1.5 justify-items-center w-full max-w-[760px] px-1 md:px-2 overflow-visible">${slots}</div>
             <div class="w-full max-w-[640px] h-px bg-pink-100 my-4"></div>
             <div class="flex flex-wrap items-center justify-center gap-3 md:gap-4 min-h-[70px] w-full px-2">${sourceItems || '<span class="text-base md:text-lg font-black text-slate-400">Không còn hình nào để kéo.</span>'}</div>
             <div class="mt-3 flex items-center gap-2">
@@ -2974,9 +3019,9 @@ function buildMuc1CompareWithFrameVisual_(q) {
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-base md:text-lg font-black mb-3 shadow-sm">
                 <span>👀</span><span>Con nhìn xem hàng nào dài hơn nhé.</span>
             </div>
-            <div class="flex items-center justify-between gap-1 w-full max-w-[760px] px-1 md:px-2 mb-1">${numbers}</div>
-            <div class="flex items-center justify-between gap-1 w-full max-w-[760px] px-1 md:px-2 mb-3">${buildRow(data.topCount, data.topEmoji, ['bg-amber-50 border-amber-200','bg-orange-50 border-orange-200'])}</div>
-            <div class="flex items-center justify-between gap-1 w-full max-w-[760px] px-1 md:px-2">${buildRow(data.bottomCount, data.bottomEmoji, ['bg-sky-50 border-sky-200','bg-violet-50 border-violet-200'])}</div>
+            <div class="grid grid-cols-5 md:grid-cols-10 gap-1 md:gap-1.5 justify-items-center w-full max-w-[760px] px-1 md:px-2 mb-1">${numbers}</div>
+            <div class="grid grid-cols-5 md:grid-cols-10 gap-1 md:gap-1.5 justify-items-center w-full max-w-[760px] px-1 md:px-2 mb-3">${buildRow(data.topCount, data.topEmoji, ['bg-amber-50 border-amber-200','bg-orange-50 border-orange-200'])}</div>
+            <div class="grid grid-cols-5 md:grid-cols-10 gap-1 md:gap-1.5 justify-items-center w-full max-w-[760px] px-1 md:px-2">${buildRow(data.bottomCount, data.bottomEmoji, ['bg-sky-50 border-sky-200','bg-violet-50 border-violet-200'])}</div>
             <div class="mt-3 text-center text-base md:text-lg font-black text-slate-700">Hàng nào dài hơn thì nhóm đó nhiều hơn.</div>
         </div>`;
 }
@@ -2998,7 +3043,7 @@ function buildMuc1EmojiRowWithoutFrame_(count, emoji) {
     const n = Math.max(0, Math.min(10, Number(count) || 0));
     const sizeClass = 'text-[24px] md:text-[26px] lg:text-[28px]';
     // Giữ 10 vị trí cố định để số lượng ít hay nhiều đều có cùng kích thước emoji.
-    return `<div class="grid grid-cols-10 items-center w-full max-w-[660px] px-1 md:px-2 ${sizeClass}">${Array.from({ length: 10 }, (_, i) => `
+    return `<div class="grid grid-cols-5 md:grid-cols-10 items-center w-full max-w-[660px] px-1 md:px-2 ${sizeClass}">${Array.from({ length: 10 }, (_, i) => `
         <div class="min-w-0 h-[50px] md:h-[58px] flex items-center justify-center">${i < n ? `<span class="leading-none">${emoji}</span>` : ''}</div>
     `).join('')}</div>`;
 }
@@ -3020,51 +3065,72 @@ function buildMuc1CompareWithoutFrameVisual_(q) {
 
 function buildMuc1PartWholeVisual_(q) {
     const state = initMuc1UiState_(q);
-    // Khi bé chọn/kéo từng hình vào phần còn lại, gạch chân tương ứng trên NHÓM BAN ĐẦU
-    // từ PHẢI sang TRÁI để bé nhìn thấy từng phần đang được tách ra khỏi toàn thể.
-    const underlineFrom = Math.max(0, state.whole - state.placed);
+    const selectedKnown = Math.min(state.placed, state.known);
+    const done = selectedKnown >= state.known;
+
+    // Bé bấm lần lượt các hình ở "Nhóm đã biết".
+    // Mỗi lần bấm, một hình tương ứng ở hàng tổng được gạch chân từ trái sang phải.
+    // Khi đã bấm đủ phần biết, phần KHÔNG gạch chân chính là phần còn lại.
     const wholeStrip = Array.from({ length: state.whole }, (_, i) => {
-        const selected = i >= underlineFrom && state.placed > 0;
-        return `<span class="inline-flex items-end text-[24px] md:text-[26px] lg:text-[28px] leading-none ${selected ? 'border-b-[4px] md:border-b-[5px] border-rose-500 pb-1' : 'pb-[5px] md:pb-[6px]'}">${state.emoji}</span>`;
+        const underlined = i < selectedKnown;
+        const isRemaining = done && i >= state.known;
+        const remainingClass = isRemaining
+            ? 'bg-amber-100 ring-2 ring-amber-300 rounded-lg px-1 py-1'
+            : '';
+        return `
+            <span class="inline-flex items-end text-[24px] md:text-[26px] lg:text-[28px] leading-none ${remainingClass} ${underlined ? 'border-b-[4px] md:border-b-[5px] border-rose-500 pb-1' : 'pb-[5px] md:pb-[6px]'}">
+                ${state.emoji}
+            </span>`;
     }).join('');
-    const knownStrip = Array.from({ length: state.known }, () => `<span class="text-[24px] md:text-[26px] lg:text-[28px]">${state.emoji}</span>`).join('');
-    const basketSlots = Array.from({ length: state.missing }, (_, i) => {
-        const filled = i < state.placed;
-        return `<button type="button" onclick="muc1PlacePartItem()" ondragover="event.preventDefault()" ondrop="muc1HandleDrop(event, 'part')" class="w-12 h-12 md:w-14 md:h-14 rounded-xl border-2 bg-pink-50 border-pink-200 flex items-center justify-center shadow-inner">${filled ? `<span class="text-[24px] md:text-[26px] lg:text-[28px]">${state.emoji}</span>` : '<span class="text-pink-200 font-black">+</span>'}</button>`;
+
+    const knownStrip = Array.from({ length: state.known }, (_, i) => {
+        const used = i < selectedKnown;
+        return `
+            <button type="button" onclick="muc1PlacePartItem()" ${used ? 'disabled' : ''}
+                class="w-11 h-11 md:w-12 md:h-12 rounded-full border-2 ${used ? 'border-emerald-100 bg-emerald-50 opacity-30' : 'border-emerald-200 bg-white hover:border-emerald-400 hover:scale-105'} flex items-center justify-center shadow-sm transition-all">
+                <span class="text-[24px] md:text-[26px] lg:text-[28px] leading-none">${state.emoji}</span>
+            </button>`;
     }).join('');
-    const remaining = Math.max(0, state.missing - state.placed);
-    const sourceItems = Array.from({ length: remaining }, (_, i) => `<button type="button" draggable="true" ondragstart="muc1HandleDragStart(event, 'part', ${i})" onclick="muc1PlacePartItem()" class="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-violet-200 bg-white hover:border-violet-400 flex items-center justify-center text-[24px] md:text-[26px] lg:text-[28px] shadow-sm transition-transform hover:scale-105">${state.emoji}</button>`).join('');
+
+    const remainingStrip = done
+        ? Array.from({ length: state.missing }, () => `
+            <span class="w-11 h-11 md:w-12 md:h-12 rounded-full border-2 border-pink-200 bg-white flex items-center justify-center shadow-sm">
+                <span class="text-[24px] md:text-[26px] lg:text-[28px] leading-none">${state.emoji}</span>
+            </span>`).join('')
+        : `<div class="text-3xl md:text-4xl font-black text-pink-300 leading-none">?</div>`;
 
     return `
         <div class="w-full flex flex-col items-center justify-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-700 text-base md:text-lg font-black mb-3 shadow-sm">
-                <span>🧺</span><span>Con kéo các hình còn lại vào rổ bên phải nhé.</span>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-700 text-base md:text-lg font-black mb-2 shadow-sm">
+                <span>🐰</span><span>Con ấn lần lượt vào các hình ở phần đã biết nhé.</span>
             </div>
-            <div class="rounded-2xl border border-amber-200 bg-amber-50/70 px-4 py-3 shadow-sm mb-4 w-full max-w-[640px]">
-                <div class="text-center text-base md:text-lg font-black text-amber-700 mb-2">Nhóm ban đầu</div>
+
+            <div class="rounded-2xl border border-amber-200 bg-amber-50/70 px-4 py-2.5 shadow-sm mb-2.5 w-full max-w-[640px]">
+                <div class="text-center text-base md:text-lg font-black text-amber-700 mb-1.5">Nhóm ban đầu</div>
                 <div class="flex flex-wrap items-center justify-center gap-1.5">${wholeStrip}</div>
+                ${done ? `<div class="text-center text-sm md:text-base font-black text-pink-600 mt-1.5">Phần không gạch chân là nhóm còn lại.</div>` : ''}
             </div>
-            <div class="grid grid-cols-2 gap-3 md:gap-5 w-full max-w-[640px]">
-                <div class="rounded-2xl border border-emerald-200 bg-emerald-50/70 px-3 py-3 shadow-sm">
-                    <div class="text-center text-base md:text-lg font-black text-emerald-700 mb-2">Nhóm đã biết</div>
-                    <div class="text-center text-4xl mb-2">🧺</div>
-                    <div class="flex flex-wrap items-center justify-center gap-1.5 min-h-[44px]">${knownStrip || '<span class="text-xs font-black text-slate-400">0 hình</span>'}</div>
+
+            <div class="grid grid-cols-2 gap-2.5 md:gap-4 w-full max-w-[640px]">
+                <div class="rounded-2xl border border-emerald-200 bg-emerald-50/70 px-3 py-2.5 shadow-sm">
+                    <div class="text-center text-base md:text-lg font-black text-emerald-700 mb-1">Nhóm đã biết</div>
+                    <div class="text-center text-xs md:text-sm font-bold text-emerald-600 mb-2">Ấn vào từng hình</div>
+                    <div class="flex flex-wrap items-center justify-center gap-1.5 min-h-[48px]">${knownStrip || '<span class="text-xs font-black text-slate-400">0 hình</span>'}</div>
                 </div>
-                <div class="rounded-2xl border border-pink-200 bg-pink-50/70 px-3 py-3 shadow-sm">
-                    <div class="text-center text-base md:text-lg font-black text-pink-700 mb-2">Nhóm còn lại</div>
-                    <div class="text-center text-4xl mb-2">🧺</div>
-                    <div class="flex flex-wrap items-center justify-center gap-1.5 min-h-[44px]">${basketSlots || '<span class="text-xs font-black text-slate-400">Không còn hình</span>'}</div>
+
+                <div class="rounded-2xl border border-pink-200 bg-pink-50/70 px-3 py-2.5 shadow-sm">
+                    <div class="text-center text-base md:text-lg font-black text-pink-700 mb-1">Nhóm còn lại</div>
+                    <div class="text-center text-xs md:text-sm font-bold ${done ? 'text-pink-600' : 'text-slate-400'} mb-2">${done ? 'Con đã tìm thấy' : 'Chưa lộ ra'}</div>
+                    <div class="flex flex-wrap items-center justify-center gap-1.5 min-h-[48px]">${remainingStrip}</div>
                 </div>
             </div>
-            <div class="w-full max-w-md h-px bg-pink-100 my-4"></div>
-            <div class="flex flex-wrap items-center justify-center gap-2 min-h-[50px]">${sourceItems || '<span class="text-base md:text-lg font-black text-slate-400">Con đã kéo đủ rồi.</span>'}</div>
-            <div class="mt-3 flex items-center gap-2">
+
+            <div class="mt-2.5 flex items-center gap-2">
                 <button type="button" onclick="muc1ResetInteraction()" class="px-3 py-1.5 rounded-full border border-pink-200 bg-pink-50 text-pink-700 text-base md:text-lg font-black pastel-btn shadow-xs">Làm lại</button>
-                <div class="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-base md:text-lg font-black shadow-xs">Đã kéo: ${state.placed} / ${state.missing}</div>
+                <div class="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-base md:text-lg font-black shadow-xs">Đã chọn: ${selectedKnown} / ${state.known}</div>
             </div>
         </div>`;
 }
-
 
 function parseMuc1PartWholeStaticData_(q) {
     const text = String(q?.question_text || '');
@@ -3090,7 +3156,7 @@ function isMuc1PartWholeStaticQuestion_(q) {
 function buildMuc1StaticTenFrame_(count, emoji) {
     const n = Math.max(0, Math.min(10, Number(count) || 0));
     return `
-        <div class="grid grid-cols-10 gap-1 md:gap-1.5 w-full max-w-[660px] px-1 md:px-2">
+        <div class="grid grid-cols-5 md:grid-cols-10 gap-1 md:gap-1.5 w-full max-w-[660px] px-1 md:px-2">
             ${Array.from({ length: 10 }, (_, i) => {
                 const tone = i < 5
                     ? 'bg-pink-50 border-pink-200'
@@ -3139,14 +3205,18 @@ function buildMuc1UniformEmojiLinesVisual_(q) {
     const emojiLines = getMuc1EmojiLines_(q);
     if (!emojiLines.length) return buildFoundationSceneVisual(q);
 
-    const rows = emojiLines.slice(0, 2).map((line) => {
+    const rows = emojiLines.slice(0, 2).map((line, rowIndex) => {
         const tokens = extractEmojiTokens_(line).slice(0, 10);
+        const rowLabel = rowIndex === 0 ? 'A' : 'B';
         return `
-            <div class="flex flex-wrap items-center justify-center gap-1.5 md:gap-2 w-full max-w-[660px] px-1 md:px-2">
-                ${tokens.map(token => `
-                    <div class="w-9 h-9 md:w-11 md:h-11 lg:w-12 lg:h-12 flex items-center justify-center shrink-0">
-                        <span class="text-[24px] md:text-[26px] lg:text-[28px] leading-none">${token}</span>
-                    </div>`).join('')}
+            <div class="grid grid-cols-[42px_1fr] md:grid-cols-[52px_1fr] items-center w-full max-w-[700px] px-1 md:px-2">
+                <div class="text-2xl md:text-3xl font-black text-violet-700 text-center">${rowLabel}</div>
+                <div class="flex flex-wrap items-center justify-center gap-1.5 md:gap-2 min-w-0">
+                    ${tokens.map(token => `
+                        <div class="w-9 h-9 md:w-11 md:h-11 lg:w-12 lg:h-12 flex items-center justify-center shrink-0">
+                            <span class="text-[24px] md:text-[26px] lg:text-[28px] leading-none">${token}</span>
+                        </div>`).join('')}
+                </div>
             </div>`;
     }).join('<div class="w-3/4 h-px bg-pink-100"></div>');
 
@@ -3163,7 +3233,7 @@ function buildMuc1TipText_(q) {
     if (sub === '1.3') return 'Cô Thỏ Hồng: Con nhìn xem hàng nào dài hơn. Hàng dài hơn là nhóm nhiều hơn.';
     if (sub === '1.4') return 'Cô Thỏ Hồng: Con tự đếm từng hàng rồi so sánh nhé. Không cần khung ô nữa đâu!';
     if (sub === '1.5') {
-        if (state.placed < state.missing) return 'Cô Thỏ Hồng: Một phần đã biết rồi. Con tìm nốt phần còn lại nhé!';
+        if (state.placed < state.known) return 'Cô Thỏ Hồng: Con ấn lần lượt vào từng hình ở phần đã biết nhé!';
         return 'Cô Thỏ Hồng: Giỏi lắm! Một số có thể tách thành hai phần nhỏ hơn.';
     }
     if (sub === '1.6' && isMuc1PartWholeStaticQuestion_(q)) {
@@ -3221,7 +3291,7 @@ function muc1PlacePartItem() {
     const q = activeQuestionsList?.[currentQIndex];
     if (!q) return;
     const state = initMuc1UiState_(q);
-    if (state.placed >= state.missing) return;
+    if (state.placed >= state.known) return;
     state.placed += 1;
     refreshMuc1InteractiveZone_();
 }
@@ -3273,6 +3343,410 @@ function buildMuc1QuestionLayout(q, speakerHtml) {
         </div>`;
 }
 
+
+// ==========================================
+// MỤC 2 - PHÉP CỘNG VÀ PHÉP TRỪ
+// Mô hình sư phạm: thao tác -> nhìn thấy -> ký hiệu -> giảm hỗ trợ -> thực hành độc lập
+// ==========================================
+let muc2UiState = null;
+
+function getMuc2QuestionKey_(q) {
+    return `${q?.question_id ?? q?.id ?? 'q'}::${q?._muc2_stage || q?.sub_topic || ''}::${q?.question_text || ''}`;
+}
+
+function getMuc2Stage_(q) {
+    return String(q?._muc2_stage || q?.sub_topic || '2.6');
+}
+
+function getMuc2Equation_(q) {
+    const text = String(q?.question_text || '');
+    const m = text.match(/(10|[0-9]|\?)\s*([+−-])\s*(10|[0-9]|\?)\s*=\s*(10|[0-9]|\?)/);
+    if (!m) return null;
+    return {
+        left: m[1] === '?' ? null : Number(m[1]),
+        op: m[2] === '−' ? '-' : m[2],
+        right: m[3] === '?' ? null : Number(m[3]),
+        result: m[4] === '?' ? null : Number(m[4]),
+        raw: m[0]
+    };
+}
+
+function getMuc2Emoji_(q) {
+    const tokens = extractEmojiTokens_(String(q?.question_text || '')).filter(x => x !== '❌');
+    return tokens[0] || getFoundationEmojiSeed(q) || '●';
+}
+
+function parseMuc2Addition_(q) {
+    const text = String(q?.question_text || '');
+    const eq = getMuc2Equation_(q);
+    if (eq && eq.op === '+' && Number.isFinite(eq.left) && Number.isFinite(eq.right)) {
+        return { a: eq.left, b: eq.right, emoji: getMuc2Emoji_(q), equation: eq.raw };
+    }
+
+    const lines = text.split('\n').map(x => x.trim()).filter(Boolean);
+    const visualLine = lines.find(line => extractEmojiTokens_(line).length > 0) || '';
+    let parts = visualLine.split(/\s+và\s+|\s*\+\s*/i);
+    if (parts.length < 2) parts = text.split(/\s+và\s+|\s*\+\s*/i);
+    const a = Math.min(10, extractEmojiTokens_(parts[0] || '').filter(x => x !== '❌').length);
+    const b = Math.min(10 - a, extractEmojiTokens_(parts[1] || '').filter(x => x !== '❌').length);
+    return { a, b, emoji: getMuc2Emoji_(q), equation: `${a} + ${b} = ?` };
+}
+
+function parseMuc2Subtraction_(q) {
+    const text = String(q?.question_text || '');
+    const eq = getMuc2Equation_(q);
+    if (eq && eq.op === '-' && Number.isFinite(eq.left) && Number.isFinite(eq.right)) {
+        return { whole: eq.left, take: eq.right, emoji: getMuc2Emoji_(q), equation: eq.raw };
+    }
+
+    const lines = text.split('\n').map(x => x.trim()).filter(Boolean);
+    const startLine = lines.find(line => /^ban đầu\s*:/i.test(line));
+    const takeLine = lines.find(line => /^bớt đi\s*:/i.test(line));
+    let whole = startLine ? extractEmojiTokens_(startLine).filter(x => x !== '❌').length : 0;
+    let take = takeLine ? extractEmojiTokens_(takeLine).filter(x => x !== '❌').length : 0;
+    if (!take) {
+        const m = text.match(/bớt đi\s+(10|[0-9])/i);
+        if (m) take = Number(m[1]);
+    }
+    return {
+        whole: Math.max(0, Math.min(10, whole)),
+        take: Math.max(0, Math.min(whole, take)),
+        emoji: getMuc2Emoji_(q),
+        equation: `${whole} − ${take} = ?`
+    };
+}
+
+function initMuc2UiState_(q) {
+    const key = getMuc2QuestionKey_(q);
+    if (muc2UiState && muc2UiState.key === key) return muc2UiState;
+
+    const stage = getMuc2Stage_(q);
+    const eq = getMuc2Equation_(q);
+    const state = { key, stage, moved: new Set(), removed: 0 };
+    if ((stage === '2.1' || stage === '2.2') || eq?.op === '+') {
+        Object.assign(state, parseMuc2Addition_(q));
+        state.mode = 'add';
+    } else {
+        Object.assign(state, parseMuc2Subtraction_(q));
+        state.mode = 'sub';
+    }
+    muc2UiState = state;
+    return state;
+}
+
+function resetMuc2UiState_() {
+    muc2UiState = null;
+}
+
+function buildMuc2TenFrameRow_(filled, emoji, numbered = false) {
+    return `
+        <div class="grid grid-cols-5 md:grid-cols-10 gap-1 md:gap-1.5 w-full max-w-[720px]">
+            ${Array.from({ length: 10 }, (_, i) => {
+                const active = i < filled;
+                const tone = i < 5 ? 'bg-pink-50 border-pink-200' : 'bg-sky-50 border-sky-200';
+                return `
+                    <div class="flex flex-col items-center gap-1 min-w-0">
+                        <div class="h-6 md:h-7 text-sm md:text-base font-black ${active && numbered ? 'text-violet-700' : 'text-transparent'}">${i + 1}</div>
+                        <div class="w-10 h-10 md:w-12 md:h-12 lg:w-[54px] lg:h-[54px] rounded-xl border-2 ${tone} flex items-center justify-center shadow-inner">
+                            ${active ? `<span class="text-[24px] md:text-[27px] lg:text-[30px] leading-none">${emoji}</span>` : '<span class="text-pink-200 text-lg font-black">+</span>'}
+                        </div>
+                    </div>`;
+            }).join('')}
+        </div>`;
+}
+
+function buildMuc2AddSourceRow_(count, emoji, group, state, label) {
+    return `
+        <div class="w-full max-w-[620px]">
+            <div class="text-center text-sm md:text-base font-black text-slate-500 mb-1">${label}</div>
+            <div class="flex flex-wrap justify-center gap-2 md:gap-2.5 min-h-[52px]">
+                ${Array.from({ length: count }, (_, i) => {
+                    const key = `${group}:${i}`;
+                    const moved = state.moved.has(key);
+                    return `
+                        <button type="button" onclick="muc2MoveAddItem_('${group}', ${i})" ${moved ? 'disabled' : ''}
+                            class="w-11 h-11 md:w-12 md:h-12 rounded-full border-2 ${moved ? 'border-slate-100 bg-slate-50 opacity-25' : 'border-violet-200 bg-white hover:border-violet-400 hover:scale-105'} flex items-center justify-center shadow-sm transition-all">
+                            <span class="text-[24px] md:text-[27px] lg:text-[30px] leading-none">${emoji}</span>
+                        </button>`;
+                }).join('')}
+            </div>
+        </div>`;
+}
+
+function buildMuc2AdditionInteractive_(q) {
+    const s = initMuc2UiState_(q);
+    const placed = s.moved.size;
+    const done = placed >= s.a + s.b;
+    return `
+        <div class="w-full flex flex-col items-center justify-center gap-3">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 border border-violet-200 text-violet-700 text-sm md:text-base font-black shadow-sm">
+                <span>🐰</span><span>Con đưa từng hình lên hàng trên để gộp hai nhóm nhé.</span>
+            </div>
+            ${buildMuc2TenFrameRow_(placed, s.emoji, true)}
+            <div class="w-4/5 h-px bg-pink-100 my-1"></div>
+            ${buildMuc2AddSourceRow_(s.a, s.emoji, 'a', s, `Nhóm 1: <span class="inline-block ml-1 text-2xl md:text-3xl font-black text-red-500 leading-none align-middle">${s.a}</span>`)}
+            ${buildMuc2AddSourceRow_(s.b, s.emoji, 'b', s, `Nhóm 2: <span class="inline-block ml-1 text-2xl md:text-3xl font-black text-red-500 leading-none align-middle">${s.b}</span>`)}
+            <div class="flex items-center gap-2 mt-1">
+                <button type="button" onclick="muc2ResetInteraction_()" class="px-3 py-1.5 rounded-full border border-pink-200 bg-pink-50 text-pink-700 text-sm md:text-base font-black">Làm lại</button>
+                <div class="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-sm md:text-base font-black">Đã gộp: ${placed} / ${s.a + s.b}</div>
+            </div>
+            ${done && s.stage === '2.1' ? `<div class="text-lg md:text-xl font-black text-emerald-600">${s.a} + ${s.b} = ${s.a + s.b}</div>` : ''}
+        </div>`;
+}
+
+function buildMuc2SubtractionInteractive_(q) {
+    const s = initMuc2UiState_(q);
+    const remaining = Math.max(0, s.whole - s.removed);
+    return `
+        <div class="w-full flex flex-col items-center justify-center gap-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-700 text-sm md:text-base font-black shadow-sm">
+                <span>🐰</span><span>Con bấm từng hình ở hàng dưới để bớt đi nhé.</span>
+            </div>
+            <div class="w-full max-w-[680px]">
+                <div class="text-center text-sm md:text-base font-black text-slate-500 mb-2">Ban đầu có <span class="inline-block ml-1 text-2xl md:text-3xl font-black text-red-500 leading-none align-middle">${s.whole}</span></div>
+                <div class="flex flex-wrap justify-center gap-2 md:gap-2.5">
+                    ${Array.from({ length: s.whole }, (_, i) => {
+                        const crossed = i >= s.whole - s.removed;
+                        return `
+                            <div class="relative w-11 h-11 md:w-12 md:h-12 rounded-full border-2 ${crossed ? 'border-slate-200 bg-slate-50 opacity-45' : 'border-violet-200 bg-white'} flex items-center justify-center shadow-sm">
+                                <span class="text-[24px] md:text-[27px] lg:text-[30px] leading-none">${s.emoji}</span>
+                                ${crossed ? '<span class="absolute inset-0 flex items-center justify-center text-rose-500 text-4xl md:text-5xl font-black leading-none">╱</span>' : ''}
+                            </div>`;
+                    }).join('')}
+                </div>
+            </div>
+            <div class="w-3/4 h-px bg-pink-100"></div>
+            <div class="w-full max-w-[620px]">
+                <div class="text-center text-sm md:text-base font-black text-slate-500 mb-2">Bớt đi <span class="inline-block ml-1 text-2xl md:text-3xl font-black text-red-500 leading-none align-middle">${s.take}</span></div>
+                <div class="flex flex-wrap justify-center gap-2 md:gap-2.5">
+                    ${Array.from({ length: s.take }, (_, i) => {
+                        const used = i < s.removed;
+                        return `
+                            <button type="button" onclick="muc2RemoveSubItem_(${i})" ${used ? 'disabled' : ''}
+                                class="w-11 h-11 md:w-12 md:h-12 rounded-full border-2 ${used ? 'border-slate-100 bg-slate-50 opacity-25' : 'border-rose-200 bg-white hover:border-rose-400 hover:scale-105'} flex items-center justify-center shadow-sm transition-all">
+                                <span class="text-[24px] md:text-[27px] lg:text-[30px] leading-none">${s.emoji}</span>
+                            </button>`;
+                    }).join('')}
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="muc2ResetInteraction_()" class="px-3 py-1.5 rounded-full border border-pink-200 bg-pink-50 text-pink-700 text-sm md:text-base font-black">Làm lại</button>
+                <div class="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-600 text-sm md:text-base font-black">Đã bớt: ${s.removed} / ${s.take}</div>
+            </div>
+            ${s.removed >= s.take && s.stage === '2.3' ? `<div class="text-lg md:text-xl font-black text-emerald-600">Còn lại ${remaining}: &nbsp; ${s.whole} − ${s.take} = ${remaining}</div>` : ''}
+        </div>`;
+}
+
+function buildMuc2StaticEmojiRow_(count, emoji, label, tone = 'violet') {
+    const toneClass = tone === 'rose' ? 'border-rose-200 bg-rose-50/40' : 'border-violet-200 bg-violet-50/40';
+    return `
+        <div class="w-full max-w-[650px] rounded-2xl border ${toneClass} px-3 py-3">
+            <div class="text-center text-sm md:text-base font-black text-slate-500 mb-2">${label}</div>
+            <div class="flex flex-wrap justify-center gap-2 md:gap-2.5">
+                ${Array.from({ length: Math.max(0, count) }, () => `
+                    <div class="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center">
+                        <span class="text-[24px] md:text-[27px] lg:text-[30px] leading-none">${emoji}</span>
+                    </div>`).join('')}
+            </div>
+        </div>`;
+}
+
+function buildMuc2NumberBond_(topValue, leftValue, rightValue) {
+    const nodeClass = 'w-11 h-11 md:w-12 md:h-12 lg:w-[52px] lg:h-[52px] rounded-full border-[3px] flex items-center justify-center text-xl md:text-2xl lg:text-[30px] font-black shadow-sm';
+    const renderValue = (v) => (v == null ? '' : v);
+    return `
+        <div class="relative w-[260px] md:w-[300px] h-[160px] md:h-[175px]">
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 300 175" preserveAspectRatio="none" aria-hidden="true">
+                <line x1="150" y1="36" x2="98" y2="110" stroke="#4f46e5" stroke-width="4" stroke-linecap="round"></line>
+                <line x1="150" y1="36" x2="202" y2="110" stroke="#4f46e5" stroke-width="4" stroke-linecap="round"></line>
+            </svg>
+            <div class="absolute left-1/2 top-0 -translate-x-1/2 ${nodeClass} bg-violet-50 border-violet-600 text-violet-700">${renderValue(topValue)}</div>
+            <div class="absolute left-[45px] md:left-[52px] top-[88px] md:top-[98px] ${nodeClass} bg-pink-50 border-pink-500 text-violet-700">${renderValue(leftValue)}</div>
+            <div class="absolute right-[45px] md:right-[52px] top-[88px] md:top-[98px] ${nodeClass} bg-amber-50 border-amber-400 text-violet-700">${renderValue(rightValue)}</div>
+        </div>`;
+}
+
+function deriveMuc2ReducedSupportModel_(q) {
+    const eq = getMuc2Equation_(q);
+    if (!eq) return null;
+    const emoji = getMuc2Emoji_(q);
+
+    if (eq.op === '+') {
+        const a = Number.isFinite(eq.left) ? eq.left : null;
+        const b = Number.isFinite(eq.right) ? eq.right : null;
+        const c = Number.isFinite(eq.result) ? eq.result : null;
+        const whole = c != null ? c : ((a != null && b != null) ? a + b : null);
+        if (whole == null) return null;
+        let topValue = c != null ? c : null;
+        let leftValue = a;
+        let rightValue = b;
+        return { op: '+', whole: Math.max(0, Math.min(10, whole)), topValue, leftValue, rightValue, emoji };
+    }
+
+    if (eq.op === '-') {
+        const whole = Number.isFinite(eq.left) ? eq.left : ((Number.isFinite(eq.right) && Number.isFinite(eq.result)) ? eq.right + eq.result : null);
+        if (whole == null) return null;
+        const topValue = Number.isFinite(eq.left) ? eq.left : null;
+        const leftValue = Number.isFinite(eq.result) ? eq.result : null;
+        const rightValue = Number.isFinite(eq.right) ? eq.right : null;
+        return { op: '-', whole: Math.max(0, Math.min(10, whole)), topValue, leftValue, rightValue, emoji };
+    }
+
+    return null;
+}
+
+function buildMuc2ReducedSupport_(q) {
+    const model = deriveMuc2ReducedSupportModel_(q);
+    if (model) {
+        return `
+            <div class="w-full flex flex-col items-center gap-4">
+                <div class="inline-flex px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-sm md:text-base font-black">Con nhìn hình rồi tự tính nhé.</div>
+                ${buildMuc1StaticTenFrame_(model.whole, model.emoji)}
+                ${buildMuc2NumberBond_(model.topValue, model.leftValue, model.rightValue)}
+            </div>`;
+    }
+
+    const eq = getMuc2Equation_(q);
+    if (eq?.op === '-') {
+        const s = parseMuc2Subtraction_(q);
+        return `
+            <div class="w-full flex flex-col items-center gap-4">
+                <div class="inline-flex px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-sm md:text-base font-black">Nhìn hình và tự nghĩ cách tính nhé.</div>
+                ${buildMuc2StaticEmojiRow_(s.whole, s.emoji, `Số bị trừ: ${s.whole}`, 'violet')}
+                ${buildMuc2StaticEmojiRow_(s.take, s.emoji, `Số trừ: ${s.take}`, 'rose')}
+            </div>`;
+    }
+
+    const s = parseMuc2Addition_(q);
+    return `
+        <div class="w-full flex flex-col items-center gap-4">
+            <div class="inline-flex px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-sm md:text-base font-black">Nhìn hình và tự gộp trong đầu nhé.</div>
+            ${buildMuc2StaticEmojiRow_(s.a, s.emoji, `Số hạng thứ nhất: ${s.a}`, 'violet')}
+            ${buildMuc2StaticEmojiRow_(s.b, s.emoji, `Số hạng thứ hai: ${s.b}`, 'rose')}
+        </div>`;
+}
+
+function getMuc2Prompt_(q) {
+    const text = String(q?.question_text || '');
+    const eq = getMuc2Equation_(q);
+    const stage = getMuc2Stage_(q);
+    if (stage === '2.6') return text;
+    const lines = text.split('\n').map(x => x.trim()).filter(Boolean);
+    const verbal = lines.find(line => !extractEmojiTokens_(line).length && !/(10|[0-9]|\?)\s*[+−-]/.test(line));
+    if (stage === '2.1') return verbal || 'Gộp hai nhóm. Có tất cả bao nhiêu?';
+    if (stage === '2.2') return eq?.raw || verbal || 'Con tính phép cộng nhé.';
+    if (stage === '2.3') return verbal || 'Bớt đi rồi xem còn lại bao nhiêu.';
+    if (stage === '2.4') return eq?.raw || verbal || 'Con tính phép trừ nhé.';
+    if (stage === '2.5') return eq?.raw || verbal || 'Con tìm số còn thiếu nhé.';
+    return verbal || text;
+}
+
+function buildMuc2Tip_(q) {
+    const stage = getMuc2Stage_(q);
+    if (stage === '2.1') return 'Cô Thỏ Hồng: Cộng là gộp hai nhóm lại thành một nhóm lớn hơn.';
+    if (stage === '2.2') return 'Cô Thỏ Hồng: Con có thể dùng hàng ô để kiểm tra kết quả phép cộng.';
+    if (stage === '2.3') return 'Cô Thỏ Hồng: Trừ là bớt đi. Những hình không bị gạch chính là phần còn lại.';
+    if (stage === '2.4') return 'Cô Thỏ Hồng: Con nhìn phần còn lại rồi liên hệ với phép trừ.';
+    if (stage === '2.5') return 'Cô Thỏ Hồng: Con nhìn sơ đồ số và hình rồi tìm số còn thiếu nhé!';
+    return '';
+}
+
+function buildMuc2Options_(q, compact = true) {
+    return (q.options || []).map((opt, idx) => {
+        const letter = String.fromCharCode(65 + idx);
+        const formattedOpt = capitalizeFirstLetter(opt);
+        return `
+            <button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${String(opt).replace(/'/g, "\\'")}')"
+                class="option-btn w-full ${compact ? 'min-h-[52px] md:min-h-[58px]' : 'min-h-[64px] md:min-h-[72px]'} px-3 bg-pink-50/40 hover:bg-pink-100/70 border-2 border-pink-200 rounded-2xl font-extrabold text-gray-800 transition-all flex items-center justify-center text-center shadow-xs pastel-btn">
+                <span class="flex items-center justify-center gap-2 leading-tight"><strong class="text-pink-600 text-lg md:text-xl">${letter}.</strong><span class="opt-text text-lg md:text-xl lg:text-[22px]">${escapeHtml(formattedOpt)}</span></span>
+                <span class="option-icon text-pink-500 text-lg md:text-xl ml-1"></span>
+            </button>`;
+    }).join('');
+}
+
+function buildMuc2ExamLikeLayout_(q, speakerHtml) {
+    const text = String(q?.question_text || '');
+    const lines = text.split('\n').map(x => x.trim()).filter(Boolean);
+    const visualLines = lines.filter(line => extractEmojiTokens_(line).length > 0);
+    const textLines = lines.filter(line => !extractEmojiTokens_(line).length);
+    const visual = visualLines.length
+        ? `<div class="w-full max-w-3xl rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-4 text-center text-[26px] md:text-[30px] leading-relaxed">${visualLines.map(escapeHtml).join('<br>')}</div>`
+        : '';
+    return `
+        <div class="w-full max-w-4xl mx-auto flex flex-col items-center gap-3 py-2">
+            ${visual}
+            <h3 class="text-lg md:text-xl lg:text-2xl font-black text-slate-900 text-center leading-snug">${escapeHtml(textLines.join(' ') || text)}</h3>
+            ${speakerHtml}
+            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">${buildMuc2Options_(q, false)}</div>
+        </div>`;
+}
+
+function buildMuc2QuestionLayout_(q, speakerHtml) {
+    const stage = getMuc2Stage_(q);
+    if (stage === '2.6') return buildMuc2ExamLikeLayout_(q, speakerHtml);
+
+    let visual = '';
+    if (stage === '2.1' || stage === '2.2') visual = buildMuc2AdditionInteractive_(q);
+    else if (stage === '2.3' || stage === '2.4') visual = buildMuc2SubtractionInteractive_(q);
+    else visual = buildMuc2ReducedSupport_(q);
+
+    const prompt = getMuc2Prompt_(q);
+    const tip = buildMuc2Tip_(q);
+    return `
+        <div class="w-full max-w-none grid grid-cols-1 md:grid-cols-[1.4fr_0.6fr] gap-3 md:gap-4 items-stretch py-1">
+            <div class="min-h-[300px] md:min-h-[360px] rounded-[28px] border-2 border-pink-100 bg-gradient-to-br from-amber-50 via-white to-sky-50 px-3 py-4 md:px-5 md:py-5 flex flex-col items-center justify-center overflow-hidden shadow-sm">
+                <div id="muc2-visual-host" class="w-full flex items-center justify-center">${visual}</div>
+            </div>
+            <div class="rounded-[28px] border border-pink-100 bg-white/95 px-3 py-4 md:px-4 md:py-5 flex flex-col justify-center shadow-sm">
+                <h3 class="text-lg md:text-xl lg:text-[22px] font-black text-slate-900 leading-snug text-center mb-1">${escapeHtml(prompt)}</h3>
+                ${speakerHtml}
+                ${tip ? `<div id="muc2-tip-host" class="mt-2 bg-amber-50 border border-amber-200 rounded-2xl px-3 py-2 text-sm md:text-base font-black text-amber-800 text-center shadow-xs">${escapeHtml(tip)}</div>` : ''}
+                <div class="w-full grid grid-cols-2 gap-2.5 md:gap-3 mt-3">${buildMuc2Options_(q, true)}</div>
+            </div>
+        </div>`;
+}
+
+function refreshMuc2InteractiveZone_() {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q) return;
+    const stage = getMuc2Stage_(q);
+    const host = document.getElementById('muc2-visual-host');
+    if (!host) return;
+    if (stage === '2.1' || stage === '2.2') host.innerHTML = buildMuc2AdditionInteractive_(q);
+    else if (stage === '2.3' || stage === '2.4') host.innerHTML = buildMuc2SubtractionInteractive_(q);
+    else if (stage === '2.5') host.innerHTML = buildMuc2ReducedSupport_(q);
+}
+
+function muc2MoveAddItem_(group, index) {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q) return;
+    const s = initMuc2UiState_(q);
+    const key = `${group}:${index}`;
+    if (s.moved.has(key)) return;
+    s.moved.add(key);
+    refreshMuc2InteractiveZone_();
+    try { speakVietnamese(String(s.moved.size), 0.94); } catch (e) {}
+}
+
+function muc2RemoveSubItem_(index) {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q) return;
+    const s = initMuc2UiState_(q);
+    if (index !== s.removed || s.removed >= s.take) return;
+    s.removed += 1;
+    refreshMuc2InteractiveZone_();
+    try { speakVietnamese(`Bớt ${s.removed}`, 0.94); } catch (e) {}
+}
+
+function muc2ResetInteraction_() {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q) return;
+    const s = initMuc2UiState_(q);
+    s.moved = new Set();
+    s.removed = 0;
+    refreshMuc2InteractiveZone_();
+}
+
 function buildFoundationQuestionLayout(q, speakerHtml) {
     const text = String(q?.question_text || '');
     const expressionMatch = text.match(/(?:\d+|\?)\s*[+−-]\s*(?:\d+|\?)\s*=\s*(?:\d+|\?)/);
@@ -3318,6 +3792,215 @@ function buildFoundationQuestionLayout(q, speakerHtml) {
         </div>`;
 }
 
+function getTopic3Stage_(q) {
+    return String(q?.sub_topic || '');
+}
+
+function extractTopic3FocusNumber_(q) {
+    const text = String(q?.question_text || '');
+    const stage = getTopic3Stage_(q);
+    let match = null;
+    if (stage === '3.2') match = text.match(/Số\s+(\d+)/i);
+    else if (stage === '3.3') match = text.match(/liền\s+(?:trước|sau)\s+số\s+(\d+)/i);
+    if (!match) {
+        const numbers = text.match(/\d+/g) || [];
+        const pick = stage === '3.3' && numbers.length >= 3 ? numbers[2] : numbers[numbers.length - 1];
+        return pick ? Number(pick) : null;
+    }
+    return Number(match[1]);
+}
+
+function formatTopic3PromptHtml_(q, promptText) {
+    const stage = getTopic3Stage_(q);
+    const safe = escapeHtml(promptText || q?.question_text || '');
+    const focus = extractTopic3FocusNumber_(q);
+    if ((stage === '3.1' || stage === '3.2') && Number.isFinite(focus)) {
+        return safe.replace(String(focus), `<span class="text-rose-600 font-black">${escapeHtml(String(focus))}</span>`);
+    }
+    return safe;
+}
+
+function getTopic3NeighbourMeta_(q) {
+    const text = String(q?.question_text || '');
+    const base = extractTopic3FocusNumber_(q);
+    if (!Number.isFinite(base)) return null;
+    const direction = /liền\s+trước/i.test(text) ? 'before' : (/liền\s+sau/i.test(text) ? 'after' : null);
+    if (!direction) return null;
+    return { base, direction };
+}
+
+function getTopic3NumberStrip_(base) {
+    let start = Number(base) - 3;
+    if (start < 1) start = 1;
+    let end = start + 6;
+    if (end > 100) {
+        end = 100;
+        start = Math.max(1, end - 6);
+    }
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+}
+
+function buildTopic3Sub33SolutionHtml_(q) {
+    const chosen = userAnswers[currentQIndex];
+    if (chosen === undefined || chosen !== q?.answer) return '';
+    const meta = getTopic3NeighbourMeta_(q);
+    if (!meta) return '';
+    const answerNum = Number(q.answer);
+    if (!Number.isFinite(answerNum)) return '';
+    const formula = meta.direction === 'before'
+        ? `${answerNum} = ${meta.base} - 1`
+        : `${answerNum} = ${meta.base} + 1`;
+    return `<div class="mt-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-2.5 text-center font-black text-emerald-800 text-xl md:text-2xl shadow-sm">${escapeHtml(formula)}</div>`;
+}
+
+function buildTopic3Sub33Layout_(q, speakerHtml) {
+    const meta = getTopic3NeighbourMeta_(q);
+    if (!meta) return '';
+    const numbers = getTopic3NumberStrip_(meta.base);
+    const prompt = meta.direction === 'before'
+        ? `Bé ơi, hãy tìm số liền trước của ${meta.base} nhé!`
+        : `Bé ơi, hãy tìm số liền sau của ${meta.base} nhé!`;
+
+    const stripHtml = numbers.map((num, idx) => {
+        const active = num === meta.base;
+        const bubbleClass = active
+            ? 'w-14 h-14 md:w-16 md:h-16 rounded-full bg-pink-500 text-white border-2 border-pink-500 shadow-sm'
+            : 'w-14 h-14 md:w-16 md:h-16 rounded-full bg-white text-purple-700 border-2 border-purple-200 shadow-sm';
+        return `
+            <div class="flex items-center ${idx < numbers.length - 1 ? 'mr-0.5 md:mr-1' : ''}">
+                <div class="${bubbleClass} flex items-center justify-center text-lg md:text-xl font-black">${num}</div>
+                ${idx < numbers.length - 1 ? '<div class="w-5 md:w-7 h-1 bg-purple-200"></div>' : ''}
+            </div>`;
+    }).join('');
+
+    const optionsHtml = q.options.map((opt, idx) => {
+        const formattedOpt = capitalizeFirstLetter(opt);
+        const letter = String.fromCharCode(65 + idx);
+        return `
+            <button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${opt.replace(/'/g, "\'")}')" class="option-btn w-full min-h-[60px] md:min-h-[68px] px-2 py-2 bg-pink-50/40 hover:bg-pink-100/70 border-2 border-pink-200 rounded-2xl font-extrabold text-gray-800 transition-all flex items-center justify-center text-center shadow-xs pastel-btn">
+                <span class="flex items-center justify-center gap-1.5 leading-tight"><strong class="text-pink-600 text-base md:text-lg">${letter}.</strong><span class="opt-text text-lg md:text-xl lg:text-[22px]">${escapeHtml(formattedOpt)}</span></span>
+                <span class="option-icon text-pink-500 text-lg md:text-xl ml-1"></span>
+            </button>`;
+    }).join('');
+
+    return `
+        <div class="w-full max-w-5xl mx-auto py-1">
+            <div class="w-full max-w-4xl mx-auto rounded-[28px] border-2 border-pink-100 bg-white/80 px-3 py-4 md:px-5 md:py-5 shadow-sm">
+                <div class="flex items-center justify-center flex-wrap">${stripHtml}</div>
+                <div id="topic3-sub33-solution-host">${buildTopic3Sub33SolutionHtml_(q)}</div>
+            </div>
+            <div class="flex flex-col items-center justify-center max-w-4xl mx-auto text-center px-2 mt-3 mb-1">
+                <h3 class="text-base md:text-lg lg:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-700 via-fuchsia-600 to-purple-700 leading-snug">${formatTopic3PromptHtml_(q, prompt)}</h3>
+                ${speakerHtml}
+            </div>
+            <div class="w-full max-w-5xl mx-auto grid grid-cols-4 gap-2.5 mt-2">${optionsHtml}</div>
+        </div>`;
+}
+
+function refreshTopic3Sub33SolutionHost_(q) {
+    if (Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.3') return;
+    const host = document.getElementById('topic3-sub33-solution-host');
+    if (!host) return;
+    host.innerHTML = buildTopic3Sub33SolutionHtml_(q);
+}
+
+function getTopic3CompareMeta_(q) {
+    const text = String(q?.question_text || '');
+    const m = text.match(/(\d{1,2})\s*\.{2,}\s*(\d{1,2})/);
+    if (!m) return null;
+    return { a: Number(m[1]), b: Number(m[2]) };
+}
+
+function buildTopic3Sub34SolutionHtml_(q) {
+    const chosen = userAnswers[currentQIndex];
+    if (chosen === undefined || chosen !== q?.answer) return '';
+    const meta = getTopic3CompareMeta_(q);
+    if (!meta) return '';
+
+    const tensA = Math.floor(meta.a / 10);
+    const onesA = meta.a % 10;
+    const tensB = Math.floor(meta.b / 10);
+    const onesB = meta.b % 10;
+    const sign = String(q.answer || '');
+
+    let explanation = '';
+    if (tensA !== tensB) {
+        explanation = `${tensA} chục ${sign} ${tensB} chục nên ${meta.a} ${sign} ${meta.b}`;
+    } else {
+        explanation = `Cùng ${tensA} chục, so sánh đơn vị: ${onesA} ${sign} ${onesB} nên ${meta.a} ${sign} ${meta.b}`;
+    }
+
+    return `<div class="mt-4 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-3 text-center font-black text-emerald-800 text-lg md:text-xl lg:text-[22px] shadow-sm">${escapeHtml(explanation)}</div>`;
+}
+
+function buildTopic3PlaceValueCard_(num, tone = 'violet') {
+    const tens = Math.floor(num / 10);
+    const ones = num % 10;
+    const toneClass = tone === 'rose'
+        ? 'border-rose-200 bg-rose-50/50 text-rose-700'
+        : 'border-violet-200 bg-violet-50/50 text-violet-700';
+    return `
+        <div class="rounded-2xl border-2 ${toneClass} px-4 py-3 min-w-[180px] md:min-w-[210px] shadow-sm">
+            <div class="text-center text-3xl md:text-4xl font-black mb-2">${num}</div>
+            <div class="grid grid-cols-2 gap-2 text-center">
+                <div class="rounded-xl bg-white/80 border border-current/20 px-2 py-2">
+                    <div class="text-xs md:text-sm font-bold opacity-70">Chục</div>
+                    <div class="text-xl md:text-2xl font-black">${tens}</div>
+                </div>
+                <div class="rounded-xl bg-white/80 border border-current/20 px-2 py-2">
+                    <div class="text-xs md:text-sm font-bold opacity-70">Đơn vị</div>
+                    <div class="text-xl md:text-2xl font-black">${ones}</div>
+                </div>
+            </div>
+        </div>`;
+}
+
+function buildTopic3Sub34Layout_(q, speakerHtml) {
+    const meta = getTopic3CompareMeta_(q);
+    if (!meta) return '';
+
+    const optionsHtml = q.options.map((opt, idx) => {
+        const formattedOpt = capitalizeFirstLetter(opt);
+        const letter = String.fromCharCode(65 + idx);
+        return `
+            <button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${opt.replace(/'/g, "\'")}')" class="option-btn w-full min-h-[60px] md:min-h-[68px] px-2 py-2 bg-pink-50/40 hover:bg-pink-100/70 border-2 border-pink-200 rounded-2xl font-extrabold text-gray-800 transition-all flex items-center justify-center text-center shadow-xs pastel-btn">
+                <span class="flex items-center justify-center gap-1.5 leading-tight"><strong class="text-pink-600 text-base md:text-lg">${letter}.</strong><span class="opt-text text-lg md:text-xl lg:text-[24px]">${escapeHtml(formattedOpt)}</span></span>
+                <span class="option-icon text-pink-500 text-lg md:text-xl ml-1"></span>
+            </button>`;
+    }).join('');
+
+    return `
+        <div class="w-full max-w-5xl mx-auto py-1">
+            <div class="w-full max-w-4xl mx-auto rounded-[28px] border-2 border-pink-100 bg-white/80 px-3 py-4 md:px-5 md:py-5 shadow-sm">
+                <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+                    ${buildTopic3PlaceValueCard_(meta.a, 'violet')}
+                    <div class="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-pink-300 bg-pink-50 flex items-center justify-center text-3xl md:text-4xl font-black text-pink-500">?</div>
+                    ${buildTopic3PlaceValueCard_(meta.b, 'rose')}
+                </div>
+                <div id="topic3-sub34-solution-host">${buildTopic3Sub34SolutionHtml_(q)}</div>
+            </div>
+            <div class="flex flex-col items-center justify-center max-w-4xl mx-auto text-center px-2 mt-3 mb-1">
+                <h3 class="text-lg md:text-xl lg:text-[24px] font-black text-violet-700 leading-snug">Bé hãy chọn dấu thích hợp nhé!</h3>
+                ${speakerHtml}
+            </div>
+            <div class="w-full max-w-5xl mx-auto grid grid-cols-4 gap-2.5 mt-2">${optionsHtml}</div>
+        </div>`;
+}
+
+function refreshTopic3Sub34SolutionHost_(q) {
+    if (Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.4') return;
+    const host = document.getElementById('topic3-sub34-solution-host');
+    if (!host) return;
+    host.innerHTML = buildTopic3Sub34SolutionHtml_(q);
+}
+
+function formatQuestionPromptHtml_(q) {
+    if (Number(activeTopicId) === 3 && /^3\.[12]$/.test(String(q?.sub_topic || ''))) {
+        return formatTopic3PromptHtml_(q, q?.question_text || '');
+    }
+    return escapeHtml(q?.question_text || '');
+}
+
 function loadQuestion() {
     stopSpeaking();
     const q = activeQuestionsList[currentQIndex];
@@ -3325,6 +4008,7 @@ function loadQuestion() {
 
     const isEvaluationMode = !!activeExamContext || !!activeRoadmapContext;
     const isFoundationPractice = !isEvaluationMode && ([1, 2].includes(Number(activeTopicId)) || /^[12]\./.test(String(q.sub_topic || '')));
+    const isTopic3Practice = !isEvaluationMode && Number(activeTopicId) === 3 && /^3\./.test(String(q.sub_topic || ''));
 
     if (isEvaluationMode) {
         document.getElementById('q-badge-index').textContent = `CÂU ${currentQIndex + 1} / ${activeQuestionsList.length}`;
@@ -3380,9 +4064,15 @@ function loadQuestion() {
     if (isFoundationPractice) {
         if (Number(activeTopicId) === 1 && /^1\./.test(String(q.sub_topic || ''))) {
             html = buildMuc1QuestionLayout(q, practiceSpeakerBtnHtml);
+        } else if (Number(activeTopicId) === 2 && /^2\./.test(String(q.sub_topic || ''))) {
+            html = buildMuc2QuestionLayout_(q, practiceSpeakerBtnHtml);
         } else {
             html = buildFoundationQuestionLayout(q, practiceSpeakerBtnHtml);
         }
+    } else if (isTopic3Practice && getTopic3Stage_(q) === '3.3') {
+        html = buildTopic3Sub33Layout_(q, practiceSpeakerBtnHtml);
+    } else if (isTopic3Practice && getTopic3Stage_(q) === '3.4') {
+        html = buildTopic3Sub34Layout_(q, practiceSpeakerBtnHtml);
     } else if (isLetterListen) {
         html = `
             ${mediaHtml}
@@ -3390,7 +4080,7 @@ function loadQuestion() {
                 <div class="text-3xl md:text-4xl mb-1.5 space-x-2">
                     <span>🎧</span><span>👂</span><span>🔢</span>
                 </div>
-                <p class="text-sm md:text-base lg:text-lg font-black text-rose-600 leading-snug">${escapeHtml(q.question_text)}</p>
+                <p class="text-sm md:text-base lg:text-lg font-black text-rose-600 leading-snug">${formatQuestionPromptHtml_(q)}</p>
                 ${practiceSpeakerBtnHtml}
             </div>
 
@@ -3416,7 +4106,7 @@ function loadQuestion() {
         ${passageHtml}
         <div class="flex flex-col items-center justify-center max-w-3xl text-center px-2 mb-0.5">
             <h3 class="text-sm md:text-base lg:text-lg font-black text-slate-900 leading-snug">
-                ${escapeHtml(q.question_text)}
+                ${formatQuestionPromptHtml_(q)}
             </h3>
             ${practiceSpeakerBtnHtml}
         </div>
@@ -3451,6 +4141,8 @@ function loadQuestion() {
     document.getElementById('question-box').innerHTML = html;
 
     restoreQuestionState(q);
+    refreshTopic3Sub33SolutionHost_(q);
+    refreshTopic3Sub34SolutionHost_(q);
     updateNavButtons();
     updateQuizPalletUI();
 
@@ -3607,6 +4299,7 @@ function checkAnswer(selectedOpt) {
                 b.classList.add('bg-red-200', 'border-red-500', 'text-red-900');
             }
         });
+        if (isCorrect) refreshTopic3Sub33SolutionHost_(q);
 
         if (isCorrect) {
             playAudio('correct');
@@ -3637,6 +4330,8 @@ function checkAnswer(selectedOpt) {
                 b.classList.add('bg-green-100', 'border-green-400', 'text-green-800');
             }
         });
+        refreshTopic3Sub33SolutionHost_(q);
+        refreshTopic3Sub34SolutionHost_(q);
 
         playAudio('correct');
         confetti({ particleCount: 30, spread: 55, origin: { y: 0.7 } });
@@ -4444,6 +5139,11 @@ function speakVietnamese(text, rate = 0.96) {
 
         let cleanText = String(text)
             .replace(/<[^>]*>/g, '')
+            // Chuẩn hóa ký hiệu toán học để Google TTS đọc đúng bằng tiếng Việt.
+            // Chỉ thay dấu khi nó nằm giữa số / dấu ?, tránh làm hỏng dấu gạch nối trong chữ.
+            .replace(/(\d|\?)\s*[−–—-]\s*(?=\d|\?)/g, '$1 trừ ')
+            .replace(/(\d|\?)\s*\+\s*(?=\d|\?)/g, '$1 cộng ')
+            .replace(/(\d|\?)\s*=\s*(?=\d|\?)/g, '$1 bằng ')
             .replace(/b-a/g, 'bờ a ba')
             .replace(/c\/k/g, 'cờ hoặc ca')
             .replace(/g\/gh/g, 'gờ đơn hoặc gờ kép')
