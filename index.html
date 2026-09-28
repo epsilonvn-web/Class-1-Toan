@@ -402,6 +402,81 @@
             }
         }
 
+
+
+        /* =========================================================
+           MỤC 12 - HỌC TOÁN THEO PHƯƠNG PHÁP MỚI / EPSILON METHOD
+           ========================================================= */
+        #view-epsilon-method-hub,#view-number-sense,#view-operation-sense{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;}
+        .em-hero{border:1.5px solid #e9d5ff;border-radius:28px;background:linear-gradient(135deg,#fff7fb 0%,#faf5ff 46%,#eff6ff 100%);padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 7px 20px rgba(126,34,206,.06);}
+        .em-hero-flow{max-width:390px;border-radius:20px;background:rgba(255,255,255,.88);border:1px solid #d8b4fe;padding:11px 14px;text-align:center;font-size:12px;line-height:1.55;font-weight:900;color:#7e22ce;}
+        .em-track-card{width:100%;border:2px solid #ede9fe;border-radius:24px;background:linear-gradient(180deg,#fff,#fdfcff);padding:17px;box-shadow:0 5px 16px rgba(76,29,149,.06);transition:transform .16s,box-shadow .16s,border-color .16s;}
+        .em-track-card:hover{transform:translateY(-2px);box-shadow:0 11px 25px rgba(76,29,149,.10);border-color:#d8b4fe;}
+        .em-track-icon{width:48px;height:48px;border-radius:17px;background:linear-gradient(135deg,#fce7f3,#ede9fe,#dbeafe);display:flex;align-items:center;justify-content:center;font-size:25px;flex:0 0 auto;}
+        .em-method-badge{flex:0 0 auto;border-radius:999px;border:1px solid #f0abfc;background:#fdf4ff;color:#a21caf;padding:5px 9px;font-size:10px;font-weight:900;}
+        .em-stat-pill{border-radius:999px;border:1px solid #e2e8f0;background:#f8fafc;padding:5px 9px;}
+
+        /* 12.1 - EPSILON NUMBER SENSE */
+        .ns-hero{border:1.5px solid #fbcfe8;border-radius:26px;background:linear-gradient(135deg,#fff7fb 0%,#faf5ff 52%,#f0f9ff 100%);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:18px;}
+        .ns-hero-flow{max-width:360px;border-radius:18px;background:rgba(255,255,255,.82);border:1px solid #e9d5ff;padding:10px 13px;text-align:center;font-size:12px;line-height:1.45;font-weight:900;color:#7e22ce;}
+        .ns-journey-card{width:100%;border:1.5px solid #ede9fe;border-radius:22px;background:#fff;padding:14px;box-shadow:0 4px 13px rgba(76,29,149,.06);transition:transform .16s,box-shadow .16s,border-color .16s;}
+        .ns-journey-card:hover{transform:translateY(-2px);box-shadow:0 9px 22px rgba(76,29,149,.10);border-color:#d8b4fe;}
+        .ns-journey-icon{width:42px;height:42px;border-radius:15px;background:linear-gradient(135deg,#fce7f3,#ede9fe);display:flex;align-items:center;justify-content:center;font-size:22px;flex:0 0 auto;}
+        .ns-teacher-bubble{display:flex;align-items:flex-start;gap:10px;border:1.5px solid #fbcfe8;border-radius:20px;background:linear-gradient(135deg,#fff1f7,#fff);padding:12px 14px;}
+        .ns-listen-btn{flex:0 0 auto;border-radius:14px;border:1px solid #fbcfe8;background:#fff;color:#be185d;padding:7px 10px;font-size:11px;font-weight:900;white-space:nowrap;}
+        .ns-listen-btn:hover{background:#fdf2f8;}
+        .ns-workspace{border:1.5px solid #e9d5ff;border-radius:26px;background:linear-gradient(180deg,#fff 0%,#fdfcff 100%);padding:16px;min-height:340px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 5px 18px rgba(76,29,149,.05);}
+        .ns-visual-box{min-height:126px;border-radius:22px;border:2px dashed #ddd6fe;background:linear-gradient(135deg,#faf5ff,#fff7ed);padding:18px;display:flex;align-items:center;justify-content:center;}
+        .ns-object-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;}
+        .ns-static-object{display:inline-flex;align-items:center;justify-content:center;min-width:42px;min-height:42px;font-size:38px;line-height:1.05;}
+        .ns-choice{min-height:56px;border-radius:17px;border:2px solid #e9d5ff;background:#fff;padding:10px 12px;font-size:18px;font-weight:900;color:#4c1d95;box-shadow:0 3px 8px rgba(76,29,149,.06);transition:all .15s;}
+        .ns-choice:hover{border-color:#c084fc;background:#faf5ff;transform:translateY(-1px);}
+        .ns-primary-btn{border-radius:16px;background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;padding:10px 16px;font-weight:900;font-size:14px;box-shadow:0 5px 13px rgba(168,85,247,.20);}
+        .ns-secondary-btn{border-radius:14px;background:#fff;border:1.5px solid #e9d5ff;color:#7e22ce;padding:9px 13px;font-weight:900;font-size:12px;}
+        .ns-evidence-pill{display:inline-flex;align-items:center;border-radius:999px;background:#f8fafc;border:1px solid #e2e8f0;padding:5px 9px;font-size:10px;font-weight:900;color:#64748b;}
+        .ns-touch-object{position:relative;width:68px;height:68px;border-radius:20px;border:2px solid #e9d5ff;background:#fff;font-size:38px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(76,29,149,.06);transition:all .15s;}
+        .ns-touch-object.is-counted{background:#ecfdf5;border-color:#6ee7b7;transform:scale(.95);}
+        .ns-count-badge{position:absolute;right:-6px;top:-8px;width:26px;height:26px;border-radius:999px;background:#10b981;color:white;font-size:12px;display:flex;align-items:center;justify-content:center;border:2px solid white;}
+        .ns-bank,.ns-tray,.ns-group-card,.ns-whole-card,.ns-part-card{border-radius:20px;border:1.5px solid #e9d5ff;background:#fafaff;padding:14px;text-align:center;}
+        .ns-tray{min-height:155px;background:linear-gradient(180deg,#fff7fb,#fff);border-style:dashed;border-color:#f9a8d4;}
+        .ns-bank-object{width:54px;height:54px;border-radius:16px;border:1.5px solid #e9d5ff;background:white;font-size:30px;cursor:grab;}
+        .ns-symbol-card{max-width:560px;margin:0 auto;border-radius:22px;border:2px solid #ddd6fe;background:linear-gradient(135deg,#f5f3ff,#fff);padding:22px;font-size:34px;font-weight:900;line-height:1.5;color:#4c1d95;}
+        .ns-frame{max-width:460px;margin:0 auto;display:grid;grid-template-columns:repeat(5,minmax(48px,1fr));border:3px solid #7c3aed;border-radius:14px;overflow:hidden;background:#fff;}
+        .ns-frame.ns-frame-10{grid-template-rows:repeat(2,68px);}
+        .ns-frame-cell{height:76px;border-right:2px solid #c4b5fd;border-bottom:2px solid #c4b5fd;background:white;font-size:42px;font-weight:900;color:#ec4899;}
+        .ns-frame-cell:nth-child(5n){border-right:0;}
+        .ns-frame-cell.is-filled{background:#fdf2f8;}
+
+        /* 12.2 - EPSILON OPERATIONAL SENSE */
+        .os-hero{border:1.5px solid #ddd6fe;border-radius:26px;background:linear-gradient(135deg,#faf5ff 0%,#eef2ff 52%,#eff6ff 100%);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:18px;}
+        .os-hero-flow{max-width:390px;border-radius:18px;background:rgba(255,255,255,.85);border:1px solid #c7d2fe;padding:10px 13px;text-align:center;font-size:12px;line-height:1.45;font-weight:900;color:#5b21b6;}
+        .os-journey-icon{width:42px;height:42px;border-radius:15px;background:linear-gradient(135deg,#ede9fe,#dbeafe);display:flex;align-items:center;justify-content:center;font-size:22px;flex:0 0 auto;}
+        .os-teacher-bubble{border-color:#ddd6fe;background:linear-gradient(135deg,#faf5ff,#fff);}
+        .os-bank-object{width:54px;height:54px;border-radius:16px;border:1.5px solid #c7d2fe;background:white;font-size:30px;cursor:pointer;box-shadow:0 3px 8px rgba(79,70,229,.06);transition:all .15s;}
+        .os-bank-object:hover{transform:translateY(-2px);border-color:#8b5cf6;}
+        .os-action-object{position:relative;width:68px;height:68px;border-radius:20px;border:2px solid #ddd6fe;background:#fff;font-size:38px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(79,70,229,.06);transition:all .15s;}
+        .os-action-object.is-removed{opacity:.42;transform:translateY(-12px) scale(.88);border-style:dashed;border-color:#fb7185;background:#fff1f2;}
+        .os-action-object.is-selected{background:#eef2ff;border-color:#818cf8;transform:scale(.94);}
+        .os-away-mark{position:absolute;right:-5px;top:-8px;width:26px;height:26px;border-radius:999px;background:#f43f5e;color:white;font-size:12px;display:flex;align-items:center;justify-content:center;border:2px solid white;}
+        .os-story-card{border:1.5px solid #c7d2fe;border-radius:18px;background:#fff;padding:12px;text-align:center;min-height:86px;display:flex;flex-direction:column;justify-content:center;}
+        .os-story-label{font-size:9px;font-weight:900;color:#6366f1;letter-spacing:.08em;}
+        .os-story-value{font-size:30px;line-height:1.1;font-weight:900;color:#312e81;margin-top:5px;}
+        .os-pair-row{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(42px,1fr);gap:5px;}
+        .os-pair-cell{min-height:50px;border-radius:13px;border:1px solid #dbeafe;background:#fff;display:flex;align-items:center;justify-content:center;font-size:29px;}
+        .os-balance{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:12px;max-width:720px;margin:0 auto;}
+        .os-balance-pan{min-height:110px;border-radius:20px 20px 28px 28px;border:2px solid #c7d2fe;background:linear-gradient(180deg,#fff,#eef2ff);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#312e81;box-shadow:0 8px 0 -4px #c7d2fe;}
+        .os-path-cell{width:48px;height:48px;border-radius:14px;border:1.5px solid #c7d2fe;background:white;display:flex;align-items:center;justify-content:center;font-weight:900;color:#475569;transition:all .15s;}
+        .os-path-cell.is-current{background:linear-gradient(135deg,#8b5cf6,#4f46e5);color:white;border-color:#4f46e5;transform:translateY(-3px) scale(1.08);box-shadow:0 6px 14px rgba(79,70,229,.25);}
+
+        @media(max-width:767px){
+            .em-hero,.ns-hero,.os-hero{padding:14px;align-items:flex-start;flex-direction:column;}
+            .em-hero-flow,.ns-hero-flow,.os-hero-flow{max-width:none;width:100%;}
+            .em-track-card{padding:14px;}
+            .ns-workspace{padding:12px;min-height:300px}.ns-static-object{font-size:31px;min-width:34px;min-height:34px}.ns-touch-object{width:58px;height:58px;font-size:31px}.ns-choice{min-height:50px;font-size:16px}.ns-frame-cell{height:60px;font-size:34px}.ns-frame.ns-frame-10{grid-template-rows:repeat(2,58px)}.ns-symbol-card{font-size:28px;padding:16px;}
+            .ns-teacher-bubble{flex-wrap:wrap}.ns-listen-btn{margin-left:34px;}
+            .os-action-object{width:58px;height:58px;font-size:31px}.os-story-card{padding:8px;min-height:74px}.os-story-value{font-size:25px}.os-balance-pan{min-height:90px;font-size:22px}.os-path-cell{width:42px;height:42px}.os-pair-cell{min-height:44px;font-size:24px}
+        }
+
 </style>
 </head>
 <body class="p-1 md:p-2 w-full" style="padding-top:0;padding-bottom:max(0.25rem,env(safe-area-inset-bottom));padding-left:max(0.25rem,env(safe-area-inset-left));padding-right:max(0.25rem,env(safe-area-inset-right));">
@@ -534,6 +609,21 @@
                 
                 <!-- VIEW 1: TRANG CHỦ 12 CHỦ ĐỀ -->
                 <div id="view-dashboard-grid" class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5"></div>
+
+                <!-- VIEW: MỤC 12 - HỌC TOÁN THEO PHƯƠNG PHÁP MỚI -->
+                <div id="view-epsilon-method-hub" class="w-full hidden">
+                    <div id="epsilon-method-content" class="w-full"></div>
+                </div>
+
+                <!-- VIEW: 12.1 - HIỂU SỐ VÀ SỐ LƯỢNG -->
+                <div id="view-number-sense" class="w-full hidden">
+                    <div id="number-sense-content" class="w-full"></div>
+                </div>
+
+                <!-- VIEW: 12.2 - HIỂU PHÉP CỘNG VÀ PHÉP TRỪ -->
+                <div id="view-operation-sense" class="w-full hidden">
+                    <div id="operation-sense-content" class="w-full"></div>
+                </div>
                 <!-- MODULE BAI HOC: HIEN THI TRUC TIEP DANH SACH BAI -->
                 <div id="view-bai-hoc-hub" class="w-full hidden pastel-card p-3 md:p-5">
                     <div class="w-full max-w-6xl mx-auto">
@@ -718,7 +808,7 @@
                     </div>
                 </div>
 
-                <!-- VIEW 5: ĐẤU TRƯỜNG ĐỀ THI (MỤC 12) -->
+                <!-- VIEW 5: ĐẤU TRƯỜNG ĐỀ THI (TAB RIÊNG) -->
                 <div id="view-exam-hub" class="w-full hidden pastel-card p-5 md:p-7 flex flex-col justify-between items-center min-h-[480px]">
                     <div class="w-full max-w-5xl">
                         <div class="text-center mb-5">
@@ -962,7 +1052,7 @@
     </footer>
 
     <!-- NẠP ENGINE JAVASCRIPT ĐỒNG BỘ -->
-    <script src="assets/js/app.js?v=10.0-toan1-ui-shell"></script>
+    <script src="assets/js/app.js?v=12.1-epsilon-method-foundation"></script>
 
     <script>
       if ('serviceWorker' in navigator) {
