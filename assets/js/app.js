@@ -13,7 +13,7 @@ const TOPICS_CONFIG = [
     { id: 9, title: "9. Giải toán có lời văn", desc: "Đọc hiểu, chọn phép tính và trình bày bài giải", icon: "📝", color: "rose" },
     { id: 10, title: "10. Toán tư duy nâng cao và IQ", desc: "Suy luận logic, quy luật và bài toán nâng cao", icon: "🧠", color: "yellow" },
     { id: 11, title: "11. Ôn tập", desc: "Ôn tập theo học kỳ và tổng ôn cuối năm", icon: "📚", color: "purple" },
-    { id: 12, title: "12. Học Toán theo phương pháp mới", desc: "Hiểu bản chất qua thao tác, trực quan và diễn đạt", icon: "✨", color: "fuchsia", engine: "epsilon-method" }
+    { id: 12, title: "12. Math Lab - Toán tư duy Mỹ", desc: "Khám phá • Mô hình • Nhiều cách giải", icon: "✨", color: "fuchsia", engine: "epsilon-method" }
 ];
 
 const SUBTOPIC_PALETTES = [
@@ -344,7 +344,7 @@ async function renderDashboardGrid() {
     TOPICS_CONFIG.filter(t => Number(t.id) !== 11).forEach(t => {
         const topicObj = topicsData.find(item => Number(item.topic_id) === Number(t.id));
         const totalCount = topicObj && topicObj.questions ? topicObj.questions.length : 0;
-        const countLabel = t.engine === 'epsilon-method' ? '2 chuyên đề' : (totalCount > 0 ? `${totalCount} câu` : 'Đang cập nhật');
+        const countLabel = t.engine === 'epsilon-method' ? '6 Lab' : (totalCount > 0 ? `${totalCount} câu` : 'Đang cập nhật');
 
         const iconHtml = t.isCustomTextIcon 
             ? `<div class="w-8 h-8 bg-rose-100 rounded-xl flex items-center justify-center text-[11px] font-black text-rose-600 shadow-inner group-hover:scale-110 transition-transform shrink-0 tracking-tight">S/X</div>`
@@ -1373,9 +1373,195 @@ function clickProgressOrExam(type) {
 
 
 // ==========================================
-// EPSILON METHOD - MỤC 12: HỌC TOÁN THEO PHƯƠNG PHÁP MỚI
-// 12.1/12.2 chỉ là mã HIỂN THỊ. ID nội bộ là EPSILON_NUMBER_SENSE / EPSILON_OPERATION_SENSE.
+// MATH LAB - MỤC 12: TOÁN TƯ DUY MỸ - GRADE 1
+// Nội dung kiến thức vẫn bám Toán 1 Việt Nam; cấu trúc trải nghiệm tham chiếu
+// Common Core Grade 1 + Mathematical Practices và tiến trình sư phạm IES/NCTM.
+// 12.1/12.2 giữ nguyên ID nội bộ để không phá dữ liệu tiến độ hiện có.
 // ==========================================
+const EPSILON_GRADE1_LABS_ = [
+    { code:'12.1', internal_id:'EPSILON_NUMBER_SENSE', engine:'number_sense', icon:'🔢', title:'Number Sense Lab - Cảm nhận số', description:'Nhìn lượng, đếm có ý nghĩa, so sánh, biểu diễn và cấu tạo số bằng nhiều mô hình.', planned_journeys:12, status:'active' },
+    { code:'12.2', internal_id:'EPSILON_OPERATION_SENSE', engine:'operation_sense', icon:'➕', title:'Addition & Subtraction Lab - Tư duy cộng trừ', description:'Hiểu thêm - bớt - gộp - tách, số còn thiếu, bằng nhau, gia đình phép tính và chiến lược làm 10.', planned_journeys:14, status:'active' },
+    { code:'12.3', engine:'place_value', icon:'🔟', title:'Place Value Lab - Chục, đơn vị & số đến 100', description:'Nhóm chục, giá trị hàng, biểu diễn số, so sánh và tính dựa trên cấu trúc chục - đơn vị.', planned_journeys:12, status:'active' },
+    { code:'12.4', engine:'measurement_data', icon:'📏', title:'Measurement & Data Lab - Đo lường, thời gian & dữ liệu', description:'Đo bằng đơn vị lặp, so sánh độ dài, xem giờ, lịch và đọc - tổ chức dữ liệu trực quan.', planned_journeys:10, status:'active' },
+    { code:'12.5', engine:'geometry_spatial', icon:'🔷', title:'Geometry & Spatial Lab - Hình học & không gian', description:'Thuộc tính hình, xoay - ghép - tách hình, vị trí không gian và chia hình thành các phần bằng nhau.', planned_journeys:10, status:'active' },
+    { code:'12.6', engine:'modeling_reasoning', icon:'🧠', title:'Modeling & Reasoning Lab - Mô hình hóa & lập luận', description:'Giải tình huống bằng vật thật, sơ đồ và phương trình; giải thích cách nghĩ, kiểm tra và tìm nhiều cách giải.', planned_journeys:14, status:'active' }
+];
+
+const EPSILON_GRADE1_BLUEPRINTS_ = {
+    '12.3': {
+        code:'12.3',
+        icon:'🔟',
+        title:'Place Value Lab - Chục, đơn vị & số đến 100',
+        tagline:'Nhìn số theo cấu trúc chục - đơn vị, không chỉ đọc thuộc lòng.',
+        focus:'Trọng tâm là gom 10 thành 1 chục, đọc - viết - biểu diễn số, so sánh số và dùng cấu trúc chục đơn vị để tính.',
+        vn_link:'Bám mục 3 Toán 1: số đến 100, cấu tạo số, bảng số, số tròn chục, so sánh và tính không nhớ.',
+        pedagogy:['Concrete → Pictorial → Abstract', 'Giải thích bằng lời: “vì sao con biết?”', 'Từ mô hình bó chục sang kí hiệu toán học'],
+        journeys:[
+            ['1','Bó chục đầu tiên','Con gom 10 que/đồ vật thành 1 bó chục và nhận ra 1 chục = 10 đơn vị.'],
+            ['2','10 và mấy','Con đọc các số dạng 10 và mấy bằng mô hình bó chục + đồ rời.'],
+            ['3','Viết số bằng chục và đơn vị','Con nối mô hình với số đúng, ví dụ 3 chục 8 đơn vị = 38.'],
+            ['4','Một số có nhiều cách biểu diễn','Con biểu diễn cùng một số bằng que tính, khung chục và sơ đồ.'],
+            ['5','So sánh theo hàng chục','Con biết số nào lớn hơn khi hàng chục khác nhau.'],
+            ['6','So sánh theo hàng đơn vị','Khi cùng số chục, con so sánh tiếp hàng đơn vị.'],
+            ['7','Số liền trước - liền sau','Con dùng tia số và bảng số để tìm số trước, sau, ở giữa.'],
+            ['8','Số tròn chục','Con nhận ra các số 10, 20, 30... và vị trí của chúng.'],
+            ['9','Tách số theo chục - đơn vị','Con tách 46 thành 40 và 6; 70 thành 7 chục và 0 đơn vị.'],
+            ['10','Cộng theo cấu trúc chục','Con tính 23 + 4, 31 + 20 bằng cách gộp chục và đơn vị.'],
+            ['11','Trừ theo cấu trúc chục','Con tính 57 - 3, 80 - 20 bằng cách bớt đơn vị hoặc bớt chục.'],
+            ['12','Giải thích và khái quát','Con chọn chiến lược hợp lí rồi giải thích được vì sao kết quả đúng.']
+        ]
+    },
+    '12.4': {
+        code:'12.4',
+        icon:'📏',
+        title:'Measurement & Data Lab - Đo lường, thời gian & dữ liệu',
+        tagline:'Đo để so sánh, đọc dữ liệu để kể lại bằng toán.',
+        focus:'Trọng tâm là đo độ dài bằng đơn vị lặp, ước lượng, xem giờ đúng, lịch và đọc bảng tranh/cột đơn giản.',
+        vn_link:'Kết nối các mạch độ dài, thời gian, lịch và bảng thống kê trực quan trong Toán 1.',
+        pedagogy:['Học qua thao tác đo thật', 'So sánh trước khi tính', 'Đọc dữ liệu rồi nói thành câu'],
+        journeys:[
+            ['1','Dài hơn - ngắn hơn','Con so sánh hai đồ vật bằng quan sát và đặt chồng.'],
+            ['2','Đo bằng đơn vị lặp','Con đo chiều dài bằng que, kẹp giấy hoặc ô vuông.'],
+            ['3','Vì sao phải đặt sát đầu mút?','Con sửa lỗi khi đo và hiểu cách đo đúng.'],
+            ['4','Ước lượng rồi kiểm tra','Con đoán trước rồi mới đo thật để kiểm chứng.'],
+            ['5','So sánh ba độ dài','Con sắp xếp theo thứ tự ngắn → dài hoặc ngược lại.'],
+            ['6','Giờ đúng trên đồng hồ','Con đọc giờ đúng và ghép với hoạt động hằng ngày.'],
+            ['7','Ngày - tuần - lịch','Con xác định hôm qua, hôm nay, ngày mai và đọc lịch đơn giản.'],
+            ['8','Bảng tranh','Con đếm dữ liệu bằng tranh rồi trả lời câu hỏi.'],
+            ['9','Biểu đồ cột đơn giản','Con đọc cột cao thấp để biết nhiều hơn/ít hơn.'],
+            ['10','Dự án mini','Con đo, ghi dữ liệu và kể lại kết quả bằng câu toán học.']
+        ]
+    },
+    '12.5': {
+        code:'12.5',
+        icon:'🔷',
+        title:'Geometry & Spatial Lab - Hình học & không gian',
+        tagline:'Nhìn hình, gọi tên, mô tả thuộc tính và thao tác với hình.',
+        focus:'Trọng tâm là nhận dạng hình phẳng, hình khối, ghép - tách hình, mô tả vị trí và chia hình thành phần bằng nhau.',
+        vn_link:'Liên hệ chặt với mục 4 Hình học và mục 6 Vị trí - không gian của chương trình Toán 1.',
+        pedagogy:['Nhìn thuộc tính trước khi nhớ tên', 'Xoay hình nhưng tên không đổi', 'Ghép - tách để thấy cấu tạo của hình'],
+        journeys:[
+            ['1','Nhìn và gọi tên hình','Con nhận ra hình tròn, tam giác, vuông, chữ nhật trong nhiều tư thế.'],
+            ['2','Nói về đặc điểm của hình','Con mô tả số cạnh, góc, cạnh bằng nhau hoặc dài - ngắn.'],
+            ['3','Hình nào khác loại?','Con phân loại theo dấu hiệu hình học chứ không theo màu sắc.'],
+            ['4','Ghép hình mới từ hình quen','Con dùng các mảnh nhỏ để ghép thành hình lớn.'],
+            ['5','Tách hình lớn thành hình nhỏ','Con tìm các hình ẩn trong một hình ghép.'],
+            ['6','Hình khối trong đời sống','Con nối đồ vật thật với khối lập phương hoặc khối hộp chữ nhật.'],
+            ['7','Vị trí trong không gian','Con nói được trên - dưới, trái - phải, trước - sau, trong - ngoài.'],
+            ['8','Xoay và lật hình','Con nhận ra hình vẫn là cùng một hình khi thay đổi hướng.'],
+            ['9','Chia hình thành hai phần bằng nhau','Con gấp/tô/chia hình thành các phần bằng nhau.'],
+            ['10','Giải thích bằng lời','Con trả lời vì sao một hình là hình vuông hay vì sao hai cách ghép là giống nhau.']
+        ]
+    },
+    '12.6': {
+        code:'12.6',
+        icon:'🧠',
+        title:'Modeling & Reasoning Lab - Mô hình hóa & lập luận',
+        tagline:'Biến tình huống thành mô hình toán và nói ra cách nghĩ của mình.',
+        focus:'Trọng tâm là đọc tình huống, chọn mô hình phù hợp, viết câu số, thử nhiều chiến lược và kiểm tra lại lời giải.',
+        vn_link:'Bổ trợ mạnh cho giải toán có lời văn, toán tư duy, mô hình thanh/sơ đồ và năng lực diễn đạt.',
+        pedagogy:['Dùng vật thật → tranh → sơ đồ → phương trình', 'Nhiều chiến lược cùng đúng', 'Khuyến khích trẻ tự giải thích'],
+        journeys:[
+            ['1','Chuyện gì đang xảy ra?','Con đọc tranh/tình huống và xác định đây là gộp, bớt, so sánh hay tìm phần thiếu.'],
+            ['2','Chọn mô hình đúng','Con chọn khung chục, sơ đồ phần - toàn thể hay đồ vật để biểu diễn.'],
+            ['3','Viết câu số từ tranh','Con chuyển mô hình thành phép tính phù hợp.'],
+            ['4','Một bài - nhiều cách làm','Con giải cùng bài bằng đồ vật, sơ đồ và câu số.'],
+            ['5','Tìm số còn thiếu','Con dùng quan hệ giữa các số để tìm ô trống.'],
+            ['6','So sánh để lập luận','Con nêu vì sao nhóm A nhiều hơn B, hay số này lớn hơn số kia.'],
+            ['7','Kiểm tra lời giải','Con thay kết quả vào tình huống để xem có hợp lí không.'],
+            ['8','Sửa một lời giải sai','Con tìm chỗ sai trong cách làm của bạn và nói vì sao sai.'],
+            ['9','Gia đình phép tính','Con nhìn ba số để lập các phép cộng trừ liên quan.'],
+            ['10','Bài toán hai bước rất nhẹ','Con giải tình huống cần suy nghĩ qua 2 ý nhỏ.'],
+            ['11','Ước lượng hợp lí','Con đoán kết quả gần đúng trước khi giải.'],
+            ['12','Giải thích bằng câu đầy đủ','Con không chỉ nói đáp án mà còn nói “Con làm thế nào”.'],
+            ['13','Tạo bài toán của riêng con','Con tự đặt một bài toán từ tranh hoặc vật thật.'],
+            ['14','Chuyển giao tình huống mới','Con dùng chiến lược đã học cho bài toán lạ nhưng cùng cấu trúc.']
+        ]
+    }
+};
+
+
+function getEpsilonLabAction_(lab) {
+    if (!lab) return '';
+    if (lab.engine === 'number_sense') return 'openNumberSenseHub()';
+    if (lab.engine === 'operation_sense') return 'openOperationSenseHub()';
+    return `openGenericMathLab_('${lab.code}')`;
+}
+
+function renderEpsilonLabBlueprint_(lab) {
+    if (!lab) return '';
+    const pedagogy = (lab.pedagogy || []).map(item => `<span class="em-stat-pill">${escapeHtml(item)}</span>`).join('');
+    const journeys = (lab.journeys || []).map(item => `
+        <div class="rounded-3xl border border-violet-200 bg-white/90 px-4 py-4 shadow-sm">
+            <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                    <div class="text-xs font-black uppercase tracking-wider text-fuchsia-600">Hành trình ${escapeHtml(item[0])}</div>
+                    <h3 class="mt-1 text-lg md:text-xl font-black text-slate-900 leading-tight">${escapeHtml(item[1])}</h3>
+                </div>
+                <span class="inline-flex shrink-0 rounded-full border border-violet-200 bg-violet-50 px-3 py-1 text-[11px] font-black text-violet-600">Khung sư phạm</span>
+            </div>
+            <p class="mt-2 text-sm md:text-base font-bold text-slate-600 leading-relaxed">${escapeHtml(item[2])}</p>
+        </div>`).join('');
+    return `<div class="w-full max-w-6xl mx-auto">
+        <div class="mb-3"><button onclick="openEpsilonMethodHub_()" class="ns-secondary-btn">← Về Math Lab Grade 1</button></div>
+        <section class="em-hero">
+            <div class="min-w-0 flex-1">
+                <div class="text-[11px] md:text-xs font-black uppercase tracking-[.26em] text-fuchsia-600">${escapeHtml(lab.code)} • ${escapeHtml(lab.icon || '✨')} GRADE 1 LAB</div>
+                <h2 class="mt-1 text-2xl md:text-4xl font-black text-slate-900">${escapeHtml(lab.title)}</h2>
+                <p class="mt-2 max-w-4xl text-sm md:text-base font-bold text-slate-600 leading-relaxed">${escapeHtml(lab.tagline || '')}</p>
+                <div class="mt-3 text-sm md:text-base font-black text-fuchsia-700">${escapeHtml(lab.focus || '')}</div>
+            </div>
+            <div class="shrink-0 min-w-[210px] rounded-3xl border border-violet-200 bg-white/75 px-5 py-4 text-center shadow-sm">
+                <div class="text-3xl md:text-4xl font-black text-violet-600">${(lab.journeys || []).length}</div>
+                <div class="mt-1 text-xs md:text-sm font-black text-violet-600">hành trình đã lên khung</div>
+                <div class="mt-1 text-[11px] font-bold text-slate-400">Sẵn sàng để phát triển hoạt động</div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-4 mt-4">
+            <div class="rounded-[28px] border border-pink-100 bg-white/90 px-5 py-5 shadow-sm">
+                <div class="text-sm font-black uppercase tracking-wider text-pink-600">Ý tưởng lớn</div>
+                <p class="mt-2 text-sm md:text-base font-bold text-slate-600 leading-relaxed">${escapeHtml(lab.focus || '')}</p>
+                <div class="mt-4 text-sm font-black uppercase tracking-wider text-pink-600">Liên hệ chương trình Việt Nam</div>
+                <p class="mt-2 text-sm md:text-base font-bold text-slate-600 leading-relaxed">${escapeHtml(lab.vn_link || '')}</p>
+                <div class="mt-4 text-sm font-black uppercase tracking-wider text-pink-600">Nguyên tắc sư phạm</div>
+                <div class="mt-3 flex flex-wrap gap-2">${pedagogy}</div>
+            </div>
+            <div class="rounded-[28px] border border-violet-100 bg-gradient-to-br from-violet-50 via-white to-fuchsia-50 px-5 py-5 shadow-sm">
+                <div class="text-sm font-black uppercase tracking-wider text-violet-600">Cách dùng trong app</div>
+                <ul class="mt-3 space-y-2 text-sm md:text-base font-bold text-slate-600 leading-relaxed list-disc pl-5">
+                    <li>Mỗi hành trình đi theo trình tự: thao tác → mô hình → nói ra cách nghĩ → ký hiệu toán.</li>
+                    <li>Ưu tiên câu hỏi giúp bé giải thích “vì sao”, không chỉ chọn đáp án.</li>
+                    <li>Cho phép nhiều chiến lược đúng để nuôi tư duy linh hoạt.</li>
+                    <li>Kết nối lại với bài học SGK hiện hành để bé vừa chắc kiến thức vừa mở rộng tư duy.</li>
+                </ul>
+            </div>
+        </div>
+
+        <section class="mt-5">
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+                <h3 class="text-xl md:text-2xl font-black text-slate-900">Lộ trình hành trình</h3>
+                <span class="em-method-badge">${(lab.journeys || []).length} hành trình</span>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-3">${journeys}</div>
+        </section>
+    </div>`;
+}
+
+function openEpsilonLabBlueprint_(labCode) {
+    stopSpeaking();
+    clearInterval(quizTimerInterval);
+    setAppShellRootMode_(false);
+    setMainTabActive_('discover');
+    activeTopicId = 12;
+    const lab = EPSILON_GRADE1_BLUEPRINTS_[labCode];
+    if (!lab) return openEpsilonMethodHub_();
+    updateNavTabs('12. Math Lab - Toán tư duy Mỹ', '✨', `${lab.code} ${lab.title}`, null);
+    switchAppView('view-epsilon-method-hub');
+    const host = document.getElementById('epsilon-method-content');
+    if (host) host.innerHTML = renderEpsilonLabBlueprint_(lab);
+}
+
 async function openEpsilonMethodHub_() {
     setAppShellRootMode_(false);
     setMainTabActive_('discover');
@@ -1388,7 +1574,8 @@ async function openEpsilonMethodHub_() {
     pendingTopicQuiz = null;
     activeNumberSense = null;
     activeOperationSense = null;
-    updateDiscoverBreadcrumb_('12. Học Toán theo phương pháp mới', '✨', null);
+    activeGenericLab = null;
+    updateDiscoverBreadcrumb_('12. Math Lab - Toán tư duy Mỹ', '✨', null);
     switchAppView('view-epsilon-method-hub');
     const host = document.getElementById('epsilon-method-content');
     if (host) host.innerHTML = '<div class="py-16 text-center font-black text-purple-600">✨ Đang mở không gian học theo phương pháp Epsilon...</div>';
@@ -1403,40 +1590,95 @@ async function openEpsilonMethodHub_() {
 function renderEpsilonMethodHub_(data) {
     const host = document.getElementById('epsilon-method-content');
     if (!host) return;
-    const cards = (data.tracks || []).map(track => {
-        const content = track.content || {};
-        const journeyCount = Array.isArray(content.journeys) ? content.journeys.length : 0;
-        const activityCount = (content.journeys || []).reduce((sum, j) => sum + (Array.isArray(j.activities) ? j.activities.length : 0), 0);
-        const action = track.engine === 'number_sense' ? 'openNumberSenseHub()' : track.engine === 'operation_sense' ? 'openOperationSenseHub()' : '';
-        return `<button onclick="${action}" class="em-track-card text-left">
+
+    const activeByEngine = {};
+    (data.tracks || []).forEach(track => { activeByEngine[track.engine] = track; });
+    const plannedTotal = EPSILON_GRADE1_LABS_.reduce((sum, lab) => sum + Number(lab.planned_journeys || 0), 0);
+    const openJourneyCount = (data.tracks || []).reduce((sum, track) => sum + ((track.content?.journeys || []).length), 0);
+
+    const cards = EPSILON_GRADE1_LABS_.map(lab => {
+        const track = activeByEngine[lab.engine];
+        const isActive = !!track && lab.status === 'active';
+        const isBlueprint = lab.status === 'blueprint';
+        const blueprint = EPSILON_GRADE1_BLUEPRINTS_[lab.code];
+        const content = track?.content || {};
+        const journeyCount = isActive ? (content.journeys || []).length : Number((blueprint?.journeys || []).length || lab.planned_journeys || 0);
+        const activityCount = isActive ? (content.journeys || []).reduce((sum, j) => sum + (Array.isArray(j.activities) ? j.activities.length : 0), 0) : 0;
+        const action = getEpsilonLabAction_(lab);
+
+        if (isActive) {
+            return `<button onclick="${action}" class="em-track-card text-left">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="em-track-icon">${escapeHtml(lab.icon || '✨')}</div>
+                        <div class="min-w-0">
+                            <div class="text-xs font-black uppercase tracking-wider text-fuchsia-600">${escapeHtml(lab.code)}</div>
+                            <h3 class="font-black text-slate-900 text-lg md:text-xl leading-tight mt-0.5">${escapeHtml(lab.title)}</h3>
+                        </div>
+                    </div>
+                    <span class="em-method-badge">${journeyCount} hành trình</span>
+                </div>
+                <p class="mt-3 text-sm md:text-base font-bold text-slate-600 leading-relaxed">${escapeHtml(lab.description)}</p>
+                <div class="mt-4 flex flex-wrap gap-2 text-[11px] font-black text-slate-500">
+                    <span class="em-stat-pill">${activityCount} hoạt động</span>
+                    <span class="em-stat-pill">Có âm thanh hướng dẫn</span>
+                    <span class="em-stat-pill">Đang mở</span>
+                </div>
+            </button>`;
+        }
+
+        if (isBlueprint) {
+            return `<button onclick="${action}" class="em-track-card text-left bg-violet-50/50 hover:bg-violet-50 transition-colors">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="em-track-icon">${escapeHtml(lab.icon || '✨')}</div>
+                        <div class="min-w-0">
+                            <div class="text-xs font-black uppercase tracking-wider text-fuchsia-600">${escapeHtml(lab.code)}</div>
+                            <h3 class="font-black text-slate-900 text-lg md:text-xl leading-tight mt-0.5">${escapeHtml(lab.title)}</h3>
+                        </div>
+                    </div>
+                    <span class="inline-flex shrink-0 rounded-full border border-violet-200 bg-white px-3 py-1 text-[11px] font-black text-violet-600">Đã lên khung</span>
+                </div>
+                <p class="mt-3 text-sm md:text-base font-bold text-slate-600 leading-relaxed">${escapeHtml(lab.description)}</p>
+                <div class="mt-4 flex flex-wrap gap-2 text-[11px] font-black text-slate-500">
+                    <span class="em-stat-pill">${journeyCount} hành trình</span>
+                    <span class="em-stat-pill">Khung sư phạm Mỹ</span>
+                    <span class="em-stat-pill">Bấm để xem roadmap</span>
+                </div>
+            </button>`;
+        }
+
+        return `<div class="em-track-card text-left opacity-75 cursor-default bg-slate-50/70">
             <div class="flex items-start justify-between gap-3">
                 <div class="flex items-center gap-3 min-w-0">
-                    <div class="em-track-icon">${escapeHtml(track.icon || '✨')}</div>
+                    <div class="em-track-icon grayscale-[25%]">${escapeHtml(lab.icon || '✨')}</div>
                     <div class="min-w-0">
-                        <div class="text-xs font-black uppercase tracking-wider text-fuchsia-600">${escapeHtml(track.display_code || '')}</div>
-                        <h3 class="font-black text-slate-900 text-lg md:text-xl leading-tight mt-0.5">${escapeHtml(track.title || '')}</h3>
+                        <div class="text-xs font-black uppercase tracking-wider text-fuchsia-500">${escapeHtml(lab.code)}</div>
+                        <h3 class="font-black text-slate-700 text-lg md:text-xl leading-tight mt-0.5">${escapeHtml(lab.title)}</h3>
                     </div>
                 </div>
-                <span class="em-method-badge">Epsilon Method</span>
+                <span class="inline-flex shrink-0 rounded-full border border-violet-200 bg-violet-50 px-3 py-1 text-[11px] font-black text-violet-500">Sắp ra mắt</span>
             </div>
-            <p class="mt-3 text-sm md:text-base font-bold text-slate-600 leading-relaxed">${escapeHtml(track.description || '')}</p>
-            <div class="mt-4 flex flex-wrap gap-2 text-[11px] font-black text-slate-500">
-                <span class="em-stat-pill">${journeyCount} hành trình</span>
-                <span class="em-stat-pill">${activityCount} hoạt động</span>
-                <span class="em-stat-pill">Có âm thanh hướng dẫn</span>
+            <p class="mt-3 text-sm md:text-base font-bold text-slate-500 leading-relaxed">${escapeHtml(lab.description)}</p>
+            <div class="mt-4 flex flex-wrap gap-2 text-[11px] font-black text-slate-400">
+                <span class="em-stat-pill">Dự kiến ${journeyCount} hành trình</span>
             </div>
-        </button>`;
+        </div>`;
     }).join('');
 
     host.innerHTML = `<div class="w-full max-w-6xl mx-auto">
         <section class="em-hero">
-            <div class="min-w-0">
-                <div class="text-xs md:text-sm font-black uppercase tracking-[.18em] text-fuchsia-600">✨ Epsilon Method</div>
-                <h2 class="mt-1 text-2xl md:text-4xl font-black text-slate-900">Học Toán theo phương pháp mới</h2>
-                <p class="mt-2 max-w-4xl text-sm md:text-base font-bold text-slate-600 leading-relaxed">Trẻ được hiểu ý nghĩa, tự tay thao tác, nhìn thấy toán học và diễn đạt cách nghĩ trước khi đi tới ký hiệu và tính thành thạo.</p>
-                <div class="mt-3 text-sm md:text-base font-black text-fuchsia-700">Hiểu bản chất trước → thành thạo sau → tiến bộ từng ngày.</div>
+            <div class="min-w-0 flex-1">
+                <div class="text-[11px] md:text-xs font-black uppercase tracking-[.26em] text-fuchsia-600">MATH LAB • GRADE 1</div>
+                <h2 class="mt-1 text-2xl md:text-4xl font-black text-slate-900">Math Lab - Toán tư duy Mỹ</h2>
+                <p class="mt-2 max-w-4xl text-sm md:text-base font-bold text-slate-600 leading-relaxed">Cùng kiến thức Toán 1 Việt Nam, nhưng con học bằng khám phá, thao tác, mô hình, giải thích và nhiều cách giải.</p>
+                <div class="mt-3 text-sm md:text-base font-black text-fuchsia-700">Khám phá • Mô hình • Nhiều cách giải</div>
             </div>
-            <div class="em-hero-flow">Tình huống → Thao tác → Mô hình → Diễn đạt → Ký hiệu → Luyện → Vận dụng</div>
+            <div class="shrink-0 min-w-[210px] rounded-3xl border border-violet-200 bg-white/75 px-5 py-4 text-center shadow-sm">
+                <div class="text-3xl md:text-4xl font-black text-violet-600">${plannedTotal}</div>
+                <div class="mt-1 text-xs md:text-sm font-black text-violet-600">hành trình trong khung Grade 1</div>
+                <div class="mt-1 text-[11px] font-bold text-slate-400">${openJourneyCount} hành trình đang mở</div>
+            </div>
         </section>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">${cards}</div>
     </div>`;
@@ -1457,6 +1699,313 @@ function speakNumberSenseActivity_() {
 
 function speakOperationSenseActivity_() {
     speakVietnamese(epsilonActivityNarration_(currentOperationSenseActivity_()), 0.94);
+}
+
+
+// ==========================================
+// GENERIC GRADE 1 MATH LAB ENGINE - 12.3 to 12.6
+// Mỗi hành trình có chu trình: mô hình -> lựa chọn -> giải thích -> transfer.
+// Trả lời sai không khóa đáp án: hệ thống tăng dần gợi ý rồi cho thử lại.
+// ==========================================
+let activeGenericLab = null;
+let genericLabHintLevel_ = 0;
+let genericLabWrongCount_ = 0;
+let genericLabSolved_ = false;
+
+function genericLabEvidenceKey_(labCode) {
+    const id = String(currentUser?.maHS || 'KHACH').toUpperCase();
+    return `epsilon_grade1_${String(labCode || '').replace(/\./g,'_')}_evidence_${id}`;
+}
+
+function readGenericLabEvidence_(labCode) {
+    try { return JSON.parse(localStorage.getItem(genericLabEvidenceKey_(labCode)) || '{}') || {}; }
+    catch (e) { return {}; }
+}
+
+function writeGenericLabEvidence_(labCode, data) {
+    try { localStorage.setItem(genericLabEvidenceKey_(labCode), JSON.stringify(data || {})); } catch (e) {}
+}
+
+function genericLabMasteryLabel_(state) {
+    return numberSenseMasteryLabel_(state);
+}
+
+function genericLabMasteryClass_(state) {
+    return numberSenseMasteryClass_(state);
+}
+
+async function loadGenericMathLabTrack_(labCode) {
+    const root = await loadEpsilonMuc12Data_();
+    const lab = EPSILON_GRADE1_LABS_.find(x => x.code === labCode);
+    if (!lab) throw new Error(`Không tìm thấy ${labCode}`);
+    const track = (root.tracks || []).find(t => t.display_code === labCode || t.engine === lab.engine);
+    if (!track?.content?.journeys?.length) throw new Error(`${labCode} chưa có dữ liệu hành trình`);
+    return { lab, track, data: track.content };
+}
+
+async function openGenericMathLab_(labCode) {
+    stopSpeaking();
+    clearInterval(quizTimerInterval);
+    setAppShellRootMode_(false);
+    setMainTabActive_('discover');
+    activeTopicId = 12;
+    switchAppView('view-epsilon-method-hub');
+    const host = document.getElementById('epsilon-method-content');
+    if (host) host.innerHTML = '<div class="py-14 text-center font-black text-violet-600">✨ Đang mở Math Lab...</div>';
+    try {
+        const {lab, track, data} = await loadGenericMathLabTrack_(labCode);
+        activeGenericLab = { labCode, lab, track, data, journeyId:null, activityIndex:0 };
+        updateNavTabs('12. Math Lab - Toán tư duy Mỹ','✨',`${lab.code} ${lab.title}`,null);
+        renderGenericMathLabHub_();
+    } catch (err) {
+        if (host) host.innerHTML = `<div class="rounded-3xl border-2 border-rose-200 bg-rose-50 p-6 text-center font-bold text-rose-700">${escapeHtml(err.message)}</div>`;
+    }
+}
+
+function genericLabJourneyState_(journeyId) {
+    if (!activeGenericLab) return {mastery:'not_observed',completed:[],attempts:0,hint_uses:0,transfer_correct:0};
+    const ev = readGenericLabEvidence_(activeGenericLab.labCode);
+    return ev[journeyId] || {mastery:'not_observed',completed:[],attempts:0,hint_uses:0,transfer_correct:0};
+}
+
+function renderGenericMathLabHub_() {
+    const host = document.getElementById('epsilon-method-content');
+    if (!host || !activeGenericLab) return;
+    const {lab, data} = activeGenericLab;
+    const evidence = readGenericLabEvidence_(activeGenericLab.labCode);
+    const completedJourneys = (data.journeys || []).filter(j => {
+        const st = evidence[j.id];
+        return st && Array.isArray(st.completed) && st.completed.length >= (j.activities || []).length;
+    }).length;
+    const cards = (data.journeys || []).map(j => {
+        const st = genericLabJourneyState_(j.id);
+        const done = Array.isArray(st.completed) ? st.completed.length : 0;
+        const total = (j.activities || []).length;
+        const pct = total ? Math.round(done/total*100) : 0;
+        const standards = (j.standards || []).map(s=>`<span class="em-stat-pill">${escapeHtml(s)}</span>`).join('');
+        const practices = (j.math_practices || []).map(s=>`<span class="em-stat-pill">${escapeHtml(s)}</span>`).join('');
+        return `<button onclick="startGenericMathLabJourney_('${escapeHtml(j.id)}')" class="em-track-card text-left">
+            <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="em-track-icon">${escapeHtml(j.icon || lab.icon || '✨')}</div>
+                    <div class="min-w-0"><div class="text-xs font-black uppercase tracking-wider text-fuchsia-600">${escapeHtml(lab.code)}.${j.order}</div><h3 class="font-black text-slate-900 text-lg md:text-xl leading-tight">${escapeHtml(j.title)}</h3></div>
+                </div>
+                <span class="inline-flex rounded-full border px-3 py-1 text-[11px] font-black ${genericLabMasteryClass_(st.mastery)}">${escapeHtml(genericLabMasteryLabel_(st.mastery))}</span>
+            </div>
+            <p class="mt-3 text-sm md:text-base font-bold text-slate-600 leading-relaxed">${escapeHtml(j.goal)}</p>
+            <div class="mt-3 flex flex-wrap gap-1.5">${standards}${practices}</div>
+            <div class="mt-4 h-2 rounded-full bg-slate-100 overflow-hidden"><div class="h-full bg-gradient-to-r from-fuchsia-400 to-violet-500" style="width:${pct}%"></div></div>
+            <div class="mt-1 text-[11px] font-black text-slate-400">${done}/${total} hoạt động</div>
+        </button>`;
+    }).join('');
+
+    host.innerHTML = `<div class="w-full max-w-6xl mx-auto">
+        <div class="mb-3"><button onclick="openEpsilonMethodHub_()" class="ns-secondary-btn">← Math Lab Grade 1</button></div>
+        <section class="em-hero">
+            <div class="min-w-0 flex-1">
+                <div class="text-[11px] md:text-xs font-black uppercase tracking-[.26em] text-fuchsia-600">${escapeHtml(lab.code)} • MATH LAB • GRADE 1</div>
+                <h2 class="mt-1 text-2xl md:text-4xl font-black text-slate-900">${escapeHtml(lab.title)}</h2>
+                <p class="mt-2 max-w-4xl text-sm md:text-base font-bold text-slate-600 leading-relaxed">${escapeHtml(lab.description)}</p>
+                <div class="mt-3 text-sm md:text-base font-black text-fuchsia-700">${escapeHtml(data.pedagogy || 'Thao tác → mô hình → giải thích → kí hiệu → transfer')}</div>
+            </div>
+            <div class="shrink-0 min-w-[210px] rounded-3xl border border-violet-200 bg-white/75 px-5 py-4 text-center shadow-sm">
+                <div class="text-3xl md:text-4xl font-black text-violet-600">${completedJourneys}/${(data.journeys||[]).length}</div>
+                <div class="mt-1 text-xs md:text-sm font-black text-violet-600">hành trình hoàn thành</div>
+                <div class="mt-1 text-[11px] font-bold text-slate-400">Theo dõi theo từng kỹ năng nhỏ</div>
+            </div>
+        </section>
+        <div class="mt-4 rounded-[24px] border border-amber-200 bg-amber-50/70 px-4 py-3 text-sm md:text-base font-bold text-amber-900">
+            🐰 <strong>Cách học:</strong> con nhìn và thao tác với mô hình trước, tự chọn cách nghĩ, được gợi ý nếu cần, rồi mới giải thích bằng kí hiệu. Sai không bị khóa bài; con được thử lại.
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">${cards}</div>
+    </div>`;
+}
+
+function startGenericMathLabJourney_(journeyId) {
+    if (!activeGenericLab) return;
+    const journey = (activeGenericLab.data.journeys || []).find(j => j.id === journeyId);
+    if (!journey) return;
+    activeGenericLab.journeyId = journeyId;
+    activeGenericLab.activityIndex = 0;
+    genericLabHintLevel_ = 0;
+    genericLabWrongCount_ = 0;
+    genericLabSolved_ = false;
+    updateNavTabs('12. Math Lab - Toán tư duy Mỹ','✨',`${activeGenericLab.lab.code} ${activeGenericLab.lab.title}`,`${journey.order}. ${journey.title}`);
+    renderGenericMathLabActivity_();
+}
+
+function currentGenericLabJourney_() {
+    if (!activeGenericLab?.journeyId) return null;
+    return (activeGenericLab.data.journeys || []).find(j => j.id === activeGenericLab.journeyId) || null;
+}
+
+function currentGenericLabActivity_() {
+    const j = currentGenericLabJourney_();
+    return j?.activities?.[activeGenericLab.activityIndex] || null;
+}
+
+function genericLabSpeakCurrent_() {
+    const a = currentGenericLabActivity_();
+    if (!a) return;
+    const teacher = String(a.teacher_audio || a.teacher || '').trim();
+    const prompt = String(a.instruction_audio || a.prompt || '').trim();
+    speakVietnamese(`${teacher}${teacher && prompt ? ' ' : ''}${prompt}`,0.94);
+}
+
+function genericBaseTenHtml_(tens=0, ones=0) {
+    const rods = Array.from({length:Math.max(0,Number(tens)||0)},()=>`<div class="grid grid-rows-5 grid-cols-2 gap-[2px] rounded-xl border-2 border-violet-300 bg-violet-50 p-1 w-10 md:w-12">${Array.from({length:10},()=>'<span class="block aspect-square rounded-[3px] bg-violet-400"></span>').join('')}</div>`).join('');
+    const dots = Array.from({length:Math.max(0,Number(ones)||0)},()=>'<span class="w-8 h-8 md:w-9 md:h-9 rounded-full border-2 border-pink-300 bg-pink-100 inline-flex"></span>').join('');
+    return `<div class="flex flex-wrap items-end justify-center gap-3"><div class="flex flex-wrap justify-center gap-2">${rods}</div><div class="flex flex-wrap justify-center gap-2 max-w-[260px]">${dots}</div></div>`;
+}
+
+function genericNumberLineHtml_(v) {
+    const start=Number(v.start||0), end=Number(v.end||10), step=Number(v.step||1);
+    const nums=[]; for(let n=start;n<=end;n+=step) nums.push(n);
+    return `<div class="flex flex-wrap items-center justify-center">${nums.map((n,i)=>`<div class="flex items-center"><div class="w-11 h-11 md:w-12 md:h-12 rounded-full border-2 ${n===Number(v.highlight)?'bg-pink-500 border-pink-500 text-white':'bg-white border-violet-200 text-violet-700'} flex items-center justify-center font-black text-lg">${v.hide_highlight_label && n===Number(v.highlight)?'?':n}</div>${i<nums.length-1?'<div class="w-5 md:w-7 h-1 bg-violet-200"></div>':''}</div>`).join('')}</div>`;
+}
+
+function genericClockSvg_(hour=3, minute=0) {
+    const cx=100, cy=100, r=78;
+    const minAng=(Number(minute||0)*6-90)*Math.PI/180;
+    const hourAng=((Number(hour||0)%12)*30 + Number(minute||0)*0.5 - 90)*Math.PI/180;
+    const hx=cx+Math.cos(hourAng)*42, hy=cy+Math.sin(hourAng)*42;
+    const mx=cx+Math.cos(minAng)*62, my=cy+Math.sin(minAng)*62;
+    const labels=Array.from({length:12},(_,i)=>{const n=i+1; const a=(n*30-90)*Math.PI/180; return `<text x="${cx+Math.cos(a)*60}" y="${cy+Math.sin(a)*60+5}" text-anchor="middle" font-size="12" font-weight="800" fill="#6d28d9">${n}</text>`}).join('');
+    return `<svg viewBox="0 0 200 200" class="w-[210px] md:w-[250px] h-auto"><circle cx="100" cy="100" r="82" fill="#fff" stroke="#ddd6fe" stroke-width="6"/>${labels}<line x1="100" y1="100" x2="${hx}" y2="${hy}" stroke="#ec4899" stroke-width="7" stroke-linecap="round"/><line x1="100" y1="100" x2="${mx}" y2="${my}" stroke="#7c3aed" stroke-width="5" stroke-linecap="round"/><circle cx="100" cy="100" r="6" fill="#111827"/></svg>`;
+}
+
+function genericBarChartHtml_(data) {
+    const max=Math.max(1,...(data||[]).map(x=>Number(x.count||0)));
+    return `<div class="flex items-end justify-center gap-5 h-[220px]">${(data||[]).map(x=>`<div class="flex flex-col items-center justify-end h-full"><div class="font-black text-violet-700 mb-1">${x.count}</div><div class="w-12 md:w-16 rounded-t-xl bg-violet-300 border-2 border-violet-400" style="height:${40+Number(x.count||0)/max*120}px"></div><div class="mt-2 font-black text-slate-600 text-sm">${escapeHtml(x.label)}</div></div>`).join('')}</div>`;
+}
+
+function renderGenericLabVisual_(a) {
+    const v=a?.visual||{}, k=v.kind||'';
+    if(k==='base_ten') return `<div>${genericBaseTenHtml_(v.tens,v.ones)}${v.action==='bundle'?'<div class="mt-3 text-center text-sm font-black text-violet-700">10 đơn vị ↔ 1 chục</div>':''}</div>`;
+    if(k==='ten_frame') { const f=Math.max(0,Math.min(10,Number(v.filled||0))); return `<div class="grid grid-cols-5 gap-2 max-w-[330px] mx-auto">${Array.from({length:10},(_,i)=>`<div class="aspect-square rounded-xl border-2 ${i<f?'bg-pink-100 border-pink-300':'bg-white border-sky-200'} flex items-center justify-center">${i<f?'<span class="w-5 h-5 rounded-full bg-pink-500"></span>':''}</div>`).join('')}</div>`; }
+    if(k==='place_value_card') return buildTopic3PlaceValueCard_(Number(v.number||0),'violet');
+    if(k==='compare_base_ten') return `<div class="grid grid-cols-2 gap-5"><div><div class="text-center text-xl font-black text-violet-700 mb-2">${v.left}</div>${genericBaseTenHtml_(Math.floor(v.left/10),v.left%10)}</div><div><div class="text-center text-xl font-black text-rose-600 mb-2">${v.right}</div>${genericBaseTenHtml_(Math.floor(v.right/10),v.right%10)}</div></div>`;
+    if(k==='compare_numbers') return `<div class="flex items-center justify-center gap-5"><div class="rounded-3xl border-2 border-violet-200 bg-violet-50 px-8 py-6 text-4xl font-black text-violet-700">${v.left}</div><div class="text-4xl font-black text-pink-500">?</div><div class="rounded-3xl border-2 border-rose-200 bg-rose-50 px-8 py-6 text-4xl font-black text-rose-700">${v.right}</div></div>`;
+    if(k==='representation_pair') return `<div class="grid md:grid-cols-2 gap-4 items-center"><div class="rounded-2xl border border-violet-200 bg-white p-4">${genericBaseTenHtml_(Math.floor(v.number/10),v.number%10)}</div><div class="text-center text-6xl font-black text-violet-700">${v.number}</div></div>`;
+    if(k==='number_line'||k==='number_line_jump') return genericNumberLineHtml_(v.kind==='number_line_jump'?{start:Number(v.start)-2,end:Number(v.start)+Number(v.jump)+2,highlight:Number(v.start)+Number(v.jump)}:v);
+    if(k==='number_cards') return `<div class="flex flex-wrap justify-center gap-3">${(v.numbers||[]).map(n=>`<div class="w-20 h-20 rounded-2xl border-2 border-violet-200 bg-white flex items-center justify-center text-3xl font-black text-violet-700">${n}</div>`).join('')}</div>`;
+    if(k==='part_whole') return buildMuc2NumberBond_(v.whole,v.left,v.right);
+    if(k==='base_ten_add'||k==='base_ten_sub') { const start=Number(v.start||0), delta=Number(k==='base_ten_add'?v.add:v.take); return `<div class="space-y-4"><div><div class="text-center font-black text-slate-500 mb-2">Ban đầu: ${start}</div>${genericBaseTenHtml_(Math.floor(start/10),start%10)}</div><div class="text-center text-3xl font-black ${k==='base_ten_add'?'text-emerald-600':'text-rose-600'}">${k==='base_ten_add'?'+':'−'} ${delta}</div></div>`; }
+    if(k==='equation') return `<div class="text-center text-4xl md:text-5xl font-black text-violet-700">${escapeHtml(v.text||'')}</div>`;
+    if(k==='strategy_cards') return `<div class="grid gap-3">${(v.items||[]).map(x=>`<div class="rounded-2xl border-2 border-violet-100 bg-white px-4 py-3 text-left font-black text-slate-700">${escapeHtml(x)}</div>`).join('')}</div>`;
+    if(k==='length_bars') return `<div class="space-y-4 max-w-xl mx-auto">${(v.items||[]).map(x=>`<div class="flex items-center gap-3"><span class="w-8 font-black text-violet-700">${escapeHtml(x.label)}</span><div class="h-8 rounded-xl bg-sky-200 border-2 border-sky-300" style="width:${40+Number(x.length||1)*34}px"></div></div>`).join('')}</div>`;
+    if(k==='length_offset') return `<div class="space-y-5 max-w-xl mx-auto"><div class="ml-4 h-8 rounded-xl bg-violet-200 border-2 border-violet-300" style="width:${60+Number(v.a||1)*34}px"></div><div class="ml-24 h-8 rounded-xl bg-rose-200 border-2 border-rose-300" style="width:${60+Number(v.b||1)*34}px"></div></div>`;
+    if(k==='logic_chain') return `<div class="flex flex-wrap items-center justify-center gap-3">${(v.items||[]).map((x,i)=>`<div class="rounded-2xl border-2 border-violet-200 bg-white px-5 py-3 font-black text-violet-700">${escapeHtml(x)}</div>${i<(v.items||[]).length-1?'<span class="text-2xl text-pink-500">→</span>':''}`).join('')}</div>`;
+    if(k==='unit_measure') { const units=Number(v.units||0); const sym=v.unit_symbol||''; return `<div class="flex flex-wrap justify-center gap-0">${Array.from({length:units},(_,i)=>`<div class="w-12 h-12 border-2 border-sky-300 bg-sky-100 flex items-center justify-center font-black text-sky-700">${sym||i+1}</div>`).join('')}</div>`; }
+    if(k==='measure_methods') return `<div class="grid grid-cols-2 gap-3">${(v.methods||[]).map((m,i)=>`<div class="rounded-2xl border-2 border-violet-100 bg-white p-3 text-center"><div class="flex justify-center ${i===1?'gap-2':i===2?'-space-x-3':'gap-0'}">${Array.from({length:4},()=>'<span class="w-10 h-10 border-2 border-sky-300 bg-sky-100"></span>').join('')}</div><div class="mt-2 font-black text-sm text-slate-600">${escapeHtml(m)}</div></div>`).join('')}</div>`;
+    if(k==='measure_error') { const err=v.error; const gap=err==='gap'?'gap-3':err==='overlap'?'-space-x-3':'gap-0'; return `<div class="flex justify-center ${gap}">${Array.from({length:5},(_,i)=>`<span class="h-12 border-2 border-rose-300 bg-rose-100 ${err==='unequal'&&i===2?'w-16':'w-11'}"></span>`).join('')}</div>`; }
+    if(k==='estimate_bar') return `<div class="mx-auto h-10 rounded-xl bg-amber-200 border-2 border-amber-300" style="width:${80+Number(v.approx||1)*34}px"></div>`;
+    if(k==='clock') return genericClockSvg_(v.hour,v.minute);
+    if(k==='digital_clock') return `<div class="text-center text-6xl font-black tracking-wider text-violet-700 bg-white border-2 border-violet-200 rounded-3xl px-8 py-5">${escapeHtml(v.text||'')}</div>`;
+    if(k==='calendar_strip') return `<div class="flex justify-center gap-2">${(v.days||[]).map(d=>`<div class="w-16 h-16 rounded-2xl border-2 ${d===v.highlight?'bg-pink-500 border-pink-500 text-white':'bg-white border-violet-200 text-violet-700'} flex items-center justify-center text-2xl font-black">${d}</div>`).join('')}</div>`;
+    if(k==='week_strip') { const days=['Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy','Chủ nhật']; return `<div class="grid grid-cols-4 md:grid-cols-7 gap-2">${days.map(d=>`<div class="rounded-xl border-2 ${d===v.highlight?'bg-pink-500 text-white border-pink-500':'bg-white text-violet-700 border-violet-200'} px-2 py-3 text-center text-xs font-black">${d}</div>`).join('')}</div>`; }
+    if(k==='pictograph') return `<div class="space-y-2">${(v.data||[]).map(x=>`<div class="flex items-center gap-3"><div class="w-20 text-right font-black text-slate-600">${escapeHtml(x.label)}</div><div class="flex flex-wrap gap-1 text-3xl">${Array.from({length:Number(x.count||0)},()=>escapeHtml(x.emoji||'●')).join('')}</div></div>`).join('')}</div>`;
+    if(k==='bar_chart') return genericBarChartHtml_(v.data);
+    if(k==='data_table') return `<div class="max-w-md mx-auto overflow-hidden rounded-2xl border-2 border-violet-100 bg-white">${(v.rows||[]).map(r=>`<div class="grid grid-cols-2 border-b last:border-b-0 border-violet-100"><div class="px-4 py-3 font-black text-slate-600">${escapeHtml(r.label)}</div><div class="px-4 py-3 text-center font-black text-violet-700">${escapeHtml(r.value)}</div></div>`).join('')}</div>`;
+    if(k==='shape') return `<div class="flex justify-center">${muc4ShapeSvg_(v.shape,{size:180,color:v.color||'#c4b5fd',rotate:v.rotate||0})}</div>`;
+    if(k==='shape_set') return `<div class="grid grid-cols-4 gap-3">${(v.shapes||[]).map((s,i)=>`<div class="rounded-2xl bg-white border-2 border-violet-100 p-2 text-center"><div class="font-black text-pink-600">${String.fromCharCode(65+i)}</div>${muc4ShapeSvg_(s,{size:90,color:['#fde68a','#bfdbfe','#bbf7d0','#fecdd3'][i%4],rotate:(v.rotates||[])[i]||0})}</div>`).join('')}</div>`;
+    if(k==='real_object_shape') return `<div class="text-center"><div class="text-8xl">${escapeHtml(v.emoji||'📦')}</div>${v.shape?`<div class="mt-3">${muc4ShapeSvg_(v.shape,{size:110,color:'#dbeafe'})}</div>`:''}${v.solid?`<div class="mt-3">${muc4SolidSvg_(v.solid,{size:130})}</div>`:''}</div>`;
+    if(k==='compose_shapes') return `<div class="flex items-center justify-center gap-3">${(v.parts||[]).map((s,i)=>muc4ShapeSvg_(s,{size:100,color:['#fecdd3','#bfdbfe'][i%2],rotate:i?180:0})).join('')}<span class="text-3xl font-black text-violet-500">→</span>${muc4ShapeSvg_(v.result,{size:130,color:'#bbf7d0'})}</div>`;
+    if(k==='compose_scene') return muc4ComposeSceneSvg_(v.scene,v.missing,true);
+    if(k==='pattern') return muc4AdvancedCountSvg_(v.pattern);
+    if(k==='solid') return `<div class="flex justify-center">${muc4SolidSvg_(v.solid,{size:180,fill1:'#dbeafe',fill2:'#93c5fd',fill3:'#60a5fa'})}</div>`;
+    if(k==='position') return `<div class="flex items-center justify-center gap-20 text-7xl"><span>${escapeHtml(v.left||'')}</span><span>${escapeHtml(v.right||'')}</span></div>`;
+    if(k==='inside_outside') return `<div class="relative w-64 h-44 mx-auto rounded-[28px] border-4 border-amber-300 bg-amber-50 flex items-center justify-center"><div class="absolute -top-8 text-5xl">${escapeHtml(v.container||'📦')}</div><div class="text-7xl">${escapeHtml(v.inside||'⚽')}</div></div>`;
+    if(k==='shape_pair') return `<div class="grid grid-cols-2 gap-8">${muc4ShapeSvg_(v.left,{size:145,color:'#bfdbfe'})}${muc4ShapeSvg_(v.right,{size:145,color:'#fecdd3',rotate:v.right_rotate||0})}</div>`;
+    if(k==='partition_options') return `<svg viewBox="0 0 300 180" class="w-full max-w-[380px]"><rect x="30" y="35" width="240" height="110" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="4"/><line x1="150" y1="35" x2="150" y2="145" stroke="#ec4899" stroke-width="4" stroke-dasharray="8 6"/></svg>`;
+    if(k==='circle_partition') return `<svg viewBox="0 0 220 220" class="w-full max-w-[260px]"><circle cx="110" cy="110" r="82" fill="#fdf2f8" stroke="#ec4899" stroke-width="5"/><line x1="28" y1="110" x2="192" y2="110" stroke="#7c3aed" stroke-width="4" stroke-dasharray="8 6"/><circle cx="110" cy="110" r="5" fill="#7c3aed"/></svg>`;
+    if(k==='partition_compare') return `<div class="grid grid-cols-2 gap-5"><div>${renderGenericLabVisual_({visual:{kind:'partition_options'}})}</div><div><svg viewBox="0 0 300 180" class="w-full"><rect x="30" y="35" width="240" height="110" rx="8" fill="#ecfeff" stroke="#0891b2" stroke-width="4"/><line x1="30" y1="90" x2="270" y2="90" stroke="#ec4899" stroke-width="4" stroke-dasharray="8 6"/></svg></div></div>`;
+    if(k==='story') { const start=Number(v.start||0), change=Number(v.change||0), obj=v.object||'●'; return `<div class="text-center"><div class="text-sm font-black text-slate-500 mb-2">BAN ĐẦU</div><div class="text-4xl leading-relaxed">${Array.from({length:start},()=>escapeHtml(obj)).join(' ')}</div><div class="my-3 text-xl font-black ${v.action==='take'?'text-rose-600':'text-emerald-600'}">${v.action==='take'?'Bớt':'Thêm'} ${change}</div><div class="text-sm font-bold text-slate-400">Con hãy hình dung hành động đang xảy ra.</div></div>`; }
+    if(k==='compare_groups') { const l=Number(v.left||0),r=Number(v.right||0),lo=v.left_object||'🔵',ro=v.right_object||'🟡'; return `<div class="grid grid-cols-2 gap-5"><div class="rounded-2xl border-2 border-violet-100 bg-white p-4 text-center"><div class="font-black text-violet-700 mb-2">Nhóm A</div><div class="text-3xl ${v.spread?'tracking-[.35em]':''}">${Array.from({length:l},()=>escapeHtml(lo)).join(' ')}</div></div><div class="rounded-2xl border-2 border-rose-100 bg-white p-4 text-center"><div class="font-black text-rose-700 mb-2">Nhóm B</div><div class="text-3xl">${Array.from({length:r},()=>escapeHtml(ro)).join(' ')}</div></div></div>`; }
+    if(k==='equation_set') return `<div class="grid grid-cols-2 gap-3">${(v.items||[]).map(x=>`<div class="rounded-2xl border-2 border-violet-100 bg-white px-3 py-4 text-center text-xl font-black text-violet-700">${escapeHtml(x)}</div>`).join('')}</div>`;
+    return `<div class="rounded-2xl border border-violet-100 bg-white p-6 text-center font-black text-violet-600">Mô hình toán học</div>`;
+}
+
+function genericLabChoiceButtons_(a) {
+    return (a.choices || []).map((c,i)=>`<button data-value="${escapeHtml(String(c))}" onclick="genericLabChooseFromButton_(this)" class="generic-lab-option w-full min-h-[60px] md:min-h-[68px] px-3 py-2.5 rounded-2xl border-2 border-pink-200 bg-pink-50/40 hover:bg-pink-100/70 font-black text-slate-800 text-sm md:text-base transition-all"><span class="text-pink-600 mr-1.5">${String.fromCharCode(65+i)}.</span>${escapeHtml(String(c))}</button>`).join('');
+}
+
+function renderGenericMathLabActivity_() {
+    const host=document.getElementById('epsilon-method-content');
+    const j=currentGenericLabJourney_(), a=currentGenericLabActivity_();
+    if(!host||!j||!a) return;
+    genericLabHintLevel_=0; genericLabWrongCount_=0; genericLabSolved_=false;
+    const total=j.activities.length, idx=activeGenericLab.activityIndex;
+    host.innerHTML=`<div class="w-full max-w-6xl mx-auto">
+        <div class="flex items-center justify-between gap-3 mb-3 flex-wrap"><button onclick="renderGenericMathLabHub_()" class="ns-secondary-btn">← Bản đồ ${escapeHtml(activeGenericLab.lab.code)}</button><div class="text-sm font-black text-violet-600">Hoạt động ${idx+1}/${total}</div></div>
+        <div class="h-2 rounded-full bg-slate-100 overflow-hidden mb-4"><div class="h-full bg-gradient-to-r from-fuchsia-400 to-violet-500" style="width:${Math.round((idx+1)/total*100)}%"></div></div>
+        <div class="rounded-[28px] border-2 border-violet-100 bg-gradient-to-br from-white via-violet-50/40 to-pink-50/40 p-4 md:p-5 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-3"><div><div class="text-xs font-black uppercase tracking-wider text-fuchsia-600">${escapeHtml(j.icon||'✨')} ${escapeHtml(j.title)}</div><h2 class="mt-1 text-xl md:text-2xl font-black text-slate-900">${escapeHtml(a.teacher||'')}</h2></div><button onclick="genericLabSpeakCurrent_()" class="ns-secondary-btn">🔊 Nghe cô đọc</button></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-4 mt-4 items-stretch">
+            <div class="min-h-[330px] rounded-[28px] border-2 border-pink-100 bg-gradient-to-br from-amber-50 via-white to-sky-50 p-4 md:p-6 flex items-center justify-center overflow-hidden shadow-sm">${renderGenericLabVisual_(a)}</div>
+            <div class="rounded-[28px] border border-pink-100 bg-white p-4 md:p-5 flex flex-col justify-center shadow-sm">
+                <h3 class="text-lg md:text-xl font-black text-slate-900 text-center leading-snug">${escapeHtml(a.prompt||'')}</h3>
+                <div class="grid grid-cols-2 gap-2.5 mt-4">${genericLabChoiceButtons_(a)}</div>
+                <div id="generic-lab-feedback" class="mt-3"></div>
+                <div class="mt-4 flex items-center justify-between gap-2"><button onclick="genericLabShowHint_()" class="ns-secondary-btn">💡 Gợi ý</button><button onclick="renderGenericMathLabActivity_()" class="ns-secondary-btn">↻ Làm lại</button><button id="generic-lab-next" onclick="genericLabNext_()" class="hidden ns-primary-btn">Tiếp tục →</button></div>
+            </div>
+        </div>
+    </div>`;
+}
+
+function genericLabShowHint_() {
+    const a=currentGenericLabActivity_(); if(!a||genericLabSolved_) return;
+    const hints=a.hints||[]; if(!hints.length) return;
+    const idx=Math.min(genericLabHintLevel_,hints.length-1); genericLabHintLevel_++;
+    const fb=document.getElementById('generic-lab-feedback');
+    if(fb) fb.innerHTML=`<div class="rounded-2xl border-2 border-amber-200 bg-amber-50 px-4 py-3 text-sm md:text-base font-black text-amber-800">💡 ${escapeHtml(hints[idx])}</div>`;
+    const st=genericLabJourneyState_(activeGenericLab.journeyId); st.hint_uses=(st.hint_uses||0)+1; saveGenericLabJourneyState_(st);
+    speakVietnamese((a.hints_audio||hints)[idx]||hints[idx],0.94);
+}
+
+function saveGenericLabJourneyState_(state) {
+    const ev=readGenericLabEvidence_(activeGenericLab.labCode); ev[activeGenericLab.journeyId]=state; writeGenericLabEvidence_(activeGenericLab.labCode,ev);
+}
+
+function genericLabChooseFromButton_(btn) {
+    genericLabChoose_(btn?.dataset?.value ?? '');
+}
+
+function genericLabChoose_(selected) {
+    const a=currentGenericLabActivity_(); if(!a||genericLabSolved_) return;
+    const selectedStr=String(selected), answerStr=String(a.answer);
+    const fb=document.getElementById('generic-lab-feedback');
+    if(selectedStr===answerStr) {
+        genericLabSolved_=true;
+        document.querySelectorAll('.generic-lab-option').forEach(b=>{ b.disabled=true; if(String(b.dataset.value)===answerStr){b.classList.remove('bg-pink-50/40','border-pink-200');b.classList.add('bg-emerald-100','border-emerald-400','text-emerald-900');}});
+        const st=genericLabJourneyState_(activeGenericLab.journeyId); st.completed=Array.isArray(st.completed)?st.completed:[]; if(!st.completed.includes(a.id)) st.completed.push(a.id); st.attempts=(st.attempts||0)+genericLabWrongCount_; if(a.transfer) st.transfer_correct=(st.transfer_correct||0)+1;
+        const total=currentGenericLabJourney_().activities.length;
+        if(st.completed.length>=total) st.mastery=(st.hint_uses||0)>0?'supported':((st.transfer_correct||0)>0?'generalized':'independent'); else st.mastery=(st.hint_uses||0)>0?'supported':'emerging';
+        saveGenericLabJourneyState_(st);
+        if(fb) fb.innerHTML=`<div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-3 text-sm md:text-base font-black text-emerald-800">✅ ${escapeHtml(a.success||'Đúng rồi!')}${a.explanation?`<div class="mt-2 text-slate-700">${escapeHtml(a.explanation)}</div>`:''}${a.reflection?`<div class="mt-2 rounded-xl bg-white/70 px-3 py-2 text-violet-700">🗣️ ${escapeHtml(a.reflection)}</div>`:''}</div>`;
+        document.getElementById('generic-lab-next')?.classList.remove('hidden');
+        speakVietnamese(a.success_audio||a.success||'Đúng rồi!',0.94);
+    } else {
+        genericLabWrongCount_++;
+        const hints=a.hints||[]; const idx=Math.min(genericLabWrongCount_-1,hints.length-1); const hint=hints[idx]||'Con nhìn lại mô hình rồi thử lại nhé.';
+        if(fb) fb.innerHTML=`<div class="rounded-2xl border-2 border-rose-200 bg-rose-50 px-4 py-3 text-sm md:text-base font-black text-rose-700">Chưa khớp rồi. <span class="text-amber-800">${escapeHtml(hint)}</span><div class="mt-1 text-xs text-slate-500">Con vẫn được chọn lại, chưa khóa đáp án.</div></div>`;
+        speakVietnamese(`${a.wrong_audio||'Chưa khớp rồi.'} ${hint}`,0.94);
+    }
+}
+
+function genericLabNext_() {
+    if(!activeGenericLab||!genericLabSolved_) return;
+    const j=currentGenericLabJourney_();
+    if(activeGenericLab.activityIndex < j.activities.length-1) { activeGenericLab.activityIndex++; renderGenericMathLabActivity_(); return; }
+    renderGenericMathLabJourneyComplete_();
+}
+
+function renderGenericMathLabJourneyComplete_() {
+    const host=document.getElementById('epsilon-method-content'), j=currentGenericLabJourney_(); if(!host||!j) return;
+    const st=genericLabJourneyState_(j.id);
+    const next=(activeGenericLab.data.journeys||[]).find(x=>Number(x.order)===Number(j.order)+1);
+    host.innerHTML=`<div class="w-full max-w-3xl mx-auto text-center py-8"><div class="text-7xl">🌟</div><h2 class="mt-3 text-2xl md:text-3xl font-black text-violet-700">Con vừa hoàn thành “${escapeHtml(j.title)}”!</h2><p class="mt-3 font-bold text-slate-600 leading-relaxed">${escapeHtml(j.goal)}</p><div class="mt-4 inline-flex rounded-full border px-4 py-2 text-sm font-black ${genericLabMasteryClass_(st.mastery)}">${escapeHtml(genericLabMasteryLabel_(st.mastery))}</div><div class="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-left"><div class="font-black text-amber-800">Bằng chứng học tập</div><ul class="mt-2 list-disc pl-5 text-sm font-bold text-slate-600">${(j.evidence||[]).map(e=>`<li>${escapeHtml(e)}</li>`).join('')}</ul></div><div class="mt-6 flex flex-wrap justify-center gap-3"><button onclick="renderGenericMathLabHub_()" class="ns-secondary-btn">← Bản đồ ${escapeHtml(activeGenericLab.lab.code)}</button>${next?`<button onclick="startGenericMathLabJourney_('${escapeHtml(next.id)}')" class="ns-primary-btn">Hành trình tiếp theo →</button>`:''}</div></div>`;
 }
 
 // EPSILON METHOD 12.1 - NUMBER SENSE
@@ -1543,7 +2092,7 @@ async function openNumberSenseHub() {
     activeTopicId = 12;
     pendingTopicQuiz = null;
     activeNumberSense = null;
-    updateNavTabs('12. Học Toán theo phương pháp mới', '✨', '12.1 Hiểu số và số lượng', null);
+    updateNavTabs('12. Math Lab - Toán tư duy Mỹ', '✨', '12.1 Number Sense Lab - Cảm nhận số', null);
     switchAppView('view-number-sense');
     const host = document.getElementById('number-sense-content');
     if (host) host.innerHTML = '<div class="py-16 text-center font-black text-purple-600">🌱 Đang mở thế giới số lượng...</div>';
@@ -1607,7 +2156,7 @@ async function startNumberSenseJourney_(journeyId) {
         const firstOpen = journey.activities.findIndex(a => !st.completed.includes(a.id));
         activeNumberSense.activityIndex = firstOpen >= 0 ? firstOpen : 0;
     }
-    updateNavTabs('12. Học Toán theo phương pháp mới', '✨', '12.1 Hiểu số và số lượng', `${journey.order}. ${journey.title}`);
+    updateNavTabs('12. Math Lab - Toán tư duy Mỹ', '✨', '12.1 Number Sense Lab - Cảm nhận số', `${journey.order}. ${journey.title}`);
     renderNumberSenseActivity_();
 }
 
@@ -1954,7 +2503,7 @@ async function openOperationSenseHub() {
     activeTopicId = 12;
     pendingTopicQuiz = null;
     activeOperationSense = null;
-    updateNavTabs('12. Học Toán theo phương pháp mới', '✨', '12.2 Hiểu phép cộng và phép trừ', null);
+    updateNavTabs('12. Math Lab - Toán tư duy Mỹ', '✨', '12.2 Addition & Subtraction Lab - Tư duy cộng trừ', null);
     switchAppView('view-operation-sense');
     const host = document.getElementById('operation-sense-content');
     if (host) host.innerHTML = '<div class="py-16 text-center font-black text-purple-600">🧩 Đang mở thế giới của những thay đổi...</div>';
@@ -2013,7 +2562,7 @@ async function startOperationSenseJourney_(journeyId) {
         const firstOpen = journey.activities.findIndex(a => !st.completed.includes(a.id));
         activeOperationSense.activityIndex = firstOpen >= 0 ? firstOpen : 0;
     }
-    updateNavTabs('12. Học Toán theo phương pháp mới', '✨', '12.2 Hiểu phép cộng và phép trừ', `${journey.order}. ${journey.title}`);
+    updateNavTabs('12. Math Lab - Toán tư duy Mỹ', '✨', '12.2 Addition & Subtraction Lab - Tư duy cộng trừ', `${journey.order}. ${journey.title}`);
     renderOperationSenseActivity_();
 }
 
@@ -2309,16 +2858,403 @@ function remapMuc2Questions_(questions) {
     });
 }
 
+// ==========================================
+// MỤC 4 - HÌNH HỌC
+// 4.1 Bài giảng nhập môn -> 4.2 nhận biết hình phẳng -> 4.3 lắp ghép -> 4.4 hình khối -> 4.5 đếm hình nâng cao
+// Trọng tâm là NHẬN DẠNG / PHÂN LOẠI / CẤU TẠO. 4.5 mới dùng đếm hình trong hình nhiều nét, không đếm emoji rời.
+// ==========================================
+const MUC4_INTRO_AUDIO_ = `Cô Thỏ Hồng chào con. Hôm nay mình làm quen với hình học nhé. Hình tròn có đường bao cong và không có góc. Hình tam giác có ba cạnh và ba góc. Hình vuông có bốn cạnh bằng nhau. Hình chữ nhật có bốn cạnh, thường nhìn thấy hai cạnh dài và hai cạnh ngắn. Đây là các hình phẳng, giống như hình con vẽ trên giấy. Còn khối lập phương và khối hộp chữ nhật là hình khối, con có thể tưởng tượng như xúc xắc và hộp giày. Khi nhận biết hình, con hãy nhìn vào dạng của hình, đừng dựa vào màu sắc, kích thước hay việc hình đang xoay nghiêng. Sau bài giới thiệu này, mình sẽ luyện nhận biết hình phẳng, ghép hình, nhận biết hình khối trong cuộc sống, rồi thử sức với bài đếm hình nhiều nét nâng cao.`;
+
+function muc4ShapeName_(shape) {
+    return ({ circle: 'Hình tròn', triangle: 'Hình tam giác', square: 'Hình vuông', rectangle: 'Hình chữ nhật' })[shape] || shape;
+}
+
+function muc4ShapeSvg_(shape, options = {}) {
+    const size = Number(options.size || 100);
+    const color = options.color || '#60a5fa';
+    const stroke = options.stroke || '#334155';
+    const rotate = Number(options.rotate || 0);
+    const common = `fill="${color}" stroke="${stroke}" stroke-width="4"`;
+    let body = '';
+    if (shape === 'circle') body = `<circle cx="50" cy="50" r="31" ${common}></circle>`;
+    else if (shape === 'triangle') body = `<polygon points="50,15 86,82 14,82" ${common}></polygon>`;
+    else if (shape === 'rectangle') body = `<rect x="12" y="27" width="76" height="46" rx="6" ${common}></rect>`;
+    else body = `<rect x="20" y="20" width="60" height="60" rx="6" ${common}></rect>`;
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="block" aria-hidden="true"><g transform="rotate(${rotate} 50 50)">${body}</g></svg>`;
+}
+
+function muc4SolidSvg_(solid, options = {}) {
+    const size = Number(options.size || 120);
+    const fill1 = options.fill1 || '#bfdbfe';
+    const fill2 = options.fill2 || '#93c5fd';
+    const fill3 = options.fill3 || '#60a5fa';
+    const stroke = options.stroke || '#334155';
+    if (solid === 'cuboid') {
+        return `<svg viewBox="0 0 140 105" width="${size}" height="${Math.round(size*0.75)}" class="block" aria-hidden="true">
+            <polygon points="18,35 90,35 122,18 50,18" fill="${fill1}" stroke="${stroke}" stroke-width="3"></polygon>
+            <polygon points="90,35 122,18 122,72 90,89" fill="${fill2}" stroke="${stroke}" stroke-width="3"></polygon>
+            <rect x="18" y="35" width="72" height="54" fill="${fill3}" stroke="${stroke}" stroke-width="3"></rect>
+        </svg>`;
+    }
+    return `<svg viewBox="0 0 120 110" width="${size}" height="${Math.round(size*0.92)}" class="block" aria-hidden="true">
+        <polygon points="20,35 70,35 98,18 48,18" fill="${fill1}" stroke="${stroke}" stroke-width="3"></polygon>
+        <polygon points="70,35 98,18 98,70 70,88" fill="${fill2}" stroke="${stroke}" stroke-width="3"></polygon>
+        <rect x="20" y="35" width="50" height="53" fill="${fill3}" stroke="${stroke}" stroke-width="3"></rect>
+    </svg>`;
+}
+
+function muc4BaseQuestion_(id, sub, label, q, options, answer, extra = {}) {
+    return {
+        question_id: id,
+        sub_topic: sub,
+        sub_topic_label: label,
+        question_text: q,
+        options,
+        answer,
+        hint: extra.hint || '',
+        explanation: extra.explanation || '',
+        audio_text: extra.audio_text || q,
+        skill_tag: 'TOAN_C1',
+        diem: 0.5,
+        ...extra
+    };
+}
+
+function buildMuc4Questions_() {
+    const out = [];
+    const shapes = ['circle', 'triangle', 'square', 'rectangle'];
+    const colors = ['#fbbf24', '#60a5fa', '#34d399', '#f472b6', '#a78bfa', '#fb7185'];
+    const rotations = [0, 18, 35, 45, 72, 90];
+    const flatOptions = shapes.map(muc4ShapeName_);
+
+    // 4.2 - Nhận biết và phân loại hình phẳng: 40 câu.
+    for (let i = 0; i < 40; i++) {
+        const target = shapes[i % shapes.length];
+        const mode = i % 3;
+        if (mode === 0) {
+            out.push(muc4BaseQuestion_(4200+i, '4.2', 'Nhận biết và phân loại hình phẳng',
+                'Hình dưới đây có tên là gì?', flatOptions, muc4ShapeName_(target), {
+                    muc4_type: 'flat_identify',
+                    muc4_visual: { target, color: colors[i % colors.length], rotate: rotations[i % rotations.length] },
+                    explanation: `Dù đổi màu, kích thước hoặc xoay nghiêng, đây vẫn là ${muc4ShapeName_(target).toLowerCase()}.`
+                }));
+        } else if (mode === 1) {
+            const optionShapes = [target, ...shapes.filter(s => s !== target)];
+            const shift = i % 4;
+            const arranged = optionShapes.slice(shift).concat(optionShapes.slice(0, shift));
+            const answerIndex = arranged.indexOf(target);
+            out.push(muc4BaseQuestion_(4200+i, '4.2', 'Nhận biết và phân loại hình phẳng',
+                `Hình mẫu là ${muc4ShapeName_(target).toLowerCase()}. Con chọn hình cùng loại với hình mẫu nhé.`, ['A','B','C','D'], String.fromCharCode(65+answerIndex), {
+                    muc4_type: 'flat_match',
+                    muc4_visual: { target, optionShapes: arranged, color: colors[i % colors.length], rotate: rotations[(i+2) % rotations.length] },
+                    explanation: `Con nhận ra ${muc4ShapeName_(target).toLowerCase()} bằng dạng của đường bao, không phải bằng màu.`
+                }));
+        } else {
+            const common = target;
+            const odd = shapes[(shapes.indexOf(target)+1+(i%2)) % shapes.length];
+            let arranged = [common, common, common, odd];
+            const shift = i % 4;
+            arranged = arranged.slice(shift).concat(arranged.slice(0, shift));
+            const answerIndex = arranged.indexOf(odd);
+            out.push(muc4BaseQuestion_(4200+i, '4.2', 'Nhận biết và phân loại hình phẳng',
+                'Hình nào khác loại với ba hình còn lại?', ['A','B','C','D'], String.fromCharCode(65+answerIndex), {
+                    muc4_type: 'flat_odd',
+                    muc4_visual: { optionShapes: arranged, color: colors[i % colors.length], rotate: rotations[(i+1) % rotations.length] },
+                    explanation: `Ba hình cùng loại là ${muc4ShapeName_(common).toLowerCase()}; hình còn lại là ${muc4ShapeName_(odd).toLowerCase()}.`
+                }));
+        }
+    }
+
+
+    // Bổ sung các câu hỏi quan sát đặc điểm hình để trẻ không chỉ gọi tên hình,
+    // mà còn chú ý tới số cạnh và quan hệ giữa các cạnh.
+    const deepShapeQuestions = [
+        {
+            q: 'Hình vuông có mấy cạnh?',
+            target: 'square',
+            options: ['3 cạnh', '4 cạnh', '5 cạnh', 'Không có cạnh'],
+            answer: '4 cạnh',
+            explanation: 'Hình vuông có 4 cạnh.'
+        },
+        {
+            q: 'Con quan sát hình vuông. Bốn cạnh của hình vuông như thế nào?',
+            target: 'square',
+            options: ['4 cạnh bằng nhau', 'Chỉ 2 cạnh bằng nhau', '3 cạnh bằng nhau', 'Không có cạnh bằng nhau'],
+            answer: '4 cạnh bằng nhau',
+            explanation: 'Hình vuông có 4 cạnh bằng nhau.'
+        },
+        {
+            q: 'Hình tam giác có mấy cạnh?',
+            target: 'triangle',
+            options: ['2 cạnh', '3 cạnh', '4 cạnh', '5 cạnh'],
+            answer: '3 cạnh',
+            explanation: 'Hình tam giác có 3 cạnh.'
+        },
+        {
+            q: 'Hình tam giác có mấy góc?',
+            target: 'triangle',
+            options: ['2 góc', '3 góc', '4 góc', 'Không có góc'],
+            answer: '3 góc',
+            explanation: 'Hình tam giác có 3 cạnh và 3 góc.'
+        },
+        {
+            q: 'Hình chữ nhật có tất cả mấy cạnh?',
+            target: 'rectangle',
+            options: ['3 cạnh', '4 cạnh', '5 cạnh', '6 cạnh'],
+            answer: '4 cạnh',
+            explanation: 'Hình chữ nhật có 4 cạnh.'
+        },
+        {
+            q: 'Hình chữ nhật thường có mấy cạnh dài và mấy cạnh ngắn?',
+            target: 'rectangle',
+            options: ['2 cạnh dài và 2 cạnh ngắn', '1 cạnh dài và 3 cạnh ngắn', '4 cạnh dài', '2 cạnh dài và 1 cạnh ngắn'],
+            answer: '2 cạnh dài và 2 cạnh ngắn',
+            explanation: 'Ở hình chữ nhật quen thuộc, con thường thấy 2 cạnh dài và 2 cạnh ngắn.'
+        },
+        {
+            q: 'Hai cạnh dài của hình chữ nhật nằm như thế nào với nhau?',
+            target: 'rectangle',
+            options: ['Đối diện nhau', 'Nằm liền nhau', 'Chỉ có 1 cạnh dài', 'Không xác định'],
+            answer: 'Đối diện nhau',
+            explanation: 'Hai cạnh dài nằm đối diện nhau; hai cạnh ngắn cũng nằm đối diện nhau.'
+        },
+        {
+            q: 'Con nhìn hình chữ nhật. Hai cạnh ngắn nằm như thế nào với nhau?',
+            target: 'rectangle',
+            options: ['Đối diện nhau', 'Nằm cùng một phía', 'Không có cạnh ngắn', 'Chỉ có 1 cạnh ngắn'],
+            answer: 'Đối diện nhau',
+            explanation: 'Hai cạnh ngắn của hình chữ nhật nằm đối diện nhau.'
+        },
+        {
+            q: 'Hình vuông có mấy góc?',
+            target: 'square',
+            options: ['3 góc', '4 góc', '5 góc', 'Không có góc'],
+            answer: '4 góc',
+            explanation: 'Hình vuông có 4 cạnh và 4 góc.'
+        },
+        {
+            q: 'Hình nào có 3 cạnh?',
+            target: 'triangle',
+            options: ['Hình tròn', 'Hình tam giác', 'Hình vuông', 'Hình chữ nhật'],
+            answer: 'Hình tam giác',
+            explanation: 'Hình tam giác có 3 cạnh.'
+        }
+    ];
+    deepShapeQuestions.forEach((item, idx) => {
+        out.push(muc4BaseQuestion_(4240 + idx, '4.2', 'Nhận biết và phân loại hình phẳng',
+            item.q, item.options, item.answer, {
+                muc4_type: 'shape_property',
+                muc4_visual: {
+                    target: item.target,
+                    color: colors[(idx + 2) % colors.length],
+                    rotate: rotations[(idx + 1) % rotations.length]
+                },
+                explanation: item.explanation
+            }));
+    });
+
+    // 4.3 - Lắp ghép và xếp hình: mỗi cảnh có 2 câu khác nhau, không lặp để đủ số lượng.
+    const scenes = [
+        { name:'ngôi nhà', missing:'triangle', placed:['square'], components:'1 hình vuông và 1 hình tam giác' },
+        { name:'cây kem', missing:'triangle', placed:['circle'], components:'1 hình tròn và 1 hình tam giác' },
+        // Hình rô-bốt đang vẽ gồm: 1 đầu vuông + 1 thân chữ nhật + 2 tay chữ nhật.
+        { name:'chú rô-bốt', missing:'square', placed:['rectangle','rectangle','rectangle'], components:'1 hình vuông và 3 hình chữ nhật' },
+        { name:'cây cờ', missing:'rectangle', placed:['rectangle'], components:'2 hình chữ nhật' },
+        { name:'chiếc thuyền', missing:'triangle', placed:['rectangle'], components:'1 hình chữ nhật và 1 hình tam giác' },
+        { name:'cửa sổ', missing:'square', placed:['square','square','square'], components:'4 hình vuông' },
+        { name:'bông hoa', missing:'circle', placed:['rectangle'], components:'1 hình tròn và 1 hình chữ nhật' },
+        { name:'mũi tên', missing:'triangle', placed:['rectangle'], components:'1 hình chữ nhật và 1 hình tam giác' }
+    ];
+    const componentOptions = [
+        '1 hình vuông và 1 hình tam giác', '1 hình tròn và 1 hình tam giác',
+        '1 hình vuông và 3 hình chữ nhật', '2 hình chữ nhật',
+        '1 hình chữ nhật và 1 hình tam giác', '4 hình vuông',
+        '1 hình tròn và 1 hình chữ nhật', '2 hình vuông và 1 hình chữ nhật'
+    ];
+    const rotateOpts = (arr, shift) => {
+        const a = [...arr];
+        const k = ((Number(shift) || 0) % a.length + a.length) % a.length;
+        return a.slice(k).concat(a.slice(0, k));
+    };
+    for (let i = 0; i < scenes.length * 2; i++) {
+        const scene = scenes[Math.floor(i / 2) % scenes.length];
+        if (i % 2 === 0) {
+            const options = rotateOpts(flatOptions, (Math.floor(i / 2) + 1) % 4);
+            out.push(muc4BaseQuestion_(4300+i, '4.3', 'Lắp ghép và xếp hình',
+                `Mảnh nào còn thiếu để hoàn thành ${scene.name}?`, options, muc4ShapeName_(scene.missing), {
+                    muc4_type: 'compose_missing',
+                    muc4_visual: { scene: scene.name, missing: scene.missing, placed: scene.placed, color: colors[i % colors.length] },
+                    explanation: `Chỗ trống có dạng ${muc4ShapeName_(scene.missing).toLowerCase()}, nên con chọn đúng mảnh có cùng dạng.`
+                }));
+        } else {
+            const distractors = componentOptions.filter(x => x !== scene.components);
+            const picked = [
+                distractors[(i + 0) % distractors.length],
+                distractors[(i + 2) % distractors.length],
+                distractors[(i + 4) % distractors.length]
+            ];
+            let options = [...new Set([scene.components, ...picked])];
+            for (const d of distractors) {
+                if (options.length >= 4) break;
+                if (!options.includes(d)) options.push(d);
+            }
+            options = rotateOpts(options.slice(0,4), (Math.floor(i / 2) + 2) % 4);
+            out.push(muc4BaseQuestion_(4300+i, '4.3', 'Lắp ghép và xếp hình',
+                `${scene.name.charAt(0).toUpperCase()+scene.name.slice(1)} được ghép từ những mảnh nào?`, options, scene.components, {
+                    muc4_type: 'compose_parts',
+                    muc4_visual: { scene: scene.name, missing: null, placed: [...scene.placed, scene.missing], color: colors[i % colors.length] },
+                    explanation: `Con tách hình lớn thành từng mảnh nhỏ rồi gọi đúng tên từng hình.`
+                }));
+        }
+    }
+
+    // 4.4 - Nhận biết hình khối qua mô hình và đồ vật thật.
+    const solidOptions = ['Khối lập phương', 'Khối hộp chữ nhật', 'Hình vuông', 'Hình chữ nhật'];
+    const objects = [
+        { label:'Xúc xắc', emoji:'🎲', solid:'cube' },
+        { label:'Khối Rubik', emoji:'🧊', solid:'cube' },
+        { label:'Hộp giày', emoji:'📦', solid:'cuboid' },
+        { label:'Viên gạch', emoji:'🧱', solid:'cuboid' }
+    ];
+    for (let i = 0; i < 40; i++) {
+        const solid = i % 2 === 0 ? 'cube' : 'cuboid';
+        if (i % 3 === 0) {
+            out.push(muc4BaseQuestion_(4400+i, '4.4', 'Nhận biết hình khối trong đời sống',
+                'Khối dưới đây có tên là gì?', solidOptions, solid === 'cube' ? 'Khối lập phương' : 'Khối hộp chữ nhật', {
+                    muc4_type: 'solid_identify',
+                    muc4_visual: { solid },
+                    explanation: solid === 'cube'
+                        ? 'Khối lập phương có dạng đều như xúc xắc hoặc khối Rubik.'
+                        : 'Khối hộp chữ nhật thường dài theo một hoặc hai chiều như hộp giày.'
+                }));
+        } else {
+            const obj = objects[i % objects.length];
+            out.push(muc4BaseQuestion_(4400+i, '4.4', 'Nhận biết hình khối trong đời sống',
+                `${obj.label} gần với dạng khối nào?`, solidOptions, obj.solid === 'cube' ? 'Khối lập phương' : 'Khối hộp chữ nhật', {
+                    muc4_type: 'solid_object',
+                    muc4_visual: { solid: obj.solid, objectLabel: obj.label, objectEmoji: obj.emoji },
+                    explanation: `${obj.label} là đồ vật có dạng gần với ${obj.solid === 'cube' ? 'khối lập phương' : 'khối hộp chữ nhật'}.`
+                }));
+        }
+    }
+
+
+    // 4.5 - Đếm hình nâng cao: đếm hình trong một hình nhiều nét, không phải đếm các emoji rời.
+    // Dùng ít câu nhưng mỗi hình có cấu trúc rõ và đáp án đã kiểm tra bằng tay.
+    const advancedPatterns = [
+        { pattern:'tri_fan_2', target:'tam giác', answer:3, explanation:'Có 2 tam giác nhỏ và 1 tam giác lớn: 2 + 1 = 3.' },
+        { pattern:'tri_fan_3', target:'tam giác', answer:6, explanation:'Có 3 tam giác nhỏ, 2 tam giác ghép từ hai phần liền nhau và 1 tam giác lớn: 3 + 2 + 1 = 6.' },
+        { pattern:'tri_fan_4', target:'tam giác', answer:10, explanation:'Đếm theo tầng: 4 tam giác nhỏ + 3 tam giác ghép 2 phần + 2 tam giác ghép 3 phần + 1 tam giác lớn = 10.' },
+        { pattern:'square_diagonals', target:'tam giác', answer:8, explanation:'Có 4 tam giác nhỏ quanh tâm và 4 tam giác lớn bằng nửa hình vuông: tổng cộng 8.' },
+        { pattern:'square_grid_2', target:'hình vuông', answer:5, explanation:'Có 4 hình vuông nhỏ và 1 hình vuông lớn: 4 + 1 = 5.' },
+        { pattern:'square_grid_3', target:'hình vuông', answer:14, explanation:'Có 9 hình vuông nhỏ, 4 hình vuông cỡ 2 ô và 1 hình vuông lớn: 9 + 4 + 1 = 14.' },
+        { pattern:'nested_squares_2', target:'hình vuông', answer:2, explanation:'Có 1 hình vuông ngoài và 1 hình vuông bên trong: tổng cộng 2.' },
+        { pattern:'nested_squares_3', target:'hình vuông', answer:3, explanation:'Có 3 hình vuông lồng vào nhau.' },
+        { pattern:'rect_cols_3', target:'hình chữ nhật', answer:6, explanation:'Có 3 hình chữ nhật một ô, 2 hình ghép hai ô và 1 hình lớn: 3 + 2 + 1 = 6.' },
+        { pattern:'rect_cols_4', target:'hình chữ nhật', answer:10, explanation:'Có 4 hình một ô + 3 hình hai ô + 2 hình ba ô + 1 hình lớn = 10.' },
+        { pattern:'rect_grid_2x2', target:'hình chữ nhật', answer:9, explanation:'Có 4 hình nhỏ, 2 hình ghép ngang, 2 hình ghép dọc và 1 hình lớn: tổng cộng 9.' },
+        { pattern:'rect_grid_3x2', target:'hình chữ nhật', answer:18, explanation:'Đếm đủ các kích thước: 6 + 4 + 2 + 3 + 2 + 1 = 18 hình chữ nhật.' }
+    ];
+    const countOptions = (correct, seed) => {
+        const c = Number(correct);
+        let vals = [c, Math.max(1, c - 1), c + 1, c + 2];
+        vals = [...new Set(vals)];
+        let d = 2;
+        while (vals.length < 4) {
+            const v = Math.max(1, c - d);
+            if (!vals.includes(v)) vals.push(v);
+            d++;
+        }
+        vals = vals.slice(0,4).map(String);
+        return rotateOpts(vals, seed % 4);
+    };
+    advancedPatterns.forEach((item, idx) => {
+        const opts = countOptions(item.answer, idx + 1);
+        out.push(muc4BaseQuestion_(4500 + idx, '4.5', 'Đếm hình nâng cao',
+            `Trong hình có tất cả bao nhiêu ${item.target}?`, opts, String(item.answer), {
+                muc4_type: 'shape_count_advanced',
+                muc4_visual: { pattern: item.pattern, target: item.target },
+                explanation: item.explanation,
+                audio_text: `Trong hình có tất cả bao nhiêu ${item.target}?`
+            }));
+    });
+    return out;
+}
+
+function openMuc4IntroLesson_() {
+    stopSpeaking();
+    setAppShellRootMode_(false);
+    updateDiscoverBreadcrumb_('4. Hình học', '📐', '4.1 Làm quen với các hình');
+    switchAppView('view-quiz');
+    document.getElementById('quiz-top-bar')?.classList.add('hidden');
+    document.getElementById('quiz-card-header')?.classList.add('hidden');
+    document.getElementById('nav-group-practice')?.classList.add('hidden');
+    document.getElementById('nav-group-exam')?.classList.add('hidden');
+    const host = document.getElementById('question-box');
+    if (!host) return;
+    host.innerHTML = `
+        <div class="w-full max-w-5xl mx-auto py-2">
+            <div class="rounded-[28px] border-2 border-pink-100 bg-gradient-to-br from-sky-50 via-white to-amber-50 px-4 py-5 md:px-7 md:py-6 shadow-sm">
+                <div class="text-center">
+                    <div class="text-sm md:text-base font-black text-pink-600">🐰 Cô Thỏ Hồng cùng con làm quen với hình học</div>
+                    <h2 class="mt-1 text-xl md:text-2xl font-black text-slate-800">Nhìn dạng của hình trước khi nhớ tên</h2>
+                    <button onclick="speakVietnamese(MUC4_INTRO_AUDIO_, 0.94)" class="mt-3 px-5 py-2 bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 rounded-2xl font-black pastel-btn shadow-xs">
+                        <i class="fa-solid fa-volume-high mr-1.5"></i> Nghe Cô Thỏ Hồng giảng
+                    </button>
+                </div>
+
+                <div class="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
+                    ${[
+                        ['circle','Hình tròn','Đường bao cong, không có góc.'],
+                        ['triangle','Hình tam giác','Có 3 cạnh và 3 góc.'],
+                        ['square','Hình vuông','Có 4 cạnh bằng nhau.'],
+                        ['rectangle','Hình chữ nhật','Có 4 góc; hai cặp cạnh đối diện bằng nhau.']
+                    ].map((x,i)=>`<div class="rounded-2xl border-2 border-violet-100 bg-white p-3 flex flex-col items-center text-center shadow-xs">
+                        ${muc4ShapeSvg_(x[0], {size:82, color:['#fde68a','#fca5a5','#93c5fd','#86efac'][i], rotate:i===1?12:(i===2?25:0)})}
+                        <div class="mt-1 font-black text-violet-700">${x[1]}</div>
+                        <div class="mt-0.5 text-xs md:text-sm font-bold text-slate-600">${x[2]}</div>
+                    </div>`).join('')}
+                </div>
+
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 max-w-3xl mx-auto">
+                    <div class="rounded-2xl border-2 border-sky-100 bg-white p-3 flex items-center gap-3 shadow-xs">
+                        ${muc4SolidSvg_('cube',{size:92})}
+                        <div><div class="font-black text-sky-700">Khối lập phương</div><div class="text-xs md:text-sm font-bold text-slate-600">Dạng gần giống xúc xắc hoặc khối Rubik.</div></div>
+                    </div>
+                    <div class="rounded-2xl border-2 border-emerald-100 bg-white p-3 flex items-center gap-3 shadow-xs">
+                        ${muc4SolidSvg_('cuboid',{size:112,fill1:'#d1fae5',fill2:'#a7f3d0',fill3:'#6ee7b7'})}
+                        <div><div class="font-black text-emerald-700">Khối hộp chữ nhật</div><div class="text-xs md:text-sm font-bold text-slate-600">Dạng gần giống hộp giày hoặc viên gạch.</div></div>
+                    </div>
+                </div>
+
+                <div class="mt-4 rounded-2xl bg-amber-50 border border-amber-200 px-4 py-3 text-center text-sm md:text-base font-black text-amber-800">
+                    Mẹo: màu sắc, kích thước và việc xoay nghiêng không làm đổi tên của hình.
+                </div>
+                <div class="mt-5 flex flex-wrap justify-center gap-3">
+                    <button onclick="switchAppView('view-lecture'); updateDiscoverBreadcrumb_('4. Hình học','📐',null)" class="px-5 py-2 bg-white border border-slate-200 rounded-2xl font-black text-slate-600 pastel-btn">← Về Mục 4</button>
+                    <button onclick="switchAppView('view-lecture'); selectSubtopic(0)" class="px-6 py-2 bg-gradient-to-r from-pink-500 to-violet-500 text-white rounded-2xl font-black shadow-md pastel-btn">Học xong – vào 4.2 →</button>
+                </div>
+            </div>
+        </div>`;
+}
+
 function showLectureAndSubtopics(topicNum, topicName, topicObj) {
     const topicQuestions = Number(topicNum) === 2
         ? remapMuc2Questions_(topicObj.questions)
-        : (topicObj.questions || []);
+        : Number(topicNum) === 4
+            ? buildMuc4Questions_()
+            : (topicObj.questions || []);
     pendingTopicQuiz = { topicNum, topicName, questions: topicQuestions };
-    
-    document.getElementById('lecture-title').textContent = topicObj.lecture_title || topicName;
-    document.getElementById('lecture-content').textContent = topicObj.lecture_content || topicObj.description || 'Chào mừng bé yêu! Hãy chọn một mục nhỏ bên dưới để bắt đầu luyện tập nhé.';
+
+    const isMuc4 = Number(topicNum) === 4;
+    document.getElementById('lecture-title').textContent = isMuc4 ? 'Hình học' : (topicObj.lecture_title || topicName);
+    document.getElementById('lecture-content').textContent = isMuc4
+        ? 'Làm quen tên gọi → nhận biết và phân loại → lắp ghép → nhận biết hình khối → đếm hình nâng cao.'
+        : (topicObj.lecture_content || topicObj.description || 'Chào mừng bé yêu! Hãy chọn một mục nhỏ bên dưới để bắt đầu luyện tập nhé.');
     document.getElementById('lecture-content')?.classList.add('text-base', 'md:text-lg');
-    document.getElementById('view-lecture').dataset.audioText = topicObj.lecture_audio_text || topicObj.lecture_content || topicObj.description || '';
+    document.getElementById('view-lecture').dataset.audioText = isMuc4
+        ? 'Mục Hình học gồm năm bước. Trước tiên con làm quen tên gọi và cách nhận biết các hình. Sau đó con luyện phân loại hình phẳng, lắp ghép xếp hình, nhận biết hình khối trong đời sống và cuối cùng thử đếm hình trong các hình nhiều nét.'
+        : (topicObj.lecture_audio_text || topicObj.lecture_content || topicObj.description || '');
 
     const groups = [], groupMap = {}, groupLabels = {};
     topicQuestions.forEach(q => {
@@ -2342,18 +3278,28 @@ function showLectureAndSubtopics(topicNum, topicName, topicObj) {
     pendingTopicQuiz.groupLabels = groupLabels;
 
     let subHtml = '';
+    if (Number(topicNum) === 4) {
+        const introStyle = SUBTOPIC_PALETTES[0];
+        subHtml += `
+            <button onclick="openMuc4IntroLesson_()" class="px-3 py-2.5 ${introStyle.card} border-2 rounded-xl font-bold text-left transition-all flex items-center justify-between gap-2 shadow-sm pastel-btn">
+                <span class="text-base md:text-lg leading-tight sm:whitespace-nowrap"><strong class="${introStyle.num} mr-1.5">1.</strong> Làm quen với các hình</span>
+                <span class="text-xs md:text-sm font-extrabold ${introStyle.badge} px-2.5 py-0.5 rounded-full border shrink-0 ml-1.5 shadow-inner">🎧 Bài giảng</span>
+            </button>`;
+    }
     groups.forEach((subName, idx) => {
-        const style = SUBTOPIC_PALETTES[idx % SUBTOPIC_PALETTES.length];
-        const displayTitle = [3, 4].includes(Number(topicNum)) ? beautifySubtopicName(groupLabels[subName]) : formatSubtopicLabelWithCode_(subName, groupLabels[subName]);
+        const displayIndex = idx + (Number(topicNum) === 4 ? 2 : 1);
+        const style = SUBTOPIC_PALETTES[(displayIndex - 1) % SUBTOPIC_PALETTES.length];
+        const hideInternalCode = [3,4,5,6,7,8,9,10,11].includes(Number(topicNum));
+        const displayTitle = hideInternalCode ? beautifySubtopicName(groupLabels[subName]) : formatSubtopicLabelWithCode_(subName, groupLabels[subName]);
         const count = groupMap[subName].length;
 
         subHtml += `
             <button onclick="selectSubtopic(${idx})" class="px-3 py-2.5 ${style.card} border-2 rounded-xl font-bold text-left transition-all flex items-center justify-between gap-2 shadow-sm pastel-btn">
-                <span class="text-base md:text-lg leading-tight sm:whitespace-nowrap"><strong class="${style.num} mr-1.5">${idx + 1}.</strong> ${escapeHtml(displayTitle)}</span>
+                <span class="text-base md:text-lg leading-tight sm:whitespace-nowrap"><strong class="${style.num} mr-1.5">${displayIndex}.</strong> ${escapeHtml(displayTitle)}</span>
                 <span class="text-sm md:text-base font-extrabold ${style.badge} px-2.5 py-0.5 rounded-full border shrink-0 ml-1.5 shadow-inner">${count} câu</span>
             </button>`;
     });
-    setSubtopicGridColumns(groups.length);
+    setSubtopicGridColumns(groups.length + (Number(topicNum) === 4 ? 1 : 0));
     document.getElementById('lecture-subtopics-list').innerHTML = subHtml;
 
     if (Number(topicNum) === 11) updateNavTabs('Ôn tập', '🧠', topicName);
@@ -3994,6 +4940,197 @@ function refreshTopic3Sub34SolutionHost_(q) {
     host.innerHTML = buildTopic3Sub34SolutionHtml_(q);
 }
 
+function buildMuc4SolutionHtml_(q) {
+    const chosen = userAnswers[currentQIndex];
+    if (chosen === undefined || chosen !== q?.answer || !q?.explanation) return '';
+    return `<div class="mt-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-2.5 text-center text-sm md:text-base font-black text-emerald-800 shadow-sm">💡 ${escapeHtml(q.explanation)}</div>`;
+}
+
+function muc4OptionIcon_(opt) {
+    const map = {
+        'Hình tròn':'circle', 'Hình tam giác':'triangle', 'Hình vuông':'square', 'Hình chữ nhật':'rectangle'
+    };
+    if (map[opt]) return muc4ShapeSvg_(map[opt], {size:52, color:'#fbcfe8', stroke:'#7c3aed'});
+    if (opt === 'Khối lập phương') return muc4SolidSvg_('cube',{size:58});
+    if (opt === 'Khối hộp chữ nhật') return muc4SolidSvg_('cuboid',{size:68,fill1:'#d1fae5',fill2:'#a7f3d0',fill3:'#6ee7b7'});
+    if (opt === 'Hình vuông') return muc4ShapeSvg_('square',{size:52,color:'#bfdbfe'});
+    if (opt === 'Hình chữ nhật') return muc4ShapeSvg_('rectangle',{size:52,color:'#fde68a'});
+    return '';
+}
+
+function muc4ComposeSceneSvg_(scene, missingShape = null, showMissing = false) {
+    const W = 240, H = 180;
+    const filled = (shape, attrs, color) => {
+        const stroke = '#475569';
+        if (shape === 'triangle') return `<polygon ${attrs} fill="${color}" stroke="${stroke}" stroke-width="3"></polygon>`;
+        if (shape === 'circle') return `<circle ${attrs} fill="${color}" stroke="${stroke}" stroke-width="3"></circle>`;
+        return `<rect ${attrs} fill="${color}" stroke="${stroke}" stroke-width="3" rx="5"></rect>`;
+    };
+    const dashed = (shape, attrs) => {
+        const common = `fill="#fff1f2" stroke="#f43f5e" stroke-width="4" stroke-dasharray="8 7"`;
+        if (shape === 'triangle') return `<polygon ${attrs} ${common}></polygon>`;
+        if (shape === 'circle') return `<circle ${attrs} ${common}></circle>`;
+        return `<rect ${attrs} ${common} rx="5"></rect>`;
+    };
+    const part = (shape, attrs, color) => (showMissing && missingShape === shape ? dashed(shape, attrs) : filled(shape, attrs, color));
+    let body = '';
+    if (scene === 'ngôi nhà') {
+        body += part('square','x="75" y="82" width="90" height="76"','#93c5fd');
+        body += part('triangle','points="120,24 52,86 188,86"','#fca5a5');
+    } else if (scene === 'cây kem') {
+        body += part('triangle','points="120,158 78,76 162,76"','#fbbf24');
+        body += part('circle','cx="120" cy="62" r="38"','#f9a8d4');
+    } else if (scene === 'chú rô-bốt') {
+        body += part('square','x="88" y="20" width="64" height="55"','#c4b5fd');
+        body += filled('rectangle','x="72" y="82" width="96" height="66"','#93c5fd');
+        body += filled('rectangle','x="38" y="92" width="32" height="45"','#86efac');
+        body += filled('rectangle','x="170" y="92" width="32" height="45"','#86efac');
+    } else if (scene === 'cây cờ') {
+        body += filled('rectangle','x="64" y="24" width="18" height="134"','#94a3b8');
+        body += part('rectangle','x="82" y="30" width="102" height="58"','#fb7185');
+    } else if (scene === 'chiếc thuyền') {
+        body += filled('rectangle','x="58" y="108" width="124" height="42"','#60a5fa');
+        body += part('triangle','points="120,28 120,108 182,108"','#fde68a');
+        body += `<line x1="120" y1="28" x2="120" y2="108" stroke="#475569" stroke-width="4"></line>`;
+    } else if (scene === 'cửa sổ') {
+        const coords=[[72,32],[122,32],[72,82],[122,82]];
+        coords.forEach((c,idx)=>{
+            const attrs=`x="${c[0]}" y="${c[1]}" width="46" height="46"`;
+            body += (showMissing && missingShape === 'square' && idx === 3) ? dashed('square',attrs) : filled('square',attrs,'#bfdbfe');
+        });
+    } else if (scene === 'bông hoa') {
+        body += filled('rectangle','x="112" y="86" width="16" height="70"','#86efac');
+        body += part('circle','cx="120" cy="62" r="38"','#fde68a');
+    } else {
+        body += filled('rectangle','x="54" y="70" width="104" height="42"','#93c5fd');
+        body += part('triangle','points="158,48 210,91 158,134"','#fca5a5');
+    }
+    return `<svg viewBox="0 0 ${W} ${H}" class="w-full max-w-[330px] h-auto" aria-hidden="true">${body}</svg>`;
+}
+
+function muc4AdvancedCountSvg_(pattern) {
+    const stroke = '#4338ca';
+    const sw = 4;
+    const line = (x1,y1,x2,y2) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}" stroke-width="${sw}" stroke-linecap="round"></line>`;
+    const rect = (x,y,w,h) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="none" stroke="${stroke}" stroke-width="${sw}" rx="2"></rect>`;
+    let body = '';
+
+    if (pattern === 'tri_fan_2' || pattern === 'tri_fan_3' || pattern === 'tri_fan_4') {
+        const parts = pattern === 'tri_fan_2' ? 2 : (pattern === 'tri_fan_3' ? 3 : 4);
+        const left = 25, right = 215, baseY = 160, apexX = 120, apexY = 20;
+        body += `<polygon points="${apexX},${apexY} ${left},${baseY} ${right},${baseY}" fill="#eef2ff" stroke="${stroke}" stroke-width="${sw}"></polygon>`;
+        for (let i = 1; i < parts; i++) {
+            const x = left + (right-left) * i / parts;
+            body += line(apexX, apexY, x, baseY);
+        }
+    } else if (pattern === 'square_diagonals') {
+        body += rect(45,20,150,150);
+        body += line(45,20,195,170) + line(195,20,45,170);
+    } else if (pattern === 'square_grid_2') {
+        body += rect(45,20,150,150);
+        body += line(120,20,120,170) + line(45,95,195,95);
+    } else if (pattern === 'square_grid_3') {
+        body += rect(45,15,150,150);
+        body += line(95,15,95,165) + line(145,15,145,165);
+        body += line(45,65,195,65) + line(45,115,195,115);
+    } else if (pattern === 'nested_squares_2' || pattern === 'nested_squares_3') {
+        body += rect(40,15,160,160);
+        body += rect(75,50,90,90);
+        if (pattern === 'nested_squares_3') body += rect(98,73,44,44);
+    } else if (pattern === 'rect_cols_3' || pattern === 'rect_cols_4') {
+        const cols = pattern === 'rect_cols_3' ? 3 : 4;
+        const x0=25, y0=48, w=190, h=82;
+        body += rect(x0,y0,w,h);
+        for (let i=1;i<cols;i++) body += line(x0+w*i/cols,y0,x0+w*i/cols,y0+h);
+    } else if (pattern === 'rect_grid_2x2') {
+        const x0=25,y0=40,w=190,h=100;
+        body += rect(x0,y0,w,h);
+        body += line(x0+w/2,y0,x0+w/2,y0+h) + line(x0,y0+h/2,x0+w,y0+h/2);
+    } else if (pattern === 'rect_grid_3x2') {
+        const x0=15,y0=40,w=210,h=100;
+        body += rect(x0,y0,w,h);
+        body += line(x0+w/3,y0,x0+w/3,y0+h) + line(x0+2*w/3,y0,x0+2*w/3,y0+h);
+        body += line(x0,y0+h/2,x0+w,y0+h/2);
+    }
+
+    return `<svg viewBox="0 0 240 190" class="w-full max-w-[430px] h-auto" aria-hidden="true">${body}</svg>`;
+}
+
+function buildMuc4SceneVisual_(q) {
+    const v = q?.muc4_visual || {};
+    const t = q?.muc4_type || '';
+    if (t === 'flat_identify') {
+        return `<div class="flex flex-col items-center"><div class="rounded-3xl border-2 border-violet-100 bg-white p-5 shadow-sm">${muc4ShapeSvg_(v.target,{size:150,color:v.color||'#93c5fd',rotate:v.rotate||0})}</div><div class="mt-2 text-sm font-bold text-slate-500">Con nhìn đường bao của hình nhé.</div></div>`;
+    }
+    if (t === 'flat_match') {
+        return `<div class="flex flex-col items-center"><div class="text-sm md:text-base font-black text-slate-500 mb-2">Hình mẫu</div><div class="rounded-3xl border-2 border-violet-200 bg-violet-50/50 p-4 shadow-sm">${muc4ShapeSvg_(v.target,{size:130,color:v.color||'#93c5fd',rotate:v.rotate||0})}</div></div>`;
+    }
+    if (t === 'flat_odd') {
+        return `<div class="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-center font-black text-amber-800">Ba hình cùng loại, chỉ có một hình khác. Con quan sát từng đáp án nhé.</div>`;
+    }
+    if (t === 'shape_property') {
+        return `<div class="flex flex-col items-center"><div class="rounded-3xl border-2 border-violet-100 bg-white p-5 shadow-sm">${muc4ShapeSvg_(v.target,{size:150,color:v.color||'#93c5fd',rotate:v.rotate||0})}</div><div class="mt-2 text-sm font-bold text-slate-500">Con nhìn kĩ số cạnh và các góc của hình nhé.</div></div>`;
+    }
+    if (t === 'compose_missing' || t === 'compose_parts') {
+        return `<div class="w-full max-w-xl rounded-[28px] border-2 border-pink-100 bg-gradient-to-br from-white to-sky-50 p-4 shadow-sm"><div class="text-center text-sm md:text-base font-black text-violet-700 mb-2">${t === 'compose_missing' ? 'Chỗ trống cần mảnh nào?' : 'Con tách hình lớn thành các mảnh nhỏ nhé.'}</div><div class="flex items-center justify-center">${muc4ComposeSceneSvg_(v.scene, v.missing, t === 'compose_missing')}</div><div class="mt-1 text-center text-xs md:text-sm font-bold text-slate-500">${escapeHtml(v.scene||'hình ghép')} · Có thể xoay mảnh khi ghép.</div></div>`;
+    }
+    if (t === 'solid_identify') {
+        return `<div class="rounded-[28px] border-2 border-sky-100 bg-white p-5 shadow-sm">${muc4SolidSvg_(v.solid,{size:v.solid==='cuboid'?180:155,fill1:'#dbeafe',fill2:'#93c5fd',fill3:'#60a5fa'})}</div>`;
+    }
+    if (t === 'solid_object') {
+        return `<div class="flex flex-col items-center rounded-[28px] border-2 border-emerald-100 bg-white p-5 shadow-sm"><div class="text-7xl md:text-8xl leading-none">${escapeHtml(v.objectEmoji||'📦')}</div><div class="mt-2 text-lg md:text-xl font-black text-emerald-700">${escapeHtml(v.objectLabel||'Đồ vật')}</div><div class="mt-2 text-xs md:text-sm font-bold text-slate-500">Hãy nghĩ tới dạng khối của đồ vật.</div></div>`;
+    }
+    if (t === 'shape_count_advanced') {
+        return `<div class="w-full max-w-xl rounded-[28px] border-2 border-violet-100 bg-gradient-to-br from-white to-violet-50 p-4 shadow-sm"><div class="text-center text-sm md:text-base font-black text-violet-700 mb-2">🔎 Con đếm cả hình nhỏ và hình ghép lớn nhé.</div><div class="flex items-center justify-center">${muc4AdvancedCountSvg_(v.pattern)}</div><div class="mt-1 text-center text-xs md:text-sm font-bold text-slate-500">Mẹo: đếm theo kích thước để không bỏ sót.</div></div>`;
+    }
+    return '';
+}
+
+function buildMuc4QuestionLayout_(q, speakerHtml) {
+    const v = q?.muc4_visual || {};
+    const visual = buildMuc4SceneVisual_(q);
+    const isVisualChoice = Array.isArray(v.optionShapes) && v.optionShapes.length === q.options.length;
+    const optionsHtml = q.options.map((opt, idx) => {
+        let icon = '';
+        if (isVisualChoice) {
+            icon = muc4ShapeSvg_(v.optionShapes[idx], {size:62,color:['#fde68a','#bfdbfe','#bbf7d0','#fecdd3'][idx%4],rotate:[0,18,35,50][idx%4]});
+        } else {
+            icon = muc4OptionIcon_(opt);
+        }
+        const letter = String.fromCharCode(65+idx);
+        const label = isVisualChoice ? '' : capitalizeFirstLetter(opt);
+        return `<button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${String(opt).replace(/'/g,"\\'")}')" class="option-btn w-full min-h-[74px] px-2.5 py-2 bg-pink-50/40 hover:bg-pink-100/70 border-2 border-pink-200 rounded-2xl font-extrabold text-slate-800 transition-all flex items-center justify-center gap-2 text-center shadow-xs pastel-btn"><strong class="text-pink-600 text-base md:text-lg">${letter}.</strong>${icon}<span class="opt-text text-sm md:text-base lg:text-lg">${escapeHtml(label)}</span><span class="option-icon text-pink-500"></span></button>`;
+    }).join('');
+
+    return `<div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-[1.12fr_0.88fr] gap-4 items-stretch py-1">
+        <div class="min-h-[280px] rounded-[28px] border-2 border-pink-100 bg-gradient-to-br from-amber-50 via-white to-sky-50 px-3 py-4 md:px-5 md:py-5 flex items-center justify-center overflow-hidden shadow-sm">${visual}</div>
+        <div class="rounded-[28px] border border-pink-100 bg-white/95 px-3 py-4 md:px-5 md:py-5 flex flex-col justify-center shadow-sm">
+            <h3 class="text-lg md:text-xl lg:text-[22px] font-black text-slate-900 leading-snug text-center">${escapeHtml(q.question_text)}</h3>
+            ${speakerHtml}
+            <div class="grid grid-cols-2 gap-2.5 mt-3">${optionsHtml}</div>
+            <div id="muc4-solution-host">${buildMuc4SolutionHtml_(q)}</div>
+        </div>
+    </div>`;
+}
+
+function refreshMuc4SolutionHost_(q) {
+    if (Number(activeTopicId) !== 4 || !/^4\.[2345]$/.test(String(q?.sub_topic||''))) return;
+    const host = document.getElementById('muc4-solution-host');
+    if (host) host.innerHTML = buildMuc4SolutionHtml_(q);
+}
+
+
+function speakMuc4SelectedShape_(q, selectedOpt) {
+    if (Number(activeTopicId) !== 4 || String(q?.sub_topic || '') !== '4.2' || q?.muc4_type !== 'flat_odd') return false;
+    const optionShapes = q?.muc4_visual?.optionShapes;
+    if (!Array.isArray(optionShapes)) return false;
+    const idx = (q.options || []).indexOf(selectedOpt);
+    if (idx < 0 || !optionShapes[idx]) return false;
+    const shapeName = muc4ShapeName_(optionShapes[idx]);
+    setTimeout(() => speakVietnamese(shapeName, 0.94), 180);
+    return true;
+}
+
 function formatQuestionPromptHtml_(q) {
     if (Number(activeTopicId) === 3 && /^3\.[12]$/.test(String(q?.sub_topic || ''))) {
         return formatTopic3PromptHtml_(q, q?.question_text || '');
@@ -4009,6 +5146,7 @@ function loadQuestion() {
     const isEvaluationMode = !!activeExamContext || !!activeRoadmapContext;
     const isFoundationPractice = !isEvaluationMode && ([1, 2].includes(Number(activeTopicId)) || /^[12]\./.test(String(q.sub_topic || '')));
     const isTopic3Practice = !isEvaluationMode && Number(activeTopicId) === 3 && /^3\./.test(String(q.sub_topic || ''));
+    const isTopic4Practice = !isEvaluationMode && Number(activeTopicId) === 4 && /^4\.[2345]$/.test(String(q.sub_topic || ''));
 
     if (isEvaluationMode) {
         document.getElementById('q-badge-index').textContent = `CÂU ${currentQIndex + 1} / ${activeQuestionsList.length}`;
@@ -4073,6 +5211,8 @@ function loadQuestion() {
         html = buildTopic3Sub33Layout_(q, practiceSpeakerBtnHtml);
     } else if (isTopic3Practice && getTopic3Stage_(q) === '3.4') {
         html = buildTopic3Sub34Layout_(q, practiceSpeakerBtnHtml);
+    } else if (isTopic4Practice) {
+        html = buildMuc4QuestionLayout_(q, practiceSpeakerBtnHtml);
     } else if (isLetterListen) {
         html = `
             ${mediaHtml}
@@ -4143,6 +5283,7 @@ function loadQuestion() {
     restoreQuestionState(q);
     refreshTopic3Sub33SolutionHost_(q);
     refreshTopic3Sub34SolutionHost_(q);
+    refreshMuc4SolutionHost_(q);
     updateNavButtons();
     updateQuizPalletUI();
 
@@ -4304,9 +5445,10 @@ function checkAnswer(selectedOpt) {
         if (isCorrect) {
             playAudio('correct');
             confetti({ particleCount: 30, spread: 55, origin: { y: 0.7 } });
-            setTimeout(() => speakVietnamese(`${q.answer}`), 180);
+            if (!speakMuc4SelectedShape_(q, selectedOpt)) setTimeout(() => speakVietnamese(`${q.answer}`), 180);
         } else {
             playAudio('wrong');
+            speakMuc4SelectedShape_(q, selectedOpt);
         }
 
         updateQuizPalletUI();
@@ -4332,6 +5474,7 @@ function checkAnswer(selectedOpt) {
         });
         refreshTopic3Sub33SolutionHost_(q);
         refreshTopic3Sub34SolutionHost_(q);
+        refreshMuc4SolutionHost_(q);
 
         playAudio('correct');
         confetti({ particleCount: 30, spread: 55, origin: { y: 0.7 } });
@@ -4340,7 +5483,7 @@ function checkAnswer(selectedOpt) {
         const isFoundationPractice = /^[12]\./.test(String(q.sub_topic || ''));
         if (isFoundationPractice) {
             setTimeout(() => nextQuestion(), 650);
-        } else {
+        } else if (!speakMuc4SelectedShape_(q, selectedOpt)) {
             setTimeout(() => speakVietnamese(`${q.answer}`), 180);
         }
     } else {
@@ -4360,6 +5503,7 @@ function checkAnswer(selectedOpt) {
         });
 
         playAudio('wrong');
+        speakMuc4SelectedShape_(q, selectedOpt);
     }
 
     updateQuizPalletUI();
