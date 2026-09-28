@@ -13,7 +13,7 @@ const TOPICS_CONFIG = [
     { id: 9, title: "9. Giải toán có lời văn", desc: "Đọc hiểu đề, phân tích từ khóa thêm/bớt, trình bày bài giải 3 phần", icon: "📝", color: "rose" },
     { id: 10, title: "10. Toán tư duy nâng cao và IQ", desc: "Điền số khuyết, toán logic cân thăng bằng, đếm hình lồng ghép nâng cao", icon: "🧠", color: "yellow" },
     { id: 11, title: "11. Ôn tập", desc: "Ôn tập học kỳ I, học kỳ II và tổng ôn tập cuối năm", icon: "📚", color: "purple" },
-    { id: 12, title: "12. Học Toán theo phương pháp mới", desc: "Hiểu bản chất qua thao tác, trực quan, diễn đạt rồi mới đi tới ký hiệu và tính thành thạo", icon: "✨", color: "fuchsia", engine: "epsilon-method" }
+    { id: 12, title: "12. Math Lab - Toán tư duy Mỹ", desc: "Khám phá • Mô hình • Nhiều cách giải", icon: "✨", color: "fuchsia", engine: "epsilon-method" }
 ];
 
 const SUBTOPIC_PALETTES = [
@@ -344,7 +344,7 @@ async function renderDashboardGrid() {
     TOPICS_CONFIG.filter(t => Number(t.id) !== 11).forEach(t => {
         const topicObj = topicsData.find(item => Number(item.topic_id) === Number(t.id));
         const totalCount = topicObj && topicObj.questions ? topicObj.questions.length : 0;
-        const countLabel = t.engine === 'epsilon-method' ? '2 chuyên đề' : (totalCount > 0 ? `${totalCount} câu` : 'Đang cập nhật');
+        const countLabel = t.engine === 'epsilon-method' ? '72 hành trình' : (totalCount > 0 ? `${totalCount} câu` : 'Đang cập nhật');
 
         const iconHtml = t.isCustomTextIcon 
             ? `<div class="w-8 h-8 bg-rose-100 rounded-xl flex items-center justify-center text-[11px] font-black text-rose-600 shadow-inner group-hover:scale-110 transition-transform shrink-0 tracking-tight">S/X</div>`
@@ -1388,7 +1388,8 @@ async function openEpsilonMethodHub_() {
     pendingTopicQuiz = null;
     activeNumberSense = null;
     activeOperationSense = null;
-    updateDiscoverBreadcrumb_('12. Học Toán theo phương pháp mới', '✨', null);
+    activeEpsilonGenericLab_ = null;
+    updateDiscoverBreadcrumb_('12. Math Lab - Toán tư duy Mỹ', '✨', null);
     switchAppView('view-epsilon-method-hub');
     const host = document.getElementById('epsilon-method-content');
     if (host) host.innerHTML = '<div class="py-16 text-center font-black text-purple-600">✨ Đang mở không gian học theo phương pháp Epsilon...</div>';
@@ -1407,7 +1408,7 @@ function renderEpsilonMethodHub_(data) {
         const content = track.content || {};
         const journeyCount = Array.isArray(content.journeys) ? content.journeys.length : 0;
         const activityCount = (content.journeys || []).reduce((sum, j) => sum + (Array.isArray(j.activities) ? j.activities.length : 0), 0);
-        const action = track.engine === 'number_sense' ? 'openNumberSenseHub()' : track.engine === 'operation_sense' ? 'openOperationSenseHub()' : '';
+        const action = track.engine === 'number_sense' ? 'openNumberSenseHub()' : track.engine === 'operation_sense' ? 'openOperationSenseHub()' : `openEpsilonGenericLab_('${escapeJsString_(track.engine || '')}')`;
         return `<button onclick="${action}" class="em-track-card text-left">
             <div class="flex items-start justify-between gap-3">
                 <div class="flex items-center gap-3 min-w-0">
@@ -1431,10 +1432,10 @@ function renderEpsilonMethodHub_(data) {
     host.innerHTML = `<div class="w-full max-w-6xl mx-auto">
         <section class="em-hero">
             <div class="min-w-0">
-                <div class="text-xs md:text-sm font-black uppercase tracking-[.18em] text-fuchsia-600">✨ Epsilon Method</div>
-                <h2 class="mt-1 text-2xl md:text-4xl font-black text-slate-900">Học Toán theo phương pháp mới</h2>
-                <p class="mt-2 max-w-4xl text-sm md:text-base font-bold text-slate-600 leading-relaxed">Trẻ được hiểu ý nghĩa, tự tay thao tác, nhìn thấy toán học và diễn đạt cách nghĩ trước khi đi tới ký hiệu và tính thành thạo.</p>
-                <div class="mt-3 text-sm md:text-base font-black text-fuchsia-700">Hiểu bản chất trước → thành thạo sau → tiến bộ từng ngày.</div>
+                <div class="text-xs md:text-sm font-black uppercase tracking-[.18em] text-fuchsia-600">MATH LAB • GRADE 1</div>
+                <h2 class="mt-1 text-2xl md:text-4xl font-black text-slate-900">Math Lab - Toán tư duy Mỹ</h2>
+                <p class="mt-2 max-w-4xl text-sm md:text-base font-bold text-slate-600 leading-relaxed">Cùng kiến thức Toán 1 Việt Nam, nhưng con học bằng khám phá, thao tác, mô hình, giải thích và nhiều cách giải.</p>
+                <div class="mt-3 text-sm md:text-base font-black text-fuchsia-700">Khám phá • Mô hình • Nhiều cách giải</div>
             </div>
             <div class="em-hero-flow">Tình huống → Thao tác → Mô hình → Diễn đạt → Ký hiệu → Luyện → Vận dụng</div>
         </section>
@@ -1457,6 +1458,282 @@ function speakNumberSenseActivity_() {
 
 function speakOperationSenseActivity_() {
     speakVietnamese(epsilonActivityNarration_(currentOperationSenseActivity_()), 0.94);
+}
+
+// ==========================================
+// EPSILON GENERIC LAB ENGINE - 12.3 -> 12.6
+// Dùng dữ liệu Toan1_Muc12_Grade1_Full.json để chạy các Lab còn lại.
+// ==========================================
+let activeEpsilonGenericLab_ = null;
+let epsilonGenericHintLevel_ = 0;
+
+function epsilonTrackLabel_(track) {
+    return `${track?.display_code || ''} ${track?.title || ''}`.trim();
+}
+
+async function loadEpsilonTrackByEngine_(engine) {
+    const root = await loadEpsilonMuc12Data_();
+    const track = (root.tracks || []).find(t => String(t.engine || '') === String(engine || ''));
+    if (!track?.content || !Array.isArray(track.content.journeys)) throw new Error('Lab này chưa có dữ liệu hợp lệ.');
+    return track;
+}
+
+function epsilonGenericEvidenceKey_(engine) {
+    const id = String(currentUser?.maHS || 'KHACH').toUpperCase();
+    return `epsilon_lab_${String(engine || 'lab')}_${id}`;
+}
+
+function readEpsilonGenericEvidence_(engine) {
+    try { return JSON.parse(localStorage.getItem(epsilonGenericEvidenceKey_(engine)) || '{}') || {}; }
+    catch (e) { return {}; }
+}
+
+function writeEpsilonGenericEvidence_(engine, data) {
+    try { localStorage.setItem(epsilonGenericEvidenceKey_(engine), JSON.stringify(data || {})); } catch (e) {}
+}
+
+function epsilonGenericMasteryLabel_(journey, state) {
+    const total = Array.isArray(journey?.activities) ? journey.activities.length : 0;
+    const done = Array.isArray(state?.completed) ? state.completed.length : 0;
+    if (total && done >= total) return state?.hint_uses ? 'Hoàn thành có hỗ trợ' : 'Hoàn thành độc lập';
+    if (done > 0) return 'Đang học';
+    return 'Chưa học';
+}
+
+function epsilonGenericMasteryClass_(journey, state) {
+    const total = Array.isArray(journey?.activities) ? journey.activities.length : 0;
+    const done = Array.isArray(state?.completed) ? state.completed.length : 0;
+    if (total && done >= total) return state?.hint_uses ? 'bg-amber-100 text-amber-700 border-amber-200' : 'bg-emerald-100 text-emerald-700 border-emerald-200';
+    if (done > 0) return 'bg-violet-100 text-violet-700 border-violet-200';
+    return 'bg-slate-100 text-slate-500 border-slate-200';
+}
+
+async function openEpsilonGenericLab_(engine) {
+    setAppShellRootMode_(false);
+    setMainTabActive_('discover');
+    stopSpeaking();
+    clearInterval(quizTimerInterval);
+    activeBaiHocContext = null;
+    activeExamContext = null;
+    activeRoadmapContext = null;
+    activeTopicId = 12;
+    pendingTopicQuiz = null;
+    activeEpsilonGenericLab_ = null;
+    switchAppView('view-epsilon-method-hub');
+    const host = document.getElementById('epsilon-method-content');
+    if (host) host.innerHTML = '<div class="py-16 text-center font-black text-purple-600">✨ Đang mở Math Lab...</div>';
+    try {
+        const track = await loadEpsilonTrackByEngine_(engine);
+        updateNavTabs('12. Math Lab - Toán tư duy Mỹ', '✨', epsilonTrackLabel_(track), null);
+        renderEpsilonGenericHub_(track);
+    } catch (err) {
+        if (host) host.innerHTML = `<div class="rounded-3xl border-2 border-rose-200 bg-rose-50 p-6 text-center font-bold text-rose-700">${escapeHtml(err.message)}</div>`;
+    }
+}
+
+function renderEpsilonGenericHub_(track) {
+    const host = document.getElementById('epsilon-method-content');
+    if (!host) return;
+    const evidence = readEpsilonGenericEvidence_(track.engine);
+    const journeys = track.content.journeys || [];
+    const cards = journeys.map(j => {
+        const st = evidence[j.id] || { completed: [], attempts: 0, hint_uses: 0 };
+        const done = Array.isArray(st.completed) ? st.completed.length : 0;
+        const total = Array.isArray(j.activities) ? j.activities.length : 0;
+        return `<button onclick="startEpsilonGenericJourney_('${escapeJsString_(track.engine)}','${escapeJsString_(j.id)}')" class="ns-journey-card text-left">
+            <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="ns-journey-icon">${escapeHtml(j.icon || track.icon || '✨')}</div>
+                    <div class="min-w-0">
+                        <div class="text-[11px] font-black uppercase tracking-wider text-purple-500">Hành trình ${j.order}</div>
+                        <h3 class="font-black text-slate-800 text-base md:text-lg leading-tight mt-0.5">${escapeHtml(j.title)}</h3>
+                    </div>
+                </div>
+                <span class="shrink-0 rounded-full border px-2 py-1 text-[10px] md:text-xs font-black ${epsilonGenericMasteryClass_(j, st)}">${escapeHtml(epsilonGenericMasteryLabel_(j, st))}</span>
+            </div>
+            <p class="mt-3 text-xs md:text-sm font-bold text-slate-500 leading-relaxed">${escapeHtml(j.goal || '')}</p>
+            <div class="mt-3 flex items-center gap-2"><div class="h-2 flex-1 rounded-full bg-slate-100 overflow-hidden"><div class="h-full rounded-full bg-gradient-to-r from-fuchsia-400 to-violet-500" style="width:${total ? Math.round(done/total*100) : 0}%"></div></div><span class="text-[11px] font-black text-slate-400">${done}/${total}</span></div>
+        </button>`;
+    }).join('');
+    const practices = (track.content.pedagogy?.learning_cycle || track.content.design_principles || []).slice(0,5).map(x=>`<span class="em-stat-pill">${escapeHtml(typeof x === 'string' ? x : JSON.stringify(x))}</span>`).join('');
+    host.innerHTML = `<div class="w-full max-w-6xl mx-auto">
+        <div class="mb-3"><button onclick="openEpsilonMethodHub_()" class="ns-secondary-btn">← Math Lab Grade 1</button></div>
+        <section class="ns-hero">
+            <div class="min-w-0">
+                <div class="text-xs md:text-sm font-black uppercase tracking-[.16em] text-fuchsia-600">${escapeHtml(track.display_code || '')} • ${escapeHtml(track.icon || '✨')} MATH LAB</div>
+                <h2 class="mt-1 text-2xl md:text-3xl font-black text-slate-900">${escapeHtml(track.title || '')}</h2>
+                <p class="mt-2 max-w-3xl text-sm md:text-base font-bold text-slate-600 leading-relaxed">${escapeHtml(track.description || '')}</p>
+                <div class="mt-3 flex flex-wrap gap-2">${practices}</div>
+            </div>
+            <div class="ns-hero-flow">Khám phá → Mô hình → Giải thích → Ký hiệu → Chuyển giao</div>
+        </section>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 mt-4">${cards}</div>
+    </div>`;
+}
+
+async function startEpsilonGenericJourney_(engine, journeyId) {
+    const track = await loadEpsilonTrackByEngine_(engine);
+    const journey = (track.content.journeys || []).find(j => j.id === journeyId);
+    if (!journey) return;
+    const evidence = readEpsilonGenericEvidence_(engine);
+    const st = evidence[journeyId] || { completed: [] };
+    let activityIndex = 0;
+    if (Array.isArray(st.completed) && st.completed.length) {
+        const firstOpen = (journey.activities || []).findIndex(a => !st.completed.includes(a.id));
+        activityIndex = firstOpen >= 0 ? firstOpen : 0;
+    }
+    activeEpsilonGenericLab_ = { engine, track, journey, activityIndex, startedAt: Date.now(), answered: false };
+    updateNavTabs('12. Math Lab - Toán tư duy Mỹ', '✨', epsilonTrackLabel_(track), `${journey.order}. ${journey.title}`);
+    renderEpsilonGenericActivity_();
+}
+
+function currentEpsilonGenericActivity_() {
+    return activeEpsilonGenericLab_?.journey?.activities?.[activeEpsilonGenericLab_.activityIndex] || null;
+}
+
+function speakEpsilonGenericActivity_() {
+    speakVietnamese(epsilonActivityNarration_(currentEpsilonGenericActivity_()), 0.94);
+}
+
+function epsilonGenericChoicesHtml_(activity) {
+    return `<div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-3xl mx-auto">${(activity.choices || []).map((c,idx)=>`<button class="ns-choice min-h-[58px]" onclick="epsilonGenericChoose_('${escapeJsString_(String(c))}',this)"><span class="text-pink-600 mr-2">${String.fromCharCode(65+idx)}.</span>${escapeHtml(String(c))}</button>`).join('')}</div>`;
+}
+
+function epsilonBaseTenHtml_(tens, ones) {
+    const rods = Array.from({length:Math.max(0,Number(tens)||0)},()=>`<div class="w-8 h-28 rounded-lg border-2 border-amber-400 bg-amber-200 flex flex-col justify-around p-1">${Array.from({length:10},()=>'<span class="h-1.5 rounded bg-amber-500/70"></span>').join('')}</div>`).join('');
+    const dots = Array.from({length:Math.max(0,Number(ones)||0)},()=>'<span class="w-7 h-7 rounded-full border-2 border-sky-400 bg-sky-200"></span>').join('');
+    return `<div class="flex flex-wrap items-end justify-center gap-4"><div class="flex flex-wrap gap-2 justify-center">${rods}</div><div class="flex flex-wrap gap-2 max-w-[260px] justify-center">${dots}</div></div>`;
+}
+
+function epsilonTenFrameHtml_(filled) {
+    return `<div class="grid grid-cols-5 gap-1.5 w-fit mx-auto">${Array.from({length:10},(_,i)=>`<div class="w-10 h-10 md:w-12 md:h-12 rounded-xl border-2 ${i<Number(filled||0)?'border-pink-300 bg-pink-50':'border-slate-200 bg-white'} flex items-center justify-center">${i<Number(filled||0)?'<span class="w-6 h-6 rounded-full bg-pink-500"></span>':''}</div>`).join('')}</div>`;
+}
+
+function epsilonClockSvg_(hour, minute=0) {
+    const h=Number(hour||0)%12, m=Number(minute||0)%60;
+    const cx=90,cy=90,r=68;
+    const ha=(h+m/60)*30-90, ma=m*6-90;
+    const point=(ang,len)=>{const rad=ang*Math.PI/180;return [cx+Math.cos(rad)*len,cy+Math.sin(rad)*len];};
+    const hp=point(ha,38), mp=point(ma,55);
+    const nums=Array.from({length:12},(_,i)=>{const a=(i+1)*30-90,p=point(a,53);return `<text x="${p[0]}" y="${p[1]+5}" text-anchor="middle" font-size="14" font-weight="800" fill="#475569">${i+1}</text>`;}).join('');
+    return `<svg viewBox="0 0 180 180" class="w-44 h-44 mx-auto"><circle cx="90" cy="90" r="72" fill="#fff" stroke="#c4b5fd" stroke-width="5"/>${nums}<line x1="90" y1="90" x2="${hp[0]}" y2="${hp[1]}" stroke="#7c3aed" stroke-width="7" stroke-linecap="round"/><line x1="90" y1="90" x2="${mp[0]}" y2="${mp[1]}" stroke="#ec4899" stroke-width="4" stroke-linecap="round"/><circle cx="90" cy="90" r="6" fill="#334155"/></svg>`;
+}
+
+function epsilonSimpleShapeHtml_(shape, rotate=0, size=110, color='#bfdbfe') {
+    if (typeof muc4ShapeSvg_ === 'function') return muc4ShapeSvg_(shape,{size,color,rotate});
+    return `<div class="w-24 h-24 border-4 border-violet-400 rounded-2xl"></div>`;
+}
+
+function renderEpsilonGenericVisual_(activity) {
+    const v = activity?.visual || {};
+    const k = v.kind || '';
+    const box = inner => `<div class="rounded-[28px] border-2 border-violet-100 bg-gradient-to-br from-white via-violet-50/30 to-sky-50 p-4 md:p-5 shadow-sm">${inner}</div>`;
+    if (k === 'base_ten') return box(`${epsilonBaseTenHtml_(v.tens,v.ones)}${v.action==='bundle'?'<div class="mt-3 text-center font-black text-amber-700">10 đơn vị ⇢ 1 chục</div>':''}`);
+    if (k === 'ten_frame') return box(epsilonTenFrameHtml_(v.filled));
+    if (k === 'equation') return box(`<div class="text-center text-3xl md:text-4xl font-black text-violet-700 py-6">${escapeHtml(v.text||'')}</div>`);
+    if (k === 'place_value_card' || k === 'representation_pair') { const n=Number(v.number||0),t=Math.floor(n/10),o=n%10; return box(`<div class="text-center"><div class="text-5xl font-black text-violet-700">${n}</div><div class="mt-3 grid grid-cols-2 gap-3 max-w-sm mx-auto"><div class="rounded-2xl border-2 border-violet-200 p-3"><div class="text-xs font-black text-violet-500">CHỤC</div><div class="text-3xl font-black">${t}</div></div><div class="rounded-2xl border-2 border-pink-200 p-3"><div class="text-xs font-black text-pink-500">ĐƠN VỊ</div><div class="text-3xl font-black">${o}</div></div></div>${k==='representation_pair'?`<div class="mt-4">${epsilonBaseTenHtml_(t,o)}</div>`:''}</div>`); }
+    if (k === 'compare_base_ten') return box(`<div class="grid grid-cols-2 gap-4"><div><div class="text-center text-2xl font-black text-violet-700 mb-2">${v.left}</div>${epsilonBaseTenHtml_(Math.floor(v.left/10),v.left%10)}</div><div><div class="text-center text-2xl font-black text-pink-600 mb-2">${v.right}</div>${epsilonBaseTenHtml_(Math.floor(v.right/10),v.right%10)}</div></div>`);
+    if (k === 'compare_numbers') return box(`<div class="flex items-center justify-center gap-5 py-6"><span class="text-5xl font-black text-violet-700">${v.left}</span><span class="text-5xl font-black text-pink-500">?</span><span class="text-5xl font-black text-rose-600">${v.right}</span></div>`);
+    if (k === 'number_line' || k === 'number_line_jump') { let start=Number(v.start||0),end=Number(v.end ?? (start+12)); if(k==='number_line_jump'){end=Math.min(100,start+Math.max(12,Number(v.jump||0)+2));} const nums=[]; for(let n=start;n<=end;n++) nums.push(n); return box(`<div class="flex flex-wrap items-center justify-center gap-1.5">${nums.map(n=>`<div class="w-10 h-10 rounded-full border-2 ${n===Number(v.highlight??v.start)?'bg-pink-500 text-white border-pink-500':'bg-white border-violet-200 text-violet-700'} flex items-center justify-center font-black">${n}</div>`).join('')}</div>${k==='number_line_jump'?`<div class="mt-3 text-center font-black text-violet-700">Từ ${v.start}, nhảy ${v.jump>0?'+':''}${v.jump}</div>`:''}`); }
+    if (k === 'number_cards') return box(`<div class="grid grid-cols-4 gap-3">${(v.numbers||[]).map(n=>`<div class="rounded-2xl border-2 border-violet-200 bg-white p-4 text-center text-3xl font-black text-violet-700">${n}</div>`).join('')}</div>`);
+    if (k === 'part_whole') return box(`<div class="relative w-[260px] h-[165px] mx-auto"><svg class="absolute inset-0" viewBox="0 0 260 165"><line x1="130" y1="40" x2="75" y2="115" stroke="#7c3aed" stroke-width="4"/><line x1="130" y1="40" x2="185" y2="115" stroke="#7c3aed" stroke-width="4"/></svg><div class="absolute left-1/2 top-0 -translate-x-1/2 w-16 h-16 rounded-full border-4 border-violet-500 bg-violet-50 flex items-center justify-center text-2xl font-black">${v.whole}</div><div class="absolute left-8 bottom-0 w-16 h-16 rounded-full border-4 border-pink-400 bg-pink-50 flex items-center justify-center text-2xl font-black">${v.left}</div><div class="absolute right-8 bottom-0 w-16 h-16 rounded-full border-4 border-amber-400 bg-amber-50 flex items-center justify-center text-2xl font-black">${v.right}</div></div>`);
+    if (k === 'base_ten_add' || k === 'base_ten_sub') { const start=Number(v.start||0),n=Number(v.add??v.take??0),sym=k==='base_ten_add'?'+':'−'; return box(`<div class="text-center"><div>${epsilonBaseTenHtml_(Math.floor(start/10),start%10)}</div><div class="mt-3 text-3xl font-black ${sym==='+'?'text-emerald-600':'text-rose-600'}">${start} ${sym} ${n} = ?</div></div>`); }
+    if (k === 'strategy_cards') return box(`<div class="grid gap-3">${(v.items||[]).map(x=>`<div class="rounded-2xl border-2 border-violet-200 bg-white p-3 font-black text-slate-700">${escapeHtml(x)}</div>`).join('')}</div>`);
+    if (k === 'length_bars') return box(`<div class="space-y-4 max-w-xl mx-auto">${(v.items||[]).map(it=>`<div class="flex items-center gap-3"><b class="w-8 text-violet-700">${escapeHtml(it.label)}</b><div class="h-8 rounded-xl bg-gradient-to-r from-sky-300 to-violet-400" style="width:${Math.max(45,Number(it.length||0)*36)}px"></div></div>`).join('')}</div>`);
+    if (k === 'length_offset') return box(`<div class="space-y-5 max-w-xl mx-auto"><div class="ml-0 h-8 rounded-xl bg-sky-300" style="width:${Number(v.a||0)*40}px"></div><div class="ml-16 h-8 rounded-xl bg-pink-300" style="width:${Number(v.b||0)*40}px"></div><div class="text-center text-xs font-black text-slate-500">Hai vật đang đặt lệch điểm bắt đầu.</div></div>`);
+    if (k === 'logic_chain') return box(`<div class="flex flex-wrap justify-center items-center gap-3 py-5">${(v.items||[]).map((x,i)=>`${i?'<span class="text-2xl">→</span>':''}<span class="rounded-2xl border-2 border-violet-200 bg-white px-5 py-3 text-xl font-black text-violet-700">${escapeHtml(x)}</span>`).join('')}</div>`);
+    if (k === 'unit_measure') return box(`<div class="flex justify-center gap-${v.gaps?'3':'0'}">${Array.from({length:Number(v.units||0)},()=>'<div class="w-12 h-12 border-2 border-violet-400 bg-violet-100"></div>').join('')}</div>`);
+    if (k === 'measure_methods') return box(`<div class="grid grid-cols-2 gap-3">${(v.methods||[]).map((m,i)=>`<div class="rounded-2xl border-2 border-violet-100 bg-white p-3 text-center"><div class="flex justify-center ${/hở/i.test(m)?'gap-3':/chồng/i.test(m)?'-space-x-4':'gap-0'}">${Array.from({length:4},()=>'<span class="w-9 h-9 border-2 border-sky-400 bg-sky-100"></span>').join('')}</div><div class="mt-2 text-sm font-black text-slate-600">${String.fromCharCode(65+i)}</div></div>`).join('')}</div>`);
+    if (k === 'measure_error') { const gap=v.error==='gap'?'gap-4':'gap-0'; return box(`<div class="flex justify-center ${gap}">${Array.from({length:5},()=>'<span class="w-11 h-11 border-2 border-rose-400 bg-rose-100"></span>').join('')}</div><div class="mt-3 text-center font-black text-rose-600">Con tìm chỗ đo chưa đúng.</div>`); }
+    if (k === 'estimate_bar') return box(`<div class="mx-auto h-10 rounded-2xl bg-gradient-to-r from-amber-300 to-orange-400" style="width:${Math.max(100,Number(v.approx||1)*45)}px"></div><div class="mt-3 text-center text-sm font-black text-slate-500">Ước lượng trước, chưa cần đếm chính xác.</div>`);
+    if (k === 'clock') return box(epsilonClockSvg_(v.hour,v.minute));
+    if (k === 'digital_clock') return box(`<div class="text-center text-6xl font-black tracking-wider text-slate-800 py-7">${escapeHtml(v.text||'')}</div>`);
+    if (k === 'calendar_strip') return box(`<div class="flex justify-center gap-2">${(v.days||[]).map(d=>`<div class="w-14 h-16 rounded-2xl border-2 ${d===v.highlight?'bg-pink-500 text-white border-pink-500':'bg-white border-violet-200 text-violet-700'} flex items-center justify-center text-2xl font-black">${d}</div>`).join('')}</div>`);
+    if (k === 'week_strip') { const days=['Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy','Chủ nhật']; return box(`<div class="flex flex-wrap justify-center gap-2">${days.map(d=>`<div class="rounded-xl border-2 ${d===v.highlight?'bg-pink-500 text-white border-pink-500':'bg-white border-violet-200 text-violet-700'} px-3 py-2 text-sm font-black">${d}</div>`).join('')}</div>`); }
+    if (k === 'pictograph') return box(`<div class="space-y-3 max-w-2xl mx-auto">${(v.data||[]).map(r=>`<div class="grid grid-cols-[90px_1fr] items-center gap-3"><b class="text-right text-slate-600">${escapeHtml(r.label)}</b><div class="flex flex-wrap gap-1 text-3xl">${Array.from({length:Number(r.count||0)},()=>escapeHtml(r.emoji||'●')).join('')}</div></div>`).join('')}</div>`);
+    if (k === 'bar_chart') { const max=Math.max(1,...(v.data||[]).map(r=>Number(r.count||0))); return box(`<div class="h-52 flex items-end justify-center gap-8">${(v.data||[]).map(r=>`<div class="flex flex-col items-center justify-end h-full"><div class="w-14 rounded-t-xl bg-gradient-to-t from-violet-500 to-sky-300" style="height:${Math.round(Number(r.count||0)/max*150)}px"></div><b class="mt-2">${escapeHtml(r.label)}</b></div>`).join('')}</div>`); }
+    if (k === 'data_table') return box(`<div class="max-w-md mx-auto overflow-hidden rounded-2xl border border-violet-200">${(v.rows||[]).map((r,i)=>`<div class="grid grid-cols-2 ${i?'border-t border-violet-100':''} bg-white"><div class="p-3 font-black text-slate-600">${escapeHtml(r.label)}</div><div class="p-3 text-center font-black text-violet-700">${escapeHtml(String(r.value))}</div></div>`).join('')}</div>`);
+    if (k === 'shape') return box(`<div class="flex justify-center">${epsilonSimpleShapeHtml_(v.shape,v.rotate||0,150)}</div>`);
+    if (k === 'real_object_shape') return box(`<div class="text-center"><div class="text-8xl">${escapeHtml(v.emoji||'◯')}</div><div class="mt-4 flex justify-center">${epsilonSimpleShapeHtml_(v.shape,0,100)}</div></div>`);
+    if (k === 'shape_set') return box(`<div class="grid grid-cols-4 gap-3">${(v.shapes||[]).map((s,i)=>`<div class="rounded-2xl border-2 border-violet-100 bg-white p-3 text-center"><div class="flex justify-center">${epsilonSimpleShapeHtml_(s,i*13,70,['#fde68a','#bfdbfe','#bbf7d0','#fecdd3'][i%4])}</div><div class="mt-1 font-black text-violet-700">${String.fromCharCode(65+i)}</div></div>`).join('')}</div>`);
+    if (k === 'compose_shapes') return box(`<div class="flex items-center justify-center gap-4"><div class="flex gap-2">${(v.parts||[]).map(s=>epsilonSimpleShapeHtml_(s,0,80,'#bfdbfe')).join('')}</div><span class="text-4xl">→</span><div class="flex justify-center">${epsilonSimpleShapeHtml_(v.result,0,110,'#bbf7d0')}</div></div>`);
+    if (k === 'compose_scene') return box(`<div class="flex justify-center">${typeof muc4ComposeSceneSvg_==='function'?muc4ComposeSceneSvg_(v.scene,v.missing,true):'<div class="text-7xl">🏠</div>'}</div>`);
+    if (k === 'pattern') { if(v.pattern==='square_grid_2') return box(`<div class="grid grid-cols-2 gap-0 w-fit mx-auto">${Array.from({length:4},()=>'<div class="w-20 h-20 border-2 border-violet-600"></div>').join('')}</div>`); if(v.pattern==='tri_fan_3' && typeof muc4AdvancedCountSvg_==='function') return box(muc4AdvancedCountSvg_('tri_fan_3')); return box(`<div class="relative w-52 h-52 mx-auto border-4 border-violet-600"><div class="absolute left-0 top-0 w-[141%] border-t-4 border-pink-500 origin-top-left rotate-45"></div></div>`); }
+    if (k === 'solid') return box(`<div class="flex justify-center">${typeof muc4SolidSvg_==='function'?muc4SolidSvg_(v.solid,{size:160}):'<div class="text-8xl">🧊</div>'}</div>`);
+    if (k === 'position') return box(`<div class="flex justify-center items-center gap-12 py-6 text-7xl"><span>${escapeHtml(v.left||'🐰')}</span><span>${escapeHtml(v.right||'🥕')}</span></div>`);
+    if (k === 'inside_outside') return box(`<div class="relative w-56 h-36 mx-auto rounded-2xl border-4 border-amber-500 bg-amber-50 flex items-center justify-center"><span class="text-6xl">${escapeHtml(v.inside||'⚽')}</span><span class="absolute -bottom-8 text-5xl opacity-70">${escapeHtml(v.container||'📦')}</span></div>`);
+    if (k === 'shape_pair') return box(`<div class="flex justify-center items-center gap-12"><div>${epsilonSimpleShapeHtml_(v.left,0,115,'#bfdbfe')}</div><div>${epsilonSimpleShapeHtml_(v.right,v.right_rotate||0,115,'#fecdd3')}</div></div>`);
+    if (k === 'partition_options') return box(`<div class="grid grid-cols-2 gap-3 max-w-xl mx-auto"><div class="relative h-28 border-4 border-violet-500 bg-white"><div class="absolute left-1/2 top-0 bottom-0 border-l-4 border-pink-500"></div></div><div class="relative h-28 border-4 border-violet-500 bg-white"><div class="absolute left-1/3 top-0 bottom-0 border-l-4 border-pink-500"></div></div></div>`);
+    if (k === 'circle_partition') return box(`<div class="relative w-44 h-44 rounded-full border-4 border-violet-500 mx-auto bg-white"><div class="absolute left-1/2 top-0 bottom-0 border-l-4 border-pink-500"></div><div class="absolute w-4 h-4 rounded-full bg-slate-700 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"></div></div>`);
+    if (k === 'partition_compare') return box(`<div class="grid grid-cols-2 gap-6 max-w-xl mx-auto"><div class="relative h-28 border-4 border-violet-500 bg-white"><div class="absolute left-1/2 top-0 bottom-0 border-l-4 border-pink-500"></div></div><div class="relative h-28 border-4 border-violet-500 bg-white"><div class="absolute top-1/2 left-0 right-0 border-t-4 border-sky-500"></div></div></div>`);
+    if (k === 'story') { const objs=Array.from({length:Number(v.start||0)},()=>`<span class="text-4xl">${escapeHtml(v.object||'●')}</span>`).join(''); return box(`<div class="text-center"><div class="flex justify-center flex-wrap gap-2">${objs}</div><div class="mt-4 text-3xl font-black ${v.action==='join'?'text-emerald-600':'text-rose-600'}">${v.action==='join'?'Có thêm':'Bớt đi'} ${v.change}</div></div>`); }
+    if (k === 'compare_groups') { const row=(n,obj)=>Array.from({length:Number(n||0)},()=>`<span class="text-4xl">${escapeHtml(obj||'●')}</span>`).join(''); return box(`<div class="grid grid-cols-2 gap-4"><div class="rounded-2xl bg-rose-50 p-4 text-center">${row(v.left,v.left_object)}</div><div class="rounded-2xl bg-sky-50 p-4 text-center">${row(v.right,v.right_object)}</div></div>`); }
+    if (k === 'equation_set') return box(`<div class="grid gap-2 max-w-xl mx-auto">${(v.items||[]).map(x=>`<div class="rounded-xl border-2 border-violet-100 bg-white p-3 text-center text-xl font-black text-slate-700">${escapeHtml(x)}</div>`).join('')}</div>`);
+    return box(`<div class="text-center text-sm font-black text-slate-500 py-8">Quan sát dữ liệu và suy nghĩ cách làm.</div>`);
+}
+
+function renderEpsilonGenericActivity_() {
+    const host = document.getElementById('epsilon-method-content');
+    const a = currentEpsilonGenericActivity_();
+    const ctx = activeEpsilonGenericLab_;
+    if (!host || !a || !ctx) return;
+    epsilonGenericHintLevel_ = 0;
+    ctx.answered = false;
+    ctx.startedAt = Date.now();
+    const journey = ctx.journey, step = ctx.activityIndex + 1, total = journey.activities.length;
+    const evidencePills = (journey.evidence || []).map(x=>`<span class="ns-evidence-pill">✓ ${escapeHtml(x)}</span>`).join('');
+    host.innerHTML = `<div class="w-full max-w-5xl mx-auto">
+        <div class="flex items-center justify-between gap-3 mb-3"><button onclick="openEpsilonGenericLab_('${escapeJsString_(ctx.engine)}')" class="ns-secondary-btn">← ${ctx.track.content.journeys.length} hành trình</button><div class="text-center min-w-0"><div class="text-xs font-black text-purple-500">${escapeHtml(journey.icon || ctx.track.icon || '✨')} Hành trình ${journey.order} · Bước ${step}/${total}</div><h2 class="text-lg md:text-xl font-black text-slate-800 truncate">${escapeHtml(journey.title)}</h2></div><div class="w-[108px] text-right text-xs font-black text-slate-400">${Math.round(step/total*100)}%</div></div>
+        <div class="h-2 bg-slate-100 rounded-full overflow-hidden mb-3"><div class="h-full bg-gradient-to-r from-fuchsia-400 via-violet-400 to-sky-400" style="width:${Math.round(step/total*100)}%"></div></div>
+        <section class="ns-teacher-bubble"><span class="text-2xl">🐰</span><div class="flex-1 min-w-0"><div class="text-[10px] font-black uppercase tracking-wider text-pink-500">Cô Thỏ Hồng</div><div class="font-extrabold text-slate-700 leading-relaxed">${escapeHtml(a.teacher || '')}</div></div><button onclick="speakEpsilonGenericActivity_()" class="ns-listen-btn">🔊 <span>Nghe cô nói</span></button></section>
+        <section class="ns-workspace mt-3"><h3 class="text-center text-lg md:text-xl font-black text-slate-900 mb-3">${escapeHtml(a.prompt || '')}</h3><div class="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-4 items-stretch"><div>${renderEpsilonGenericVisual_(a)}</div><div class="flex flex-col justify-center">${epsilonGenericChoicesHtml_(a)}<div id="eg-feedback" class="hidden mt-3 rounded-2xl border-2 p-3 text-center font-black"></div><div id="eg-hint" class="hidden mt-3 rounded-2xl border border-amber-200 bg-amber-50 p-3 text-center font-bold text-amber-800"></div><div id="eg-reflection" class="hidden mt-3 rounded-2xl border border-fuchsia-200 bg-fuchsia-50 p-3 text-center font-bold text-fuchsia-800"></div></div></div></section>
+        <div class="mt-3 flex flex-wrap justify-center gap-2">${evidencePills}</div>
+        <div class="mt-4 flex items-center justify-between gap-2"><button onclick="epsilonGenericShowHint_()" class="ns-secondary-btn">💡 Gợi ý</button><button onclick="renderEpsilonGenericActivity_()" class="ns-secondary-btn">↻ Làm lại</button><button id="eg-next-btn" onclick="epsilonGenericNext_()" class="hidden ns-primary-btn">Tiếp tục →</button></div>
+    </div>`;
+    if (autoSpeechEnabled) setTimeout(()=>speakEpsilonGenericActivity_(),120);
+}
+
+function epsilonGenericShowHint_() {
+    const a = currentEpsilonGenericActivity_(), ctx=activeEpsilonGenericLab_;
+    if (!a || !ctx) return;
+    epsilonGenericHintLevel_ = Math.min(Math.max(1,(a.hints||[]).length), epsilonGenericHintLevel_ + 1);
+    const hint = (a.hints || [])[epsilonGenericHintLevel_ - 1] || 'Con hãy nhìn lại mô hình và nói điều con thấy trước khi chọn.';
+    const box=document.getElementById('eg-hint'); if(box){box.textContent=`💡 ${hint}`;box.classList.remove('hidden');}
+    const ev=readEpsilonGenericEvidence_(ctx.engine), st=ev[ctx.journey.id]||{completed:[],attempts:0,hint_uses:0}; st.hint_uses=(st.hint_uses||0)+1; ev[ctx.journey.id]=st; writeEpsilonGenericEvidence_(ctx.engine,ev);
+    speakVietnamese(hint,0.94);
+}
+
+function epsilonGenericChoose_(value, btn) {
+    const a=currentEpsilonGenericActivity_(),ctx=activeEpsilonGenericLab_;
+    if(!a||!ctx||ctx.answered) return;
+    const feedback=document.getElementById('eg-feedback');
+    const ev=readEpsilonGenericEvidence_(ctx.engine), st=ev[ctx.journey.id]||{completed:[],attempts:0,hint_uses:0}; st.attempts=(st.attempts||0)+1;
+    if(String(value)===String(a.answer)){
+        ctx.answered=true;
+        document.querySelectorAll('.ns-choice').forEach(b=>{b.disabled=true; if(b===btn)b.classList.add('bg-emerald-100','border-emerald-400','text-emerald-800');});
+        if(!Array.isArray(st.completed)) st.completed=[]; if(!st.completed.includes(a.id)) st.completed.push(a.id); if(a.transfer) st.transfer_correct=(st.transfer_correct||0)+1; ev[ctx.journey.id]=st; writeEpsilonGenericEvidence_(ctx.engine,ev);
+        if(feedback){feedback.innerHTML=`✅ ${escapeHtml(a.success||'Đúng rồi!')}<div class="mt-1 text-sm font-bold text-emerald-700/80">${escapeHtml(a.explanation||'')}</div>`;feedback.className='mt-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-3 text-center font-black text-emerald-800';}
+        const ref=document.getElementById('eg-reflection'); if(ref&&a.reflection){ref.textContent=`💬 ${a.reflection}`;ref.classList.remove('hidden');}
+        document.getElementById('eg-next-btn')?.classList.remove('hidden');
+        playAudio('correct'); setTimeout(()=>speakVietnamese(a.success||'Đúng rồi!',0.94),120);
+    } else {
+        ev[ctx.journey.id]=st; writeEpsilonGenericEvidence_(ctx.engine,ev);
+        btn?.classList.add('bg-rose-100','border-rose-400','text-rose-800'); setTimeout(()=>btn?.classList.remove('bg-rose-100','border-rose-400','text-rose-800'),450);
+        if(feedback){feedback.textContent='🌱 Chưa khớp. Con nhìn lại mô hình rồi thử cách khác nhé.';feedback.className='mt-3 rounded-2xl border-2 border-amber-300 bg-amber-50 p-3 text-center font-black text-amber-800';}
+        playAudio('wrong'); setTimeout(()=>speakVietnamese(a.wrong_audio||'Chưa khớp rồi. Con nhìn lại mô hình và thử một cách khác nhé.',0.94),120);
+    }
+}
+
+function epsilonGenericNext_() {
+    const ctx=activeEpsilonGenericLab_; if(!ctx) return;
+    if(ctx.activityIndex < ctx.journey.activities.length-1){ctx.activityIndex++;renderEpsilonGenericActivity_();return;}
+    renderEpsilonGenericJourneyDone_();
+}
+
+function renderEpsilonGenericJourneyDone_() {
+    const host=document.getElementById('epsilon-method-content'),ctx=activeEpsilonGenericLab_; if(!host||!ctx)return;
+    const ev=readEpsilonGenericEvidence_(ctx.engine),st=ev[ctx.journey.id]||{};
+    host.innerHTML=`<div class="w-full max-w-3xl mx-auto text-center py-8"><div class="text-6xl">🌟</div><h2 class="mt-3 text-2xl md:text-3xl font-black text-violet-700">Con vừa hoàn thành một hành trình Math Lab!</h2><p class="mt-2 font-bold text-slate-600">${escapeHtml(ctx.journey.goal||'')}</p><div class="mt-4 inline-flex rounded-full border px-4 py-2 text-sm font-black ${epsilonGenericMasteryClass_(ctx.journey,st)}">${escapeHtml(epsilonGenericMasteryLabel_(ctx.journey,st))}</div><div class="mt-4 rounded-2xl border border-fuchsia-200 bg-fuchsia-50 p-4 text-left"><div class="text-sm font-black text-fuchsia-700">Bằng chứng cô đang tìm</div><ul class="mt-2 list-disc pl-5 text-sm font-bold text-slate-600 space-y-1">${(ctx.journey.evidence||[]).map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul></div><div class="mt-6 flex flex-wrap justify-center gap-3"><button onclick="openEpsilonGenericLab_('${escapeJsString_(ctx.engine)}')" class="ns-secondary-btn">← Bản đồ Lab</button>${ctx.journey.order < ctx.track.content.journeys.length ? `<button onclick="startEpsilonGenericJourney_('${escapeJsString_(ctx.engine)}','${escapeJsString_(ctx.track.content.journeys[ctx.journey.order]?.id || '')}')" class="ns-primary-btn">Hành trình tiếp theo →</button>`:''}</div></div>`;
 }
 
 // EPSILON METHOD 12.1 - NUMBER SENSE
@@ -1543,7 +1820,7 @@ async function openNumberSenseHub() {
     activeTopicId = 12;
     pendingTopicQuiz = null;
     activeNumberSense = null;
-    updateNavTabs('12. Học Toán theo phương pháp mới', '✨', '12.1 Hiểu số và số lượng', null);
+    updateNavTabs('12. Math Lab - Toán tư duy Mỹ', '✨', '12.1 Number Sense Lab - Cảm nhận số', null);
     switchAppView('view-number-sense');
     const host = document.getElementById('number-sense-content');
     if (host) host.innerHTML = '<div class="py-16 text-center font-black text-purple-600">🌱 Đang mở thế giới số lượng...</div>';
@@ -1607,7 +1884,7 @@ async function startNumberSenseJourney_(journeyId) {
         const firstOpen = journey.activities.findIndex(a => !st.completed.includes(a.id));
         activeNumberSense.activityIndex = firstOpen >= 0 ? firstOpen : 0;
     }
-    updateNavTabs('12. Học Toán theo phương pháp mới', '✨', '12.1 Hiểu số và số lượng', `${journey.order}. ${journey.title}`);
+    updateNavTabs('12. Math Lab - Toán tư duy Mỹ', '✨', '12.1 Number Sense Lab - Cảm nhận số', `${journey.order}. ${journey.title}`);
     renderNumberSenseActivity_();
 }
 
@@ -1954,7 +2231,7 @@ async function openOperationSenseHub() {
     activeTopicId = 12;
     pendingTopicQuiz = null;
     activeOperationSense = null;
-    updateNavTabs('12. Học Toán theo phương pháp mới', '✨', '12.2 Hiểu phép cộng và phép trừ', null);
+    updateNavTabs('12. Math Lab - Toán tư duy Mỹ', '✨', '12.2 Addition & Subtraction Lab - Tư duy cộng trừ', null);
     switchAppView('view-operation-sense');
     const host = document.getElementById('operation-sense-content');
     if (host) host.innerHTML = '<div class="py-16 text-center font-black text-purple-600">🧩 Đang mở thế giới của những thay đổi...</div>';
@@ -2013,7 +2290,7 @@ async function startOperationSenseJourney_(journeyId) {
         const firstOpen = journey.activities.findIndex(a => !st.completed.includes(a.id));
         activeOperationSense.activityIndex = firstOpen >= 0 ? firstOpen : 0;
     }
-    updateNavTabs('12. Học Toán theo phương pháp mới', '✨', '12.2 Hiểu phép cộng và phép trừ', `${journey.order}. ${journey.title}`);
+    updateNavTabs('12. Math Lab - Toán tư duy Mỹ', '✨', '12.2 Addition & Subtraction Lab - Tư duy cộng trừ', `${journey.order}. ${journey.title}`);
     renderOperationSenseActivity_();
 }
 
