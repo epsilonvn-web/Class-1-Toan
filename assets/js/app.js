@@ -4,9 +4,9 @@
 const TOPICS_CONFIG = [
     { id: 1, title: "1. Các số đến 10", desc: "Đọc, viết, đếm và so sánh số 0-10", icon: "🔢", color: "pink" },
     { id: 2, title: "2. Phép cộng và phép trừ", desc: "Tách - gộp và thực hiện phép cộng, phép trừ", icon: "➕", color: "purple" },
-    { id: 3, title: "3. Các số trong phạm vi 100", desc: "Đọc, viết và cấu tạo các số đến 100", icon: "💯", color: "indigo" },
-    { id: 4, title: "4. Hình học", desc: "Nhận biết hình phẳng và một số hình khối", icon: "📐", color: "amber" },
-    { id: 5, title: "5. Dãy số và quy luật", desc: "Số liền trước, liền sau và quy luật dãy số", icon: "🔗", color: "cyan" },
+    { id: 3, title: "3. Các số trong phạm vi 100", desc: "Đọc, viết, cấu tạo, so sánh, sắp xếp và đặc điểm số đến 100", icon: "💯", color: "indigo" },
+    { id: 4, title: "4. Dãy số và quy luật", desc: "Liền trước - liền sau, số còn thiếu và quy luật dãy số", icon: "🔗", color: "cyan" },
+    { id: 5, title: "5. Hình học", desc: "Nhận biết hình phẳng, hình khối, lắp ghép và đếm hình", icon: "📐", color: "amber" },
     { id: 6, title: "6. Vị trí và không gian", desc: "Xác định vị trí và quan hệ trong không gian", icon: "🧭", color: "violet" },
     { id: 7, title: "7. Độ dài và đơn vị đo", desc: "So sánh, ước lượng và đo độ dài bằng cm", icon: "📏", color: "emerald" },
     { id: 8, title: "8. Thời gian, lịch và kiểm đếm", desc: "Xem giờ, ngày trong tuần và kiểm đếm", icon: "⏰", color: "blue" },
@@ -35,12 +35,12 @@ const examFileMap = {
 // 6 nhóm năng lực Toán lớp 1 (TOAN_C1 - TOAN_C6) — khoá nội bộ vẫn dùng C1..C6,
 // việc trích tag từ chuỗi "TOAN_C1" sang "C1" được xử lý bằng regex ở nơi dùng.
 const SKILL_TAXONOMY = {
-    C1: { code: 'C1', sheetCol: 'C1_SoHocHinhHoc', totalCol: 'C1_SoHocHinhHoc_Tong', name: 'Số học cơ bản và Hình học', advice: 'Cần ôn lại cách đọc viết đếm số phạm vi 10 và 100, cấu tạo số chục - đơn vị, và nhận diện hình phẳng, hình khối cơ bản.' },
+    C1: { code: 'C1', sheetCol: 'C1_SoHocHinhHoc', totalCol: 'C1_SoHocHinhHoc_Tong', name: 'Số học cơ bản và Hình học', advice: 'Cần ôn lại cách đọc viết đếm số phạm vi 10 và 100, cấu tạo số chục - đơn vị, đặc điểm chẵn lẻ và nhận diện hình phẳng, hình khối cơ bản.' },
     C2: { code: 'C2', sheetCol: 'C2_PhepTinh', totalCol: 'C2_PhepTinh_Tong', name: 'Phép tính cộng và phép trừ', advice: 'Rèn luyện thêm sơ đồ tách - gộp số, bảng cộng trừ và kỹ năng đặt tính rồi tính không nhớ.' },
     C3: { code: 'C3', sheetCol: 'C3_DoLuongThoiGian', totalCol: 'C3_DoLuongThoiGian_Tong', name: 'Đo lường, Thời gian và Lịch', advice: 'Luyện tập thêm về đo độ dài bằng thước kẻ (cm), xem giờ đúng trên đồng hồ kim và xem lịch tuần.' },
-    C4: { code: 'C4', sheetCol: 'C4_ViTriSoSanh', totalCol: 'C4_ViTriSoSanh_Tong', name: 'Vị trí không gian và So sánh', advice: 'Cần luyện thêm về xác định vị trí không gian (trên dưới, trái phải) và so sánh giá trị số bằng dấu >, <, =.' },
+    C4: { code: 'C4', sheetCol: 'C4_ViTriSoSanh', totalCol: 'C4_ViTriSoSanh_Tong', name: 'Vị trí không gian và So sánh', advice: 'Cần luyện thêm về xác định vị trí không gian, so sánh - sắp xếp số và tìm số lớn nhất, số bé nhất theo điều kiện.' },
     C5: { code: 'C5', sheetCol: 'C5_GiaiToan', totalCol: 'C5_GiaiToan_Tong', name: 'Giải toán có lời văn', advice: 'Tăng cường đọc hiểu đề bài toán đố, tìm đúng từ khóa thêm/bớt và trình bày bài giải đầy đủ 3 phần.' },
-    C6: { code: 'C6', sheetCol: 'C6_TuDuy', totalCol: 'C6_TuDuy_Tong', name: 'Dãy số, Quy luật và Tư duy', advice: 'Rèn kỹ năng tìm số liền trước/sau, phân biệt chẵn lẻ, phát hiện quy luật dãy số và tư duy logic IQ.' }
+    C6: { code: 'C6', sheetCol: 'C6_TuDuy', totalCol: 'C6_TuDuy_Tong', name: 'Dãy số, Quy luật và Tư duy', advice: 'Rèn kỹ năng tìm số liền trước/sau, số còn thiếu, bước nhảy và quy luật dãy số; sau đó mới mở rộng sang tư duy logic IQ.' }
 };
 
 const GREETINGS_STUDENT = [
@@ -343,7 +343,7 @@ async function renderDashboardGrid() {
     // Mục 11 (Ôn tập) vẫn có tab chính riêng trên header.
     TOPICS_CONFIG.filter(t => Number(t.id) !== 11).forEach(t => {
         const topicObj = topicsData.find(item => Number(item.topic_id) === Number(t.id));
-        const totalCount = topicObj && topicObj.questions ? topicObj.questions.length : 0;
+        const totalCount = Number(t.id) === 5 ? buildMuc5Questions_().length : (topicObj && topicObj.questions ? topicObj.questions.length : 0);
         const countLabel = t.engine === 'epsilon-method' ? '6 Lab' : (totalCount > 0 ? `${totalCount} câu` : 'Đang cập nhật');
 
         const iconHtml = t.isCustomTextIcon 
@@ -1438,7 +1438,7 @@ const EPSILON_GRADE1_BLUEPRINTS_ = {
         title:'Geometry & Spatial Lab - Hình học & không gian',
         tagline:'Nhìn hình, gọi tên, mô tả thuộc tính và thao tác với hình.',
         focus:'Trọng tâm là nhận dạng hình phẳng, hình khối, ghép - tách hình, mô tả vị trí và chia hình thành phần bằng nhau.',
-        vn_link:'Liên hệ chặt với mục 4 Hình học và mục 6 Vị trí - không gian của chương trình Toán 1.',
+        vn_link:'Liên hệ chặt với mục 5 Hình học và mục 6 Vị trí - không gian của chương trình Toán 1.',
         pedagogy:['Nhìn thuộc tính trước khi nhớ tên', 'Xoay hình nhưng tên không đổi', 'Ghép - tách để thấy cấu tạo của hình'],
         journeys:[
             ['1','Nhìn và gọi tên hình','Con nhận ra hình tròn, tam giác, vuông, chữ nhật trong nhiều tư thế.'],
@@ -1907,16 +1907,16 @@ function renderGenericLabVisual_(a) {
     if(k==='pictograph') return `<div class="space-y-2">${(v.data||[]).map(x=>`<div class="flex items-center gap-3"><div class="w-20 text-right font-black text-slate-600">${escapeHtml(x.label)}</div><div class="flex flex-wrap gap-1 text-3xl">${Array.from({length:Number(x.count||0)},()=>escapeHtml(x.emoji||'●')).join('')}</div></div>`).join('')}</div>`;
     if(k==='bar_chart') return genericBarChartHtml_(v.data);
     if(k==='data_table') return `<div class="max-w-md mx-auto overflow-hidden rounded-2xl border-2 border-violet-100 bg-white">${(v.rows||[]).map(r=>`<div class="grid grid-cols-2 border-b last:border-b-0 border-violet-100"><div class="px-4 py-3 font-black text-slate-600">${escapeHtml(r.label)}</div><div class="px-4 py-3 text-center font-black text-violet-700">${escapeHtml(r.value)}</div></div>`).join('')}</div>`;
-    if(k==='shape') return `<div class="flex justify-center">${muc4ShapeSvg_(v.shape,{size:180,color:v.color||'#c4b5fd',rotate:v.rotate||0})}</div>`;
-    if(k==='shape_set') return `<div class="grid grid-cols-4 gap-3">${(v.shapes||[]).map((s,i)=>`<div class="rounded-2xl bg-white border-2 border-violet-100 p-2 text-center"><div class="font-black text-pink-600">${String.fromCharCode(65+i)}</div>${muc4ShapeSvg_(s,{size:90,color:['#fde68a','#bfdbfe','#bbf7d0','#fecdd3'][i%4],rotate:(v.rotates||[])[i]||0})}</div>`).join('')}</div>`;
-    if(k==='real_object_shape') return `<div class="text-center"><div class="text-8xl">${escapeHtml(v.emoji||'📦')}</div>${v.shape?`<div class="mt-3">${muc4ShapeSvg_(v.shape,{size:110,color:'#dbeafe'})}</div>`:''}${v.solid?`<div class="mt-3">${muc4SolidSvg_(v.solid,{size:130})}</div>`:''}</div>`;
-    if(k==='compose_shapes') return `<div class="flex items-center justify-center gap-3">${(v.parts||[]).map((s,i)=>muc4ShapeSvg_(s,{size:100,color:['#fecdd3','#bfdbfe'][i%2],rotate:i?180:0})).join('')}<span class="text-3xl font-black text-violet-500">→</span>${muc4ShapeSvg_(v.result,{size:130,color:'#bbf7d0'})}</div>`;
-    if(k==='compose_scene') return muc4ComposeSceneSvg_(v.scene,v.missing,true);
-    if(k==='pattern') return muc4AdvancedCountSvg_(v.pattern);
-    if(k==='solid') return `<div class="flex justify-center">${muc4SolidSvg_(v.solid,{size:180,fill1:'#dbeafe',fill2:'#93c5fd',fill3:'#60a5fa'})}</div>`;
+    if(k==='shape') return `<div class="flex justify-center">${muc5ShapeSvg_(v.shape,{size:180,color:v.color||'#c4b5fd',rotate:v.rotate||0})}</div>`;
+    if(k==='shape_set') return `<div class="grid grid-cols-4 gap-3">${(v.shapes||[]).map((s,i)=>`<div class="rounded-2xl bg-white border-2 border-violet-100 p-2 text-center"><div class="font-black text-pink-600">${String.fromCharCode(65+i)}</div>${muc5ShapeSvg_(s,{size:90,color:['#fde68a','#bfdbfe','#bbf7d0','#fecdd3'][i%4],rotate:(v.rotates||[])[i]||0})}</div>`).join('')}</div>`;
+    if(k==='real_object_shape') return `<div class="text-center"><div class="text-8xl">${escapeHtml(v.emoji||'📦')}</div>${v.shape?`<div class="mt-3">${muc5ShapeSvg_(v.shape,{size:110,color:'#dbeafe'})}</div>`:''}${v.solid?`<div class="mt-3">${muc5SolidSvg_(v.solid,{size:130})}</div>`:''}</div>`;
+    if(k==='compose_shapes') return `<div class="flex items-center justify-center gap-3">${(v.parts||[]).map((s,i)=>muc5ShapeSvg_(s,{size:100,color:['#fecdd3','#bfdbfe'][i%2],rotate:i?180:0})).join('')}<span class="text-3xl font-black text-violet-500">→</span>${muc5ShapeSvg_(v.result,{size:130,color:'#bbf7d0'})}</div>`;
+    if(k==='compose_scene') return muc5ComposeSceneSvg_(v.scene,v.missing,true);
+    if(k==='pattern') return muc5AdvancedCountSvg_(v.pattern);
+    if(k==='solid') return `<div class="flex justify-center">${muc5SolidSvg_(v.solid,{size:180,fill1:'#dbeafe',fill2:'#93c5fd',fill3:'#60a5fa'})}</div>`;
     if(k==='position') return `<div class="flex items-center justify-center gap-20 text-7xl"><span>${escapeHtml(v.left||'')}</span><span>${escapeHtml(v.right||'')}</span></div>`;
     if(k==='inside_outside') return `<div class="relative w-64 h-44 mx-auto rounded-[28px] border-4 border-amber-300 bg-amber-50 flex items-center justify-center"><div class="absolute -top-8 text-5xl">${escapeHtml(v.container||'📦')}</div><div class="text-7xl">${escapeHtml(v.inside||'⚽')}</div></div>`;
-    if(k==='shape_pair') return `<div class="grid grid-cols-2 gap-8">${muc4ShapeSvg_(v.left,{size:145,color:'#bfdbfe'})}${muc4ShapeSvg_(v.right,{size:145,color:'#fecdd3',rotate:v.right_rotate||0})}</div>`;
+    if(k==='shape_pair') return `<div class="grid grid-cols-2 gap-8">${muc5ShapeSvg_(v.left,{size:145,color:'#bfdbfe'})}${muc5ShapeSvg_(v.right,{size:145,color:'#fecdd3',rotate:v.right_rotate||0})}</div>`;
     if(k==='partition_options') return `<svg viewBox="0 0 300 180" class="w-full max-w-[380px]"><rect x="30" y="35" width="240" height="110" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="4"/><line x1="150" y1="35" x2="150" y2="145" stroke="#ec4899" stroke-width="4" stroke-dasharray="8 6"/></svg>`;
     if(k==='circle_partition') return `<svg viewBox="0 0 220 220" class="w-full max-w-[260px]"><circle cx="110" cy="110" r="82" fill="#fdf2f8" stroke="#ec4899" stroke-width="5"/><line x1="28" y1="110" x2="192" y2="110" stroke="#7c3aed" stroke-width="4" stroke-dasharray="8 6"/><circle cx="110" cy="110" r="5" fill="#7c3aed"/></svg>`;
     if(k==='partition_compare') return `<div class="grid grid-cols-2 gap-5"><div>${renderGenericLabVisual_({visual:{kind:'partition_options'}})}</div><div><svg viewBox="0 0 300 180" class="w-full"><rect x="30" y="35" width="240" height="110" rx="8" fill="#ecfeff" stroke="#0891b2" stroke-width="4"/><line x1="30" y1="90" x2="270" y2="90" stroke="#ec4899" stroke-width="4" stroke-dasharray="8 6"/></svg></div></div>`;
@@ -2887,17 +2887,17 @@ function remapMuc2Questions_(questions) {
 }
 
 // ==========================================
-// MỤC 4 - HÌNH HỌC
-// 4.1 Bài giảng nhập môn -> 4.2 nhận biết hình phẳng -> 4.3 lắp ghép -> 4.4 hình khối -> 4.5 đếm hình nâng cao
-// Trọng tâm là NHẬN DẠNG / PHÂN LOẠI / CẤU TẠO. 4.5 mới dùng đếm hình trong hình nhiều nét, không đếm emoji rời.
+// MỤC 5 - HÌNH HỌC
+// 5.1 Bài giảng nhập môn -> 5.2 nhận biết hình phẳng -> 5.3 lắp ghép -> 5.4 hình khối -> 5.5 đếm hình nâng cao
+// Trọng tâm là NHẬN DẠNG / PHÂN LOẠI / CẤU TẠO. 5.5 mới dùng đếm hình trong hình nhiều nét, không đếm emoji rời.
 // ==========================================
-const MUC4_INTRO_AUDIO_ = `Cô Thỏ Hồng chào con. Hôm nay mình làm quen với hình học nhé. Hình tròn có đường bao cong và không có góc. Hình tam giác có ba cạnh và ba góc. Hình vuông có bốn cạnh bằng nhau. Hình chữ nhật có bốn cạnh, thường nhìn thấy hai cạnh dài và hai cạnh ngắn. Đây là các hình phẳng, giống như hình con vẽ trên giấy. Còn khối lập phương và khối hộp chữ nhật là hình khối, con có thể tưởng tượng như xúc xắc và hộp giày. Khi nhận biết hình, con hãy nhìn vào dạng của hình, đừng dựa vào màu sắc, kích thước hay việc hình đang xoay nghiêng. Sau bài giới thiệu này, mình sẽ luyện nhận biết hình phẳng, ghép hình, nhận biết hình khối trong cuộc sống, rồi thử sức với bài đếm hình nhiều nét nâng cao.`;
+const MUC5_INTRO_AUDIO_ = `Cô Thỏ Hồng chào con. Hôm nay mình làm quen với hình học nhé. Hình tròn có đường bao cong và không có góc. Hình tam giác có ba cạnh và ba góc. Hình vuông có bốn cạnh bằng nhau. Hình chữ nhật có bốn cạnh, thường nhìn thấy hai cạnh dài và hai cạnh ngắn. Đây là các hình phẳng, giống như hình con vẽ trên giấy. Còn khối lập phương và khối hộp chữ nhật là hình khối, con có thể tưởng tượng như xúc xắc và hộp giày. Khi nhận biết hình, con hãy nhìn vào dạng của hình, đừng dựa vào màu sắc, kích thước hay việc hình đang xoay nghiêng. Sau bài giới thiệu này, mình sẽ luyện nhận biết hình phẳng, ghép hình, nhận biết hình khối trong cuộc sống, rồi thử sức với bài đếm hình nhiều nét nâng cao.`;
 
-function muc4ShapeName_(shape) {
+function muc5ShapeName_(shape) {
     return ({ circle: 'Hình tròn', triangle: 'Hình tam giác', square: 'Hình vuông', rectangle: 'Hình chữ nhật' })[shape] || shape;
 }
 
-function muc4ShapeSvg_(shape, options = {}) {
+function muc5ShapeSvg_(shape, options = {}) {
     const size = Number(options.size || 100);
     const color = options.color || '#60a5fa';
     const stroke = options.stroke || '#334155';
@@ -2911,7 +2911,7 @@ function muc4ShapeSvg_(shape, options = {}) {
     return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" class="block" aria-hidden="true"><g transform="rotate(${rotate} 50 50)">${body}</g></svg>`;
 }
 
-function muc4SolidSvg_(solid, options = {}) {
+function muc5SolidSvg_(solid, options = {}) {
     const size = Number(options.size || 120);
     const fill1 = options.fill1 || '#bfdbfe';
     const fill2 = options.fill2 || '#93c5fd';
@@ -2931,7 +2931,7 @@ function muc4SolidSvg_(solid, options = {}) {
     </svg>`;
 }
 
-function muc4BaseQuestion_(id, sub, label, q, options, answer, extra = {}) {
+function muc5BaseQuestion_(id, sub, label, q, options, answer, extra = {}) {
     return {
         question_id: id,
         sub_topic: sub,
@@ -2948,34 +2948,34 @@ function muc4BaseQuestion_(id, sub, label, q, options, answer, extra = {}) {
     };
 }
 
-function buildMuc4Questions_() {
+function buildMuc5Questions_() {
     const out = [];
     const shapes = ['circle', 'triangle', 'square', 'rectangle'];
     const colors = ['#fbbf24', '#60a5fa', '#34d399', '#f472b6', '#a78bfa', '#fb7185'];
     const rotations = [0, 18, 35, 45, 72, 90];
-    const flatOptions = shapes.map(muc4ShapeName_);
+    const flatOptions = shapes.map(muc5ShapeName_);
 
-    // 4.2 - Nhận biết và phân loại hình phẳng: 40 câu.
+    // 5.2 - Nhận biết và phân loại hình phẳng: 40 câu.
     for (let i = 0; i < 40; i++) {
         const target = shapes[i % shapes.length];
         const mode = i % 3;
         if (mode === 0) {
-            out.push(muc4BaseQuestion_(4200+i, '4.2', 'Nhận biết và phân loại hình phẳng',
-                'Hình dưới đây có tên là gì?', flatOptions, muc4ShapeName_(target), {
-                    muc4_type: 'flat_identify',
-                    muc4_visual: { target, color: colors[i % colors.length], rotate: rotations[i % rotations.length] },
-                    explanation: `Dù đổi màu, kích thước hoặc xoay nghiêng, đây vẫn là ${muc4ShapeName_(target).toLowerCase()}.`
+            out.push(muc5BaseQuestion_(4200+i, '5.2', 'Nhận biết và phân loại hình phẳng',
+                'Hình dưới đây có tên là gì?', flatOptions, muc5ShapeName_(target), {
+                    muc5_type: 'flat_identify',
+                    muc5_visual: { target, color: colors[i % colors.length], rotate: rotations[i % rotations.length] },
+                    explanation: `Dù đổi màu, kích thước hoặc xoay nghiêng, đây vẫn là ${muc5ShapeName_(target).toLowerCase()}.`
                 }));
         } else if (mode === 1) {
             const optionShapes = [target, ...shapes.filter(s => s !== target)];
             const shift = i % 4;
             const arranged = optionShapes.slice(shift).concat(optionShapes.slice(0, shift));
             const answerIndex = arranged.indexOf(target);
-            out.push(muc4BaseQuestion_(4200+i, '4.2', 'Nhận biết và phân loại hình phẳng',
-                `Hình mẫu là ${muc4ShapeName_(target).toLowerCase()}. Con chọn hình cùng loại với hình mẫu nhé.`, ['A','B','C','D'], String.fromCharCode(65+answerIndex), {
-                    muc4_type: 'flat_match',
-                    muc4_visual: { target, optionShapes: arranged, color: colors[i % colors.length], rotate: rotations[(i+2) % rotations.length] },
-                    explanation: `Con nhận ra ${muc4ShapeName_(target).toLowerCase()} bằng dạng của đường bao, không phải bằng màu.`
+            out.push(muc5BaseQuestion_(4200+i, '5.2', 'Nhận biết và phân loại hình phẳng',
+                `Hình mẫu là ${muc5ShapeName_(target).toLowerCase()}. Con chọn hình cùng loại với hình mẫu nhé.`, ['A','B','C','D'], String.fromCharCode(65+answerIndex), {
+                    muc5_type: 'flat_match',
+                    muc5_visual: { target, optionShapes: arranged, color: colors[i % colors.length], rotate: rotations[(i+2) % rotations.length] },
+                    explanation: `Con nhận ra ${muc5ShapeName_(target).toLowerCase()} bằng dạng của đường bao, không phải bằng màu.`
                 }));
         } else {
             const common = target;
@@ -2984,11 +2984,11 @@ function buildMuc4Questions_() {
             const shift = i % 4;
             arranged = arranged.slice(shift).concat(arranged.slice(0, shift));
             const answerIndex = arranged.indexOf(odd);
-            out.push(muc4BaseQuestion_(4200+i, '4.2', 'Nhận biết và phân loại hình phẳng',
+            out.push(muc5BaseQuestion_(4200+i, '5.2', 'Nhận biết và phân loại hình phẳng',
                 'Hình nào khác loại với ba hình còn lại?', ['A','B','C','D'], String.fromCharCode(65+answerIndex), {
-                    muc4_type: 'flat_odd',
-                    muc4_visual: { optionShapes: arranged, color: colors[i % colors.length], rotate: rotations[(i+1) % rotations.length] },
-                    explanation: `Ba hình cùng loại là ${muc4ShapeName_(common).toLowerCase()}; hình còn lại là ${muc4ShapeName_(odd).toLowerCase()}.`
+                    muc5_type: 'flat_odd',
+                    muc5_visual: { optionShapes: arranged, color: colors[i % colors.length], rotate: rotations[(i+1) % rotations.length] },
+                    explanation: `Ba hình cùng loại là ${muc5ShapeName_(common).toLowerCase()}; hình còn lại là ${muc5ShapeName_(odd).toLowerCase()}.`
                 }));
         }
     }
@@ -3069,10 +3069,10 @@ function buildMuc4Questions_() {
         }
     ];
     deepShapeQuestions.forEach((item, idx) => {
-        out.push(muc4BaseQuestion_(4240 + idx, '4.2', 'Nhận biết và phân loại hình phẳng',
+        out.push(muc5BaseQuestion_(4240 + idx, '5.2', 'Nhận biết và phân loại hình phẳng',
             item.q, item.options, item.answer, {
-                muc4_type: 'shape_property',
-                muc4_visual: {
+                muc5_type: 'shape_property',
+                muc5_visual: {
                     target: item.target,
                     color: colors[(idx + 2) % colors.length],
                     rotate: rotations[(idx + 1) % rotations.length]
@@ -3081,7 +3081,7 @@ function buildMuc4Questions_() {
             }));
     });
 
-    // 4.3 - Lắp ghép và xếp hình: mỗi cảnh có 2 câu khác nhau, không lặp để đủ số lượng.
+    // 5.3 - Lắp ghép và xếp hình: mỗi cảnh có 2 câu khác nhau, không lặp để đủ số lượng.
     const scenes = [
         { name:'ngôi nhà', missing:'triangle', placed:['square'], components:'1 hình vuông và 1 hình tam giác' },
         { name:'cây kem', missing:'triangle', placed:['circle'], components:'1 hình tròn và 1 hình tam giác' },
@@ -3108,11 +3108,11 @@ function buildMuc4Questions_() {
         const scene = scenes[Math.floor(i / 2) % scenes.length];
         if (i % 2 === 0) {
             const options = rotateOpts(flatOptions, (Math.floor(i / 2) + 1) % 4);
-            out.push(muc4BaseQuestion_(4300+i, '4.3', 'Lắp ghép và xếp hình',
-                `Mảnh nào còn thiếu để hoàn thành ${scene.name}?`, options, muc4ShapeName_(scene.missing), {
-                    muc4_type: 'compose_missing',
-                    muc4_visual: { scene: scene.name, missing: scene.missing, placed: scene.placed, color: colors[i % colors.length] },
-                    explanation: `Chỗ trống có dạng ${muc4ShapeName_(scene.missing).toLowerCase()}, nên con chọn đúng mảnh có cùng dạng.`
+            out.push(muc5BaseQuestion_(4300+i, '5.3', 'Lắp ghép và xếp hình',
+                `Mảnh nào còn thiếu để hoàn thành ${scene.name}?`, options, muc5ShapeName_(scene.missing), {
+                    muc5_type: 'compose_missing',
+                    muc5_visual: { scene: scene.name, missing: scene.missing, placed: scene.placed, color: colors[i % colors.length] },
+                    explanation: `Chỗ trống có dạng ${muc5ShapeName_(scene.missing).toLowerCase()}, nên con chọn đúng mảnh có cùng dạng.`
                 }));
         } else {
             const distractors = componentOptions.filter(x => x !== scene.components);
@@ -3127,16 +3127,16 @@ function buildMuc4Questions_() {
                 if (!options.includes(d)) options.push(d);
             }
             options = rotateOpts(options.slice(0,4), (Math.floor(i / 2) + 2) % 4);
-            out.push(muc4BaseQuestion_(4300+i, '4.3', 'Lắp ghép và xếp hình',
+            out.push(muc5BaseQuestion_(4300+i, '5.3', 'Lắp ghép và xếp hình',
                 `${scene.name.charAt(0).toUpperCase()+scene.name.slice(1)} được ghép từ những mảnh nào?`, options, scene.components, {
-                    muc4_type: 'compose_parts',
-                    muc4_visual: { scene: scene.name, missing: null, placed: [...scene.placed, scene.missing], color: colors[i % colors.length] },
+                    muc5_type: 'compose_parts',
+                    muc5_visual: { scene: scene.name, missing: null, placed: [...scene.placed, scene.missing], color: colors[i % colors.length] },
                     explanation: `Con tách hình lớn thành từng mảnh nhỏ rồi gọi đúng tên từng hình.`
                 }));
         }
     }
 
-    // 4.4 - Nhận biết hình khối qua mô hình và đồ vật thật.
+    // 5.4 - Nhận biết hình khối qua mô hình và đồ vật thật.
     const solidOptions = ['Khối lập phương', 'Khối hộp chữ nhật', 'Hình vuông', 'Hình chữ nhật'];
     const objects = [
         { label:'Xúc xắc', emoji:'🎲', solid:'cube' },
@@ -3147,27 +3147,27 @@ function buildMuc4Questions_() {
     for (let i = 0; i < 40; i++) {
         const solid = i % 2 === 0 ? 'cube' : 'cuboid';
         if (i % 3 === 0) {
-            out.push(muc4BaseQuestion_(4400+i, '4.4', 'Nhận biết hình khối trong đời sống',
+            out.push(muc5BaseQuestion_(4400+i, '5.4', 'Nhận biết hình khối trong đời sống',
                 'Khối dưới đây có tên là gì?', solidOptions, solid === 'cube' ? 'Khối lập phương' : 'Khối hộp chữ nhật', {
-                    muc4_type: 'solid_identify',
-                    muc4_visual: { solid },
+                    muc5_type: 'solid_identify',
+                    muc5_visual: { solid },
                     explanation: solid === 'cube'
                         ? 'Khối lập phương có dạng đều như xúc xắc hoặc khối Rubik.'
                         : 'Khối hộp chữ nhật thường dài theo một hoặc hai chiều như hộp giày.'
                 }));
         } else {
             const obj = objects[i % objects.length];
-            out.push(muc4BaseQuestion_(4400+i, '4.4', 'Nhận biết hình khối trong đời sống',
+            out.push(muc5BaseQuestion_(4400+i, '5.4', 'Nhận biết hình khối trong đời sống',
                 `${obj.label} gần với dạng khối nào?`, solidOptions, obj.solid === 'cube' ? 'Khối lập phương' : 'Khối hộp chữ nhật', {
-                    muc4_type: 'solid_object',
-                    muc4_visual: { solid: obj.solid, objectLabel: obj.label, objectEmoji: obj.emoji },
+                    muc5_type: 'solid_object',
+                    muc5_visual: { solid: obj.solid, objectLabel: obj.label, objectEmoji: obj.emoji },
                     explanation: `${obj.label} là đồ vật có dạng gần với ${obj.solid === 'cube' ? 'khối lập phương' : 'khối hộp chữ nhật'}.`
                 }));
         }
     }
 
 
-    // 4.5 - Đếm hình nâng cao: đếm hình trong một hình nhiều nét, không phải đếm các emoji rời.
+    // 5.5 - Đếm hình nâng cao: đếm hình trong một hình nhiều nét, không phải đếm các emoji rời.
     // Dùng ít câu nhưng mỗi hình có cấu trúc rõ và đáp án đã kiểm tra bằng tay.
     const advancedPatterns = [
         { pattern:'tri_fan_2', target:'tam giác', answer:3, explanation:'Có 2 tam giác nhỏ và 1 tam giác lớn: 2 + 1 = 3.' },
@@ -3198,10 +3198,10 @@ function buildMuc4Questions_() {
     };
     advancedPatterns.forEach((item, idx) => {
         const opts = countOptions(item.answer, idx + 1);
-        out.push(muc4BaseQuestion_(4500 + idx, '4.5', 'Đếm hình nâng cao',
+        out.push(muc5BaseQuestion_(4500 + idx, '5.5', 'Đếm hình nâng cao',
             `Trong hình có tất cả bao nhiêu ${item.target}?`, opts, String(item.answer), {
-                muc4_type: 'shape_count_advanced',
-                muc4_visual: { pattern: item.pattern, target: item.target },
+                muc5_type: 'shape_count_advanced',
+                muc5_visual: { pattern: item.pattern, target: item.target },
                 explanation: item.explanation,
                 audio_text: `Trong hình có tất cả bao nhiêu ${item.target}?`
             }));
@@ -3209,10 +3209,10 @@ function buildMuc4Questions_() {
     return out;
 }
 
-function openMuc4IntroLesson_() {
+function openMuc5IntroLesson_() {
     stopSpeaking();
     setAppShellRootMode_(false);
-    updateDiscoverBreadcrumb_('4. Hình học', '📐', '4.1 Làm quen với các hình');
+    updateDiscoverBreadcrumb_('5. Hình học', '📐', '5.1 Làm quen với các hình');
     switchAppView('view-quiz');
     document.getElementById('quiz-top-bar')?.classList.add('hidden');
     document.getElementById('quiz-card-header')?.classList.add('hidden');
@@ -3226,7 +3226,7 @@ function openMuc4IntroLesson_() {
                 <div class="text-center">
                     <div class="text-sm md:text-base font-black text-pink-600">🐰 Cô Thỏ Hồng cùng con làm quen với hình học</div>
                     <h2 class="mt-1 text-xl md:text-2xl font-black text-slate-800">Nhìn dạng của hình trước khi nhớ tên</h2>
-                    <button onclick="speakVietnamese(MUC4_INTRO_AUDIO_, 0.94)" class="mt-3 px-5 py-2 bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 rounded-2xl font-black pastel-btn shadow-xs">
+                    <button onclick="speakVietnamese(MUC5_INTRO_AUDIO_, 0.94)" class="mt-3 px-5 py-2 bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 rounded-2xl font-black pastel-btn shadow-xs">
                         <i class="fa-solid fa-volume-high mr-1.5"></i> Nghe Cô Thỏ Hồng giảng
                     </button>
                 </div>
@@ -3238,7 +3238,7 @@ function openMuc4IntroLesson_() {
                         ['square','Hình vuông','Có 4 cạnh bằng nhau.'],
                         ['rectangle','Hình chữ nhật','Có 4 góc; hai cặp cạnh đối diện bằng nhau.']
                     ].map((x,i)=>`<div class="rounded-2xl border-2 border-violet-100 bg-white p-3 flex flex-col items-center text-center shadow-xs">
-                        ${muc4ShapeSvg_(x[0], {size:82, color:['#fde68a','#fca5a5','#93c5fd','#86efac'][i], rotate:i===1?12:(i===2?25:0)})}
+                        ${muc5ShapeSvg_(x[0], {size:82, color:['#fde68a','#fca5a5','#93c5fd','#86efac'][i], rotate:i===1?12:(i===2?25:0)})}
                         <div class="mt-1 font-black text-violet-700">${x[1]}</div>
                         <div class="mt-0.5 text-xs md:text-sm font-bold text-slate-600">${x[2]}</div>
                     </div>`).join('')}
@@ -3246,11 +3246,11 @@ function openMuc4IntroLesson_() {
 
                 <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 max-w-3xl mx-auto">
                     <div class="rounded-2xl border-2 border-sky-100 bg-white p-3 flex items-center gap-3 shadow-xs">
-                        ${muc4SolidSvg_('cube',{size:92})}
+                        ${muc5SolidSvg_('cube',{size:92})}
                         <div><div class="font-black text-sky-700">Khối lập phương</div><div class="text-xs md:text-sm font-bold text-slate-600">Dạng gần giống xúc xắc hoặc khối Rubik.</div></div>
                     </div>
                     <div class="rounded-2xl border-2 border-emerald-100 bg-white p-3 flex items-center gap-3 shadow-xs">
-                        ${muc4SolidSvg_('cuboid',{size:112,fill1:'#d1fae5',fill2:'#a7f3d0',fill3:'#6ee7b7'})}
+                        ${muc5SolidSvg_('cuboid',{size:112,fill1:'#d1fae5',fill2:'#a7f3d0',fill3:'#6ee7b7'})}
                         <div><div class="font-black text-emerald-700">Khối hộp chữ nhật</div><div class="text-xs md:text-sm font-bold text-slate-600">Dạng gần giống hộp giày hoặc viên gạch.</div></div>
                     </div>
                 </div>
@@ -3259,8 +3259,8 @@ function openMuc4IntroLesson_() {
                     Mẹo: màu sắc, kích thước và việc xoay nghiêng không làm đổi tên của hình.
                 </div>
                 <div class="mt-5 flex flex-wrap justify-center gap-3">
-                    <button onclick="switchAppView('view-lecture'); updateDiscoverBreadcrumb_('4. Hình học','📐',null)" class="px-5 py-2 bg-white border border-slate-200 rounded-2xl font-black text-slate-600 pastel-btn">← Về Mục 4</button>
-                    <button onclick="switchAppView('view-lecture'); selectSubtopic(0)" class="px-6 py-2 bg-gradient-to-r from-pink-500 to-violet-500 text-white rounded-2xl font-black shadow-md pastel-btn">Học xong – vào 4.2 →</button>
+                    <button onclick="switchAppView('view-lecture'); updateDiscoverBreadcrumb_('5. Hình học','📐',null)" class="px-5 py-2 bg-white border border-slate-200 rounded-2xl font-black text-slate-600 pastel-btn">← Về Mục 5</button>
+                    <button onclick="switchAppView('view-lecture'); selectSubtopic(0)" class="px-6 py-2 bg-gradient-to-r from-pink-500 to-violet-500 text-white rounded-2xl font-black shadow-md pastel-btn">Học xong – vào 5.2 →</button>
                 </div>
             </div>
         </div>`;
@@ -3269,18 +3269,18 @@ function openMuc4IntroLesson_() {
 function showLectureAndSubtopics(topicNum, topicName, topicObj) {
     const topicQuestions = Number(topicNum) === 2
         ? remapMuc2Questions_(topicObj.questions)
-        : Number(topicNum) === 4
-            ? buildMuc4Questions_()
+        : Number(topicNum) === 5
+            ? buildMuc5Questions_()
             : (topicObj.questions || []);
     pendingTopicQuiz = { topicNum, topicName, questions: topicQuestions };
 
-    const isMuc4 = Number(topicNum) === 4;
-    document.getElementById('lecture-title').textContent = isMuc4 ? 'Hình học' : (topicObj.lecture_title || topicName);
-    document.getElementById('lecture-content').textContent = isMuc4
+    const isMuc5 = Number(topicNum) === 5;
+    document.getElementById('lecture-title').textContent = isMuc5 ? 'Hình học' : (topicObj.lecture_title || topicName);
+    document.getElementById('lecture-content').textContent = isMuc5
         ? 'Làm quen tên gọi → nhận biết và phân loại → lắp ghép → nhận biết hình khối → đếm hình nâng cao.'
         : (topicObj.lecture_content || topicObj.description || 'Chào mừng bé yêu! Hãy chọn một mục nhỏ bên dưới để bắt đầu luyện tập nhé.');
     document.getElementById('lecture-content')?.classList.add('text-base', 'md:text-lg');
-    document.getElementById('view-lecture').dataset.audioText = isMuc4
+    document.getElementById('view-lecture').dataset.audioText = isMuc5
         ? 'Mục Hình học gồm năm bước. Trước tiên con làm quen tên gọi và cách nhận biết các hình. Sau đó con luyện phân loại hình phẳng, lắp ghép xếp hình, nhận biết hình khối trong đời sống và cuối cùng thử đếm hình trong các hình nhiều nét.'
         : (topicObj.lecture_audio_text || topicObj.lecture_content || topicObj.description || '');
 
@@ -3306,16 +3306,16 @@ function showLectureAndSubtopics(topicNum, topicName, topicObj) {
     pendingTopicQuiz.groupLabels = groupLabels;
 
     let subHtml = '';
-    if (Number(topicNum) === 4) {
+    if (Number(topicNum) === 5) {
         const introStyle = SUBTOPIC_PALETTES[0];
         subHtml += `
-            <button onclick="openMuc4IntroLesson_()" class="px-3 py-2.5 ${introStyle.card} border-2 rounded-xl font-bold text-left transition-all flex items-center justify-between gap-2 shadow-sm pastel-btn">
+            <button onclick="openMuc5IntroLesson_()" class="px-3 py-2.5 ${introStyle.card} border-2 rounded-xl font-bold text-left transition-all flex items-center justify-between gap-2 shadow-sm pastel-btn">
                 <span class="text-base md:text-lg leading-tight sm:whitespace-nowrap"><strong class="${introStyle.num} mr-1.5">1.</strong> Làm quen với các hình</span>
                 <span class="text-xs md:text-sm font-extrabold ${introStyle.badge} px-2.5 py-0.5 rounded-full border shrink-0 ml-1.5 shadow-inner">🎧 Bài giảng</span>
             </button>`;
     }
     groups.forEach((subName, idx) => {
-        const displayIndex = idx + (Number(topicNum) === 4 ? 2 : 1);
+        const displayIndex = idx + (Number(topicNum) === 5 ? 2 : 1);
         const style = SUBTOPIC_PALETTES[(displayIndex - 1) % SUBTOPIC_PALETTES.length];
         const hideInternalCode = [3,4,5,6,7,8,9,10,11].includes(Number(topicNum));
         const displayTitle = hideInternalCode ? beautifySubtopicName(groupLabels[subName]) : formatSubtopicLabelWithCode_(subName, groupLabels[subName]);
@@ -3330,7 +3330,7 @@ function showLectureAndSubtopics(topicNum, topicName, topicObj) {
                 <span class="text-sm md:text-base font-extrabold ${style.badge} px-2.5 py-0.5 rounded-full border shrink-0 ml-1.5 shadow-inner">${count} câu</span>
             </button>`;
     });
-    setSubtopicGridColumns(groups.length + (Number(topicNum) === 4 ? 1 : 0));
+    setSubtopicGridColumns(groups.length + (Number(topicNum) === 5 ? 1 : 0));
     document.getElementById('lecture-subtopics-list').innerHTML = subHtml;
 
     if (Number(topicNum) === 11) updateNavTabs('Ôn tập', '🧠', topicName);
@@ -4289,14 +4289,53 @@ function formatMuc1PromptHtml_(q, prompt) {
     return safe.replace(/\d+/g, m => `<span class="text-rose-600 font-black">${m}</span>`);
 }
 
+let muc1OptionRotationOffset_ = null;
+const MUC1_OPTION_ORDER_VERSION_ = 2;
+
+function getMuc1ShuffledOptions_(q) {
+    const source = Array.isArray(q?.options) ? q.options.slice() : [];
+    const sub = String(q?.sub_topic || '');
+
+    if (Array.isArray(q?._muc1ShuffledOptions)
+        && q._muc1ShuffledOptions.length === source.length
+        && q._muc1OptionOrderVersion === MUC1_OPTION_ORDER_VERSION_) {
+        return q._muc1ShuffledOptions;
+    }
+
+    let shuffled = [];
+
+    // 1.3 và 1.4 thường dùng cùng một bộ 4 nhãn (nhiều hơn / ít hơn / bằng nhau / chưa biết).
+    // Random độc lập có thể vô tình để một nhãn nằm cùng vị trí nhiều câu liên tiếp.
+    // Vì vậy ta dùng vòng quay cân bằng: mỗi câu dịch toàn bộ lựa chọn sang một vị trí,
+    // bảo đảm từng nhãn lần lượt xuất hiện ở A/B/C/D trong mỗi 4 câu.
+    if ((sub === '1.3' || sub === '1.4') && source.length === 4) {
+        if (!Number.isInteger(muc1OptionRotationOffset_)) {
+            muc1OptionRotationOffset_ = Math.floor(Math.random() * 4);
+        }
+        const shift = (Number(currentQIndex || 0) + muc1OptionRotationOffset_) % 4;
+        shuffled = source.map((_, index) => source[(index + shift) % 4]);
+    } else {
+        shuffled = shuffleArray(source);
+        // Tránh trường hợp random đúng nguyên thứ tự nguồn ở các mục còn lại.
+        if (source.length > 1 && shuffled.every((value, index) => String(value) === String(source[index]))) {
+            shuffled = shuffled.slice(1).concat(shuffled[0]);
+        }
+    }
+
+    q._muc1ShuffledOptions = shuffled;
+    q._muc1OptionOrderVersion = MUC1_OPTION_ORDER_VERSION_;
+    return shuffled;
+}
+
 function buildMuc1QuestionLayout(q, speakerHtml) {
     initMuc1UiState_(q);
     const prompt = getMuc1ReadablePrompt(q);
     const optionSizeClass = 'min-h-[50px] md:min-h-[56px] py-1.5';
     const optionTextClass = 'text-lg md:text-xl lg:text-[22px]';
+    const optionList = getMuc1ShuffledOptions_(q);
 
     let optionsHtml = '';
-    q.options.forEach((opt, idx) => {
+    optionList.forEach((opt, idx) => {
         const formattedOpt = capitalizeFirstLetter(opt);
         const letter = String.fromCharCode(65 + idx);
         optionsHtml += `
@@ -4778,10 +4817,9 @@ function extractTopic3FocusNumber_(q) {
     const stage = getTopic3Stage_(q);
     let match = null;
     if (stage === '3.2') match = text.match(/Số\s+(\d+)/i);
-    else if (stage === '3.3') match = text.match(/liền\s+(?:trước|sau)\s+số\s+(\d+)/i);
     if (!match) {
         const numbers = text.match(/\d+/g) || [];
-        const pick = stage === '3.3' && numbers.length >= 3 ? numbers[2] : numbers[numbers.length - 1];
+        const pick = numbers[numbers.length - 1];
         return pick ? Number(pick) : null;
     }
     return Number(match[1]);
@@ -4797,17 +4835,27 @@ function formatTopic3PromptHtml_(q, promptText) {
     return safe;
 }
 
-function getTopic3NeighbourMeta_(q) {
-    const text = String(q?.question_text || '');
-    const base = extractTopic3FocusNumber_(q);
-    if (!Number.isFinite(base)) return null;
-    const direction = /liền\s+trước/i.test(text) ? 'before' : (/liền\s+sau/i.test(text) ? 'after' : null);
-    if (!direction) return null;
-    return { base, direction };
+function getTopic4SequenceStage_(q) {
+    return String(q?.sub_topic || '');
 }
 
-function getTopic3NumberStrip_(base) {
-    let start = Number(base) - 3;
+function getTopic4NeighbourMeta_(q) {
+    const text = String(q?.question_text || '');
+    let m = text.match(/liền\s+trước\s+của\s+(\d+)/i);
+    if (m) return { type: 'before', base: Number(m[1]) };
+    m = text.match(/liền\s+sau\s+của\s+(\d+)/i);
+    if (m) return { type: 'after', base: Number(m[1]) };
+    m = text.match(/ở\s+giữa\s+(\d+)\s+và\s+(\d+)/i);
+    if (m) return { type: 'middle', left: Number(m[1]), right: Number(m[2]), base: Math.round((Number(m[1]) + Number(m[2])) / 2) };
+    m = text.match(/liền\s+kề\s+với\s+(\d+)/i);
+    if (m) return { type: 'around', base: Number(m[1]) };
+    return null;
+}
+
+function getTopic4NumberStrip_(meta) {
+    const center = Number(meta?.base);
+    if (!Number.isFinite(center)) return [];
+    let start = center - 3;
     if (start < 1) start = 1;
     let end = start + 6;
     if (end > 100) {
@@ -4817,31 +4865,27 @@ function getTopic3NumberStrip_(base) {
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 }
 
-function buildTopic3Sub33SolutionHtml_(q) {
+function buildTopic4Sub41SolutionHtml_(q) {
     const chosen = userAnswers[currentQIndex];
     if (chosen === undefined || chosen !== q?.answer) return '';
-    const meta = getTopic3NeighbourMeta_(q);
+    const meta = getTopic4NeighbourMeta_(q);
     if (!meta) return '';
-    const answerNum = Number(q.answer);
-    if (!Number.isFinite(answerNum)) return '';
-    const formula = meta.direction === 'before'
-        ? `${answerNum} = ${meta.base} - 1`
-        : `${answerNum} = ${meta.base} + 1`;
-    return `<div class="mt-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-2.5 text-center font-black text-emerald-800 text-xl md:text-2xl shadow-sm">${escapeHtml(formula)}</div>`;
+    let formula = '';
+    if (meta.type === 'before') formula = `${q.answer} = ${meta.base} - 1`;
+    else if (meta.type === 'after') formula = `${q.answer} = ${meta.base} + 1`;
+    else if (meta.type === 'middle') formula = `${meta.left} < ${q.answer} < ${meta.right}`;
+    else if (meta.type === 'around') formula = `${meta.base - 1} ← ${meta.base} → ${meta.base + 1}`;
+    return formula ? `<div class="mt-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-2.5 text-center font-black text-emerald-800 text-xl md:text-2xl shadow-sm">${escapeHtml(formula)}</div>` : '';
 }
 
-function buildTopic3Sub33Layout_(q, speakerHtml) {
-    const meta = getTopic3NeighbourMeta_(q);
+function buildTopic4Sub41Layout_(q, speakerHtml) {
+    const meta = getTopic4NeighbourMeta_(q);
     if (!meta) return '';
-    const numbers = getTopic3NumberStrip_(meta.base);
-    const prompt = meta.direction === 'before'
-        ? `Bé ơi, hãy tìm số liền trước của ${meta.base} nhé!`
-        : `Bé ơi, hãy tìm số liền sau của ${meta.base} nhé!`;
-
+    const numbers = getTopic4NumberStrip_(meta);
     const stripHtml = numbers.map((num, idx) => {
         const active = num === meta.base;
         const bubbleClass = active
-            ? 'w-14 h-14 md:w-16 md:h-16 rounded-full bg-pink-500 text-white border-2 border-pink-500 shadow-sm'
+            ? 'w-14 h-14 md:w-16 md:h-16 rounded-full bg-cyan-500 text-white border-2 border-cyan-500 shadow-sm'
             : 'w-14 h-14 md:w-16 md:h-16 rounded-full bg-white text-purple-700 border-2 border-purple-200 shadow-sm';
         return `
             <div class="flex items-center ${idx < numbers.length - 1 ? 'mr-0.5 md:mr-1' : ''}">
@@ -4851,34 +4895,32 @@ function buildTopic3Sub33Layout_(q, speakerHtml) {
     }).join('');
 
     const optionsHtml = q.options.map((opt, idx) => {
-        const formattedOpt = capitalizeFirstLetter(opt);
         const letter = String.fromCharCode(65 + idx);
         return `
-            <button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${opt.replace(/'/g, "\'")}')" class="option-btn w-full min-h-[60px] md:min-h-[68px] px-2 py-2 bg-pink-50/40 hover:bg-pink-100/70 border-2 border-pink-200 rounded-2xl font-extrabold text-gray-800 transition-all flex items-center justify-center text-center shadow-xs pastel-btn">
-                <span class="flex items-center justify-center gap-1.5 leading-tight"><strong class="text-pink-600 text-base md:text-lg">${letter}.</strong><span class="opt-text text-lg md:text-xl lg:text-[22px]">${escapeHtml(formattedOpt)}</span></span>
-                <span class="option-icon text-pink-500 text-lg md:text-xl ml-1"></span>
+            <button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${String(opt).replace(/'/g, "\\'")}')" class="option-btn w-full min-h-[60px] md:min-h-[68px] px-2 py-2 bg-cyan-50/40 hover:bg-cyan-100/70 border-2 border-cyan-200 rounded-2xl font-extrabold text-gray-800 transition-all flex items-center justify-center text-center shadow-xs pastel-btn">
+                <span class="flex items-center justify-center gap-1.5 leading-tight"><strong class="text-cyan-600 text-base md:text-lg">${letter}.</strong><span class="opt-text text-lg md:text-xl lg:text-[22px]">${escapeHtml(capitalizeFirstLetter(opt))}</span></span>
+                <span class="option-icon text-cyan-500 text-lg md:text-xl ml-1"></span>
             </button>`;
     }).join('');
 
     return `
         <div class="w-full max-w-5xl mx-auto py-1">
-            <div class="w-full max-w-4xl mx-auto rounded-[28px] border-2 border-pink-100 bg-white/80 px-3 py-4 md:px-5 md:py-5 shadow-sm">
+            <div class="w-full max-w-4xl mx-auto rounded-[28px] border-2 border-cyan-100 bg-white/80 px-3 py-4 md:px-5 md:py-5 shadow-sm">
                 <div class="flex items-center justify-center flex-wrap">${stripHtml}</div>
-                <div id="topic3-sub33-solution-host">${buildTopic3Sub33SolutionHtml_(q)}</div>
+                <div id="topic4-sub41-solution-host">${buildTopic4Sub41SolutionHtml_(q)}</div>
             </div>
             <div class="flex flex-col items-center justify-center max-w-4xl mx-auto text-center px-2 mt-3 mb-1">
-                <h3 class="text-base md:text-lg lg:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-700 via-fuchsia-600 to-purple-700 leading-snug">${formatTopic3PromptHtml_(q, prompt)}</h3>
+                <h3 class="text-base md:text-lg lg:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-700 via-violet-600 to-purple-700 leading-snug">${escapeHtml(q.question_text)}</h3>
                 ${speakerHtml}
             </div>
             <div class="w-full max-w-5xl mx-auto grid grid-cols-4 gap-2.5 mt-2">${optionsHtml}</div>
         </div>`;
 }
 
-function refreshTopic3Sub33SolutionHost_(q) {
-    if (Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.3') return;
-    const host = document.getElementById('topic3-sub33-solution-host');
-    if (!host) return;
-    host.innerHTML = buildTopic3Sub33SolutionHtml_(q);
+function refreshTopic4Sub41SolutionHost_(q) {
+    if (Number(activeTopicId) !== 4 || getTopic4SequenceStage_(q) !== '4.1') return;
+    const host = document.getElementById('topic4-sub41-solution-host');
+    if (host) host.innerHTML = buildTopic4Sub41SolutionHtml_(q);
 }
 
 function getTopic3CompareMeta_(q) {
@@ -4888,7 +4930,7 @@ function getTopic3CompareMeta_(q) {
     return { a: Number(m[1]), b: Number(m[2]) };
 }
 
-function buildTopic3Sub34SolutionHtml_(q) {
+function buildTopic3CompareSolutionHtml_(q) {
     const chosen = userAnswers[currentQIndex];
     if (chosen === undefined || chosen !== q?.answer) return '';
     const meta = getTopic3CompareMeta_(q);
@@ -4932,7 +4974,7 @@ function buildTopic3PlaceValueCard_(num, tone = 'violet') {
         </div>`;
 }
 
-function buildTopic3Sub34Layout_(q, speakerHtml) {
+function buildTopic3CompareLayout_(q, speakerHtml) {
     const meta = getTopic3CompareMeta_(q);
     if (!meta) return '';
 
@@ -4954,7 +4996,7 @@ function buildTopic3Sub34Layout_(q, speakerHtml) {
                     <div class="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-pink-300 bg-pink-50 flex items-center justify-center text-3xl md:text-4xl font-black text-pink-500">?</div>
                     ${buildTopic3PlaceValueCard_(meta.b, 'rose')}
                 </div>
-                <div id="topic3-sub34-solution-host">${buildTopic3Sub34SolutionHtml_(q)}</div>
+                <div id="topic3-compare-solution-host">${buildTopic3CompareSolutionHtml_(q)}</div>
             </div>
             <div class="flex flex-col items-center justify-center max-w-4xl mx-auto text-center px-2 mt-3 mb-1">
                 <h3 class="text-lg md:text-xl lg:text-[24px] font-black text-violet-700 leading-snug">Bé hãy chọn dấu thích hợp nhé!</h3>
@@ -4964,32 +5006,32 @@ function buildTopic3Sub34Layout_(q, speakerHtml) {
         </div>`;
 }
 
-function refreshTopic3Sub34SolutionHost_(q) {
-    if (Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.4') return;
-    const host = document.getElementById('topic3-sub34-solution-host');
+function refreshTopic3CompareSolutionHost_(q) {
+    if (Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.3') return;
+    const host = document.getElementById('topic3-compare-solution-host');
     if (!host) return;
-    host.innerHTML = buildTopic3Sub34SolutionHtml_(q);
+    host.innerHTML = buildTopic3CompareSolutionHtml_(q);
 }
 
-function buildMuc4SolutionHtml_(q) {
+function buildMuc5SolutionHtml_(q) {
     const chosen = userAnswers[currentQIndex];
     if (chosen === undefined || chosen !== q?.answer || !q?.explanation) return '';
     return `<div class="mt-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-2.5 text-center text-sm md:text-base font-black text-emerald-800 shadow-sm">💡 ${escapeHtml(q.explanation)}</div>`;
 }
 
-function muc4OptionIcon_(opt) {
+function muc5OptionIcon_(opt) {
     const map = {
         'Hình tròn':'circle', 'Hình tam giác':'triangle', 'Hình vuông':'square', 'Hình chữ nhật':'rectangle'
     };
-    if (map[opt]) return muc4ShapeSvg_(map[opt], {size:52, color:'#fbcfe8', stroke:'#7c3aed'});
-    if (opt === 'Khối lập phương') return muc4SolidSvg_('cube',{size:58});
-    if (opt === 'Khối hộp chữ nhật') return muc4SolidSvg_('cuboid',{size:68,fill1:'#d1fae5',fill2:'#a7f3d0',fill3:'#6ee7b7'});
-    if (opt === 'Hình vuông') return muc4ShapeSvg_('square',{size:52,color:'#bfdbfe'});
-    if (opt === 'Hình chữ nhật') return muc4ShapeSvg_('rectangle',{size:52,color:'#fde68a'});
+    if (map[opt]) return muc5ShapeSvg_(map[opt], {size:52, color:'#fbcfe8', stroke:'#7c3aed'});
+    if (opt === 'Khối lập phương') return muc5SolidSvg_('cube',{size:58});
+    if (opt === 'Khối hộp chữ nhật') return muc5SolidSvg_('cuboid',{size:68,fill1:'#d1fae5',fill2:'#a7f3d0',fill3:'#6ee7b7'});
+    if (opt === 'Hình vuông') return muc5ShapeSvg_('square',{size:52,color:'#bfdbfe'});
+    if (opt === 'Hình chữ nhật') return muc5ShapeSvg_('rectangle',{size:52,color:'#fde68a'});
     return '';
 }
 
-function muc4ComposeSceneSvg_(scene, missingShape = null, showMissing = false) {
+function muc5ComposeSceneSvg_(scene, missingShape = null, showMissing = false) {
     const W = 240, H = 180;
     const filled = (shape, attrs, color) => {
         const stroke = '#475569';
@@ -5039,7 +5081,7 @@ function muc4ComposeSceneSvg_(scene, missingShape = null, showMissing = false) {
     return `<svg viewBox="0 0 ${W} ${H}" class="w-full max-w-[330px] h-auto" aria-hidden="true">${body}</svg>`;
 }
 
-function muc4AdvancedCountSvg_(pattern) {
+function muc5AdvancedCountSvg_(pattern) {
     const stroke = '#4338ca';
     const sw = 4;
     const line = (x1,y1,x2,y2) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}" stroke-width="${sw}" stroke-linecap="round"></line>`;
@@ -5087,46 +5129,46 @@ function muc4AdvancedCountSvg_(pattern) {
     return `<svg viewBox="0 0 240 190" class="w-full max-w-[430px] h-auto" aria-hidden="true">${body}</svg>`;
 }
 
-function buildMuc4SceneVisual_(q) {
-    const v = q?.muc4_visual || {};
-    const t = q?.muc4_type || '';
+function buildMuc5SceneVisual_(q) {
+    const v = q?.muc5_visual || {};
+    const t = q?.muc5_type || '';
     if (t === 'flat_identify') {
-        return `<div class="flex flex-col items-center"><div class="rounded-3xl border-2 border-violet-100 bg-white p-5 shadow-sm">${muc4ShapeSvg_(v.target,{size:150,color:v.color||'#93c5fd',rotate:v.rotate||0})}</div><div class="mt-2 text-sm font-bold text-slate-500">Con nhìn đường bao của hình nhé.</div></div>`;
+        return `<div class="flex flex-col items-center"><div class="rounded-3xl border-2 border-violet-100 bg-white p-5 shadow-sm">${muc5ShapeSvg_(v.target,{size:150,color:v.color||'#93c5fd',rotate:v.rotate||0})}</div><div class="mt-2 text-sm font-bold text-slate-500">Con nhìn đường bao của hình nhé.</div></div>`;
     }
     if (t === 'flat_match') {
-        return `<div class="flex flex-col items-center"><div class="text-sm md:text-base font-black text-slate-500 mb-2">Hình mẫu</div><div class="rounded-3xl border-2 border-violet-200 bg-violet-50/50 p-4 shadow-sm">${muc4ShapeSvg_(v.target,{size:130,color:v.color||'#93c5fd',rotate:v.rotate||0})}</div></div>`;
+        return `<div class="flex flex-col items-center"><div class="text-sm md:text-base font-black text-slate-500 mb-2">Hình mẫu</div><div class="rounded-3xl border-2 border-violet-200 bg-violet-50/50 p-4 shadow-sm">${muc5ShapeSvg_(v.target,{size:130,color:v.color||'#93c5fd',rotate:v.rotate||0})}</div></div>`;
     }
     if (t === 'flat_odd') {
         return `<div class="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-center font-black text-amber-800">Ba hình cùng loại, chỉ có một hình khác. Con quan sát từng đáp án nhé.</div>`;
     }
     if (t === 'shape_property') {
-        return `<div class="flex flex-col items-center"><div class="rounded-3xl border-2 border-violet-100 bg-white p-5 shadow-sm">${muc4ShapeSvg_(v.target,{size:150,color:v.color||'#93c5fd',rotate:v.rotate||0})}</div><div class="mt-2 text-sm font-bold text-slate-500">Con nhìn kĩ số cạnh và các góc của hình nhé.</div></div>`;
+        return `<div class="flex flex-col items-center"><div class="rounded-3xl border-2 border-violet-100 bg-white p-5 shadow-sm">${muc5ShapeSvg_(v.target,{size:150,color:v.color||'#93c5fd',rotate:v.rotate||0})}</div><div class="mt-2 text-sm font-bold text-slate-500">Con nhìn kĩ số cạnh và các góc của hình nhé.</div></div>`;
     }
     if (t === 'compose_missing' || t === 'compose_parts') {
-        return `<div class="w-full max-w-xl rounded-[28px] border-2 border-pink-100 bg-gradient-to-br from-white to-sky-50 p-4 shadow-sm"><div class="text-center text-sm md:text-base font-black text-violet-700 mb-2">${t === 'compose_missing' ? 'Chỗ trống cần mảnh nào?' : 'Con tách hình lớn thành các mảnh nhỏ nhé.'}</div><div class="flex items-center justify-center">${muc4ComposeSceneSvg_(v.scene, v.missing, t === 'compose_missing')}</div><div class="mt-1 text-center text-xs md:text-sm font-bold text-slate-500">${escapeHtml(v.scene||'hình ghép')} · Có thể xoay mảnh khi ghép.</div></div>`;
+        return `<div class="w-full max-w-xl rounded-[28px] border-2 border-pink-100 bg-gradient-to-br from-white to-sky-50 p-4 shadow-sm"><div class="text-center text-sm md:text-base font-black text-violet-700 mb-2">${t === 'compose_missing' ? 'Chỗ trống cần mảnh nào?' : 'Con tách hình lớn thành các mảnh nhỏ nhé.'}</div><div class="flex items-center justify-center">${muc5ComposeSceneSvg_(v.scene, v.missing, t === 'compose_missing')}</div><div class="mt-1 text-center text-xs md:text-sm font-bold text-slate-500">${escapeHtml(v.scene||'hình ghép')} · Có thể xoay mảnh khi ghép.</div></div>`;
     }
     if (t === 'solid_identify') {
-        return `<div class="rounded-[28px] border-2 border-sky-100 bg-white p-5 shadow-sm">${muc4SolidSvg_(v.solid,{size:v.solid==='cuboid'?180:155,fill1:'#dbeafe',fill2:'#93c5fd',fill3:'#60a5fa'})}</div>`;
+        return `<div class="rounded-[28px] border-2 border-sky-100 bg-white p-5 shadow-sm">${muc5SolidSvg_(v.solid,{size:v.solid==='cuboid'?180:155,fill1:'#dbeafe',fill2:'#93c5fd',fill3:'#60a5fa'})}</div>`;
     }
     if (t === 'solid_object') {
         return `<div class="flex flex-col items-center rounded-[28px] border-2 border-emerald-100 bg-white p-5 shadow-sm"><div class="text-7xl md:text-8xl leading-none">${escapeHtml(v.objectEmoji||'📦')}</div><div class="mt-2 text-lg md:text-xl font-black text-emerald-700">${escapeHtml(v.objectLabel||'Đồ vật')}</div><div class="mt-2 text-xs md:text-sm font-bold text-slate-500">Hãy nghĩ tới dạng khối của đồ vật.</div></div>`;
     }
     if (t === 'shape_count_advanced') {
-        return `<div class="w-full max-w-xl rounded-[28px] border-2 border-violet-100 bg-gradient-to-br from-white to-violet-50 p-4 shadow-sm"><div class="text-center text-sm md:text-base font-black text-violet-700 mb-2">🔎 Con đếm cả hình nhỏ và hình ghép lớn nhé.</div><div class="flex items-center justify-center">${muc4AdvancedCountSvg_(v.pattern)}</div><div class="mt-1 text-center text-xs md:text-sm font-bold text-slate-500">Mẹo: đếm theo kích thước để không bỏ sót.</div></div>`;
+        return `<div class="w-full max-w-xl rounded-[28px] border-2 border-violet-100 bg-gradient-to-br from-white to-violet-50 p-4 shadow-sm"><div class="text-center text-sm md:text-base font-black text-violet-700 mb-2">🔎 Con đếm cả hình nhỏ và hình ghép lớn nhé.</div><div class="flex items-center justify-center">${muc5AdvancedCountSvg_(v.pattern)}</div><div class="mt-1 text-center text-xs md:text-sm font-bold text-slate-500">Mẹo: đếm theo kích thước để không bỏ sót.</div></div>`;
     }
     return '';
 }
 
-function buildMuc4QuestionLayout_(q, speakerHtml) {
-    const v = q?.muc4_visual || {};
-    const visual = buildMuc4SceneVisual_(q);
+function buildMuc5QuestionLayout_(q, speakerHtml) {
+    const v = q?.muc5_visual || {};
+    const visual = buildMuc5SceneVisual_(q);
     const isVisualChoice = Array.isArray(v.optionShapes) && v.optionShapes.length === q.options.length;
     const optionsHtml = q.options.map((opt, idx) => {
         let icon = '';
         if (isVisualChoice) {
-            icon = muc4ShapeSvg_(v.optionShapes[idx], {size:62,color:['#fde68a','#bfdbfe','#bbf7d0','#fecdd3'][idx%4],rotate:[0,18,35,50][idx%4]});
+            icon = muc5ShapeSvg_(v.optionShapes[idx], {size:62,color:['#fde68a','#bfdbfe','#bbf7d0','#fecdd3'][idx%4],rotate:[0,18,35,50][idx%4]});
         } else {
-            icon = muc4OptionIcon_(opt);
+            icon = muc5OptionIcon_(opt);
         }
         const letter = String.fromCharCode(65+idx);
         const label = isVisualChoice ? '' : capitalizeFirstLetter(opt);
@@ -5139,25 +5181,25 @@ function buildMuc4QuestionLayout_(q, speakerHtml) {
             <h3 class="text-lg md:text-xl lg:text-[22px] font-black text-slate-900 leading-snug text-center">${escapeHtml(q.question_text)}</h3>
             ${speakerHtml}
             <div class="grid grid-cols-2 gap-2.5 mt-3">${optionsHtml}</div>
-            <div id="muc4-solution-host">${buildMuc4SolutionHtml_(q)}</div>
+            <div id="muc5-solution-host">${buildMuc5SolutionHtml_(q)}</div>
         </div>
     </div>`;
 }
 
-function refreshMuc4SolutionHost_(q) {
-    if (Number(activeTopicId) !== 4 || !/^4\.[2345]$/.test(String(q?.sub_topic||''))) return;
-    const host = document.getElementById('muc4-solution-host');
-    if (host) host.innerHTML = buildMuc4SolutionHtml_(q);
+function refreshMuc5SolutionHost_(q) {
+    if (Number(activeTopicId) !== 5 || !/^5\.[2345]$/.test(String(q?.sub_topic||''))) return;
+    const host = document.getElementById('muc5-solution-host');
+    if (host) host.innerHTML = buildMuc5SolutionHtml_(q);
 }
 
 
-function speakMuc4SelectedShape_(q, selectedOpt) {
-    if (Number(activeTopicId) !== 4 || String(q?.sub_topic || '') !== '4.2' || q?.muc4_type !== 'flat_odd') return false;
-    const optionShapes = q?.muc4_visual?.optionShapes;
+function speakMuc5SelectedShape_(q, selectedOpt) {
+    if (Number(activeTopicId) !== 5 || String(q?.sub_topic || '') !== '5.2' || q?.muc5_type !== 'flat_odd') return false;
+    const optionShapes = q?.muc5_visual?.optionShapes;
     if (!Array.isArray(optionShapes)) return false;
     const idx = (q.options || []).indexOf(selectedOpt);
     if (idx < 0 || !optionShapes[idx]) return false;
-    const shapeName = muc4ShapeName_(optionShapes[idx]);
+    const shapeName = muc5ShapeName_(optionShapes[idx]);
     setTimeout(() => speakVietnamese(shapeName, 0.94), 180);
     return true;
 }
@@ -5177,7 +5219,8 @@ function loadQuestion() {
     const isEvaluationMode = !!activeExamContext || !!activeRoadmapContext;
     const isFoundationPractice = !isEvaluationMode && ([1, 2].includes(Number(activeTopicId)) || /^[12]\./.test(String(q.sub_topic || '')));
     const isTopic3Practice = !isEvaluationMode && Number(activeTopicId) === 3 && /^3\./.test(String(q.sub_topic || ''));
-    const isTopic4Practice = !isEvaluationMode && Number(activeTopicId) === 4 && /^4\.[2345]$/.test(String(q.sub_topic || ''));
+    const isTopic4Practice = !isEvaluationMode && Number(activeTopicId) === 4 && /^4\./.test(String(q.sub_topic || ''));
+    const isTopic5Practice = !isEvaluationMode && Number(activeTopicId) === 5 && /^5\.[2345]$/.test(String(q.sub_topic || ''));
 
     if (isEvaluationMode) {
         document.getElementById('q-badge-index').textContent = `CÂU ${currentQIndex + 1} / ${activeQuestionsList.length}`;
@@ -5239,11 +5282,11 @@ function loadQuestion() {
             html = buildFoundationQuestionLayout(q, practiceSpeakerBtnHtml);
         }
     } else if (isTopic3Practice && getTopic3Stage_(q) === '3.3') {
-        html = buildTopic3Sub33Layout_(q, practiceSpeakerBtnHtml);
-    } else if (isTopic3Practice && getTopic3Stage_(q) === '3.4') {
-        html = buildTopic3Sub34Layout_(q, practiceSpeakerBtnHtml);
-    } else if (isTopic4Practice) {
-        html = buildMuc4QuestionLayout_(q, practiceSpeakerBtnHtml);
+        html = buildTopic3CompareLayout_(q, practiceSpeakerBtnHtml);
+    } else if (isTopic4Practice && getTopic4SequenceStage_(q) === '4.1') {
+        html = buildTopic4Sub41Layout_(q, practiceSpeakerBtnHtml);
+    } else if (isTopic5Practice) {
+        html = buildMuc5QuestionLayout_(q, practiceSpeakerBtnHtml);
     } else if (isLetterListen) {
         html = `
             ${mediaHtml}
@@ -5312,9 +5355,9 @@ function loadQuestion() {
     document.getElementById('question-box').innerHTML = html;
 
     restoreQuestionState(q);
-    refreshTopic3Sub33SolutionHost_(q);
-    refreshTopic3Sub34SolutionHost_(q);
-    refreshMuc4SolutionHost_(q);
+    refreshTopic4Sub41SolutionHost_(q);
+    refreshTopic3CompareSolutionHost_(q);
+    refreshMuc5SolutionHost_(q);
     updateNavButtons();
     updateQuizPalletUI();
 
@@ -5471,15 +5514,15 @@ function checkAnswer(selectedOpt) {
                 b.classList.add('bg-red-200', 'border-red-500', 'text-red-900');
             }
         });
-        if (isCorrect) refreshTopic3Sub33SolutionHost_(q);
+        if (isCorrect) refreshTopic4Sub41SolutionHost_(q);
 
         if (isCorrect) {
             playAudio('correct');
             confetti({ particleCount: 30, spread: 55, origin: { y: 0.7 } });
-            if (!speakMuc4SelectedShape_(q, selectedOpt)) setTimeout(() => speakVietnamese(`${q.answer}`), 180);
+            if (!speakMuc5SelectedShape_(q, selectedOpt)) setTimeout(() => speakVietnamese(`${q.answer}`), 180);
         } else {
             playAudio('wrong');
-            speakMuc4SelectedShape_(q, selectedOpt);
+            speakMuc5SelectedShape_(q, selectedOpt);
         }
 
         updateQuizPalletUI();
@@ -5503,9 +5546,9 @@ function checkAnswer(selectedOpt) {
                 b.classList.add('bg-green-100', 'border-green-400', 'text-green-800');
             }
         });
-        refreshTopic3Sub33SolutionHost_(q);
-        refreshTopic3Sub34SolutionHost_(q);
-        refreshMuc4SolutionHost_(q);
+        refreshTopic4Sub41SolutionHost_(q);
+        refreshTopic3CompareSolutionHost_(q);
+        refreshMuc5SolutionHost_(q);
 
         playAudio('correct');
         confetti({ particleCount: 30, spread: 55, origin: { y: 0.7 } });
@@ -5514,7 +5557,7 @@ function checkAnswer(selectedOpt) {
         const isFoundationPractice = /^[12]\./.test(String(q.sub_topic || ''));
         if (isFoundationPractice) {
             setTimeout(() => nextQuestion(), 650);
-        } else if (!speakMuc4SelectedShape_(q, selectedOpt)) {
+        } else if (!speakMuc5SelectedShape_(q, selectedOpt)) {
             setTimeout(() => speakVietnamese(`${q.answer}`), 180);
         }
     } else {
@@ -5534,7 +5577,7 @@ function checkAnswer(selectedOpt) {
         });
 
         playAudio('wrong');
-        speakMuc4SelectedShape_(q, selectedOpt);
+        speakMuc5SelectedShape_(q, selectedOpt);
     }
 
     updateQuizPalletUI();
