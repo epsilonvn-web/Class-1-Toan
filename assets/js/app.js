@@ -3342,6 +3342,28 @@ function speakLecture() {
     speakVietnamese(document.getElementById('view-lecture').dataset.audioText || '', 0.96);
 }
 
+
+function buildPracticeCycleQuestions_(pool) {
+    const source = Array.isArray(pool) ? [...pool] : [];
+    if (!source.length) return [];
+    const isTopic35 = source.every(q => String(q?.sub_topic || '') === '3.5');
+    if (!isTopic35) return shuffleArray(source);
+
+    const phase1 = source.filter(q => Number(q?.question_id || 0) >= 5200 && Number(q?.question_id || 0) <= 5209);
+    const phase2 = source.filter(q => Number(q?.question_id || 0) >= 5210 && Number(q?.question_id || 0) <= 5219);
+    const phase3 = source.filter(q => Number(q?.question_id || 0) >= 5220 && Number(q?.question_id || 0) <= 5239);
+    const other = source.filter(q => ![...phase1, ...phase2, ...phase3].includes(q));
+
+    // 3.5 là lộ trình học có chủ đích: 10 câu số 0-9 → 10 câu chọn trong 4 số → 20 câu số hai chữ số.
+    // Chỉ xáo trong từng chặng, không xáo lẫn các chặng.
+    return [
+        ...shuffleArray(phase1),
+        ...shuffleArray(phase2),
+        ...shuffleArray(phase3),
+        ...shuffleArray(other)
+    ];
+}
+
 function selectSubtopic(idx) {
     stopSpeaking();
     if (!pendingTopicQuiz) return;
@@ -3352,7 +3374,7 @@ function selectSubtopic(idx) {
     const finalTitle = displayLabel ? `${topicName} - ${displayLabel}` : topicName;
 
     practiceCycleRawPool = [...pool];
-    const firstCycleQuestions = shuffleArray([...pool]);
+    const firstCycleQuestions = buildPracticeCycleQuestions_(pool);
 
     if (Number(topicNum) === 11) updateNavTabs('Ôn tập', '🧠', topicName, displayLabel || 'Tất cả các mục');
     else updateDiscoverBreadcrumb_(topicName, TOPICS_CONFIG.find(t => t.id === topicNum)?.icon || '🔢', displayLabel || 'Tất cả các mục');
@@ -3842,6 +3864,7 @@ function getFoundationPrompt(q) {
 
 
 let muc1UiState = null;
+let topic3SortUiState_ = {};
 
 function getMuc1QuestionKey_(q) {
     return `${q?.id ?? 'q'}::${q?.sub_topic || ''}::${q?.question_text || ''}`;
@@ -4835,6 +4858,166 @@ function formatTopic3PromptHtml_(q, promptText) {
     return safe;
 }
 
+
+function getTopic3SortQuestionKey_(q) {
+    return `${q?.question_id ?? q?.id ?? 'q'}::${q?.sub_topic || ''}::${q?.question_text || ''}`;
+}
+
+function parseTopic3SortMeta_(q) {
+    const text = String(q?.question_text || '');
+    const direction = /bé\s+đến\s+lớn/i.test(text)
+        ? 'asc'
+        : (/lớn\s+đến\s+bé/i.test(text) ? 'desc' : null);
+    const tail = text.includes(':') ? text.split(':').pop() : text;
+    const numbers = (String(tail).match(/\d+/g) || []).map(Number).slice(0, 4);
+    if (!direction || numbers.length < 4) return null;
+    return { direction, numbers };
+}
+
+function normalizeTopic3SortAnswer_(value) {
+    return (String(value || '').match(/\d+/g) || []).join(',');
+}
+
+function getTopic3SortState_(q) {
+    const key = getTopic3SortQuestionKey_(q);
+    if (!topic3SortUiState_[key]) topic3SortUiState_[key] = { selected: [] };
+    const state = topic3SortUiState_[key];
+    const completed = userAnswers[currentQIndex];
+    if ((!Array.isArray(state.selected) || state.selected.length === 0) && completed !== undefined) {
+        state.selected = (String(completed).match(/\d+/g) || []).map(Number);
+    }
+    if (!Array.isArray(state.selected)) state.selected = [];
+    return state;
+}
+
+function buildTopic3SortLayout_(q, speakerHtml) {
+    const meta = parseTopic3SortMeta_(q);
+    if (!meta) return '';
+    const directionText = meta.direction === 'asc' ? 'từ bé đến lớn' : 'từ lớn đến bé';
+    const helper = meta.direction === 'asc'
+        ? 'Con hãy chọn số bé nhất trước rồi chọn dần đến số lớn nhất.'
+        : 'Con hãy chọn số lớn nhất trước rồi chọn dần đến số bé nhất.';
+
+    return `
+        <div class="w-full max-w-5xl mx-auto py-1">
+            <div class="w-full max-w-4xl mx-auto rounded-[28px] border-2 border-indigo-100 bg-white/95 px-3 py-4 md:px-5 md:py-5 shadow-sm">
+                <div class="flex flex-col items-center justify-center text-center px-2">
+                    <h3 class="text-lg md:text-xl lg:text-[24px] font-black text-slate-900 leading-snug">${escapeHtml(q.question_text)}</h3>
+                    ${speakerHtml}
+                    <div class="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-4 py-2 text-sm md:text-base font-black text-cyan-700 mt-1">
+                        <span>🔢</span><span>${helper}</span>
+                    </div>
+                </div>
+                <div id="topic3-sort-slots" class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4"></div>
+                <div class="mt-4 rounded-3xl border-2 border-pink-100 bg-gradient-to-br from-pink-50 via-white to-amber-50 px-3 py-4 md:px-4 md:py-5 shadow-sm">
+                    <div class="text-center text-sm md:text-base font-black text-pink-700 mb-3">Các số cần sắp xếp ${directionText}</div>
+                    <div id="topic3-sort-chips" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+                </div>
+                <div class="mt-3 flex flex-wrap items-center justify-center gap-2.5">
+                    <button onclick="topic3SortReset_()" class="px-4 py-2 rounded-2xl border-2 border-amber-200 bg-amber-50 hover:bg-amber-100 text-amber-700 font-black text-sm md:text-base pastel-btn shadow-xs">↺ Làm lại</button>
+                </div>
+                <div id="topic3-sort-feedback" class="mt-3"></div>
+            </div>
+        </div>`;
+}
+
+function renderTopic3SortInteractive_(q) {
+    if (Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.4') return;
+    const meta = parseTopic3SortMeta_(q);
+    if (!meta) return;
+    const state = getTopic3SortState_(q);
+    const selected = Array.isArray(state.selected) ? state.selected : [];
+    const isLocked = userAnswers[currentQIndex] !== undefined;
+    const firstLabel = meta.direction === 'asc' ? 'Số bé nhất' : 'Số lớn nhất';
+    const lastLabel = meta.direction === 'asc' ? 'Số lớn nhất' : 'Số bé nhất';
+    const slotLabels = [firstLabel, 'Ô thứ 2', 'Ô thứ 3', lastLabel];
+
+    const slotsEl = document.getElementById('topic3-sort-slots');
+    if (slotsEl) {
+        slotsEl.innerHTML = Array.from({ length: 4 }, (_, idx) => {
+            const value = selected[idx];
+            const hasValue = value !== undefined;
+            const canRemove = hasValue && !isLocked;
+            const baseClass = hasValue
+                ? 'border-cyan-300 bg-cyan-50 text-cyan-800'
+                : 'border-dashed border-slate-300 bg-slate-50 text-slate-400';
+            return `
+                <button ${canRemove ? `onclick="topic3SortRemoveAt_(${idx})"` : 'disabled'} class="min-h-[98px] rounded-[24px] border-2 ${baseClass} px-3 py-3 flex flex-col items-center justify-center text-center transition-all ${canRemove ? 'hover:scale-[1.02] cursor-pointer' : 'cursor-default'}">
+                    <div class="text-[11px] md:text-xs font-black uppercase tracking-wide ${idx === 0 || idx === 3 ? 'text-rose-600' : 'text-slate-500'}">${slotLabels[idx]}</div>
+                    <div class="mt-2 text-2xl md:text-3xl font-black">${hasValue ? value : '?'}</div>
+                </button>`;
+        }).join('');
+    }
+
+    const chipsEl = document.getElementById('topic3-sort-chips');
+    if (chipsEl) {
+        chipsEl.innerHTML = meta.numbers.map(num => {
+            const used = selected.includes(num);
+            const disabled = used || isLocked;
+            const cls = used
+                ? 'border-emerald-300 bg-emerald-100 text-emerald-700'
+                : 'border-pink-200 bg-white hover:bg-pink-50 text-slate-800';
+            return `<button data-num="${num}" onclick="topic3SortPickNumber_(${num})" ${disabled ? 'disabled' : ''} class="min-h-[70px] rounded-2xl border-2 ${cls} font-black text-2xl md:text-3xl transition-all ${disabled ? 'opacity-60 cursor-not-allowed' : 'hover:-translate-y-0.5 pastel-btn'} shadow-xs">${num}</button>`;
+        }).join('');
+    }
+
+    const feedbackEl = document.getElementById('topic3-sort-feedback');
+    if (feedbackEl) {
+        const wrongAttempts = wrongAttemptsByQ[currentQIndex] || [];
+        if (isLocked && normalizeTopic3SortAnswer_(userAnswers[currentQIndex]) === normalizeTopic3SortAnswer_(q.answer)) {
+            const directionText = meta.direction === 'asc' ? 'từ bé đến lớn' : 'từ lớn đến bé';
+            feedbackEl.innerHTML = `<div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-3 text-center font-black text-emerald-800">✅ Giỏi lắm! Con đã sắp xếp đúng ${directionText}: ${escapeHtml(q.answer)}</div>`;
+        } else if (!isLocked && wrongAttempts.length > 0 && selected.length === 0) {
+            const hint = meta.direction === 'asc' ? 'Hãy tìm số bé nhất trước nhé.' : 'Hãy tìm số lớn nhất trước nhé.';
+            feedbackEl.innerHTML = `<div class="rounded-2xl border-2 border-rose-200 bg-rose-50 px-4 py-3 text-center font-black text-rose-700">Con thử lại nhé. ${hint}</div>`;
+        } else {
+            feedbackEl.innerHTML = `<div class="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-center font-bold text-slate-600">Chạm vào các số bên dưới để đưa lần lượt lên hàng trên.</div>`;
+        }
+    }
+}
+
+function topic3SortPickNumber_(num) {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q || Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.4') return;
+    if (userAnswers[currentQIndex] !== undefined) return;
+    const state = getTopic3SortState_(q);
+    if (state.selected.includes(Number(num)) || state.selected.length >= 4) return;
+    state.selected.push(Number(num));
+    renderTopic3SortInteractive_(q);
+    if (state.selected.length === 4) {
+        const attempt = state.selected.join(', ');
+        const isCorrect = normalizeTopic3SortAnswer_(attempt) === normalizeTopic3SortAnswer_(q.answer);
+        checkAnswer(attempt);
+        if (isCorrect) {
+            renderTopic3SortInteractive_(q);
+        } else {
+            setTimeout(() => {
+                state.selected = [];
+                renderTopic3SortInteractive_(q);
+            }, 650);
+        }
+    }
+}
+
+function topic3SortRemoveAt_(idx) {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q || Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.4') return;
+    if (userAnswers[currentQIndex] !== undefined) return;
+    const state = getTopic3SortState_(q);
+    if (!Array.isArray(state.selected) || idx < 0 || idx >= state.selected.length) return;
+    state.selected.splice(idx, 1);
+    renderTopic3SortInteractive_(q);
+}
+
+function topic3SortReset_() {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q || Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.4') return;
+    if (userAnswers[currentQIndex] !== undefined) return;
+    const state = getTopic3SortState_(q);
+    state.selected = [];
+    renderTopic3SortInteractive_(q);
+}
+
 function getTopic4SequenceStage_(q) {
     return String(q?.sub_topic || '');
 }
@@ -5011,6 +5194,331 @@ function refreshTopic3CompareSolutionHost_(q) {
     const host = document.getElementById('topic3-compare-solution-host');
     if (!host) return;
     host.innerHTML = buildTopic3CompareSolutionHtml_(q);
+}
+
+
+function getTopic3SortMeta_(q) {
+    const text = String(q?.question_text || '');
+    const numbers = (text.match(/\d+/g) || []).map(Number).slice(-4);
+    if (numbers.length !== 4) return null;
+    const order = /lớn\s+đến\s+bé/i.test(text) ? 'desc' : 'asc';
+    return { numbers, order };
+}
+
+function getTopic3SortState_(q) {
+    const meta = getTopic3SortMeta_(q);
+    if (!meta) return null;
+    const key = `${q?.question_id ?? q?.id ?? 'q'}::${q?.question_text || ''}`;
+    if (q._topic3SortState && q._topic3SortState.key === key) return q._topic3SortState;
+    let chips = shuffleArray(meta.numbers.slice());
+    const desired = String(q?.answer || '').trim();
+    const chipOrder = chips.join(', ');
+    if (chips.length > 1 && chipOrder === desired) {
+        chips = chips.slice(1).concat(chips[0]);
+    }
+    q._topic3SortState = {
+        key,
+        chips,
+        selected: [],
+        feedback: '',
+        lastAttempt: ''
+    };
+    return q._topic3SortState;
+}
+
+function topic3SortChoiceDisabled_(q, num) {
+    const state = getTopic3SortState_(q);
+    if (!state) return true;
+    return state.selected.includes(Number(num)) || userAnswers[currentQIndex] !== undefined;
+}
+
+function buildTopic3SortFeedbackHtml_(q) {
+    const state = getTopic3SortState_(q);
+    if (!state) return '';
+    const completedAnswer = userAnswers[currentQIndex];
+    const wrongAttempts = wrongAttemptsByQ[currentQIndex] || [];
+
+    if (completedAnswer !== undefined && completedAnswer === q.answer) {
+        return `<div class="mt-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-2.5 text-center font-black text-emerald-800 text-sm md:text-base shadow-sm">✅ Giỏi lắm! Con đã sắp xếp đúng thứ tự rồi.</div>`;
+    }
+    if (state.feedback === 'wrong' || wrongAttempts.length > 0) {
+        return `<div class="mt-3 rounded-2xl border-2 border-rose-300 bg-rose-50 px-4 py-2.5 text-center font-black text-rose-700 text-sm md:text-base shadow-sm">💡 Con hãy chọn lần lượt từng số theo đúng thứ tự nhé. Nếu nhầm, bấm “Xóa số cuối” hoặc “Làm lại”.</div>`;
+    }
+    return `<div class="mt-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-2.5 text-center font-black text-amber-700 text-sm md:text-base shadow-sm">👆 Con chạm các số ở hàng dưới theo đúng thứ tự để đưa lên hàng trên.</div>`;
+}
+
+function buildTopic3SortLayout_(q, speakerHtml) {
+    const meta = getTopic3SortMeta_(q);
+    const state = getTopic3SortState_(q);
+    if (!meta || !state) return '';
+
+    const promptShort = meta.order === 'asc'
+        ? 'Chọn lần lượt từ bé đến lớn'
+        : 'Chọn lần lượt từ lớn đến bé';
+
+    const slotsHtml = Array.from({ length: meta.numbers.length }, (_, idx) => {
+        const value = state.selected[idx];
+        const baseClass = userAnswers[currentQIndex] !== undefined && userAnswers[currentQIndex] === q.answer
+            ? 'border-emerald-300 bg-emerald-50 text-emerald-700'
+            : state.feedback === 'wrong'
+                ? 'border-rose-300 bg-rose-50 text-rose-700'
+                : 'border-violet-200 bg-white text-violet-700';
+        return `<div class="w-20 h-16 md:w-24 md:h-18 rounded-2xl border-2 ${baseClass} flex items-center justify-center font-black text-2xl md:text-3xl shadow-sm">${value !== undefined ? value : '<span class="text-violet-200">?</span>'}</div>`;
+    }).join('');
+
+    const chipsHtml = state.chips.map((num) => {
+        const disabled = topic3SortChoiceDisabled_(q, num);
+        return `<button type="button" onclick="topic3SortChoose_(${Number(num)})" ${disabled ? 'disabled' : ''}
+            class="topic3-sort-chip min-w-[78px] md:min-w-[92px] h-14 md:h-16 px-4 rounded-2xl border-2 ${disabled ? 'border-slate-100 bg-slate-50 text-slate-300 cursor-not-allowed opacity-70' : 'border-pink-200 bg-pink-50/70 hover:bg-pink-100/80 text-pink-700 hover:scale-[1.03]'} font-black text-2xl md:text-3xl transition-all shadow-sm">${num}</button>`;
+    }).join('');
+
+    const done = userAnswers[currentQIndex] !== undefined;
+
+    return `
+        <div class="w-full max-w-5xl mx-auto py-1">
+            <div class="flex flex-col items-center justify-center max-w-4xl mx-auto text-center px-2 mb-2">
+                <h3 class="text-lg md:text-xl lg:text-[24px] font-black text-slate-900 leading-snug">${escapeHtml(q.question_text)}</h3>
+                ${speakerHtml}
+            </div>
+
+            <div class="w-full max-w-4xl mx-auto rounded-[28px] border-2 border-violet-100 bg-white/90 px-4 py-4 md:px-6 md:py-5 shadow-sm">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 border border-violet-200 text-violet-700 text-sm md:text-base font-black shadow-sm mb-4">
+                    <span>🐰</span><span>${escapeHtml(promptShort)}</span>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-center gap-2.5 md:gap-3 mb-4">${slotsHtml}</div>
+
+                <div class="flex items-center justify-center gap-2 mb-3 flex-wrap">
+                    <button type="button" onclick="topic3SortUndo_()" ${done || !state.selected.length ? 'disabled' : ''} class="px-3 py-2 rounded-2xl border-2 border-sky-200 bg-sky-50 text-sky-700 font-black text-sm md:text-base ${done || !state.selected.length ? 'opacity-40 cursor-not-allowed' : 'hover:bg-sky-100'}">↩️ Xóa số cuối</button>
+                    <button type="button" onclick="topic3SortReset_()" ${done || !state.selected.length ? 'disabled' : ''} class="px-3 py-2 rounded-2xl border-2 border-amber-200 bg-amber-50 text-amber-700 font-black text-sm md:text-base ${done || !state.selected.length ? 'opacity-40 cursor-not-allowed' : 'hover:bg-amber-100'}">🔄 Làm lại</button>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-3">${chipsHtml}</div>
+                <div id="topic3-sort-feedback-host">${buildTopic3SortFeedbackHtml_(q)}</div>
+            </div>
+        </div>`;
+}
+
+function refreshTopic3SortUi_(q) {
+    if (Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.4') return;
+    const host = document.getElementById('question-box');
+    if (!host) return;
+    const isEvaluationMode = !!activeExamContext || !!activeRoadmapContext;
+    if (isEvaluationMode) return;
+    const practiceSpeakerBtnHtml = `
+        <div class="flex items-center justify-center mt-1 mb-1">
+            <button onclick="speakCurrentQuestion()" class="px-4 py-1.5 bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 rounded-2xl text-xs md:text-sm font-extrabold flex items-center space-x-1.5 pastel-btn shadow-xs">
+                <i class="fa-solid fa-volume-high text-pink-600"></i>
+                <span>Nghe câu hỏi</span>
+            </button>
+        </div>
+    `;
+    host.innerHTML = buildTopic3SortLayout_(q, practiceSpeakerBtnHtml);
+}
+
+function topic3SortChoose_(num) {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q || Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.4') return;
+    if (userAnswers[currentQIndex] !== undefined) return;
+    const state = getTopic3SortState_(q);
+    if (!state || state.selected.includes(Number(num))) return;
+    state.selected.push(Number(num));
+    state.feedback = '';
+    refreshTopic3SortUi_(q);
+    try { speakVietnamese(String(num), 0.94); } catch (e) {}
+    if (state.selected.length === state.chips.length) {
+        setTimeout(() => topic3SortSubmit_(), 120);
+    }
+}
+
+function topic3SortUndo_() {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q || Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.4') return;
+    if (userAnswers[currentQIndex] !== undefined) return;
+    const state = getTopic3SortState_(q);
+    if (!state || !state.selected.length) return;
+    state.selected.pop();
+    state.feedback = '';
+    refreshTopic3SortUi_(q);
+}
+
+function topic3SortReset_() {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q || Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.4') return;
+    if (userAnswers[currentQIndex] !== undefined) return;
+    const state = getTopic3SortState_(q);
+    if (!state) return;
+    state.selected = [];
+    state.feedback = '';
+    refreshTopic3SortUi_(q);
+}
+
+function topic3SortSubmit_() {
+    const q = activeQuestionsList?.[currentQIndex];
+    if (!q || Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.4') return;
+    if (userAnswers[currentQIndex] !== undefined) return;
+    const state = getTopic3SortState_(q);
+    if (!state || !state.selected.length) return;
+    const answerText = state.selected.join(', ');
+    state.lastAttempt = answerText;
+    checkAnswer(answerText);
+    if (userAnswers[currentQIndex] === q.answer) {
+        state.feedback = 'correct';
+        refreshTopic3SortUi_(q);
+        return;
+    }
+    state.feedback = 'wrong';
+    refreshTopic3SortUi_(q);
+    setTimeout(() => {
+        const latestQ = activeQuestionsList?.[currentQIndex];
+        if (latestQ !== q) return;
+        if (userAnswers[currentQIndex] !== undefined) return;
+        state.selected = [];
+        state.feedback = '';
+        refreshTopic3SortUi_(q);
+    }, 850);
+}
+
+
+function getTopic35Phase_(q) {
+    const id = Number(q?.question_id || 0);
+    if (id >= 5200 && id <= 5209) return 'digit_pairing';
+    if (id >= 5210 && id <= 5219) return 'pick_from_four';
+    if (id >= 5220 && id <= 5239) return 'two_digit';
+    return 'generic';
+}
+
+function getTopic35DisplayOptions_(q) {
+    const opts = Array.isArray(q?.options) ? [...q.options] : [];
+    if (opts.length <= 1) return opts;
+    const seed = Number(q?.question_id || 0) + Number(currentQIndex || 0);
+    const shift = ((seed % opts.length) + opts.length) % opts.length;
+    const rotated = opts.slice(shift).concat(opts.slice(0, shift));
+    // Đảo thêm theo seed để đáp án đúng không nằm lì một vị trí qua nhiều câu.
+    return seed % 2 === 0 ? rotated : rotated.reverse();
+}
+
+function getTopic35MainNumber_(q) {
+    const m = String(q?.question_text || '').match(/Số\s+(\d+)/i);
+    return m ? Number(m[1]) : null;
+}
+
+function topic35EmojiForQuestion_(q) {
+    const emojis = ['🍎','🐰','⭐','🐟','🍓','🦋','⚽','🌼','🚗','🧁'];
+    return emojis[Math.abs(Number(q?.question_id || 0)) % emojis.length];
+}
+
+function buildTopic35PairingVisual_(q) {
+    const n = getTopic35MainNumber_(q);
+    if (!Number.isFinite(n) || n < 0 || n > 9) return '';
+    const emoji = topic35EmojiForQuestion_(q);
+    if (n === 0) {
+        return `
+            <div class="flex flex-col items-center justify-center min-h-[150px]">
+                <div class="w-28 h-28 rounded-full border-4 border-dashed border-slate-300 bg-slate-50 flex items-center justify-center text-5xl text-slate-400">∅</div>
+                <div class="mt-3 text-base md:text-lg font-black text-slate-600">Không có đồ vật nào</div>
+            </div>`;
+    }
+    const pairs = Math.floor(n / 2);
+    const hasSingle = n % 2 === 1;
+    let html = '<div class="flex flex-wrap items-center justify-center gap-3 md:gap-4">';
+    for (let i = 0; i < pairs; i++) {
+        html += `<div class="inline-flex items-center gap-0.5 rounded-2xl border-2 border-emerald-200 bg-emerald-50 px-3 py-2 shadow-xs"><span class="text-4xl md:text-5xl">${emoji}</span><span class="text-4xl md:text-5xl">${emoji}</span></div>`;
+    }
+    if (hasSingle) {
+        html += `<div class="ml-2 md:ml-4 inline-flex flex-col items-center rounded-2xl border-2 border-rose-300 bg-rose-50 px-3 py-2 shadow-xs"><span class="text-4xl md:text-5xl">${emoji}</span><span class="mt-1 text-[11px] md:text-xs font-black text-rose-600">đứng một mình</span></div>`;
+    }
+    html += '</div>';
+    return html;
+}
+
+function buildTopic35MemoryStrip_() {
+    return `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 mt-3">
+            <div class="rounded-2xl border-2 border-emerald-200 bg-emerald-50 px-3 py-2 text-center"><span class="font-black text-emerald-700">Số chẵn:</span> <span class="font-black text-slate-800">0 · 2 · 4 · 6 · 8</span></div>
+            <div class="rounded-2xl border-2 border-violet-200 bg-violet-50 px-3 py-2 text-center"><span class="font-black text-violet-700">Số lẻ:</span> <span class="font-black text-slate-800">1 · 3 · 5 · 7 · 9</span></div>
+        </div>`;
+}
+
+function buildTopic35FeedbackHtml_(q) {
+    const chosen = userAnswers[currentQIndex];
+    if (chosen === undefined || chosen !== q?.answer) return '';
+    const phase = getTopic35Phase_(q);
+    if (phase === 'digit_pairing') {
+        const n = getTopic35MainNumber_(q);
+        const why = n === 0
+            ? '0 được xếp vào nhóm số chẵn.'
+            : (n % 2 === 0 ? 'Ghép thành từng đôi và không còn hình nào đứng một mình.' : 'Ghép thành từng đôi còn 1 hình đứng một mình.');
+        return `<div class="mt-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-3 text-center font-black text-emerald-800">✅ ${escapeHtml(why)}</div>`;
+    }
+    if (phase === 'two_digit') {
+        const n = getTopic35MainNumber_(q);
+        const unit = Number.isFinite(n) ? n % 10 : '';
+        return `<div class="mt-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-3 text-center font-black text-emerald-800">✅ Chỉ cần nhìn hàng đơn vị: ${unit} → ${escapeHtml(q.answer)}.</div>`;
+    }
+    return `<div class="mt-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-3 text-center font-black text-emerald-800">✅ Chính xác!</div>`;
+}
+
+function buildTopic35QuestionLayout_(q, speakerHtml) {
+    const phase = getTopic35Phase_(q);
+    const opts = getTopic35DisplayOptions_(q);
+    const n = getTopic35MainNumber_(q);
+    let visualHtml = '';
+    let guidanceHtml = '';
+
+    if (phase === 'digit_pairing') {
+        visualHtml = `
+            <div class="rounded-[28px] border-2 border-cyan-100 bg-gradient-to-br from-cyan-50 via-white to-emerald-50 px-4 py-5 shadow-sm">
+                <div class="text-center text-sm md:text-base font-black text-cyan-700 mb-3">Ghép các hình thành từng đôi</div>
+                ${buildTopic35PairingVisual_(q)}
+            </div>`;
+        guidanceHtml = '<div class="mt-2 text-center text-sm md:text-base font-bold text-slate-600">Nếu còn 1 hình đứng một mình → số lẻ. Ghép hết thành đôi → số chẵn.</div>';
+    } else if (phase === 'pick_from_four') {
+        visualHtml = `
+            <div class="rounded-[28px] border-2 border-violet-100 bg-gradient-to-br from-violet-50 via-white to-pink-50 px-4 py-6 shadow-sm flex flex-col items-center justify-center min-h-[170px]">
+                <div class="text-5xl md:text-6xl">🔎</div>
+                <div class="mt-3 text-center text-base md:text-lg font-black text-violet-700">Con hãy tìm đúng một số theo yêu cầu.</div>
+            </div>`;
+        guidanceHtml = buildTopic35MemoryStrip_();
+    } else if (phase === 'two_digit') {
+        const tens = Number.isFinite(n) ? Math.floor(n / 10) : '';
+        const unit = Number.isFinite(n) ? n % 10 : '';
+        visualHtml = `
+            <div class="rounded-[28px] border-2 border-amber-100 bg-gradient-to-br from-amber-50 via-white to-rose-50 px-4 py-6 shadow-sm flex flex-col items-center justify-center min-h-[180px]">
+                <div class="text-sm md:text-base font-black text-amber-700 mb-3">Hãy nhìn chữ số hàng đơn vị</div>
+                <div class="flex items-end gap-1 leading-none">
+                    <span class="text-7xl md:text-8xl font-black text-slate-500">${tens}</span>
+                    <span class="text-7xl md:text-8xl font-black text-rose-600 underline decoration-4 underline-offset-8">${unit}</span>
+                </div>
+                <div class="mt-4 rounded-full border-2 border-rose-200 bg-white px-4 py-2 text-sm md:text-base font-black text-rose-700">Hàng đơn vị là ${unit}</div>
+            </div>`;
+        guidanceHtml = `<div class="mt-2 text-center text-sm md:text-base font-black text-rose-700">💡 Bé hãy để ý chữ số hàng đơn vị nhé!</div>${buildTopic35MemoryStrip_()}`;
+    }
+
+    const isNumberChoice = phase === 'pick_from_four';
+    const optionsHtml = opts.map((opt, idx) => {
+        const letter = String.fromCharCode(65 + idx);
+        const label = isNumberChoice ? String(opt) : capitalizeFirstLetter(opt);
+        const textClass = isNumberChoice ? 'text-2xl md:text-3xl' : 'text-base md:text-lg lg:text-xl';
+        return `<button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${String(opt).replace(/'/g,"\\'")}')" class="option-btn w-full min-h-[68px] md:min-h-[76px] px-3 py-2.5 bg-pink-50/40 hover:bg-pink-100/70 border-2 border-pink-200 rounded-2xl font-extrabold text-slate-800 transition-all flex items-center justify-center text-center shadow-xs pastel-btn"><span class="flex items-center justify-center gap-2"><strong class="text-pink-600 text-base md:text-lg">${letter}.</strong><span class="opt-text ${textClass} font-black">${escapeHtml(label)}</span></span><span class="option-icon text-pink-500 ml-1"></span></button>`;
+    }).join('');
+
+    return `
+        <div class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-[1.05fr_0.95fr] gap-4 items-stretch py-1">
+            <div class="flex flex-col justify-center">${visualHtml}${guidanceHtml}</div>
+            <div class="rounded-[28px] border border-pink-100 bg-white/95 px-3 py-4 md:px-5 md:py-5 flex flex-col justify-center shadow-sm">
+                <h3 class="text-lg md:text-xl lg:text-[24px] font-black text-slate-900 leading-snug text-center">${escapeHtml(q.question_text)}</h3>
+                ${speakerHtml}
+                <div class="grid ${opts.length === 2 ? 'grid-cols-2' : 'grid-cols-2'} gap-2.5 mt-3">${optionsHtml}</div>
+                <div id="topic35-feedback-host">${buildTopic35FeedbackHtml_(q)}</div>
+            </div>
+        </div>`;
+}
+
+function refreshTopic35FeedbackHost_(q) {
+    if (Number(activeTopicId) !== 3 || getTopic3Stage_(q) !== '3.5') return;
+    const host = document.getElementById('topic35-feedback-host');
+    if (host) host.innerHTML = buildTopic35FeedbackHtml_(q);
 }
 
 function buildMuc5SolutionHtml_(q) {
@@ -5283,6 +5791,10 @@ function loadQuestion() {
         }
     } else if (isTopic3Practice && getTopic3Stage_(q) === '3.3') {
         html = buildTopic3CompareLayout_(q, practiceSpeakerBtnHtml);
+    } else if (isTopic3Practice && getTopic3Stage_(q) === '3.4') {
+        html = buildTopic3SortLayout_(q, practiceSpeakerBtnHtml);
+    } else if (isTopic3Practice && getTopic3Stage_(q) === '3.5') {
+        html = buildTopic35QuestionLayout_(q, practiceSpeakerBtnHtml);
     } else if (isTopic4Practice && getTopic4SequenceStage_(q) === '4.1') {
         html = buildTopic4Sub41Layout_(q, practiceSpeakerBtnHtml);
     } else if (isTopic5Practice) {
@@ -5357,6 +5869,8 @@ function loadQuestion() {
     restoreQuestionState(q);
     refreshTopic4Sub41SolutionHost_(q);
     refreshTopic3CompareSolutionHost_(q);
+    renderTopic3SortInteractive_(q);
+    refreshTopic35FeedbackHost_(q);
     refreshMuc5SolutionHost_(q);
     updateNavButtons();
     updateQuizPalletUI();
@@ -5425,6 +5939,10 @@ function restoreQuestionState(q) {
                 b.disabled = true;
             }
         });
+    }
+
+    if (Number(activeTopicId) === 3 && getTopic3Stage_(q) === '3.4') {
+        refreshTopic3SortUi_(q);
     }
 }
 
@@ -5514,7 +6032,13 @@ function checkAnswer(selectedOpt) {
                 b.classList.add('bg-red-200', 'border-red-500', 'text-red-900');
             }
         });
-        if (isCorrect) refreshTopic4Sub41SolutionHost_(q);
+        if (isCorrect) {
+            refreshTopic4Sub41SolutionHost_(q);
+            refreshTopic3CompareSolutionHost_(q);
+            renderTopic3SortInteractive_(q);
+            refreshTopic35FeedbackHost_(q);
+            refreshMuc5SolutionHost_(q);
+        }
 
         if (isCorrect) {
             playAudio('correct');
@@ -5548,6 +6072,8 @@ function checkAnswer(selectedOpt) {
         });
         refreshTopic4Sub41SolutionHost_(q);
         refreshTopic3CompareSolutionHost_(q);
+        renderTopic3SortInteractive_(q);
+        refreshTopic35FeedbackHost_(q);
         refreshMuc5SolutionHost_(q);
 
         playAudio('correct');
@@ -5612,7 +6138,7 @@ function nextQuestion() {
             showAppNotice(`🎉 Chúc mừng bé đã hoàn thành trọn vẹn 1 vòng luyện tập (${activeQuestionsList.length} câu)!\nBây giờ Cô Thỏ Hồng sẽ xáo trộn để con bước vào vòng luyện tập tiếp theo nhé!`, { title: 'Hoàn thành vòng luyện tập', icon: '🎉', tone: 'emerald' });
 
             const basePool = practiceCycleRawPool.length ? practiceCycleRawPool : activeQuestionsList;
-            activeQuestionsList = shuffleArray([...basePool]);
+            activeQuestionsList = buildPracticeCycleQuestions_(basePool);
             currentQIndex = 0;
             userAnswers = {};
             wrongAttemptsByQ = {};
