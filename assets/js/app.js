@@ -2011,7 +2011,15 @@ function renderGenericMathLabJourneyComplete_() {
 // EPSILON METHOD 12.1 - NUMBER SENSE
 // Trải nghiệm -> thao tác -> nhìn thấy -> diễn đạt -> ký hiệu -> transfer
 // ==========================================
-const EPSILON_MUC12_DATA_FILE = 'assets/data/Toan 1 - Muc 12 part 1.json';
+// Mục 12 đã được gộp thành một file JSON đầy đủ. Hỗ trợ cả tên file sạch và tên file
+// có hậu tố (1) do trình duyệt/Windows tự thêm khi tải trùng; giữ tên cũ làm fallback
+// để không làm vỡ các bản triển khai trước.
+const EPSILON_MUC12_DATA_FILES = [
+    'assets/data/Toan1_Muc12_Grade1_Full.json',
+    'assets/data/Toan1_Muc12_Grade1_Full(1).json',
+    'assets/data/Toan 1 - Muc 12 part 1.json'
+];
+let epsilonMuc12ResolvedFile_ = '';
 let epsilonMuc12DataCache = null;
 let numberSenseDataCache = null;
 let activeNumberSense = null;
@@ -2023,12 +2031,32 @@ let numberSenseFlashTimer = null;
 
 async function loadEpsilonMuc12Data_() {
     if (epsilonMuc12DataCache) return epsilonMuc12DataCache;
-    const res = await fetch(EPSILON_MUC12_DATA_FILE, { cache: 'no-store' });
-    if (!res.ok) throw new Error('Không thể tải dữ liệu Mục 12');
-    const data = await res.json();
-    if (!data || Number(data.topic_id) !== 12 || !Array.isArray(data.tracks)) throw new Error('Dữ liệu Mục 12 chưa đúng cấu trúc');
-    epsilonMuc12DataCache = data;
-    return data;
+
+    const errors = [];
+    for (const file of EPSILON_MUC12_DATA_FILES) {
+        try {
+            const res = await fetch(file, { cache: 'no-store' });
+            if (!res.ok) {
+                errors.push(`${file}: HTTP ${res.status}`);
+                continue;
+            }
+
+            const data = await res.json();
+            if (!data || Number(data.topic_id) !== 12 || !Array.isArray(data.tracks) || !data.tracks.length) {
+                errors.push(`${file}: sai cấu trúc dữ liệu`);
+                continue;
+            }
+
+            epsilonMuc12ResolvedFile_ = file;
+            epsilonMuc12DataCache = data;
+            return data;
+        } catch (err) {
+            errors.push(`${file}: ${err?.message || 'không đọc được JSON'}`);
+        }
+    }
+
+    console.error('[Mục 12] Không tải được dữ liệu:', errors);
+    throw new Error('Không thể tải dữ liệu Mục 12. Hãy đặt file Toan1_Muc12_Grade1_Full.json trong assets/data.');
 }
 
 async function loadNumberSenseData_() {
@@ -2821,7 +2849,7 @@ function formatSubtopicLabelWithCode_(code, label) {
     const safeCode = String(code || '').trim();
     const safeLabel = beautifySubtopicName(label || safeCode || '');
     if (!safeCode) return safeLabel;
-    if (safeLabel.startsWith(`${safeCode} `) || safeLabel.startsWith(`${safeCode}.`) || safeLabel.startsWith(`${safeCode} -`)) return safeLabel;
+    if (safeLabel === safeCode || safeLabel.startsWith(`${safeCode} `) || safeLabel.startsWith(`${safeCode}.`) || safeLabel.startsWith(`${safeCode} -`) || safeLabel.startsWith(`${safeCode}:`)) return safeLabel;
     return `${safeCode} ${safeLabel}`.trim();
 }
 
@@ -3292,10 +3320,13 @@ function showLectureAndSubtopics(topicNum, topicName, topicObj) {
         const hideInternalCode = [3,4,5,6,7,8,9,10,11].includes(Number(topicNum));
         const displayTitle = hideInternalCode ? beautifySubtopicName(groupLabels[subName]) : formatSubtopicLabelWithCode_(subName, groupLabels[subName]);
         const count = groupMap[subName].length;
+        // Mục 1 và 2 đã có mã thật 1.1, 1.2... / 2.1, 2.2... trong tiêu đề.
+        // Không chèn thêm số thứ tự 1., 2., 3. phía trước để tránh hiển thị "1. 1.1...".
+        const ordinalHtml = hideInternalCode ? `<strong class="${style.num} mr-1.5">${displayIndex}.</strong>` : '';
 
         subHtml += `
             <button onclick="selectSubtopic(${idx})" class="px-3 py-2.5 ${style.card} border-2 rounded-xl font-bold text-left transition-all flex items-center justify-between gap-2 shadow-sm pastel-btn">
-                <span class="text-base md:text-lg leading-tight sm:whitespace-nowrap"><strong class="${style.num} mr-1.5">${displayIndex}.</strong> ${escapeHtml(displayTitle)}</span>
+                <span class="text-base md:text-lg leading-tight sm:whitespace-nowrap">${ordinalHtml}${ordinalHtml ? ' ' : ''}${escapeHtml(displayTitle)}</span>
                 <span class="text-sm md:text-base font-extrabold ${style.badge} px-2.5 py-0.5 rounded-full border shrink-0 ml-1.5 shadow-inner">${count} câu</span>
             </button>`;
     });
@@ -5981,10 +6012,11 @@ async function renderHistoryReport(rows, sheetName) {
     });
 
     const skillKeys = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6'];
-    // Chưa có dữ liệu thật (chưa làm bài nào) thì để 0 hết, không dùng số ảo mẫu nữa
-    // (trước đây để tạm {85,78,92,70,80,75} gây hiểu lầm là đã có kết quả thật).
-    const skillAverages = { C1: 0, C2: 0, C3: 0, C4: 0, C5: 0, C6: 0 };
+    // null = chưa được đánh giá. Chỉ năng lực thực sự có bằng chứng mới nhận giá trị %.
+    // Không dùng 0 để đại diện cho "chưa học/chưa kiểm tra", vì 0% chỉ hợp lệ khi đã được kiểm tra.
+    const skillAverages = { C1: null, C2: null, C3: null, C4: null, C5: null, C6: null };
     const touchedSkills = [];
+    let examSkillBlueprint = {};
 
     if (rows.length && isWeekly) {
         // Bài tập: % = tổng số câu đúng / tổng số câu đã làm THẬT của nhóm kỹ năng đó
@@ -6004,7 +6036,6 @@ async function renderHistoryReport(rows, sheetName) {
     } else if (rows.length) {
         // Đề thi mới không ép đủ 6 năng lực. Mỗi lần thi chỉ tính những năng lực có câu thật sự.
         // Dùng chính JSON đề thi để lấy điểm tối đa của từng năng lực ở từng đề, thay vì một ma trận cố định 6 nhóm.
-        let examSkillBlueprint = {};
         try {
             const examData = await loadExamDataFile('de_thi_toan_1.json');
             const exams = Array.isArray(examData?.exams) ? examData.exams : [];
@@ -6128,7 +6159,7 @@ async function renderHistoryReport(rows, sheetName) {
     });
 
     renderPedagogicalEvaluation(rows, skillAverages, touchedSkills);
-    renderHistoryTable(rows, sheetName);
+    renderHistoryTable(rows, sheetName, examSkillBlueprint);
 }
 
 function renderPedagogicalEvaluation(rows, skillAverages, touchedSkills) {
@@ -6206,7 +6237,7 @@ function renderPedagogicalEvaluation(rows, skillAverages, touchedSkills) {
     `;
 }
 
-function renderHistoryTable(rows, sheetName) {
+function renderHistoryTable(rows, sheetName, examSkillBlueprint = {}) {
     const tbody = document.getElementById('hist-table-body');
     if (!tbody) return;
 
@@ -6218,9 +6249,25 @@ function renderHistoryTable(rows, sheetName) {
     const isWeekly = sheetName === 'LichSuTienTrinhTuan';
     const skillKeys = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6'];
 
+    // Trả về null khi năng lực chưa có dữ liệu. Giá trị 0 chỉ được giữ khi thật sự có dữ liệu 0 điểm.
     const getScoreVal = (r, num, colName) => {
-        const val = r[`diemC${num}`] ?? r[colName] ?? r[`diem_c${num}`] ?? r[`C${num}`];
-        return (val !== undefined && val !== null && val !== '') ? Number(val) : 0;
+        const candidates = [r[`diemC${num}`], r[colName], r[`diem_c${num}`], r[`C${num}`]];
+        for (const val of candidates) {
+            if (val === undefined || val === null || val === '' || val === '--') continue;
+            const parsed = Number(val);
+            if (Number.isFinite(parsed)) return parsed;
+        }
+        return null;
+    };
+
+    // Với đề thi, JSON đề là nguồn xác định năng lực nào thực sự được kiểm tra.
+    // Điều này cũng sửa dữ liệu lịch sử cũ từng lưu 0 cho năng lực không có câu trong đề.
+    const isExamSkillAssessed = (r, k) => {
+        if (isWeekly) return true;
+        const examNo = Number(r.deSo);
+        const blueprint = examNo > 0 ? examSkillBlueprint?.[examNo] : null;
+        if (!blueprint) return true; // Không có blueprint thì chỉ dựa vào dữ liệu đã lưu.
+        return Number(blueprint[k] || 0) > 0;
     };
 
     const totalRows = rows.length;
@@ -6245,7 +6292,7 @@ function renderHistoryTable(rows, sheetName) {
         });
         skillKeys.forEach(k => {
             const a = agg[k];
-            summaryCells += `<td class="py-2 px-1">${a.total > 0 ? Math.round((a.correct / a.total) * 100) + '%' : '--'}</td>`;
+            summaryCells += `<td class="py-2 px-1">${a.total > 0 ? Math.round((a.correct / a.total) * 100) + '%' : ''}</td>`;
         });
 
         rows.forEach((r, idx) => {
@@ -6256,7 +6303,7 @@ function renderHistoryTable(rows, sheetName) {
             let skillCells = '';
             skillKeys.forEach(k => {
                 const cell = getSkillCell(r, k);
-                if (!cell) { skillCells += `<td class="py-2 px-1 text-gray-300">--</td>`; return; }
+                if (!cell) { skillCells += `<td class="py-2 px-1"></td>`; return; }
                 const pct = cell.total > 0 ? Math.round((cell.correct / cell.total) * 100) : 0;
                 skillCells += `<td class="py-2 px-1">${cell.correct}/${cell.total} <span class="text-gray-400">(${pct}%)</span></td>`;
             });
@@ -6273,9 +6320,19 @@ function renderHistoryTable(rows, sheetName) {
             `;
         });
     } else {
+        // Đề thi: trung bình từng năng lực chỉ tính trên những đề CÓ kiểm tra năng lực đó.
+        // Nếu cả học kỳ chưa có dữ liệu của một năng lực, ô tổng hợp để trống hoàn toàn.
         skillKeys.forEach((k, i) => {
-            const sum = rows.reduce((acc, r) => acc + getScoreVal(r, i + 1, SKILL_TAXONOMY[k].sheetCol), 0);
-            summaryCells += `<td class="py-2 px-1">${(sum / totalRows).toFixed(1)}</td>`;
+            let sum = 0;
+            let count = 0;
+            rows.forEach(r => {
+                if (!isExamSkillAssessed(r, k)) return;
+                const val = getScoreVal(r, i + 1, SKILL_TAXONOMY[k].sheetCol);
+                if (val === null) return;
+                sum += val;
+                count++;
+            });
+            summaryCells += `<td class="py-2 px-1">${count > 0 ? (sum / count).toFixed(1) : ''}</td>`;
         });
 
         rows.forEach((r, idx) => {
@@ -6285,7 +6342,12 @@ function renderHistoryTable(rows, sheetName) {
 
             let examSkillCells = '';
             skillKeys.forEach((k, i) => {
-                examSkillCells += `<td class="py-2 px-1">${getScoreVal(r, i + 1, SKILL_TAXONOMY[k].sheetCol)}</td>`;
+                if (!isExamSkillAssessed(r, k)) {
+                    examSkillCells += `<td class="py-2 px-1"></td>`;
+                    return;
+                }
+                const val = getScoreVal(r, i + 1, SKILL_TAXONOMY[k].sheetCol);
+                examSkillCells += `<td class="py-2 px-1">${val === null ? '' : val}</td>`;
             });
 
             bodyRows += `
@@ -6302,37 +6364,17 @@ function renderHistoryTable(rows, sheetName) {
     }
 
     const html = `
-        <tr class="bg-amber-100/90 text-amber-950 font-black border-b-2 border-amber-200">
-            <td class="py-2.5 px-2" colspan="2">Điểm trung bình</td>
-            <td class="py-2.5 px-2 text-rose-600">${avgTong}</td>
+        <tr class="bg-pink-50/80 font-black text-rose-700 border-b border-pink-200">
+            <td class="py-2.5 px-2">TB</td>
+            <td class="py-2.5 px-2">Trung bình</td>
+            <td class="py-2.5 px-2">${avgTong}</td>
             ${summaryCells}
-            <td class="py-2.5 px-2" colspan="2">--</td>
+            <td class="py-2.5 px-2">--</td>
+            <td class="py-2.5 px-2">--</td>
         </tr>
         ${bodyRows}
     `;
     tbody.innerHTML = html;
-}
-
-function exportReportToPDF() {
-    const area = document.getElementById('printable-report-area');
-    if (!area) return;
-    showLoadingOverlay('Đang khởi tạo file PDF chuẩn in ấn...');
-    
-    const opt = {
-        margin: [5, 5, 5, 5],
-        filename: `Bao_Cao_Tien_Trinh_${currentUser?.maHS || 'HocSinh'}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
-        pagebreak: { mode: ['css', 'legacy'] }
-    };
-
-    html2pdf().set(opt).from(area).save().then(() => {
-        hideLoadingOverlay();
-    }).catch(err => {
-        hideLoadingOverlay();
-        window.print();
-    });
 }
 
 // ==========================================
