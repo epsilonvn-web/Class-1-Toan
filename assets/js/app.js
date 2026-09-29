@@ -4083,6 +4083,11 @@ function starCountFromPercent(percent) {
     return 0;
 }
 
+function getSkillKeyFromTag_(rawTag) {
+    const m = String(rawTag || '').toUpperCase().match(/C([1-6])/);
+    return m ? `C${m[1]}` : null;
+}
+
 function renderReportTopicsBreakdown() {
     const container = document.getElementById('report-topics-list');
     if (!container) return;
@@ -4095,25 +4100,37 @@ function renderReportTopicsBreakdown() {
     });
 
     activeQuestionsList.forEach((q, idx) => {
-        let rawTag = String(q.skill_tag || 'TOAN_C1').toUpperCase();
-        let m = rawTag.match(/C([1-6])/);
-        let tag = m ? 'C' + m[1] : 'C1';
+        const tag = getSkillKeyFromTag_(q.skill_tag);
+        if (!tag || !skillStats[tag]) return;
 
-        if (!skillStats[tag]) skillStats[tag] = { total: 0, correct: 0, maxScore: 0, earnedScore: 0 };
+        const point = Number(q.diem ?? 0.5);
+        const safePoint = Number.isFinite(point) ? point : 0.5;
         skillStats[tag].total++;
-        skillStats[tag].maxScore += (q.diem ?? 0.5);
+        skillStats[tag].maxScore += safePoint;
         if (userAnswers[idx] === q.answer) {
             skillStats[tag].correct++;
-            skillStats[tag].earnedScore += (q.diem ?? 0.5);
+            skillStats[tag].earnedScore += safePoint;
         }
     });
 
+    // Chỉ hiển thị những năng lực THỰC SỰ có câu trong bài/đề hiện tại.
+    // Năng lực chưa học/chưa được kiểm tra không được biến thành 0% hay "Cần luyện tập thêm".
+    const assessedSkills = skillKeys.filter(k => {
+        const data = skillStats[k];
+        return isRoadmap ? data.total > 0 : data.maxScore > 0;
+    });
+
+    if (!assessedSkills.length) {
+        container.innerHTML = `<div class="col-span-full rounded-2xl border border-slate-200 bg-slate-50 p-4 text-center text-sm font-bold text-slate-600">Chưa có dữ liệu năng lực để đánh giá.</div>`;
+        return;
+    }
+
     let html = '';
-    skillKeys.forEach(k => {
+    assessedSkills.forEach(k => {
         const data = skillStats[k];
         const pct = isRoadmap
-            ? (data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0)
-            : (data.maxScore > 0 ? Math.round((data.earnedScore / data.maxScore) * 100) : 0);
+            ? Math.round((data.correct / data.total) * 100)
+            : Math.round((data.earnedScore / data.maxScore) * 100);
         const isPassed = pct >= 50;
         const badgeClass = isPassed ? 'bg-amber-100 text-amber-800 border border-amber-200' : 'bg-rose-50 text-rose-700 border border-rose-200';
         const badgeText = isPassed ? 'Đạt yêu cầu' : 'Cần luyện tập thêm';
@@ -4179,22 +4196,27 @@ function closeReviewWrongModal() {
 }
 
 // ==========================================
-// LƯU KẾT QUẢ & ĐỒNG BỘ ĐIỂM C1-C6 LÊN GOOGLE SHEETS
+// LƯU KẾT QUẢ ĐỀ THI THEO NHỮNG NĂNG LỰC THỰC SỰ ĐƯỢC KIỂM TRA
 // ==========================================
 async function saveExamResultToSheet() {
     const { categoryKey, examIndex } = activeExamContext;
     const thoiGianLamBai = quizStartTime ? formatDuration(Date.now() - quizStartTime) : '';
-    
-    const skillScores = { C1: 0, C2: 0, C3: 0, C4: 0, C5: 0, C6: 0 };
-    quizAnsweredLog.forEach(item => {
-        let rawTag = String(item.skill_tag || 'C1').toUpperCase();
-        let m = rawTag.match(/C([1-6])/);
-        let tag = m ? 'C' + m[1] : 'C1';
 
-        if (item.isCorrect && skillScores[tag] !== undefined) {
-            skillScores[tag] += (item.diem || 0.5);
-        }
+    const skillScores = { C1: 0, C2: 0, C3: 0, C4: 0, C5: 0, C6: 0 };
+    const skillMaxScores = { C1: 0, C2: 0, C3: 0, C4: 0, C5: 0, C6: 0 };
+    quizAnsweredLog.forEach(item => {
+        const tag = getSkillKeyFromTag_(item.skill_tag);
+        if (!tag || skillScores[tag] === undefined) return;
+
+        const point = Number(item.diem ?? 0.5);
+        const safePoint = Number.isFinite(point) ? point : 0.5;
+        skillMaxScores[tag] += safePoint;
+        if (item.isCorrect) skillScores[tag] += safePoint;
     });
+
+    // Năng lực không có câu trong đề phải để TRỐNG, không được lưu 0.
+    // 0 chỉ có nghĩa khi năng lực đó đã được kiểm tra nhưng bé không đạt điểm nào.
+    const storedSkillScore = (k) => skillMaxScores[k] > 0 ? skillScores[k].toFixed(1) : '';
 
     const payload = {
         maHS: currentUser.maHS,
@@ -4207,18 +4229,18 @@ async function saveExamResultToSheet() {
         tongDiem: score.toFixed(1),
         soCauDung: quizAnsweredLog.filter(x => x.isCorrect).length,
         tongCauHoi: activeQuestionsList.length,
-        diemC1: skillScores.C1.toFixed(1),
-        diemC2: skillScores.C2.toFixed(1),
-        diemC3: skillScores.C3.toFixed(1),
-        diemC4: skillScores.C4.toFixed(1),
-        diemC5: skillScores.C5.toFixed(1),
-        diemC6: skillScores.C6.toFixed(1),
+        diemC1: storedSkillScore('C1'),
+        diemC2: storedSkillScore('C2'),
+        diemC3: storedSkillScore('C3'),
+        diemC4: storedSkillScore('C4'),
+        diemC5: storedSkillScore('C5'),
+        diemC6: storedSkillScore('C6'),
         wrongQuestions: quizWrongAnswers
     };
-    // Ghi điểm từng nhóm năng lực vào ĐÚNG tên cột khai báo trong SKILL_TAXONOMY (C1_NhanBiet, C2_PhepTinh...)
-    // — không hard-code tên cột, tránh lệch dữ liệu nếu sau này đổi lại taxonomy.
+    // Ghi cùng quy tắc vào các cột năng lực chuẩn: có kiểm tra thì lưu điểm (kể cả 0.0),
+    // chưa kiểm tra thì để trống để lịch sử không hiểu nhầm là bé bị 0 điểm.
     Object.keys(SKILL_TAXONOMY).forEach(k => {
-        payload[SKILL_TAXONOMY[k].sheetCol] = skillScores[k].toFixed(1);
+        payload[SKILL_TAXONOMY[k].sheetCol] = storedSkillScore(k);
     });
     try { await callAppsScript('saveExamResult', payload); } catch (e) {}
 }
@@ -4306,7 +4328,7 @@ async function openHistoryModal(sheetName = 'LichSuTienTrinhTuan') {
         const res = await callAppsScript('getHistory', { maHS: currentUser.maHS, sheetName });
         hideLoadingOverlay();
         const rows = (res && res.history) ? res.history : [];
-        renderHistoryReport(rows, sheetName);
+        await renderHistoryReport(rows, sheetName);
     } catch (err) {
         hideLoadingOverlay();
         showAppNotice('Không thể tải lịch sử: ' + err.message, { title: 'Lịch sử học tập', icon: '📊', tone: 'rose' });
@@ -4343,7 +4365,7 @@ function formatDateShort(value) {
     return `${String(d.getDate()).padStart(2, '0')}-${String(d.getMonth() + 1).padStart(2, '0')}`;
 }
 
-function renderHistoryReport(rows, sheetName) {
+async function renderHistoryReport(rows, sheetName) {
     const isWeekly = sheetName === 'LichSuTienTrinhTuan';
     const labels = rows.map((r, i) => {
         const dm = formatDateShort(r.Timestamp || r.ngayLam);
@@ -4418,20 +4440,63 @@ function renderHistoryReport(rows, sheetName) {
             }
         });
     } else if (rows.length) {
-        // Điểm tối đa THẬT của từng nhóm năng lực trong 1 đề thi, đúng theo ma trận đề thi 13 câu / 10 điểm:
-        // C1 (Q1,Q3,Q7)=2.0đ | C2 (Q4,Q8)=1.5đ | C3 (Q6,Q9)=1.5đ | C4 (Q2,Q5,Q10)=2.0đ | C5 (Q11)=1.0đ | C6 (Q12,Q13)=2.0đ
-        const SKILL_MAX_POINTS = { C1: 2.0, C2: 1.5, C3: 1.5, C4: 2.0, C5: 1.0, C6: 2.0 };
+        // Đề thi mới không ép đủ 6 năng lực. Mỗi lần thi chỉ tính những năng lực có câu thật sự.
+        // Dùng chính JSON đề thi để lấy điểm tối đa của từng năng lực ở từng đề, thay vì một ma trận cố định 6 nhóm.
+        let examSkillBlueprint = {};
+        try {
+            const examData = await loadExamDataFile('de_thi_toan_1.json');
+            const exams = Array.isArray(examData?.exams) ? examData.exams : [];
+            exams.forEach((exam, index) => {
+                const maxBySkill = { C1: 0, C2: 0, C3: 0, C4: 0, C5: 0, C6: 0 };
+                (exam.questions || []).forEach(q => {
+                    const tag = getSkillKeyFromTag_(q.skill_tag);
+                    if (!tag || maxBySkill[tag] === undefined) return;
+                    const point = Number(q.diem ?? 0.5);
+                    maxBySkill[tag] += Number.isFinite(point) ? point : 0.5;
+                });
+                examSkillBlueprint[index + 1] = maxBySkill;
+            });
+        } catch (e) {
+            examSkillBlueprint = {};
+        }
+
         skillKeys.forEach((k) => {
             const colName = SKILL_TAXONOMY[k].sheetCol;
-            const vals = rows.map(r => {
-                const val = r[`diem${k}`] ?? r[colName] ?? r[`diem_${k.toLowerCase()}`] ?? r[k];
-                return (val !== undefined && val !== null && val !== '--') ? Number(val) : 0;
+            let sumEarned = 0;
+            let sumMax = 0;
+
+            rows.forEach(r => {
+                const raw = r[`diem${k}`] ?? r[colName] ?? r[`diem_${k.toLowerCase()}`] ?? r[k];
+                const hasStoredValue = raw !== undefined && raw !== null && raw !== '' && raw !== '--';
+                const examNo = Number(r.deSo);
+                const maxForExam = Number(examSkillBlueprint[examNo]?.[k] || 0);
+
+                // Nếu JSON xác nhận đề này không kiểm tra năng lực k thì bỏ qua hoàn toàn,
+                // kể cả dữ liệu cũ từng lưu 0 do lỗi "ép đủ 6 năng lực".
+                if (examNo > 0 && examSkillBlueprint[examNo] && maxForExam <= 0) return;
+                if (!hasStoredValue) return;
+
+                const earned = Number(raw);
+                if (!Number.isFinite(earned)) return;
+
+                // Ưu tiên mẫu đề hiện tại để có mẫu số đúng. Nếu không tìm được đề cũ,
+                // chỉ dùng dòng dữ liệu khi backend có cột tổng/max tương ứng.
+                let denominator = maxForExam;
+                if (denominator <= 0) {
+                    const rawTotal = r[SKILL_TAXONOMY[k].totalCol];
+                    const parsedTotal = Number(rawTotal);
+                    if (rawTotal !== undefined && rawTotal !== null && rawTotal !== '' && Number.isFinite(parsedTotal) && parsedTotal > 0) {
+                        denominator = parsedTotal;
+                    }
+                }
+                if (denominator <= 0) return;
+
+                sumEarned += earned;
+                sumMax += denominator;
             });
-            const sum = vals.reduce((a, b) => a + b, 0);
-            const maxTotal = SKILL_MAX_POINTS[k] * vals.length;
-            // Không dùng "|| 75" nữa: điểm 0 thật sự phải hiển thị 0%, không được tự nhảy về giá trị mặc định.
-            if (vals.length > 0 && maxTotal > 0) {
-                skillAverages[k] = Math.min(100, Math.round((sum / maxTotal) * 100));
+
+            if (sumMax > 0) {
+                skillAverages[k] = Math.min(100, Math.round((sumEarned / sumMax) * 100));
                 touchedSkills.push(k);
             }
         });
@@ -4440,14 +4505,20 @@ function renderHistoryReport(rows, sheetName) {
     const ctxBar = document.getElementById('topicRadarChartCanvas').getContext('2d');
     if (histBarChartInstance) histBarChartInstance.destroy();
 
+    // Biểu đồ chỉ vẽ những năng lực đã có bằng chứng đánh giá; không vẽ cột 0% giả cho năng lực chưa học/chưa thi.
+    const chartSkills = touchedSkills.length ? touchedSkills : [];
+    const chartLabels = chartSkills.length ? chartSkills.map(k => SKILL_TAXONOMY[k].name) : ['Chưa có dữ liệu năng lực'];
+    const chartValues = chartSkills.length ? chartSkills.map(k => skillAverages[k]) : [0];
+    const chartColors = ['#f472b6', '#fb7185', '#f59e0b', '#a855f7', '#ec4899', '#e11d48'];
+
     histBarChartInstance = new Chart(ctxBar, {
         type: 'bar',
         data: {
-            labels: skillKeys.map(k => SKILL_TAXONOMY[k].name),
+            labels: chartLabels,
             datasets: [{
                 label: 'Độ thành thạo (%)',
-                data: skillKeys.map(k => skillAverages[k]),
-                backgroundColor: ['#f472b6', '#fb7185', '#f59e0b', '#a855f7', '#ec4899', '#e11d48'],
+                data: chartValues,
+                backgroundColor: chartValues.map((_, i) => chartColors[i % chartColors.length]),
                 borderRadius: 8,
                 borderSkipped: false,
                 barThickness: 16
@@ -4478,6 +4549,7 @@ function renderHistoryReport(rows, sheetName) {
             id: 'barValueLabels',
             afterDatasetsDraw(chart) {
                 const { ctx } = chart;
+                if (!chartSkills.length) return;
                 chart.data.datasets[0].data.forEach((val, i) => {
                     const meta = chart.getDatasetMeta(0).data[i];
                     if (!meta) return;
