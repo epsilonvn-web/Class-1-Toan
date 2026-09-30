@@ -606,6 +606,14 @@ function setAppShellRootMode_(isRoot) {
     if (contextBanner) contextBanner.classList.toggle('hidden', appShellRootMode_);
 }
 
+
+function setMiniGamePlayWide_(wide) {
+    const dashboard = document.getElementById('screen-dashboard');
+    const playInner = document.querySelector('#view-game-play > div');
+    if (dashboard) dashboard.style.maxWidth = wide ? '1280px' : '';
+    if (playInner) playInner.style.maxWidth = wide ? '1280px' : '';
+}
+
 let currentMainTab = 'discover';
 function setMainTabActive_(tabName) {
     currentMainTab = tabName || 'discover';
@@ -668,6 +676,7 @@ function returnToTopicLecture() {
 
 function switchAppView(viewId) {
     stopSpeaking();
+    if (viewId !== 'view-game-play') setMiniGamePlayWide_(false);
     if (viewId !== 'view-game-play' && typeof stopActiveMiniGame_ === 'function') stopActiveMiniGame_();
     ['view-dashboard-grid', 'view-epsilon-method-hub', 'view-number-sense', 'view-operation-sense', 'view-bai-hoc-hub', 'view-bai-hoc-lesson', 'view-lecture', 'view-quiz', 'view-roadmap', 'view-minigame-hub', 'view-game-play', 'view-exam-hub', 'view-result'].forEach(id => {
         const el = document.getElementById(id);
@@ -693,38 +702,48 @@ function goHome() {
 
 // ==========================================
 // MINI GAME TOÁN 1 — HUB + LAZY LOAD
-// 1. Sudoku  |  2. Thám tử đếm  |  3. Chẵn - lẻ  |  4. Cây cầu số
+// 1. Sudoku  |  2. Thám tử đếm  |  3. Chẵn - lẻ  |  4. Cây cầu số  |  5. Tháp số  |  6. Ký ức công trình
 // ==========================================
 let inMiniGameFlow = false;
 const MINIGAME_LIST = [
     { id: 'sudoku', title: '1. Sudoku', desc: 'Điền số đúng theo hàng, cột và từng ô nhỏ', icon: '🔢', ready: true },
     { id: 'counting-scene', title: '2. Thám tử đếm', desc: 'Quan sát tranh thật, chạm từng vật và đếm không lặp', icon: '🔎', ready: true },
     { id: 'even-odd', title: '3. Ghép đôi - Chẵn lẻ', desc: 'Ghép thành từng đôi để hiểu số chẵn và số lẻ', icon: '👯', ready: true },
-    { id: 'number-bridge', title: '4. Cây cầu số', desc: 'Ghép các đoạn cầu vừa khít để hiểu tách - gộp, cộng và phần còn thiếu', icon: '🌉', ready: true }
+    { id: 'number-bridge', title: '4. Cây cầu số', desc: 'Ghép các đoạn cầu vừa khít để hiểu tách - gộp, cộng và phần còn thiếu', icon: '🌉', ready: true },
+    { id: 'number-tower', title: '5. Tháp số vươn cao', desc: 'Xây tháp theo thứ tự, số hai chữ số và quy luật cách đều', icon: '🏰', ready: true },
+    { id: 'construction-memory', title: '6. Ký ức công trình', desc: 'Nhìn, ghi nhớ rồi dựng lại công trình bằng các khối hình', icon: '🏗️', ready: true }
 ];
 const MINIGAME_PALETTES = [
     ['bg-rose-50/80','border-rose-300','text-rose-600'],
     ['bg-sky-50/80','border-sky-300','text-sky-600'],
     ['bg-violet-50/80','border-violet-300','text-violet-600'],
-    ['bg-amber-50/80','border-amber-300','text-amber-700']
+    ['bg-amber-50/80','border-amber-300','text-amber-700'],
+    ['bg-fuchsia-50/80','border-fuchsia-300','text-fuchsia-700'],
+    ['bg-emerald-50/80','border-emerald-300','text-emerald-700']
 ];
 const GAME_SCRIPT_MAP = {
     'sudoku': 'assets/js/games/sudoku.js?v=20260930-toan1-same-toan2',
     'counting-scene': 'assets/js/games/counting-scene.js?v=20260930-scene-count-v1',
     'even-odd': 'assets/js/games/even-odd.js?v=20260930-pairing-v1',
-    'number-bridge': 'assets/js/games/number-bridge.js?v=20260930-number-bridge-v1'
+    'number-bridge': 'assets/js/games/number-bridge.js?v=20260930-number-bridge-v3-wide',
+    'number-tower': 'assets/js/games/number-tower.js?v=20260930-number-tower-v2-wide',
+    'construction-memory': 'assets/js/games/construction-memory.js?v=20260930-construction-memory-v1'
 };
 const GAME_START_FN_MAP = {
     'sudoku': 'startSudokuGame',
     'counting-scene': 'startCountingSceneGame',
     'even-odd': 'startEvenOddGame',
-    'number-bridge': 'startNumberBridgeGame'
+    'number-bridge': 'startNumberBridgeGame',
+    'number-tower': 'startNumberTowerGame',
+    'construction-memory': 'startConstructionMemoryGame'
 };
 const GAME_STOP_FN_MAP = {
     'sudoku': 'stopSudokuGame',
     'counting-scene': 'stopCountingSceneGame',
     'even-odd': 'stopEvenOddGame',
-    'number-bridge': 'stopNumberBridgeGame'
+    'number-bridge': 'stopNumberBridgeGame',
+    'number-tower': 'stopNumberTowerGame',
+    'construction-memory': 'stopConstructionMemoryGame'
 };
 let activeMiniGameId_ = null;
 const loadedGameScripts = {};
@@ -784,6 +803,7 @@ async function openGamePlay(gameId) {
     const game = MINIGAME_LIST.find(g => g.id === gameId);
     if (!game) return;
     setAppShellRootMode_(false);
+    setMiniGamePlayWide_(true);
     setMainTabActive_('games');
     stopSpeaking();
     clearInterval(quizTimerInterval);
