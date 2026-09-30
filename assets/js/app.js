@@ -702,7 +702,7 @@ function goHome() {
 
 // ==========================================
 // MINI GAME TOÁN 1 — HUB + LAZY LOAD
-// 1. Sudoku  |  2. Thám tử đếm  |  3. Chẵn - lẻ  |  4. Cây cầu số  |  5. Tháp số  |  6. Xưởng ghép hình kỳ diệu
+// 1. Sudoku  |  2. Thám tử đếm  |  3. Chẵn - lẻ  |  4. Cây cầu số  |  5. Tháp số  |  6. Xưởng ghép hình  |  7. Kệ đồ chơi  |  8. Ao cá & Vườn hoa so sánh
 // ==========================================
 let inMiniGameFlow = false;
 const MINIGAME_LIST = [
@@ -711,7 +711,9 @@ const MINIGAME_LIST = [
     { id: 'even-odd', title: '3. Ghép đôi - Chẵn lẻ', desc: 'Ghép thành từng đôi để hiểu số chẵn và số lẻ', icon: '👯', ready: true },
     { id: 'number-bridge', title: '4. Cây cầu số', desc: 'Ghép các đoạn cầu vừa khít để hiểu tách - gộp, cộng và phần còn thiếu', icon: '🌉', ready: true },
     { id: 'number-tower', title: '5. Tháp số vươn cao', desc: 'Xây tháp theo thứ tự, số hai chữ số và quy luật cách đều', icon: '🏰', ready: true },
-    { id: 'construction-memory', title: '6. Xưởng ghép hình kỳ diệu', desc: 'Ghép đúng hình, màu, hướng và số để lắp mô hình hình học', icon: '🧩', ready: true }
+    { id: 'construction-memory', title: '6. Xưởng ghép hình kỳ diệu', desc: 'Ghép đúng hình, màu, hướng và số để lắp mô hình hình học', icon: '🧩', ready: true },
+    { id: 'tidy-toy-shelf', title: '7. Kệ đồ chơi ngăn nắp', desc: 'Phân loại, đếm, thêm bớt và làm các ngăn bằng nhau', icon: '🧸', ready: true },
+    { id: 'compare-garden-pond', title: '8. Ao cá & Vườn hoa so sánh', desc: 'Ghép cặp, so sánh, thêm bớt và tìm hai nhóm hơn kém nhau bao nhiêu', icon: '🐟', ready: true }
 ];
 const MINIGAME_PALETTES = [
     ['bg-rose-50/80','border-rose-300','text-rose-600'],
@@ -727,7 +729,9 @@ const GAME_SCRIPT_MAP = {
     'even-odd': 'assets/js/games/even-odd.js?v=20260930-pairing-v1',
     'number-bridge': 'assets/js/games/number-bridge.js?v=20260930-number-bridge-v3-wide',
     'number-tower': 'assets/js/games/number-tower.js?v=20260930-number-tower-v2-wide',
-    'construction-memory': 'assets/js/games/construction-memory.js?v=20260930-geometry-workshop-v1'
+    'construction-memory': 'assets/js/games/construction-memory.js?v=20260930-geometry-workshop-v1',
+    'tidy-toy-shelf': 'assets/js/games/tidy-toy-shelf.js?v=20260930-tidy-toy-shelf-v1',
+    'compare-garden-pond': 'assets/js/games/compare-garden-pond.js?v=20260930-compare-garden-pond-v1'
 };
 const GAME_START_FN_MAP = {
     'sudoku': 'startSudokuGame',
@@ -735,7 +739,9 @@ const GAME_START_FN_MAP = {
     'even-odd': 'startEvenOddGame',
     'number-bridge': 'startNumberBridgeGame',
     'number-tower': 'startNumberTowerGame',
-    'construction-memory': 'startConstructionMemoryGame'
+    'construction-memory': 'startConstructionMemoryGame',
+    'tidy-toy-shelf': 'startTidyToyShelfGame',
+    'compare-garden-pond': 'startCompareGardenPondGame'
 };
 const GAME_STOP_FN_MAP = {
     'sudoku': 'stopSudokuGame',
@@ -743,7 +749,9 @@ const GAME_STOP_FN_MAP = {
     'even-odd': 'stopEvenOddGame',
     'number-bridge': 'stopNumberBridgeGame',
     'number-tower': 'stopNumberTowerGame',
-    'construction-memory': 'stopConstructionMemoryGame'
+    'construction-memory': 'stopConstructionMemoryGame',
+    'tidy-toy-shelf': 'stopTidyToyShelfGame',
+    'compare-garden-pond': 'stopCompareGardenPondGame'
 };
 let activeMiniGameId_ = null;
 const loadedGameScripts = {};
