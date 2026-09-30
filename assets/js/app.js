@@ -7,13 +7,14 @@ const TOPICS_CONFIG = [
     { id: 3, title: "3. Các số trong phạm vi 100", desc: "Đọc, viết, cấu tạo, so sánh, sắp xếp và đặc điểm số đến 100", icon: "💯", color: "indigo" },
     { id: 4, title: "4. Dãy số và quy luật", desc: "Liền trước - liền sau, số còn thiếu và quy luật dãy số", icon: "🔗", color: "cyan" },
     { id: 5, title: "5. Hình học", desc: "Nhận biết hình phẳng, hình khối, lắp ghép và đếm hình", icon: "📐", color: "amber" },
-    { id: 6, title: "6. Vị trí và không gian", desc: "Xác định vị trí và quan hệ trong không gian", icon: "🧭", color: "violet" },
-    { id: 7, title: "7. Độ dài và đơn vị đo", desc: "So sánh, ước lượng và đo độ dài bằng cm", icon: "📏", color: "emerald" },
-    { id: 8, title: "8. Thời gian, lịch và kiểm đếm", desc: "Xem giờ, ngày trong tuần và kiểm đếm", icon: "⏰", color: "blue" },
-    { id: 9, title: "9. Giải toán có lời văn", desc: "Đọc hiểu, chọn phép tính và trình bày bài giải", icon: "📝", color: "rose" },
-    { id: 10, title: "10. Toán tư duy nâng cao và IQ", desc: "Suy luận logic, quy luật và bài toán nâng cao", icon: "🧠", color: "yellow" },
-    { id: 11, title: "11. Ôn tập", desc: "Ôn tập theo học kỳ và tổng ôn cuối năm", icon: "📚", color: "purple" },
-    { id: 12, title: "12. Math Lab - Toán tư duy Mỹ", desc: "Khám phá • Mô hình • Nhiều cách giải", icon: "✨", color: "fuchsia", engine: "epsilon-method" }
+    { id: 6, title: "6. Vị trí và không gian", desc: "Trên - dưới, trước - sau, trái - phải, thứ tự, các mặt của khối và tổng hợp", icon: "🧭", color: "violet" },
+    { id: 7, title: "7. Độ dài và đo độ dài", desc: "Dài - ngắn, cao - thấp, gang tay - sải tay - bước chân, xăng-ti-mét, ước lượng và đo", icon: "📏", color: "emerald" },
+    { id: 8, title: "8. Thời gian, giờ và lịch", desc: "Xem giờ đúng, sinh hoạt theo giờ, ngày trong tuần, hôm qua - hôm nay - ngày mai và đọc lịch hoạt động", icon: "⏰", color: "blue" },
+    { id: 9, title: "9. Giải toán bằng câu chuyện", desc: "Hiểu tình huống → chọn phép tính → trả lời bài toán bằng tranh", icon: "📝", color: "rose" },
+    { id: 10, title: "10. Toán tư duy nâng cao", desc: "Tìm số bí mật • Chuỗi số • Chữ số • Ô số • Hình học tư duy • Bài toán quan hệ", icon: "🧠", color: "yellow" },
+    { id: 11, title: "11. Xưởng thử thách Toán", desc: "Thám tử Toán • Manh mối • Đúng sai • Tuổi - ngày - giờ • Puzzle tổng hợp", icon: "🕵️", color: "purple" },
+    { id: 12, title: "12. Math Lab - Toán tư duy Mỹ", desc: "Khám phá • Mô hình • Nhiều cách giải", icon: "✨", color: "fuchsia", engine: "epsilon-method" },
+    { id: 13, title: "Ôn tập", desc: "Ôn tập theo học kỳ và tổng ôn cuối năm", icon: "📚", color: "purple", hidden: true, internalRole: "review" }
 ];
 
 const SUBTOPIC_PALETTES = [
@@ -39,7 +40,7 @@ const SKILL_TAXONOMY = {
     C2: { code: 'C2', sheetCol: 'C2_PhepTinh', totalCol: 'C2_PhepTinh_Tong', name: 'Phép tính cộng và phép trừ', advice: 'Rèn luyện thêm sơ đồ tách - gộp số, bảng cộng trừ và kỹ năng đặt tính rồi tính không nhớ.' },
     C3: { code: 'C3', sheetCol: 'C3_DoLuongThoiGian', totalCol: 'C3_DoLuongThoiGian_Tong', name: 'Đo lường, Thời gian và Lịch', advice: 'Luyện tập thêm về đo độ dài bằng thước kẻ (cm), xem giờ đúng trên đồng hồ kim và xem lịch tuần.' },
     C4: { code: 'C4', sheetCol: 'C4_ViTriSoSanh', totalCol: 'C4_ViTriSoSanh_Tong', name: 'Vị trí không gian và So sánh', advice: 'Cần luyện thêm về xác định vị trí không gian, so sánh - sắp xếp số và tìm số lớn nhất, số bé nhất theo điều kiện.' },
-    C5: { code: 'C5', sheetCol: 'C5_GiaiToan', totalCol: 'C5_GiaiToan_Tong', name: 'Giải toán có lời văn', advice: 'Tăng cường đọc hiểu đề bài toán đố, tìm đúng từ khóa thêm/bớt và trình bày bài giải đầy đủ 3 phần.' },
+    C5: { code: 'C5', sheetCol: 'C5_GiaiToan', totalCol: 'C5_GiaiToan_Tong', name: 'Giải toán có lời văn', advice: 'Rèn đọc hiểu tình huống: xác định số ban đầu, điều gì thay đổi, cần tìm gì; sau đó chọn phép tính phù hợp và trả lời bằng câu đầy đủ.' },
     C6: { code: 'C6', sheetCol: 'C6_TuDuy', totalCol: 'C6_TuDuy_Tong', name: 'Dãy số, Quy luật và Tư duy', advice: 'Rèn kỹ năng tìm số liền trước/sau, số còn thiếu, bước nhảy và quy luật dãy số; sau đó mới mở rộng sang tư duy logic IQ.' }
 };
 
@@ -207,7 +208,19 @@ function normalizeQuestion(q) {
         skill_tag: q.skill_tag ?? q.tag ?? 'TOAN_C1',
         diem: Number(q.diem ?? q.score ?? 0.5),
         explanation: q.explanation ?? q.h ?? 'Không có giải thích chi tiết.',
-        muc1_type: q.muc1_type ?? ''
+        muc1_type: q.muc1_type ?? '',
+        muc6_type: q.muc6_type ?? '',
+        muc6_visual: q.muc6_visual ?? null,
+        muc7_type: q.muc7_type ?? '',
+        muc7_visual: q.muc7_visual ?? null,
+        muc8_type: q.muc8_type ?? '',
+        muc8_visual: q.muc8_visual ?? null,
+        muc9_type: q.muc9_type ?? '',
+        muc9_visual: q.muc9_visual ?? null,
+        muc10_type: q.muc10_type ?? '',
+        muc10_visual: q.muc10_visual ?? null,
+        muc11_type: q.muc11_type ?? '',
+        muc11_visual: q.muc11_visual ?? null
     };
 }
 
@@ -339,9 +352,8 @@ async function renderDashboardGrid() {
     try { topicsData = await fetchAllTopicsData(); } catch (e) {}
 
     let html = '';
-    // Tab Khám phá hiển thị Mục 1-10 và Mục 12 (Epsilon Method).
-    // Mục 11 (Ôn tập) vẫn có tab chính riêng trên header.
-    TOPICS_CONFIG.filter(t => Number(t.id) !== 11).forEach(t => {
+    // Tab Khám phá hiển thị Mục 1-12. Topic 13 chỉ là nguồn nội bộ cho tab Ôn tập.
+    TOPICS_CONFIG.filter(t => !t.hidden).forEach(t => {
         const topicObj = topicsData.find(item => Number(item.topic_id) === Number(t.id));
         const totalCount = Number(t.id) === 5 ? buildMuc5Questions_().length : (topicObj && topicObj.questions ? topicObj.questions.length : 0);
         const countLabel = t.engine === 'epsilon-method' ? '6 Lab' : (totalCount > 0 ? `${totalCount} câu` : 'Đang cập nhật');
@@ -620,7 +632,7 @@ function returnToCurrentDiscoverTopic_() {
 function openReviewTab() {
     if (!requirePremium('Ôn tập')) return;
     setMainTabActive_('review');
-    openTopic(11, '11. Ôn tập', '🧠');
+    openTopic(13, 'Ôn tập', '📚');
     setAppShellRootMode_(true);
 }
 
@@ -656,6 +668,7 @@ function returnToTopicLecture() {
 
 function switchAppView(viewId) {
     stopSpeaking();
+    if (viewId !== 'view-game-play' && typeof stopActiveMiniGame_ === 'function') stopActiveMiniGame_();
     ['view-dashboard-grid', 'view-epsilon-method-hub', 'view-number-sense', 'view-operation-sense', 'view-bai-hoc-hub', 'view-bai-hoc-lesson', 'view-lecture', 'view-quiz', 'view-roadmap', 'view-minigame-hub', 'view-game-play', 'view-exam-hub', 'view-result'].forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
@@ -679,11 +692,60 @@ function goHome() {
 }
 
 // ==========================================
-// MINI GAMES - giữ entry point ổn định trong UI 6 tab
+// MINI GAME TOÁN 1 — HUB + LAZY LOAD
+// 1. Sudoku  |  2. Thám tử đếm  |  3. Chẵn - lẻ  |  4. Cây cầu số
 // ==========================================
 let inMiniGameFlow = false;
+const MINIGAME_LIST = [
+    { id: 'sudoku', title: '1. Sudoku', desc: 'Điền số đúng theo hàng, cột và từng ô nhỏ', icon: '🔢', ready: true },
+    { id: 'counting-scene', title: '2. Thám tử đếm', desc: 'Quan sát tranh thật, chạm từng vật và đếm không lặp', icon: '🔎', ready: true },
+    { id: 'even-odd', title: '3. Ghép đôi - Chẵn lẻ', desc: 'Ghép thành từng đôi để hiểu số chẵn và số lẻ', icon: '👯', ready: true },
+    { id: 'number-bridge', title: '4. Cây cầu số', desc: 'Ghép các đoạn cầu vừa khít để hiểu tách - gộp, cộng và phần còn thiếu', icon: '🌉', ready: true }
+];
+const MINIGAME_PALETTES = [
+    ['bg-rose-50/80','border-rose-300','text-rose-600'],
+    ['bg-sky-50/80','border-sky-300','text-sky-600'],
+    ['bg-violet-50/80','border-violet-300','text-violet-600'],
+    ['bg-amber-50/80','border-amber-300','text-amber-700']
+];
+const GAME_SCRIPT_MAP = {
+    'sudoku': 'assets/js/games/sudoku.js?v=20260930-toan1-same-toan2',
+    'counting-scene': 'assets/js/games/counting-scene.js?v=20260930-scene-count-v1',
+    'even-odd': 'assets/js/games/even-odd.js?v=20260930-pairing-v1',
+    'number-bridge': 'assets/js/games/number-bridge.js?v=20260930-number-bridge-v1'
+};
+const GAME_START_FN_MAP = {
+    'sudoku': 'startSudokuGame',
+    'counting-scene': 'startCountingSceneGame',
+    'even-odd': 'startEvenOddGame',
+    'number-bridge': 'startNumberBridgeGame'
+};
+const GAME_STOP_FN_MAP = {
+    'sudoku': 'stopSudokuGame',
+    'counting-scene': 'stopCountingSceneGame',
+    'even-odd': 'stopEvenOddGame',
+    'number-bridge': 'stopNumberBridgeGame'
+};
+let activeMiniGameId_ = null;
+const loadedGameScripts = {};
+function stopActiveMiniGame_() {
+    if (!activeMiniGameId_) return;
+    const fnName = GAME_STOP_FN_MAP[activeMiniGameId_];
+    const fn = fnName ? window[fnName] : null;
+    if (typeof fn === 'function') {
+        try { fn(); } catch (_) {}
+    }
+    activeMiniGameId_ = null;
+}
+function rewardMiniGameStar_(message) {
+    starGreenCount++;
+    const el = document.getElementById('star-green-count');
+    if (el) el.textContent = starGreenCount;
+    if (message && typeof showAppNotice === 'function') showAppNotice(message, { title: 'Xuất sắc!', icon: '⭐', okText: 'Chơi tiếp' });
+}
 function openMiniGameHub() {
     if (!requirePremium('Mini games')) return;
+    stopActiveMiniGame_();
     setAppShellRootMode_(true);
     setMainTabActive_('games');
     stopSpeaking();
@@ -695,10 +757,57 @@ function openMiniGameHub() {
     activeTopicId = null;
     pendingTopicQuiz = null;
     updateNavTabs('Mini games', '🎮', null);
-    switchAppView('view-minigame-hub');
     const grid = document.getElementById('minigame-grid');
-    if (grid && !grid.children.length) {
-        grid.innerHTML = '<div class="col-span-full rounded-2xl border-2 border-teal-100 bg-teal-50/60 p-5 text-center"><div class="text-3xl">🎮</div><div class="mt-2 font-black text-teal-700">Kho Mini games Toán 1</div><div class="mt-1 text-xs md:text-sm font-bold text-slate-500">Nội dung Mini game hiện tại sẽ được giữ độc lập và nối vào khu vực này.</div></div>';
+    if (!grid) return;
+    grid.innerHTML = MINIGAME_LIST.map((g, idx) => {
+        const p = MINIGAME_PALETTES[idx % MINIGAME_PALETTES.length];
+        return `<div onclick="openGamePlay('${g.id}')" class="${p[0]} ${p[1]} border-2 rounded-[26px] p-3.5 md:p-4 min-h-[142px] flex flex-col items-center justify-between text-center cursor-pointer relative shadow-sm pastel-btn group">
+            <span class="absolute top-2 right-2 bg-emerald-100 text-emerald-700 text-[10px] font-black px-2 py-0.5 rounded-full border border-emerald-200">Chơi ngay</span>
+            <div class="text-4xl group-hover:scale-110 transition-transform mt-1">${g.icon}</div>
+            <div class="w-full"><h3 class="font-extrabold ${p[2]} text-base md:text-lg leading-tight">${g.title}</h3><p class="text-sm text-gray-700 font-bold mt-1 leading-snug">${g.desc}</p></div>
+        </div>`;
+    }).join('');
+    switchAppView('view-minigame-hub');
+}
+function loadGameScript(src) {
+    if (loadedGameScripts[src]) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = () => { loadedGameScripts[src] = true; resolve(); };
+        script.onerror = () => reject(new Error(`Không tải được file game: ${src}`));
+        document.body.appendChild(script);
+    });
+}
+async function openGamePlay(gameId) {
+    if (!requirePremium('Mini game')) return;
+    const game = MINIGAME_LIST.find(g => g.id === gameId);
+    if (!game) return;
+    setAppShellRootMode_(false);
+    setMainTabActive_('games');
+    stopSpeaking();
+    clearInterval(quizTimerInterval);
+    inMiniGameFlow = true;
+    const title = document.getElementById('game-play-title');
+    if (title) title.innerHTML = `<span>${game.icon}</span><span class="truncate">${game.title}</span>`;
+    updateNavTabs(game.title, '🎮', null);
+    switchAppView('view-game-play');
+    const container = document.getElementById('game-play-container');
+    if (container) container.innerHTML = '<p class="text-center text-gray-400 font-bold py-8"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Đang tải game...</p>';
+    try {
+        await loadGameScript(GAME_SCRIPT_MAP[gameId]);
+    } catch (e) {
+        if (container) container.innerHTML = '<p class="text-center text-rose-500 font-bold py-8">Không tải được game, bé thử lại nhé!</p>';
+        return;
+    }
+    const startFnName = GAME_START_FN_MAP[gameId];
+    const startFn = startFnName ? window[startFnName] : null;
+    if (typeof startFn === 'function') {
+        stopActiveMiniGame_();
+        activeMiniGameId_ = gameId;
+        startFn();
+    } else if (container) {
+        container.innerHTML = '<p class="text-center text-amber-600 font-bold py-8">Game đã tải nhưng chưa tìm thấy hàm khởi động. Bé thử tải lại trang nhé!</p>';
     }
 }
 
@@ -2810,12 +2919,12 @@ function operationSenseNext_() {
 function openTopic(topicNum, topicName, icon) {
     if (Number(topicNum) === 12) return openEpsilonMethodHub_();
     setAppShellRootMode_(false);
-    if (Number(topicNum) === 11 && !requirePremium('Ôn tập')) return;
-    if (Number(topicNum) === 11) setMainTabActive_('review');
+    if (Number(topicNum) === 13 && !requirePremium('Ôn tập')) return;
+    if (Number(topicNum) === 13) setMainTabActive_('review');
     else setMainTabActive_('discover');
     stopSpeaking();
     activeBaiHocContext = null; activeTopicId = topicNum; activeExamContext = null; activeRoadmapContext = null;
-    if (Number(topicNum) === 11) updateNavTabs('Ôn tập', '🧠', null);
+    if (Number(topicNum) === 13) updateNavTabs('Ôn tập', '📚', null);
     else updateDiscoverBreadcrumb_(topicName, icon || '🔢', null);
 
     showLoadingOverlay(`Đang tải chủ đề "${topicName}"...`);
@@ -3286,8 +3395,38 @@ function showLectureAndSubtopics(topicNum, topicName, topicObj) {
 
     const groups = [], groupMap = {}, groupLabels = {};
     topicQuestions.forEach(q => {
-        const k = (q.sub_topic || 'Câu hỏi chung').trim();
-        if (!groupMap[k]) { groupMap[k] = []; groups.push(k); groupLabels[k] = q.sub_topic_label || k; }
+        let k = (q.sub_topic || 'Câu hỏi chung').trim();
+        let label = q.sub_topic_label || k;
+
+        // Mục 1 và Mục 2 chỉ hiển thị 3 chặng lớn cho trẻ.
+        // Mã sub_topic gốc vẫn được giữ trong từng câu để engine dùng đúng trực quan/hỗ trợ.
+        if (Number(topicNum) === 1) {
+            const stage = String(q?.sub_topic || '');
+            if (stage === '1.1' || stage === '1.2') {
+                k = '1';
+                label = 'Các số từ 0 đến 10';
+            } else if (stage === '1.3' || stage === '1.4') {
+                k = '2';
+                label = 'So sánh số';
+            } else {
+                k = '3';
+                label = 'Tách - gộp và củng cố';
+            }
+        } else if (Number(topicNum) === 2) {
+            const stage = String(q?._muc2_stage || q?.sub_topic || '');
+            if (stage === '2.1' || stage === '2.2') {
+                k = '1';
+                label = 'Phép cộng';
+            } else if (stage === '2.3' || stage === '2.4') {
+                k = '2';
+                label = 'Phép trừ';
+            } else {
+                k = '3';
+                label = 'Luyện tập tổng hợp';
+            }
+        }
+
+        if (!groupMap[k]) { groupMap[k] = []; groups.push(k); groupLabels[k] = label; }
         groupMap[k].push(q);
     });
     groups.sort((a, b) => {
@@ -3317,12 +3456,16 @@ function showLectureAndSubtopics(topicNum, topicName, topicObj) {
     groups.forEach((subName, idx) => {
         const displayIndex = idx + (Number(topicNum) === 5 ? 2 : 1);
         const style = SUBTOPIC_PALETTES[(displayIndex - 1) % SUBTOPIC_PALETTES.length];
-        const hideInternalCode = [3,4,5,6,7,8,9,10,11].includes(Number(topicNum));
-        const displayTitle = hideInternalCode ? beautifySubtopicName(groupLabels[subName]) : formatSubtopicLabelWithCode_(subName, groupLabels[subName]);
+        const hideInternalCode = [3,4,5,6,7,8,9,10,11,13].includes(Number(topicNum));
+        const isMucThreeStage = Number(topicNum) === 1 || Number(topicNum) === 2;
+        const displayTitle = isMucThreeStage
+            ? beautifySubtopicName(groupLabels[subName])
+            : (hideInternalCode ? beautifySubtopicName(groupLabels[subName]) : formatSubtopicLabelWithCode_(subName, groupLabels[subName]));
         const count = groupMap[subName].length;
-        // Mục 1 và 2 đã có mã thật 1.1, 1.2... / 2.1, 2.2... trong tiêu đề.
-        // Không chèn thêm số thứ tự 1., 2., 3. phía trước để tránh hiển thị "1. 1.1...".
-        const ordinalHtml = hideInternalCode ? `<strong class="${style.num} mr-1.5">${displayIndex}.</strong>` : '';
+        // Mục 1-2: chỉ hiện 1. / 2. / 3. thay cho các mã nhỏ 1.x / 2.x.
+        const ordinalHtml = (hideInternalCode || isMucThreeStage)
+            ? `<strong class="${style.num} mr-1.5">${displayIndex}.</strong>`
+            : '';
 
         subHtml += `
             <button onclick="selectSubtopic(${idx})" class="px-3 py-2.5 ${style.card} border-2 rounded-xl font-bold text-left transition-all flex items-center justify-between gap-2 shadow-sm pastel-btn">
@@ -3333,7 +3476,7 @@ function showLectureAndSubtopics(topicNum, topicName, topicObj) {
     setSubtopicGridColumns(groups.length + (Number(topicNum) === 5 ? 1 : 0));
     document.getElementById('lecture-subtopics-list').innerHTML = subHtml;
 
-    if (Number(topicNum) === 11) updateNavTabs('Ôn tập', '🧠', topicName);
+    if (Number(topicNum) === 13) updateNavTabs('Ôn tập', '📚', topicName);
     else updateDiscoverBreadcrumb_(topicName, TOPICS_CONFIG.find(t => t.id === topicNum)?.icon || '🔢', null);
     switchAppView('view-lecture');
 }
@@ -3370,13 +3513,19 @@ function selectSubtopic(idx) {
     const { topicNum, topicName, questions, groups, groupMap, groupLabels } = pendingTopicQuiz;
     const subLabel = idx !== null ? groups[idx] : null;
     const pool = idx !== null ? groupMap[subLabel] : questions;
-    const displayLabel = subLabel ? formatSubtopicLabelWithCode_(subLabel, groupLabels[subLabel]) : null;
+    const displayLabel = subLabel
+        ? ((Number(topicNum) === 1 || Number(topicNum) === 2)
+            ? `${subLabel}. ${beautifySubtopicName(groupLabels[subLabel])}`
+            : (Number(topicNum) === 13
+                ? beautifySubtopicName(groupLabels[subLabel])
+                : formatSubtopicLabelWithCode_(subLabel, groupLabels[subLabel])))
+        : null;
     const finalTitle = displayLabel ? `${topicName} - ${displayLabel}` : topicName;
 
     practiceCycleRawPool = [...pool];
     const firstCycleQuestions = buildPracticeCycleQuestions_(pool);
 
-    if (Number(topicNum) === 11) updateNavTabs('Ôn tập', '🧠', topicName, displayLabel || 'Tất cả các mục');
+    if (Number(topicNum) === 13) updateNavTabs('Ôn tập', '📚', topicName, displayLabel || 'Tất cả các mục');
     else updateDiscoverBreadcrumb_(topicName, TOPICS_CONFIG.find(t => t.id === topicNum)?.icon || '🔢', displayLabel || 'Tất cả các mục');
     startTopicQuiz(topicNum, finalTitle, firstCycleQuestions, subLabel);
 }
@@ -5081,7 +5230,7 @@ function buildTopic4Sub41Layout_(q, speakerHtml) {
         const letter = String.fromCharCode(65 + idx);
         return `
             <button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${String(opt).replace(/'/g, "\\'")}')" class="option-btn w-full min-h-[60px] md:min-h-[68px] px-2 py-2 bg-cyan-50/40 hover:bg-cyan-100/70 border-2 border-cyan-200 rounded-2xl font-extrabold text-gray-800 transition-all flex items-center justify-center text-center shadow-xs pastel-btn">
-                <span class="flex items-center justify-center gap-1.5 leading-tight"><strong class="text-cyan-600 text-base md:text-lg">${letter}.</strong><span class="opt-text text-lg md:text-xl lg:text-[22px]">${escapeHtml(capitalizeFirstLetter(opt))}</span></span>
+                <span class="flex items-center justify-center gap-1.5 leading-tight"><strong class="text-cyan-600 text-lg md:text-xl">${letter}.</strong><span class="opt-text text-xl md:text-2xl lg:text-[26px]">${escapeHtml(capitalizeFirstLetter(opt))}</span></span>
                 <span class="option-icon text-cyan-500 text-lg md:text-xl ml-1"></span>
             </button>`;
     }).join('');
@@ -5093,7 +5242,7 @@ function buildTopic4Sub41Layout_(q, speakerHtml) {
                 <div id="topic4-sub41-solution-host">${buildTopic4Sub41SolutionHtml_(q)}</div>
             </div>
             <div class="flex flex-col items-center justify-center max-w-4xl mx-auto text-center px-2 mt-3 mb-1">
-                <h3 class="text-base md:text-lg lg:text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-700 via-violet-600 to-purple-700 leading-snug">${escapeHtml(q.question_text)}</h3>
+                <h3 class="text-lg md:text-xl lg:text-[26px] font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-700 via-violet-600 to-purple-700 leading-snug">${escapeHtml(q.question_text)}</h3>
                 ${speakerHtml}
             </div>
             <div class="w-full max-w-5xl mx-auto grid grid-cols-4 gap-2.5 mt-2">${optionsHtml}</div>
@@ -5712,6 +5861,571 @@ function speakMuc5SelectedShape_(q, selectedOpt) {
     return true;
 }
 
+
+function muc6FaceColorLabel_(face) {
+    return face?.name || '';
+}
+
+function muc6CuboidSvg_(visual) {
+    const front = visual?.front || {name:'Đỏ',color:'#ef4444'};
+    const top = visual?.top || {name:'Xanh dương',color:'#3b82f6'};
+    const right = visual?.right || {name:'Vàng',color:'#facc15'};
+    return `
+        <svg viewBox="0 0 360 300" class="w-full max-w-[390px] h-auto" role="img" aria-label="Khối hộp có ba mặt màu khác nhau">
+            <defs>
+                <filter id="muc6shadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="9" stdDeviation="7" flood-color="#94a3b8" flood-opacity="0.32"/>
+                </filter>
+            </defs>
+            <g filter="url(#muc6shadow)" stroke="#334155" stroke-width="5" stroke-linejoin="round">
+                <polygon points="70,105 205,48 305,102 170,160" fill="${escapeHtml(top.color)}"></polygon>
+                <polygon points="70,105 170,160 170,267 70,212" fill="${escapeHtml(front.color)}"></polygon>
+                <polygon points="170,160 305,102 305,210 170,267" fill="${escapeHtml(right.color)}"></polygon>
+            </g>
+            <g font-family="Nunito, Arial, sans-serif" font-weight="900" text-anchor="middle">
+                <text x="185" y="104" font-size="20" fill="#0f172a">MẶT TRÊN</text>
+                <text x="118" y="196" font-size="18" fill="#0f172a">MẶT TRƯỚC</text>
+                <text x="238" y="193" font-size="18" fill="#0f172a">MẶT BÊN</text>
+            </g>
+        </svg>`;
+}
+
+function muc6StageGuide_(q) {
+    const stage = String(q?.sub_topic || '');
+    if (stage === '6.1') return 'Chọn một vật làm mốc rồi nhìn theo chiều trên – dưới.';
+    if (stage === '6.2') return 'Quan sát vật nào ở gần phía trước, vật nào ở xa phía sau hoặc nằm giữa.';
+    if (stage === '6.3') return 'Nhìn theo hướng của con ở trước màn hình để phân biệt bên trái và bên phải.';
+    if (stage === '6.4') return 'Đọc đúng hướng “từ trái sang phải” hoặc “từ phải sang trái” rồi mới đếm thứ tự.';
+    if (stage === '6.5') return 'Nhìn đúng mặt được hỏi: mặt trước, mặt trên hay mặt bên phải.';
+    if (stage === '6.6') return 'Câu tổng hợp có từ hai điều kiện. Kiểm tra từng điều kiện một rồi mới chọn.';
+    return 'Quan sát tranh thật kĩ rồi mới trả lời.';
+}
+
+function buildMuc6QuestionLayout_(q, speakerHtml, isEvaluationMode = false) {
+    const isFaces = q?.muc6_type === 'faces' || String(q?.sub_topic || '') === '6.5';
+    const stageLabel = beautifySubtopicName(q?.sub_topic_label) || 'Quan sát vị trí';
+    let visualHtml = '';
+
+    if (isFaces) {
+        visualHtml = `
+            <div class="w-full h-full flex flex-col items-center justify-center p-2">
+                ${muc6CuboidSvg_(q?.muc6_visual || {})}
+            </div>`;
+    } else if (q?.image_url) {
+        visualHtml = `
+            <div class="w-full h-full flex items-center justify-center">
+                <img src="${escapeHtml(q.image_url)}" alt="Tranh minh họa cho câu hỏi vị trí" class="w-full h-full max-h-[470px] object-contain rounded-2xl" onerror="this.closest('.muc6-image-shell').innerHTML='<div class=&quot;text-center text-rose-600 font-black p-6&quot;>Chưa tìm thấy hình minh họa.<br><span class=&quot;text-sm text-slate-500&quot;>${escapeHtml(q.image_url)}</span></div>'">
+            </div>`;
+    } else {
+        visualHtml = `<div class="min-h-[380px] flex items-center justify-center text-center text-slate-500 font-bold">Chưa có hình minh họa cho câu này.</div>`;
+    }
+
+    const optionsHtml = (q.options || []).map((opt, idx) => {
+        const letter = String.fromCharCode(65 + idx);
+        const optionThemes = [
+            'border-pink-200 bg-pink-50/55 hover:bg-pink-100/80',
+            'border-sky-200 bg-sky-50/55 hover:bg-sky-100/80',
+            'border-amber-200 bg-amber-50/55 hover:bg-amber-100/80',
+            'border-emerald-200 bg-emerald-50/55 hover:bg-emerald-100/80'
+        ];
+        const letterThemes = ['text-pink-600','text-sky-600','text-amber-600','text-emerald-600'];
+        return `<button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${escapeJsString_(opt)}')" class="option-btn w-full min-h-[64px] px-4 py-3 ${optionThemes[idx % optionThemes.length]} border-2 rounded-2xl font-extrabold text-slate-800 transition-all flex items-center justify-start gap-3 text-left shadow-xs pastel-btn">
+            <strong class="${letterThemes[idx % letterThemes.length]} text-xl md:text-2xl shrink-0 w-8">${letter}.</strong>
+            <span class="opt-text text-lg md:text-xl lg:text-[22px] leading-snug">${escapeHtml(capitalizeFirstLetter(opt))}</span>
+            <span class="option-icon ml-auto"></span>
+        </button>`;
+    }).join('');
+
+    const guide = isEvaluationMode ? '' : `
+        <div class="mt-2 text-center text-sm md:text-base font-extrabold text-slate-600">
+            👀 ${escapeHtml(muc6StageGuide_(q))}
+        </div>`;
+
+    return `
+        <div class="w-full max-w-6xl mx-auto rounded-[30px] border-2 border-pink-100 bg-white/95 p-3 md:p-4 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-[0.94fr_1.06fr] gap-3 md:gap-4 items-stretch">
+                <div class="muc6-image-shell relative min-h-[380px] md:min-h-[430px] rounded-[24px] border-2 border-sky-100 bg-gradient-to-br from-sky-50 via-white to-amber-50 p-2.5 flex items-center justify-center overflow-hidden">
+                    ${visualHtml}
+                    <div class="absolute left-3 bottom-3 rounded-full border-2 border-pink-200 bg-white/95 px-4 py-1.5 text-sm md:text-base font-black text-pink-600 shadow-sm">${escapeHtml(stageLabel)}</div>
+                </div>
+
+                <div class="rounded-[24px] border-2 border-pink-100 bg-gradient-to-br from-white via-pink-50/20 to-sky-50/30 px-3 py-4 md:px-5 md:py-5 flex flex-col justify-center">
+                    <h3 class="text-xl md:text-2xl lg:text-[27px] font-black text-slate-900 leading-snug text-center">${escapeHtml(q.question_text)}</h3>
+                    ${speakerHtml}
+                    <div class="grid grid-cols-1 gap-2.5 mt-3">${optionsHtml}</div>
+                    ${guide}
+                </div>
+            </div>
+        </div>`;
+}
+
+
+function muc7StageGuide_(q) {
+    const stage = String(q?.sub_topic || '');
+    if (stage === '7.1') return 'Đặt các vật cùng điểm đầu rồi so nơi chúng kết thúc.';
+    if (stage === '7.2') return 'Các vật phải cùng mặt đất hoặc mặt bàn rồi mới so chiều cao.';
+    if (stage === '7.3') return 'Đếm các đơn vị được đặt nối tiếp, không để hở và không chồng lên nhau.';
+    if (stage === '7.4') return 'Đặt một đầu vật đúng vạch 0 rồi đọc vạch ở đầu còn lại.';
+    if (stage === '7.5') return 'Ước lượng là đoán gần đúng trước khi dùng thước kiểm tra.';
+    if (stage === '7.6') return 'Đọc kĩ số đo và điều kiện rồi mới so sánh hoặc lựa chọn.';
+    return 'Quan sát mô hình rồi trả lời.';
+}
+
+function muc7LengthVisualSvg_(visual, vertical = false) {
+    const items = Array.isArray(visual?.items) ? visual.items : [];
+    if (vertical) {
+        const baseline = 275;
+        const xPos = items.length === 2 ? [180, 340] : [135, 260, 385];
+        const bodies = items.map((it, idx) => {
+            const h = Math.max(60, Math.min(190, Number(it.height || 6) * 13));
+            const x = xPos[idx] || (120 + idx * 130);
+            const color = escapeHtml(it.color || '#60a5fa');
+            return `<g>
+                <line x1="${x}" y1="${baseline}" x2="${x}" y2="${baseline-h+28}" stroke="#8b5a2b" stroke-width="12" stroke-linecap="round"></line>
+                <circle cx="${x}" cy="${baseline-h+20}" r="35" fill="${color}" stroke="#334155" stroke-width="3"></circle>
+                <line x1="${x-46}" y1="${baseline}" x2="${x+46}" y2="${baseline}" stroke="#94a3b8" stroke-width="3"></line>
+                <text x="${x}" y="${baseline+28}" text-anchor="middle" font-size="21" font-weight="900" fill="#0f172a">${escapeHtml(it.label || '')}</text>
+            </g>`;
+        }).join('');
+        return `<svg viewBox="0 0 520 330" class="w-full h-auto max-h-[410px]" role="img" aria-label="Mô hình so sánh chiều cao">
+            <rect x="25" y="18" width="470" height="290" rx="28" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="3"></rect>
+            <line x1="55" y1="275" x2="465" y2="275" stroke="#64748b" stroke-width="4"></line>
+            ${bodies}
+            <text x="260" y="50" text-anchor="middle" font-size="18" font-weight="900" fill="#047857">Cùng một mặt đất</text>
+        </svg>`;
+    }
+
+    const yPos = items.length === 2 ? [125, 220] : [92, 173, 254];
+    const rows = items.map((it, idx) => {
+        const len = Math.max(85, Math.min(340, Number(it.length || 6) * 24));
+        const y = yPos[idx] || (90 + idx * 80);
+        const color = escapeHtml(it.color || '#38bdf8');
+        return `<g>
+            <text x="62" y="${y+7}" text-anchor="middle" font-size="22" font-weight="900" fill="#0f172a">${escapeHtml(it.label || '')}</text>
+            <rect x="105" y="${y-17}" width="${len}" height="34" rx="16" fill="${color}" stroke="#334155" stroke-width="3"></rect>
+            <polygon points="${105+len},${y-17} ${105+len+24},${y} ${105+len},${y+17}" fill="#fde68a" stroke="#334155" stroke-width="3"></polygon>
+        </g>`;
+    }).join('');
+    return `<svg viewBox="0 0 520 330" class="w-full h-auto max-h-[410px]" role="img" aria-label="Mô hình so sánh độ dài">
+        <rect x="25" y="18" width="470" height="290" rx="28" fill="#eff6ff" stroke="#bfdbfe" stroke-width="3"></rect>
+        <line x1="105" y1="55" x2="105" y2="286" stroke="#ef4444" stroke-width="4" stroke-dasharray="7 7"></line>
+        <text x="105" y="43" text-anchor="middle" font-size="16" font-weight="900" fill="#dc2626">CÙNG MỐC</text>
+        ${rows}
+    </svg>`;
+}
+
+function muc7NonstandardSvg_(visual) {
+    const count = Math.max(1, Math.min(12, Number(visual?.count || 4)));
+    const unit = String(visual?.unit || 'gang');
+    const label = unit === 'gang' ? 'gang tay' : (unit === 'sai' ? 'sải tay' : 'bước chân');
+    const totalW = 390;
+    const seg = totalW / count;
+    let marks = '';
+    for (let i=0;i<count;i++) {
+        const x=65+i*seg;
+        if (unit === 'buoc') {
+            marks += `<g transform="translate(${x+seg/2-9},205) rotate(${i%2?10:-10})"><ellipse cx="0" cy="0" rx="8" ry="18" fill="#a78bfa"></ellipse><circle cx="0" cy="-20" r="5" fill="#a78bfa"></circle></g>`;
+        } else if (unit === 'sai') {
+            marks += `<g><circle cx="${x+seg/2}" cy="192" r="8" fill="#f59e0b"></circle><line x1="${x+6}" y1="208" x2="${x+seg-6}" y2="208" stroke="#f59e0b" stroke-width="6" stroke-linecap="round"></line><line x1="${x+seg/2}" y1="200" x2="${x+seg/2}" y2="226" stroke="#f59e0b" stroke-width="5"></line></g>`;
+        } else {
+            marks += `<g><line x1="${x+4}" y1="208" x2="${x+seg-4}" y2="208" stroke="#10b981" stroke-width="5" stroke-linecap="round"></line><line x1="${x+4}" y1="197" x2="${x+4}" y2="219" stroke="#10b981" stroke-width="4"></line><line x1="${x+seg-4}" y1="197" x2="${x+seg-4}" y2="219" stroke="#10b981" stroke-width="4"></line></g>`;
+        }
+    }
+    return `<svg viewBox="0 0 520 330" class="w-full h-auto max-h-[410px]" role="img" aria-label="Mô hình đo bằng ${escapeHtml(label)}">
+        <rect x="25" y="18" width="470" height="290" rx="28" fill="#fff7ed" stroke="#fed7aa" stroke-width="3"></rect>
+        <text x="260" y="58" text-anchor="middle" font-size="21" font-weight="900" fill="#9a3412">${escapeHtml(String(visual?.object || 'Đồ vật'))}</text>
+        <rect x="65" y="92" width="390" height="65" rx="16" fill="#fdba74" stroke="#9a3412" stroke-width="3"></rect>
+        <line x1="65" y1="174" x2="455" y2="174" stroke="#64748b" stroke-width="3"></line>
+        ${marks}
+        <text x="260" y="275" text-anchor="middle" font-size="19" font-weight="900" fill="#475569">Đếm số ${escapeHtml(label)} được đặt nối tiếp</text>
+    </svg>`;
+}
+
+function muc7RulerTicks_(max=15, y=245, x0=48, scale=28) {
+    let s='';
+    for (let i=0;i<=max;i++) {
+        const x=x0+i*scale;
+        const h=i%5===0?26:18;
+        s += `<line x1="${x}" y1="${y}" x2="${x}" y2="${y-h}" stroke="#334155" stroke-width="2"></line>`;
+        s += `<text x="${x}" y="${y+23}" text-anchor="middle" font-size="14" font-weight="800" fill="#334155">${i}</text>`;
+    }
+    return s;
+}
+
+function muc7RulerSvg_(visual) {
+    const max=Math.max(10,Math.min(15,Number(visual?.max||15)));
+    const len=Math.max(1,Math.min(max,Number(visual?.length||8)));
+    const start=Math.max(0,Math.min(max-1,Number(visual?.start||0)));
+    const x0=48, scale=28, y=245;
+    const sx=x0+start*scale, ex=x0+Math.min(max,start+len)*scale;
+    return `<svg viewBox="0 0 520 330" class="w-full h-auto max-h-[410px]" role="img" aria-label="Thước đo xăng-ti-mét">
+        <rect x="24" y="18" width="472" height="290" rx="28" fill="#fefce8" stroke="#fde68a" stroke-width="3"></rect>
+        <text x="260" y="53" text-anchor="middle" font-size="20" font-weight="900" fill="#a16207">${escapeHtml(String(visual?.object||'Vật cần đo'))}</text>
+        <rect x="${sx}" y="105" width="${Math.max(35,ex-sx)}" height="38" rx="14" fill="#60a5fa" stroke="#1e3a8a" stroke-width="3"></rect>
+        <polygon points="${ex},105 ${ex+22},124 ${ex},143" fill="#fde68a" stroke="#1e3a8a" stroke-width="3"></polygon>
+        <rect x="${x0-8}" y="210" width="${max*scale+16}" height="52" rx="8" fill="#facc15" opacity="0.72"></rect>
+        ${muc7RulerTicks_(max,y,x0,scale)}
+        <text x="475" y="286" text-anchor="end" font-size="16" font-weight="900" fill="#a16207">cm</text>
+    </svg>`;
+}
+
+function muc7RulerPlacementSvg_(visual) {
+    const placements=Array.isArray(visual?.placements)?visual.placements:[];
+    const max=15, x0=108, scale=20;
+    const rows=placements.map((p,idx)=>{
+        const y=72+idx*62;
+        const sx=x0+Number(p.start||0)*scale;
+        const ex=sx+Number(p.length||7)*scale;
+        let ticks='';
+        for(let i=0;i<=max;i++){
+            const x=x0+i*scale;
+            ticks+=`<line x1="${x}" y1="${y+28}" x2="${x}" y2="${y+18}" stroke="#475569" stroke-width="1.5"></line>`;
+            if(i%5===0) ticks+=`<text x="${x}" y="${y+45}" text-anchor="middle" font-size="10" fill="#475569">${i}</text>`;
+        }
+        return `<g><text x="62" y="${y+8}" text-anchor="middle" font-size="20" font-weight="900" fill="#be123c">${escapeHtml(p.label||'')}</text><line x1="${x0}" y1="${y+28}" x2="${x0+max*scale}" y2="${y+28}" stroke="#94a3b8" stroke-width="2"></line>${ticks}<rect x="${sx}" y="${y-10}" width="${Math.max(30,ex-sx)}" height="23" rx="9" fill="#38bdf8" stroke="#075985" stroke-width="2"></rect></g>`;
+    }).join('');
+    return `<svg viewBox="0 0 520 340" class="w-full h-auto max-h-[430px]" role="img" aria-label="Bốn cách đặt vật lên thước"><rect x="22" y="15" width="476" height="310" rx="26" fill="#f0f9ff" stroke="#bae6fd" stroke-width="3"></rect>${rows}</svg>`;
+}
+
+function muc7EstimateSvg_(visual) {
+    const obj=escapeHtml(String(visual?.object||'Đồ vật'));
+    return `<svg viewBox="0 0 520 330" class="w-full h-auto max-h-[410px]" role="img" aria-label="Ước lượng độ dài">
+        <rect x="25" y="18" width="470" height="290" rx="28" fill="#faf5ff" stroke="#e9d5ff" stroke-width="3"></rect>
+        <text x="260" y="60" text-anchor="middle" font-size="23" font-weight="900" fill="#7e22ce">${obj}</text>
+        <rect x="120" y="118" width="280" height="55" rx="24" fill="#c4b5fd" stroke="#6d28d9" stroke-width="4"></rect>
+        <polygon points="400,118 435,145 400,173" fill="#fde68a" stroke="#6d28d9" stroke-width="4"></polygon>
+        <path d="M120 218 H400" stroke="#94a3b8" stroke-width="4" stroke-dasharray="9 8"></path>
+        <text x="260" y="258" text-anchor="middle" font-size="34" font-weight="900" fill="#9333ea">? cm</text>
+        <text x="260" y="292" text-anchor="middle" font-size="16" font-weight="800" fill="#64748b">Đoán gần đúng trước khi dùng thước</text>
+    </svg>`;
+}
+
+function muc7MeasuredSetSvg_(visual, fitMode=false) {
+    const items=Array.isArray(visual?.items)?visual.items:[];
+    const maxLen=Math.max(1,...items.map(x=>Number(x.length||1)),Number(visual?.target||0),Number(visual?.threshold||0));
+    const scale=Math.min(15,310/maxLen);
+    const rows=items.map((it,idx)=>{
+        const y=102+idx*48;
+        const w=Math.max(35,Number(it.length||1)*scale);
+        return `<g><text x="62" y="${y+8}" text-anchor="middle" font-size="20" font-weight="900" fill="#0f172a">${escapeHtml(it.label||'')}</text><rect x="100" y="${y-13}" width="${w}" height="27" rx="12" fill="${['#fb7185','#38bdf8','#34d399','#fbbf24'][idx%4]}" stroke="#334155" stroke-width="2"></rect><text x="${Math.min(458,115+w)}" y="${y+7}" font-size="17" font-weight="900" fill="#475569">${Number(it.length||0)} cm</text></g>`;
+    }).join('');
+    const target=Number(visual?.target||visual?.threshold||0);
+    const title=fitMode?`Hộp bút: ${target} cm`:(visual?.relation?`Mốc so sánh: ${target} cm`:'So sánh các số đo');
+    return `<svg viewBox="0 0 520 340" class="w-full h-auto max-h-[430px]" role="img" aria-label="Các vật có số đo khác nhau"><rect x="22" y="15" width="476" height="310" rx="26" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="3"></rect><text x="260" y="58" text-anchor="middle" font-size="21" font-weight="900" fill="#047857">${escapeHtml(title)}</text>${rows}</svg>`;
+}
+
+function muc7ReasoningSvg_(visual) {
+    const kind=String(visual?.kind||'');
+    let inner='';
+    if(kind==='align_start') inner=`<line x1="115" y1="100" x2="115" y2="250" stroke="#ef4444" stroke-width="5" stroke-dasharray="8 7"></line><rect x="115" y="125" width="250" height="34" rx="14" fill="#60a5fa"></rect><rect x="160" y="200" width="210" height="34" rx="14" fill="#fbbf24"></rect>`;
+    else if(kind==='start_zero') inner=muc7RulerSvg_({length:8,start:1,max:15,object:'Bút đặt lệch vạch 0'}).replace(/^<svg[^>]*>|<\/svg>$/g,'');
+    else inner=`<rect x="105" y="118" width="310" height="70" rx="25" fill="#dbeafe" stroke="#3b82f6" stroke-width="4"></rect><text x="260" y="162" text-anchor="middle" font-size="27" font-weight="900" fill="#1d4ed8">ĐO • SO SÁNH • KIỂM TRA</text>`;
+    return `<svg viewBox="0 0 520 330" class="w-full h-auto max-h-[410px]" role="img" aria-label="Mô hình suy luận đo độ dài"><rect x="25" y="18" width="470" height="290" rx="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="3"></rect>${inner}</svg>`;
+}
+
+function muc7VisualHtml_(q) {
+    const t=String(q?.muc7_type||'');
+    const v=q?.muc7_visual||{};
+    if(t==='length_pair'||t==='length_set') return muc7LengthVisualSvg_(v,false);
+    if(t==='height_pair'||t==='height_set') return muc7LengthVisualSvg_(v,true);
+    if(t==='nonstandard') return muc7NonstandardSvg_(v);
+    if(t==='ruler_read') return muc7RulerSvg_(v);
+    if(t==='ruler_placement') return muc7RulerPlacementSvg_(v);
+    if(t==='estimate') return muc7EstimateSvg_(v);
+    if(t==='fit_case') return muc7MeasuredSetSvg_(v,true);
+    if(t==='measured_set') return muc7MeasuredSetSvg_(v,false);
+    if(t==='reasoning') return muc7ReasoningSvg_(v);
+    if(t==='cm_concept') return `<div class="w-full h-full min-h-[330px] flex flex-col items-center justify-center rounded-3xl bg-gradient-to-br from-yellow-50 to-sky-50 border-2 border-yellow-200"><svg viewBox="0 0 360 130" class="w-full max-w-[360px] h-auto"><rect x="25" y="36" width="310" height="58" rx="10" fill="#facc15" stroke="#92400e" stroke-width="4"></rect>${muc7RulerTicks_(10,94,40,28)}</svg><div class="mt-1 text-5xl md:text-6xl font-black text-emerald-700">cm</div><div class="mt-3 text-lg font-extrabold text-slate-600">xăng-ti-mét</div></div>`;
+    return `<div class="min-h-[350px] flex items-center justify-center font-black text-slate-500">Quan sát mô hình đo độ dài</div>`;
+}
+
+function buildMuc7QuestionLayout_(q, speakerHtml, isEvaluationMode=false) {
+    const stageLabel=beautifySubtopicName(q?.sub_topic_label)||'Độ dài và đo độ dài';
+    const optionsHtml=(q.options||[]).map((opt,idx)=>{
+        const letter=String.fromCharCode(65+idx);
+        const themes=['border-emerald-200 bg-emerald-50/60 hover:bg-emerald-100','border-sky-200 bg-sky-50/60 hover:bg-sky-100','border-amber-200 bg-amber-50/60 hover:bg-amber-100','border-violet-200 bg-violet-50/60 hover:bg-violet-100'];
+        const letters=['text-emerald-700','text-sky-700','text-amber-700','text-violet-700'];
+        return `<button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${escapeJsString_(opt)}')" class="option-btn w-full min-h-[64px] px-4 py-3 ${themes[idx%4]} border-2 rounded-2xl font-extrabold text-slate-800 transition-all flex items-center justify-start gap-3 text-left shadow-xs pastel-btn"><strong class="${letters[idx%4]} text-xl md:text-2xl shrink-0 w-8">${letter}.</strong><span class="opt-text text-lg md:text-xl lg:text-[22px] leading-snug">${escapeHtml(capitalizeFirstLetter(opt))}</span><span class="option-icon ml-auto"></span></button>`;
+    }).join('');
+    const guide=isEvaluationMode?'':`<div class="mt-2 text-center text-sm md:text-base font-extrabold text-slate-600">${escapeHtml(muc7StageGuide_(q))}</div>`;
+    return `<div class="w-full max-w-6xl mx-auto rounded-[30px] border-2 border-emerald-100 bg-white/95 p-3 md:p-4 shadow-sm"><div class="grid grid-cols-1 md:grid-cols-[1.02fr_0.98fr] gap-3 md:gap-4 items-stretch"><div class="relative min-h-[390px] md:min-h-[440px] rounded-[24px] border-2 border-emerald-100 bg-gradient-to-br from-emerald-50 via-white to-sky-50 p-2.5 flex items-center justify-center overflow-hidden">${muc7VisualHtml_(q)}<div class="absolute left-3 bottom-3 rounded-full border-2 border-emerald-200 bg-white/95 px-4 py-1.5 text-sm md:text-base font-black text-emerald-700 shadow-sm">${escapeHtml(stageLabel)}</div></div><div class="rounded-[24px] border-2 border-emerald-100 bg-gradient-to-br from-white via-emerald-50/20 to-sky-50/30 px-3 py-4 md:px-5 md:py-5 flex flex-col justify-center"><h3 class="text-xl md:text-2xl lg:text-[27px] font-black text-slate-900 leading-snug text-center">${escapeHtml(q.question_text)}</h3>${speakerHtml}<div class="grid grid-cols-1 gap-2.5 mt-3">${optionsHtml}</div>${guide}</div></div></div>`;
+}
+
+
+function muc8ClockSvg_(hour, minute = 0, opts = {}) {
+    const size = opts.size || 300;
+    const cx = 160, cy = 160, r = 130;
+    const hourAngle = ((Number(hour || 12) % 12) + Number(minute || 0) / 60) * 30 - 90;
+    const minuteAngle = Number(minute || 0) * 6 - 90;
+    const toPt = (ang, len) => {
+        const rad = ang * Math.PI / 180;
+        return [cx + Math.cos(rad) * len, cy + Math.sin(rad) * len];
+    };
+    const hp = toPt(hourAngle, 72);
+    const mp = toPt(minuteAngle, 102);
+    let nums = '';
+    for (let n = 1; n <= 12; n++) {
+        const a = n * 30 - 90;
+        const [x,y] = toPt(a, 105);
+        nums += `<text x="${x.toFixed(1)}" y="${(y+7).toFixed(1)}" text-anchor="middle" font-size="22" font-weight="900" fill="#0f172a">${n}</text>`;
+    }
+    let ticks='';
+    for (let i=0;i<60;i++) {
+        const a=i*6-90; const len=i%5===0?12:6;
+        const [x1,y1]=toPt(a,r-4); const [x2,y2]=toPt(a,r-4-len);
+        ticks += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${i%5===0?'#64748b':'#cbd5e1'}" stroke-width="${i%5===0?3:1.4}" stroke-linecap="round"/>`;
+    }
+    return `<svg viewBox="0 0 320 320" class="w-full h-auto" style="max-width:${size}px" role="img" aria-label="Đồng hồ chỉ ${hour} giờ">
+        <circle cx="160" cy="160" r="142" fill="#fff" stroke="#60a5fa" stroke-width="10"/>
+        <circle cx="160" cy="160" r="132" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+        ${ticks}${nums}
+        <line x1="160" y1="160" x2="${hp[0]}" y2="${hp[1]}" stroke="#ef4444" stroke-width="10" stroke-linecap="round"/>
+        <line x1="160" y1="160" x2="${mp[0]}" y2="${mp[1]}" stroke="#0f172a" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="160" cy="160" r="9" fill="#0f172a"/><circle cx="160" cy="160" r="4" fill="#fff"/>
+    </svg>`;
+}
+
+function muc8WeekStripHtml_(v) {
+    const days = Array.isArray(v?.days) ? v.days : ['Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy','Chủ nhật'];
+    return `<div class="w-full max-w-2xl"><div class="grid grid-cols-2 md:grid-cols-4 gap-2">${days.map((d,i)=>{
+        const hi = d === v?.highlight;
+        return `<div class="rounded-2xl border-2 ${hi?'border-blue-400 bg-blue-100':'border-slate-200 bg-white'} px-3 py-3 text-center shadow-xs"><div class="text-xs font-black text-slate-500">NGÀY ${i+1}</div><div class="mt-1 text-base md:text-lg font-black ${hi?'text-blue-700':'text-slate-800'}">${escapeHtml(d)}</div></div>`;
+    }).join('')}</div><div class="mt-3 text-center text-sm font-black text-blue-700">Một tuần có 7 ngày</div></div>`;
+}
+
+function muc8DateStripHtml_(v) {
+    const cards=[['Hôm qua',v?.yesterday_day,v?.yesterday_date,'amber'],['Hôm nay',v?.today_day,v?.today_date,'blue'],['Ngày mai',v?.tomorrow_day,v?.tomorrow_date,'emerald']];
+    return `<div class="w-full max-w-2xl grid grid-cols-1 md:grid-cols-3 gap-3">${cards.map(([label,day,date,tone],idx)=>`<div class="rounded-[24px] border-2 ${tone==='blue'?'border-blue-300 bg-blue-50':tone==='amber'?'border-amber-300 bg-amber-50':'border-emerald-300 bg-emerald-50'} p-4 text-center shadow-sm"><div class="text-sm font-black text-slate-500">${label}</div><div class="mt-1 text-lg md:text-xl font-black text-slate-800">${escapeHtml(day||'')}</div><div class="mt-2 text-4xl font-black ${tone==='blue'?'text-blue-700':tone==='amber'?'text-amber-700':'text-emerald-700'}">${date ?? '?'}</div></div>`).join('')}</div>`;
+}
+
+function muc8ScheduleHtml_(v) {
+    const sch=v?.schedule || {};
+    const rows=Object.entries(sch);
+    return `<div class="w-full max-w-2xl rounded-[24px] border-2 border-blue-200 bg-white overflow-hidden shadow-sm"><div class="bg-blue-100 px-4 py-2 text-center text-lg font-black text-blue-800">${escapeHtml(v?.title||'Lịch hoạt động')}</div><div class="grid grid-cols-[0.9fr_1fr_1fr] text-center font-black text-sm md:text-base"><div class="bg-slate-100 p-2 border-r border-b">Ngày</div><div class="bg-amber-100 p-2 border-r border-b">🌤 Buổi sáng</div><div class="bg-sky-100 p-2 border-b">🌇 Buổi chiều</div>${rows.map(([d,val])=>{const hi=d===v?.highlight_day;return `<div class="p-2 border-r border-b ${hi?'bg-blue-50 text-blue-800':'bg-white'}">${escapeHtml(d)}</div><div class="p-2 border-r border-b ${hi?'bg-blue-50':''}">${escapeHtml(val[0])}</div><div class="p-2 border-b ${hi?'bg-blue-50':''}">${escapeHtml(val[1])}</div>`}).join('')}</div></div>`;
+}
+
+function muc8VisualHtml_(q) {
+    const t=String(q?.muc8_type||''); const v=q?.muc8_visual||{};
+    if (t==='clock') return `<div class="flex flex-col items-center justify-center">${muc8ClockSvg_(v.hour,v.minute||0,{size:330})}<div class="mt-2 rounded-full bg-blue-50 border border-blue-200 px-4 py-1.5 text-sm font-black text-blue-700">Kim dài màu đen · Kim ngắn màu đỏ</div></div>`;
+    if (t==='activity_clock') return `<div class="w-full grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-3 items-center"><div class="rounded-[22px] overflow-hidden border-2 border-blue-100 bg-white"><img src="${escapeHtml(v.image||q.image_url||'')}" alt="Hoạt động hằng ngày" class="w-full max-h-[300px] object-contain"></div><div class="flex flex-col items-center">${muc8ClockSvg_(v.hour,v.minute||0,{size:245})}<div class="mt-1 rounded-full border border-rose-200 bg-rose-50 px-3 py-1 text-sm font-black text-rose-700">${escapeHtml(v.activity||'Hoạt động')} · ${escapeHtml(v.period||'')}</div></div></div>`;
+    if (t==='week') return muc8WeekStripHtml_(v);
+    if (t==='date_strip') return muc8DateStripHtml_(v);
+    if (t==='schedule') return muc8ScheduleHtml_(v);
+    if (t==='combo') return `<div class="w-full flex flex-col items-center gap-3">${muc8DateStripHtml_(v)}<div class="w-full border-t-2 border-dashed border-blue-200 pt-3 flex justify-center">${muc8ClockSvg_(v.hour,v.minute||0,{size:235})}</div></div>`;
+    if (t==='two_clocks') return `<div class="w-full grid grid-cols-1 md:grid-cols-2 gap-5 items-center"><div class="text-center"><div class="text-sm font-black text-emerald-700 mb-1">BẮT ĐẦU</div>${muc8ClockSvg_(v.start_hour,0,{size:230})}<div class="text-xl font-black text-slate-800">${v.start_hour} giờ</div></div><div class="text-center"><div class="text-sm font-black text-rose-700 mb-1">KẾT THÚC</div>${muc8ClockSvg_(v.end_hour,0,{size:230})}<div class="text-xl font-black text-slate-800">${v.end_hour} giờ</div></div></div>`;
+    return `<div class="text-center text-slate-500 font-bold">Quan sát thông tin thời gian trong câu hỏi.</div>`;
+}
+
+function muc8StageGuide_(q) {
+    const s=String(q?.sub_topic||'');
+    if (s==='8.1') return 'Giờ đúng: kim dài chỉ 12, kim ngắn cho biết mấy giờ.';
+    if (s==='8.2') return 'Quan sát đồng hồ rồi liên hệ với hoạt động trong tranh.';
+    if (s==='8.3') return 'Đọc các ngày theo thứ tự từ Thứ Hai đến Chủ nhật.';
+    if (s==='8.4') return 'Hôm qua lùi 1 ngày; ngày mai tiến 1 ngày.';
+    if (s==='8.5') return 'Đọc đúng hàng ngày và đúng cột buổi sáng hoặc buổi chiều.';
+    if (s==='8.6') return 'Câu tổng hợp: tách từng dữ kiện về ngày, giờ và lịch rồi xử lí.';
+    return 'Quan sát hình thật kĩ rồi trả lời.';
+}
+
+function buildMuc8QuestionLayout_(q, speakerHtml, isEvaluationMode=false) {
+    const stageLabel=beautifySubtopicName(q?.sub_topic_label)||'Thời gian và lịch';
+    const optionsHtml=(q.options||[]).map((opt,idx)=>{
+        const letter=String.fromCharCode(65+idx);
+        const themes=['border-blue-200 bg-blue-50/65 hover:bg-blue-100','border-sky-200 bg-sky-50/65 hover:bg-sky-100','border-indigo-200 bg-indigo-50/65 hover:bg-indigo-100','border-violet-200 bg-violet-50/65 hover:bg-violet-100'];
+        const letters=['text-blue-700','text-sky-700','text-indigo-700','text-violet-700'];
+        return `<button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${escapeJsString_(opt)}')" class="option-btn w-full min-h-[64px] px-4 py-3 ${themes[idx%4]} border-2 rounded-2xl font-extrabold text-slate-800 transition-all flex items-center justify-start gap-3 text-left shadow-xs pastel-btn"><strong class="${letters[idx%4]} text-xl md:text-2xl shrink-0 w-8">${letter}.</strong><span class="opt-text text-lg md:text-xl lg:text-[22px] leading-snug">${escapeHtml(capitalizeFirstLetter(opt))}</span><span class="option-icon ml-auto"></span></button>`;
+    }).join('');
+    const guide=isEvaluationMode?'':`<div class="mt-2 text-center text-sm md:text-base font-extrabold text-slate-600">${escapeHtml(muc8StageGuide_(q))}</div>`;
+    return `<div class="w-full max-w-6xl mx-auto rounded-[30px] border-2 border-blue-100 bg-white/95 p-3 md:p-4 shadow-sm"><div class="grid grid-cols-1 md:grid-cols-[1.06fr_0.94fr] gap-3 md:gap-4 items-stretch"><div class="relative min-h-[390px] md:min-h-[445px] rounded-[24px] border-2 border-blue-100 bg-gradient-to-br from-sky-50 via-white to-indigo-50 p-3 flex items-center justify-center overflow-hidden">${muc8VisualHtml_(q)}<div class="absolute left-3 bottom-3 rounded-full border-2 border-blue-200 bg-white/95 px-4 py-1.5 text-sm md:text-base font-black text-blue-700 shadow-sm">${escapeHtml(stageLabel)}</div></div><div class="rounded-[24px] border-2 border-blue-100 bg-gradient-to-br from-white via-sky-50/20 to-indigo-50/30 px-3 py-4 md:px-5 md:py-5 flex flex-col justify-center"><h3 class="text-xl md:text-2xl lg:text-[27px] font-black text-slate-900 leading-snug text-center">${escapeHtml(q.question_text)}</h3>${speakerHtml}<div class="grid grid-cols-1 gap-2.5 mt-3">${optionsHtml}</div>${guide}</div></div></div>`;
+}
+
+
+function muc9StageGuide_(q) {
+    const stage=String(q?.sub_topic||'');
+    if(stage==='9.1') return 'Đọc câu chuyện theo 3 ý: ban đầu có gì → chuyện gì xảy ra → cần tìm gì.';
+    if(stage==='9.2') return 'Hình dung số lượng tăng hay giảm rồi mới chọn phép tính.';
+    if(stage==='9.3') return 'Hai phần cùng được tính vào một nhóm. Con tìm tất cả.';
+    if(stage==='9.4') return 'Một phần rời khỏi nhóm ban đầu. Con tìm số còn lại.';
+    if(stage==='9.5') return 'Không săn từ khóa. Hãy kể lại câu chuyện bằng lời của con trước khi tính.';
+    if(stage==='9.6') return 'Nối đúng ba bước: câu chuyện → phép tính → câu trả lời.';
+    return 'Quan sát tranh và các thẻ dữ kiện rồi kể lại câu chuyện toán học.';
+}
+
+function muc9VisualHtml_(q) {
+    const v=q?.muc9_visual||{};
+    const before=Number(v.before);
+    const change=Number(v.change);
+    const result=Number(v.result);
+    const hasBefore=Number.isFinite(before);
+    const hasChange=Number.isFinite(change);
+    const hasResult=Number.isFinite(result);
+    const isAdd=String(v.action||'')==='add';
+    const showOp=!!v.show_operator;
+    const item=String(v.item||'đồ vật');
+    const unit=String(v.unit||'');
+    const img=q?.image_url||'';
+    const op=isAdd?'+':'−';
+    const verb=isAdd?'Đưa vào cùng nhóm':'Rời khỏi nhóm';
+    const changeTone=isAdd?'border-emerald-200 bg-emerald-50 text-emerald-800':'border-amber-200 bg-amber-50 text-amber-800';
+    const imageHtml=img?`<img src="${escapeHtml(img)}" alt="Tranh bối cảnh bài toán" class="w-full h-full max-h-[285px] object-contain rounded-2xl" onerror="this.remove()">`:`<div class="min-h-[230px] flex items-center justify-center text-slate-400 font-black">Bối cảnh câu chuyện</div>`;
+
+    const beforeCard=hasBefore?`<div class="flex-1 min-w-[112px] rounded-2xl border-2 border-sky-200 bg-sky-50 px-3 py-2 text-center shadow-sm"><div class="text-xs md:text-sm font-black text-sky-700">BAN ĐẦU</div><div class="text-2xl md:text-3xl font-black text-slate-900">${before}</div><div class="text-xs md:text-sm font-bold text-slate-600 line-clamp-1">${escapeHtml(item)}</div></div>`:'';
+    const changeCard=hasChange?`<div class="flex-1 min-w-[112px] rounded-2xl border-2 ${changeTone} px-3 py-2 text-center shadow-sm"><div class="text-xs md:text-sm font-black">SAU ĐÓ</div><div class="text-2xl md:text-3xl font-black text-slate-900">${showOp?escapeHtml(op):''}${change}</div><div class="text-xs md:text-sm font-bold text-slate-600 line-clamp-1">${showOp?escapeHtml(unit):escapeHtml(verb)}</div></div>`:'';
+    let resultCard='';
+    if(hasBefore&&hasChange){
+        const value='?';
+        resultCard=`<div class="flex-1 min-w-[112px] rounded-2xl border-2 border-rose-200 bg-rose-50 px-3 py-2 text-center shadow-sm"><div class="text-xs md:text-sm font-black text-rose-700">CẦN TÌM</div><div class="text-2xl md:text-3xl font-black text-slate-900">${escapeHtml(String(value))}</div><div class="text-xs md:text-sm font-bold text-slate-600">Con suy nghĩ nhé</div></div>`;
+    }
+    return `<div class="w-full h-full flex flex-col justify-center gap-3"><div class="w-full min-h-[235px] flex items-center justify-center rounded-[22px] bg-white border border-rose-100 overflow-hidden p-2">${imageHtml}</div><div class="flex items-stretch justify-center gap-2 md:gap-3 flex-wrap">${beforeCard}${changeCard}${resultCard}</div></div>`;
+}
+
+function buildMuc9SolutionHtml_(q) {
+    const chosen=userAnswers[currentQIndex];
+    if(chosen===undefined || chosen!==q?.answer || !q?.explanation) return '';
+    return `<div class="mt-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-2.5 text-center text-sm md:text-base font-black text-emerald-800 shadow-sm">💡 ${escapeHtml(q.explanation)}</div>`;
+}
+
+function refreshMuc9SolutionHost_(q) {
+    if(Number(activeTopicId)!==9 && !/^9\./.test(String(q?.sub_topic||''))) return;
+    const host=document.getElementById('muc9-solution-host');
+    if(host) host.innerHTML=buildMuc9SolutionHtml_(q);
+}
+
+function buildMuc9QuestionLayout_(q, speakerHtml, isEvaluationMode=false) {
+    const stageLabel=beautifySubtopicName(q?.sub_topic_label)||'Giải toán bằng câu chuyện';
+    const optionsHtml=(q.options||[]).map((opt,idx)=>{
+        const letter=String.fromCharCode(65+idx);
+        const themes=['border-rose-200 bg-rose-50/60 hover:bg-rose-100','border-sky-200 bg-sky-50/60 hover:bg-sky-100','border-amber-200 bg-amber-50/60 hover:bg-amber-100','border-emerald-200 bg-emerald-50/60 hover:bg-emerald-100'];
+        const letters=['text-rose-700','text-sky-700','text-amber-700','text-emerald-700'];
+        return `<button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${escapeJsString_(opt)}')" class="option-btn w-full min-h-[66px] px-4 py-3 ${themes[idx%4]} border-2 rounded-2xl font-extrabold text-slate-800 transition-all flex items-center justify-start gap-3 text-left shadow-xs pastel-btn"><strong class="${letters[idx%4]} text-xl md:text-2xl shrink-0 w-8">${letter}.</strong><span class="opt-text text-lg md:text-xl lg:text-[22px] leading-snug">${escapeHtml(capitalizeFirstLetter(opt))}</span><span class="option-icon ml-auto"></span></button>`;
+    }).join('');
+    const guide=isEvaluationMode?'':`<div class="mt-2 text-center text-sm md:text-base font-extrabold text-slate-600">🧠 ${escapeHtml(muc9StageGuide_(q))}</div>`;
+    return `<div class="w-full max-w-6xl mx-auto rounded-[30px] border-2 border-rose-100 bg-white/95 p-3 md:p-4 shadow-sm"><div class="grid grid-cols-1 md:grid-cols-[1.04fr_0.96fr] gap-3 md:gap-4 items-stretch"><div class="relative min-h-[420px] md:min-h-[470px] rounded-[24px] border-2 border-rose-100 bg-gradient-to-br from-amber-50/70 via-white to-rose-50/60 p-3 flex items-center justify-center overflow-hidden">${muc9VisualHtml_(q)}<div class="absolute left-3 bottom-3 rounded-full border-2 border-rose-200 bg-white/95 px-4 py-1.5 text-sm md:text-base font-black text-rose-700 shadow-sm">${escapeHtml(stageLabel)}</div></div><div class="rounded-[24px] border-2 border-rose-100 bg-gradient-to-br from-white via-rose-50/15 to-amber-50/20 px-3 py-4 md:px-5 md:py-5 flex flex-col justify-center"><h3 class="text-xl md:text-2xl lg:text-[27px] font-black text-slate-900 leading-snug text-center">${escapeHtml(q.question_text)}</h3>${speakerHtml}<div class="grid grid-cols-1 gap-2.5 mt-3">${optionsHtml}</div>${guide}<div id="muc9-solution-host">${buildMuc9SolutionHtml_(q)}</div></div></div></div>`;
+}
+
+
+
+// ==========================================
+// MỤC 10 - TOÁN TƯ DUY NÂNG CAO
+// Mục 10 dạy chiến lược: mô hình rõ, gợi ý ngắn, sau khi đúng mới hiện cách nghĩ.
+// ==========================================
+function muc10StageGuide_(q) {
+    const s=String(q?.sub_topic||'');
+    if(s==='10.1') return 'Tìm số làm cho phép tính đúng, không đoán theo đáp án.';
+    if(s==='10.2') return 'Đi từng mũi tên một và giữ lại kết quả của mỗi bước.';
+    if(s==='10.3') return 'Tách rõ hàng chục và hàng đơn vị trước khi lập số.';
+    if(s==='10.4') return 'Tìm tổng của hàng đã đủ rồi suy ra ô còn thiếu.';
+    if(s==='10.5') return 'Đếm hình nhỏ trước, sau đó kiểm tra các hình lớn ghép lại.';
+    if(s==='10.6') return 'Vẽ quan hệ nhiều hơn / ít hơn thành hai thẻ hoặc hai thanh.';
+    return 'Con hãy nói cách nghĩ trước khi chọn đáp án.';
+}
+
+function muc1011GeometrySvg_(pattern) {
+    const stroke='#334155', fill='none';
+    const svg=(inner)=>`<svg viewBox="0 0 320 240" class="w-full max-w-[430px] h-auto" role="img" aria-label="Hình học tư duy"><rect x="6" y="6" width="308" height="228" rx="22" fill="#fff" stroke="#e9d5ff" stroke-width="2"/>${inner}</svg>`;
+    const L=(x1,y1,x2,y2)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}" stroke-width="5" stroke-linecap="round"/>`;
+    const R=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="${stroke}" stroke-width="5"/>`;
+    if(pattern==='grid2x2') return svg(R(70,30,180,180)+L(160,30,160,210)+L(70,120,250,120));
+    if(pattern==='diamond_square') return svg(R(60,25,200,190)+`<polygon points="160,25 260,120 160,215 60,120" fill="none" stroke="${stroke}" stroke-width="5"/>`);
+    if(pattern==='cross_diagonals') return svg(R(60,25,200,190)+L(60,25,260,215)+L(260,25,60,215));
+    if(pattern==='two_squares') return svg(R(50,70,105,105)+R(155,70,105,105));
+    if(pattern==='three_squares') return svg(R(15,70,95,95)+R(110,70,95,95)+R(205,70,95,95));
+    if(pattern==='triangle_median') return svg(`<polygon points="160,25 55,210 265,210" fill="none" stroke="${stroke}" stroke-width="5"/>`+L(160,25,160,210));
+    if(pattern==='triangle_midline') return svg(`<polygon points="160,25 55,210 265,210" fill="none" stroke="${stroke}" stroke-width="5"/>`+L(105,120,215,120));
+    if(pattern==='grid1x3') return svg(R(40,75,240,90)+L(120,75,120,165)+L(200,75,200,165));
+    if(pattern==='grid2x1') return svg(R(70,55,180,120)+L(160,55,160,175));
+    if(pattern==='square_plus_diag') return svg(R(65,25,190,190)+L(65,25,255,215));
+    return svg(R(75,35,170,170));
+}
+
+function muc10VisualHtml_(q) {
+    const v=q?.muc10_visual||{}; const k=String(v.kind||q?.muc10_type||'');
+    if(k==='equation') return `<div class="flex flex-col items-center gap-4"><div class="text-sm font-black text-amber-700 tracking-wide">SỐ BÍ MẬT</div><div class="flex items-center justify-center gap-3 md:gap-4 text-4xl md:text-5xl font-black text-slate-900"><span class="min-w-[78px] h-[78px] px-3 rounded-2xl border-4 border-dashed border-amber-400 bg-amber-50 flex items-center justify-center">${escapeHtml(String(v.left))}</span><span>${escapeHtml(String(v.op))}</span><span class="min-w-[78px] h-[78px] px-3 rounded-2xl border-2 border-slate-200 bg-white flex items-center justify-center">${escapeHtml(String(v.right))}</span><span>=</span><span class="min-w-[78px] h-[78px] px-3 rounded-2xl border-2 border-emerald-200 bg-emerald-50 flex items-center justify-center">${escapeHtml(String(v.result))}</span></div></div>`;
+    if(k==='machine') return `<div class="flex flex-col items-center gap-5"><div class="text-6xl">⚙️</div><div class="flex items-center gap-3 text-3xl md:text-4xl font-black"><span class="rounded-2xl border-4 border-dashed border-amber-400 bg-amber-50 px-6 py-4">${escapeHtml(String(v.start))}</span><span class="text-slate-400">→</span><span class="rounded-full bg-violet-100 border-2 border-violet-200 px-5 py-3 text-violet-800">${escapeHtml(String((v.steps||[])[0]||''))}</span><span class="text-slate-400">→</span><span class="rounded-2xl border-2 border-emerald-200 bg-emerald-50 px-6 py-4">${escapeHtml(String(v.end))}</span></div></div>`;
+    if(k==='path') return `<div class="w-full flex flex-col items-center gap-6"><div class="text-5xl">🛤️</div><div class="flex items-center justify-center gap-2 md:gap-3 flex-wrap"><div class="w-20 h-20 rounded-full bg-sky-50 border-4 border-sky-300 flex items-center justify-center text-3xl font-black">${v.start}</div><div class="text-center"><div class="font-black text-violet-700">${escapeHtml(String((v.ops||[])[0]||''))}</div><div class="text-3xl text-slate-400">→</div></div><div class="w-20 h-20 rounded-2xl bg-amber-50 border-4 border-amber-300 flex items-center justify-center text-3xl font-black">${escapeHtml(String(v.mid))}</div><div class="text-center"><div class="font-black text-violet-700">${escapeHtml(String((v.ops||[])[1]||''))}</div><div class="text-3xl text-slate-400">→</div></div><div class="w-20 h-20 rounded-full bg-emerald-50 border-4 border-emerald-300 flex items-center justify-center text-3xl font-black">${escapeHtml(String(v.end))}</div></div></div>`;
+    if(k==='digits' || k==='digit_cards') {
+        const tens=v.tens ?? (v.digits||[])[0] ?? '?'; const ones=v.ones ?? (v.digits||[])[1] ?? '?';
+        return `<div class="flex flex-col items-center gap-4"><div class="flex gap-4"><div class="w-32 rounded-3xl border-2 border-indigo-200 bg-indigo-50 p-4 text-center"><div class="text-sm font-black text-indigo-700">HÀNG CHỤC</div><div class="text-6xl font-black text-slate-900 mt-2">${escapeHtml(String(tens))}</div></div><div class="w-32 rounded-3xl border-2 border-rose-200 bg-rose-50 p-4 text-center"><div class="text-sm font-black text-rose-700">HÀNG ĐƠN VỊ</div><div class="text-6xl font-black text-slate-900 mt-2">${escapeHtml(String(ones))}</div></div></div><div class="rounded-full border-2 border-amber-200 bg-amber-50 px-4 py-2 font-black text-amber-800">${escapeHtml(String(v.rule||v.goal||''))}</div></div>`;
+    }
+    if(k==='equal_rows') {
+        const cell=(x,mark=false)=>`<div class="w-20 h-20 rounded-2xl ${mark?'border-4 border-dashed border-amber-400 bg-amber-50':'border-2 border-indigo-200 bg-white'} flex items-center justify-center text-3xl font-black">${escapeHtml(String(x))}</div>`;
+        return `<div class="flex flex-col items-center gap-3"><div class="text-lg font-black text-indigo-700">Mỗi hàng có cùng tổng</div><div class="flex gap-2">${(v.row1||[]).map(x=>cell(x)).join('')}</div><div class="flex gap-2">${(v.row2||[]).map(x=>cell(x,String(x)==='?')).join('')}</div><div class="rounded-full bg-emerald-50 border-2 border-emerald-200 px-5 py-2 font-black text-emerald-700">Tổng mẫu: ${v.target}</div></div>`;
+    }
+    if(k==='geometry') return `<div class="w-full flex items-center justify-center">${muc1011GeometrySvg_(v.pattern)}</div>`;
+    if(k==='relation') {
+        const img=q.image_url?`<div class="w-full"><img src="${escapeHtml(q.image_url)}" class="w-full max-h-[220px] object-contain rounded-2xl" alt="Bối cảnh minh họa" onerror="this.parentElement.remove()"><div class="mt-1 text-center text-xs font-extrabold text-slate-500">Bối cảnh minh họa • dữ kiện nằm ở sơ đồ bên dưới</div></div>`:'';
+        const itemTag=v.item?`<div class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs md:text-sm font-black text-slate-600">Đối tượng: ${escapeHtml(v.item)}</div>`:'';
+        return `<div class="w-full flex flex-col items-center gap-3">${img}<div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2 w-full"><div class="rounded-2xl border-2 border-sky-200 bg-sky-50 p-3 text-center"><div class="font-black text-sky-700">${escapeHtml(v.a_name||'Bạn A')}</div><div class="text-3xl font-black">${escapeHtml(String(v.a_value))}</div></div><div class="rounded-full bg-amber-100 border-2 border-amber-200 px-3 py-2 text-sm font-black text-amber-800">${escapeHtml(v.relation||'')}</div><div class="rounded-2xl border-4 border-dashed border-rose-300 bg-rose-50 p-3 text-center"><div class="font-black text-rose-700">${escapeHtml(v.b_name||'Bạn B')}</div><div class="text-3xl font-black">?</div></div></div>${itemTag}</div>`;
+    }
+    return `<div class="text-7xl">🧠</div>`;
+}
+
+function buildMuc10SolutionHtml_(q) {
+    const chosen=userAnswers[currentQIndex];
+    if(chosen===undefined || chosen!==q?.answer || !q?.explanation) return '';
+    return `<div class="mt-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-2.5 text-center text-sm md:text-base font-black text-emerald-800 shadow-sm">💡 ${escapeHtml(q.explanation)}</div>`;
+}
+function refreshMuc10SolutionHost_(q) { if(Number(activeTopicId)!==10 && !/^10\./.test(String(q?.sub_topic||''))) return; const h=document.getElementById('muc10-solution-host'); if(h)h.innerHTML=buildMuc10SolutionHtml_(q); }
+function buildMuc10QuestionLayout_(q,speakerHtml,isEvaluationMode=false) {
+    const label=beautifySubtopicName(q?.sub_topic_label)||'Toán tư duy nâng cao';
+    const options=(q.options||[]).map((opt,idx)=>{const letter=String.fromCharCode(65+idx);const th=['border-amber-200 bg-amber-50/70 hover:bg-amber-100','border-sky-200 bg-sky-50/70 hover:bg-sky-100','border-indigo-200 bg-indigo-50/70 hover:bg-indigo-100','border-emerald-200 bg-emerald-50/70 hover:bg-emerald-100'];return `<button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${escapeJsString_(opt)}')" class="option-btn w-full min-h-[66px] px-4 py-3 ${th[idx%4]} border-2 rounded-2xl font-extrabold text-slate-800 transition-all flex items-center justify-start gap-3 text-left shadow-xs pastel-btn"><strong class="text-amber-700 text-xl md:text-2xl shrink-0 w-8">${letter}.</strong><span class="opt-text text-lg md:text-xl lg:text-[23px] leading-snug">${escapeHtml(capitalizeFirstLetter(opt))}</span><span class="option-icon ml-auto"></span></button>`}).join('');
+    const guide=isEvaluationMode?'':`<div class="mt-2 text-center text-sm md:text-base font-extrabold text-slate-600">🧠 ${escapeHtml(muc10StageGuide_(q))}</div>`;
+    return `<div class="w-full max-w-6xl mx-auto rounded-[30px] border-2 border-amber-100 bg-white/95 p-3 md:p-4 shadow-sm"><div class="grid grid-cols-1 md:grid-cols-[1.04fr_0.96fr] gap-3 md:gap-4 items-stretch"><div class="relative min-h-[420px] md:min-h-[470px] rounded-[24px] border-2 border-amber-100 bg-gradient-to-br from-amber-50 via-white to-indigo-50 p-4 flex items-center justify-center overflow-hidden">${muc10VisualHtml_(q)}<div class="absolute left-3 bottom-3 rounded-full border-2 border-amber-200 bg-white/95 px-4 py-1.5 text-sm md:text-base font-black text-amber-700 shadow-sm">${escapeHtml(label)}</div></div><div class="rounded-[24px] border-2 border-amber-100 bg-gradient-to-br from-white via-amber-50/20 to-indigo-50/20 px-3 py-4 md:px-5 md:py-5 flex flex-col justify-center"><h3 class="text-xl md:text-2xl lg:text-[27px] font-black text-slate-900 leading-snug text-center">${escapeHtml(q.question_text)}</h3>${speakerHtml}<div class="grid grid-cols-1 gap-2.5 mt-3">${options}</div>${guide}<div id="muc10-solution-host">${buildMuc10SolutionHtml_(q)}</div></div></div></div>`;
+}
+
+// ==========================================
+// MỤC 11 - XƯỞNG THỬ THÁCH TOÁN
+// Mục 11 là chuyển giao: trẻ tự nhận dạng chiến lược, gợi ý ít hơn Mục 10.
+// ==========================================
+function muc11StageGuide_(q) {
+    const s=String(q?.sub_topic||'');
+    if(s==='11.1') return 'Đọc đủ mọi manh mối rồi mới loại đáp án.';
+    if(s==='11.2') return 'Manh mối nào thật sự ảnh hưởng đến điều cần tìm?';
+    if(s==='11.3') return 'Kiểm tra từng lời nói độc lập trước khi kết luận.';
+    if(s==='11.4') return 'So sánh trạng thái trước và sau để suy ra điều đã thay đổi.';
+    if(s==='11.5') return 'Vẽ trục thời gian nhỏ nếu con chưa chắc.';
+    if(s==='11.6') return 'Không có tên dạng toán: con tự chọn chiến lược phù hợp.';
+    return 'Thử thách này cần con tự chọn cách giải.';
+}
+
+function muc11VisualHtml_(q) {
+    const v=q?.muc11_visual||{}; const k=String(v.kind||q?.muc11_type||''); const img=q?.image_url||'';
+    const scene=img?`<div class="w-full rounded-2xl overflow-hidden border-2 border-purple-100 bg-white"><img src="${escapeHtml(img)}" class="w-full max-h-[215px] object-contain" alt="Bối cảnh thử thách" onerror="this.parentElement.remove()"><div class="px-2 py-1 text-center text-xs font-extrabold text-slate-500">Bối cảnh minh họa • hãy đọc dữ kiện trên thẻ/sơ đồ</div></div>`:'';
+    if(k==='clues') return `<div class="w-full flex flex-col items-center gap-3">${scene}<div class="text-5xl">${escapeHtml(v.icon||'🔎')}</div><div class="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">${(v.clues||[]).map((c,i)=>`<div class="rounded-2xl border-2 ${['border-sky-200 bg-sky-50','border-amber-200 bg-amber-50','border-rose-200 bg-rose-50','border-emerald-200 bg-emerald-50'][i%4]} p-3 font-black text-slate-800 text-center">${escapeHtml(String(c))}</div>`).join('')}</div></div>`;
+    if(k==='who_right') return `<div class="w-full grid grid-cols-1 gap-4"><div class="rounded-[24px] border-2 border-sky-200 bg-sky-50 p-4"><div class="text-3xl mb-1">🐿️</div><div class="font-black text-sky-700">A. ${escapeHtml(v.a_name||'Bạn A')}</div><div class="mt-2 text-xl md:text-2xl font-black text-slate-900">“${escapeHtml(v.a_text||'')}”</div></div><div class="rounded-[24px] border-2 border-rose-200 bg-rose-50 p-4"><div class="text-3xl mb-1">🐰</div><div class="font-black text-rose-700">B. ${escapeHtml(v.b_name||'Bạn B')}</div><div class="mt-2 text-xl md:text-2xl font-black text-slate-900">“${escapeHtml(v.b_text||'')}”</div></div></div>`;
+    if(k==='before_after') {
+        const isTransfer=String(v.action||'')==='transfer' || String(v.ask||'')==='after';
+        const badge=isTransfer
+            ? `Nhận thêm: ${escapeHtml(String(v.change ?? '?'))}`
+            : (String(v.action||'')==='same' ? 'Thay đổi: ?' : 'Thay đổi: ?');
+        return `<div class="w-full flex flex-col gap-3">${scene}<div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2"><div class="rounded-2xl border-2 border-sky-200 bg-sky-50 p-4 text-center"><div class="text-sm font-black text-sky-700">TRƯỚC</div><div class="text-4xl font-black">${escapeHtml(String(v.before))}</div></div><div class="text-4xl text-purple-400">→</div><div class="rounded-2xl ${String(v.after)==='?'?'border-4 border-dashed border-emerald-300':'border-2 border-emerald-200'} bg-emerald-50 p-4 text-center"><div class="text-sm font-black text-emerald-700">SAU</div><div class="text-4xl font-black">${escapeHtml(String(v.after))}</div></div></div><div class="mx-auto rounded-full border-2 ${isTransfer?'border-emerald-300 bg-emerald-50 text-emerald-800':'border-dashed border-amber-300 bg-amber-50 text-amber-800'} px-5 py-2 font-black">${badge}</div></div>`;
+    }
+    if(k==='time_logic' || k==='timeline' || k==='weekline' || k==='clock_span') {
+        if(Array.isArray(v.labels)) return `<div class="w-full flex items-center justify-center gap-2 flex-wrap">${v.labels.map((x,i)=>`<div class="rounded-2xl border-2 ${i===1?'border-amber-200 bg-amber-50':'border-purple-200 bg-purple-50'} px-5 py-4 text-xl md:text-2xl font-black">${escapeHtml(String(x))}</div>${i<v.labels.length-1?'<span class="text-3xl text-slate-400">→</span>':''}`).join('')}</div>`;
+        if(v.today) return `<div class="w-full flex flex-col items-center gap-4"><div class="text-5xl">📅</div><div class="rounded-2xl border-2 border-purple-200 bg-purple-50 px-6 py-4 text-2xl font-black">Hôm nay: ${escapeHtml(v.today)}</div><div class="text-3xl font-black text-amber-700">+ ${v.jump} ngày → ?</div></div>`;
+        if(v.start!=null) return `<div class="w-full grid grid-cols-2 gap-4"> <div class="text-center"><div class="font-black text-sky-700 mb-1">BẮT ĐẦU</div>${muc8ClockSvg_(v.start,0,{size:220})}</div><div class="text-center"><div class="font-black text-rose-700 mb-1">KẾT THÚC</div>${muc8ClockSvg_(v.end,0,{size:220})}</div></div>`;
+    }
+    if(k==='mixed') {
+        if(v.kind==='sum_boxes') return `<div class="flex flex-col items-center gap-4"><div class="text-lg font-black text-purple-700">Tổng cần đạt: ${v.target}</div><div class="flex gap-3">${(v.values||[]).map(x=>`<div class="w-24 h-24 rounded-2xl ${String(x)==='?'?'border-4 border-dashed border-amber-300 bg-amber-50':'border-2 border-purple-200 bg-purple-50'} flex items-center justify-center text-4xl font-black">${escapeHtml(String(x))}</div>`).join('')}</div></div>`;
+    }
+    // mixed records store their real kind directly; support them here too.
+    if(k==='sum_boxes') return `<div class="flex flex-col items-center gap-4"><div class="text-lg font-black text-purple-700">Tổng cần đạt: ${v.target}</div><div class="flex gap-3">${(v.values||[]).map(x=>`<div class="w-24 h-24 rounded-2xl ${String(x)==='?'?'border-4 border-dashed border-amber-300 bg-amber-50':'border-2 border-purple-200 bg-purple-50'} flex items-center justify-center text-4xl font-black">${escapeHtml(String(x))}</div>`).join('')}</div></div>`;
+    if(k==='relation_chain') return `<div class="w-full flex flex-col items-center gap-3">${scene}<div class="flex items-center justify-center gap-2 flex-wrap">${(v.nodes||[]).map((x,i)=>`<div class="rounded-2xl border-2 border-purple-200 bg-purple-50 px-4 py-4 text-xl font-black">${escapeHtml(String(x))}</div>${i<(v.nodes||[]).length-1?'<span class="text-3xl text-slate-400">→</span>':''}`).join('')}</div></div>`;
+    if(k==='digits') return `<div class="flex flex-col items-center gap-4"><div class="flex gap-4"><div class="w-32 rounded-3xl border-2 border-indigo-200 bg-indigo-50 p-4 text-center"><div class="text-sm font-black text-indigo-700">CHỤC</div><div class="text-6xl font-black">${escapeHtml(String(v.tens))}</div></div><div class="w-32 rounded-3xl border-2 border-rose-200 bg-rose-50 p-4 text-center"><div class="text-sm font-black text-rose-700">ĐƠN VỊ</div><div class="text-6xl font-black">${escapeHtml(String(v.ones))}</div></div></div><div class="rounded-full bg-amber-50 border-2 border-amber-200 px-4 py-2 font-black text-amber-800">${escapeHtml(v.rule||'')}</div></div>`;
+    if(k==='geometry') return muc1011GeometrySvg_(v.pattern);
+    if(k==='length_fit') { const max=Math.max(Number(v.container)||1,Number(v.item)||1); const wc=Math.round((Number(v.container)||1)/max*100); const wi=Math.round((Number(v.item)||1)/max*100); return `<div class="w-full flex flex-col gap-5"><div><div class="font-black text-sky-700 mb-1">Hộp ${v.container} cm</div><div class="h-16 rounded-2xl border-2 border-sky-300 bg-sky-50 flex items-center px-2" style="width:${wc}%"><div class="w-full h-2 bg-sky-300 rounded-full"></div></div></div><div><div class="font-black text-rose-700 mb-1">Bút ${v.item} cm</div><div class="h-10 rounded-full bg-rose-300 border-2 border-rose-400" style="width:${wi}%"></div></div></div>`; }
+    return `<div class="text-7xl">🕵️</div>`;
+}
+
+function buildMuc11SolutionHtml_(q) { const chosen=userAnswers[currentQIndex]; if(chosen===undefined || chosen!==q?.answer || !q?.explanation)return ''; return `<div class="mt-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 px-4 py-2.5 text-center text-sm md:text-base font-black text-emerald-800 shadow-sm">🔍 ${escapeHtml(q.explanation)}</div>`; }
+function refreshMuc11SolutionHost_(q) { if(Number(activeTopicId)!==11 && !/^11\./.test(String(q?.sub_topic||''))) return; const h=document.getElementById('muc11-solution-host'); if(h)h.innerHTML=buildMuc11SolutionHtml_(q); }
+function buildMuc11QuestionLayout_(q,speakerHtml,isEvaluationMode=false) {
+    const label=beautifySubtopicName(q?.sub_topic_label)||'Xưởng thử thách Toán';
+    const options=(q.options||[]).map((opt,idx)=>{const letter=String.fromCharCode(65+idx);const th=['border-purple-200 bg-purple-50/70 hover:bg-purple-100','border-sky-200 bg-sky-50/70 hover:bg-sky-100','border-rose-200 bg-rose-50/70 hover:bg-rose-100','border-emerald-200 bg-emerald-50/70 hover:bg-emerald-100'];return `<button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${escapeJsString_(opt)}')" class="option-btn w-full min-h-[66px] px-4 py-3 ${th[idx%4]} border-2 rounded-2xl font-extrabold text-slate-800 transition-all flex items-center justify-start gap-3 text-left shadow-xs pastel-btn"><strong class="text-purple-700 text-xl md:text-2xl shrink-0 w-8">${letter}.</strong><span class="opt-text text-lg md:text-xl lg:text-[23px] leading-snug">${escapeHtml(capitalizeFirstLetter(opt))}</span><span class="option-icon ml-auto"></span></button>`}).join('');
+    const guide=isEvaluationMode?'':`<div class="mt-2 text-center text-sm md:text-base font-extrabold text-slate-600">🕵️ ${escapeHtml(muc11StageGuide_(q))}</div>`;
+    return `<div class="w-full max-w-6xl mx-auto rounded-[30px] border-2 border-purple-100 bg-white/95 p-3 md:p-4 shadow-sm"><div class="grid grid-cols-1 md:grid-cols-[1.04fr_0.96fr] gap-3 md:gap-4 items-stretch"><div class="relative min-h-[420px] md:min-h-[470px] rounded-[24px] border-2 border-purple-100 bg-gradient-to-br from-purple-50 via-white to-sky-50 p-4 flex items-center justify-center overflow-hidden">${muc11VisualHtml_(q)}<div class="absolute left-3 bottom-3 rounded-full border-2 border-purple-200 bg-white/95 px-4 py-1.5 text-sm md:text-base font-black text-purple-700 shadow-sm">${escapeHtml(label)}</div></div><div class="rounded-[24px] border-2 border-purple-100 bg-gradient-to-br from-white via-purple-50/20 to-sky-50/20 px-3 py-4 md:px-5 md:py-5 flex flex-col justify-center"><h3 class="text-xl md:text-2xl lg:text-[27px] font-black text-slate-900 leading-snug text-center">${escapeHtml(q.question_text)}</h3>${speakerHtml}<div class="grid grid-cols-1 gap-2.5 mt-3">${options}</div>${guide}<div id="muc11-solution-host">${buildMuc11SolutionHtml_(q)}</div></div></div></div>`;
+}
+
 function formatQuestionPromptHtml_(q) {
     if (Number(activeTopicId) === 3 && /^3\.[12]$/.test(String(q?.sub_topic || ''))) {
         return formatTopic3PromptHtml_(q, q?.question_text || '');
@@ -5729,6 +6443,14 @@ function loadQuestion() {
     const isTopic3Practice = !isEvaluationMode && Number(activeTopicId) === 3 && /^3\./.test(String(q.sub_topic || ''));
     const isTopic4Practice = !isEvaluationMode && Number(activeTopicId) === 4 && /^4\./.test(String(q.sub_topic || ''));
     const isTopic5Practice = !isEvaluationMode && Number(activeTopicId) === 5 && /^5\.[2345]$/.test(String(q.sub_topic || ''));
+    // Mục 6 luôn dùng layout tranh lớn bên trái - câu hỏi bên phải.
+    // Kiểm tra cả activeTopicId để không rơi về layout trắc nghiệm chung nếu dữ liệu sub_topic cũ/thiếu.
+    const isTopic6Question = Number(activeTopicId) === 6 || /^6\./.test(String(q.sub_topic || ''));
+    const isTopic7Question = Number(activeTopicId) === 7 || /^7\./.test(String(q.sub_topic || ''));
+    const isTopic8Question = Number(activeTopicId) === 8 || /^8\./.test(String(q.sub_topic || ''));
+    const isTopic9Question = Number(activeTopicId) === 9 || /^9\./.test(String(q.sub_topic || ''));
+    const isTopic10Question = Number(activeTopicId) === 10 || /^10\./.test(String(q.sub_topic || ''));
+    const isTopic11Question = Number(activeTopicId) === 11 || /^11\./.test(String(q.sub_topic || ''));
 
     if (isEvaluationMode) {
         document.getElementById('q-badge-index').textContent = `CÂU ${currentQIndex + 1} / ${activeQuestionsList.length}`;
@@ -5799,6 +6521,18 @@ function loadQuestion() {
         html = buildTopic4Sub41Layout_(q, practiceSpeakerBtnHtml);
     } else if (isTopic5Practice) {
         html = buildMuc5QuestionLayout_(q, practiceSpeakerBtnHtml);
+    } else if (isTopic6Question) {
+        html = buildMuc6QuestionLayout_(q, practiceSpeakerBtnHtml, isEvaluationMode);
+    } else if (isTopic7Question) {
+        html = buildMuc7QuestionLayout_(q, practiceSpeakerBtnHtml, isEvaluationMode);
+    } else if (isTopic8Question) {
+        html = buildMuc8QuestionLayout_(q, practiceSpeakerBtnHtml, isEvaluationMode);
+    } else if (isTopic9Question) {
+        html = buildMuc9QuestionLayout_(q, practiceSpeakerBtnHtml, isEvaluationMode);
+    } else if (isTopic10Question) {
+        html = buildMuc10QuestionLayout_(q, practiceSpeakerBtnHtml, isEvaluationMode);
+    } else if (isTopic11Question) {
+        html = buildMuc11QuestionLayout_(q, practiceSpeakerBtnHtml, isEvaluationMode);
     } else if (isLetterListen) {
         html = `
             ${mediaHtml}
@@ -5827,11 +6561,23 @@ function loadQuestion() {
                 </div>`;
         }
     } else {
+        const isTopic4TextLarge = !isEvaluationMode && Number(activeTopicId) === 4 && /^4\./.test(String(q.sub_topic || ''));
+        const isTopic9Or10TextLarge = !isEvaluationMode && [9, 10].includes(Number(activeTopicId)) && /^(9|10)\./.test(String(q.sub_topic || ''));
+        const useLargeGenericText = isTopic4TextLarge || isTopic9Or10TextLarge;
+        const genericQuestionTextClass = useLargeGenericText
+            ? 'text-lg md:text-xl lg:text-[26px]'
+            : 'text-sm md:text-base lg:text-lg';
+        const genericOptionTextClass = useLargeGenericText
+            ? 'text-lg md:text-xl lg:text-[24px]'
+            : 'text-sm md:text-base';
+        const genericOptionLetterClass = useLargeGenericText
+            ? 'text-xl md:text-2xl'
+            : 'text-base md:text-lg';
         html = `
         ${mediaHtml}
         ${passageHtml}
         <div class="flex flex-col items-center justify-center max-w-3xl text-center px-2 mb-0.5">
-            <h3 class="text-sm md:text-base lg:text-lg font-black text-slate-900 leading-snug">
+            <h3 class="${genericQuestionTextClass} font-black text-slate-900 leading-snug">
                 ${formatQuestionPromptHtml_(q)}
             </h3>
             ${practiceSpeakerBtnHtml}
@@ -5855,8 +6601,8 @@ function loadQuestion() {
                 </button>`;
         } else {
             html += `
-                <button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${opt.replace(/'/g, "\\'")}')" class="option-btn w-full p-3 md:p-3.5 bg-pink-50/40 hover:bg-pink-100/70 border-2 border-pink-200 rounded-2xl font-extrabold text-gray-800 text-left transition-all flex items-center justify-between text-sm md:text-base shadow-xs pastel-btn">
-                    <span><strong class="text-pink-600 mr-2 text-base md:text-lg">${letter}.</strong> ${escapeHtml(formattedOpt)}</span>
+                <button data-opt="${escapeHtml(opt)}" onclick="checkAnswer('${opt.replace(/'/g, "\\'")}')" class="option-btn w-full p-3 md:p-3.5 bg-pink-50/40 hover:bg-pink-100/70 border-2 border-pink-200 rounded-2xl font-extrabold text-gray-800 text-left transition-all flex items-center justify-between ${genericOptionTextClass} shadow-xs pastel-btn">
+                    <span><strong class="text-pink-600 mr-2 ${genericOptionLetterClass}">${letter}.</strong> ${escapeHtml(formattedOpt)}</span>
                     <span class="option-icon text-pink-500 text-base md:text-lg"></span>
                 </button>`;
         }
@@ -5872,6 +6618,7 @@ function loadQuestion() {
     renderTopic3SortInteractive_(q);
     refreshTopic35FeedbackHost_(q);
     refreshMuc5SolutionHost_(q);
+    refreshMuc9SolutionHost_(q);
     updateNavButtons();
     updateQuizPalletUI();
 
@@ -6038,6 +6785,9 @@ function checkAnswer(selectedOpt) {
             renderTopic3SortInteractive_(q);
             refreshTopic35FeedbackHost_(q);
             refreshMuc5SolutionHost_(q);
+            refreshMuc9SolutionHost_(q);
+            refreshMuc10SolutionHost_(q);
+            refreshMuc11SolutionHost_(q);
         }
 
         if (isCorrect) {
@@ -6075,13 +6825,17 @@ function checkAnswer(selectedOpt) {
         renderTopic3SortInteractive_(q);
         refreshTopic35FeedbackHost_(q);
         refreshMuc5SolutionHost_(q);
+        refreshMuc9SolutionHost_(q);
+        refreshMuc10SolutionHost_(q);
+        refreshMuc11SolutionHost_(q);
 
         playAudio('correct');
         confetti({ particleCount: 30, spread: 55, origin: { y: 0.7 } });
 
-        // Riêng Mục 1-2: trả lời đúng thì tự chuyển câu để giữ nhịp học liên tục cho bé.
-        const isFoundationPractice = /^[12]\./.test(String(q.sub_topic || ''));
-        if (isFoundationPractice) {
+        // Mục 1-2, 6, 7 và 8: trả lời đúng thì tự chuyển câu để giữ nhịp học liên tục cho bé.
+        // Các mục này thiên về nhận biết trực quan / thực hành nhanh nên không cần dừng lâu sau khi đã chọn đúng.
+        const isAutoNextPractice = /^(?:1|2|6|7|8)\./.test(String(q.sub_topic || ''));
+        if (isAutoNextPractice) {
             setTimeout(() => nextQuestion(), 650);
         } else if (!speakMuc5SelectedShape_(q, selectedOpt)) {
             setTimeout(() => speakVietnamese(`${q.answer}`), 180);
