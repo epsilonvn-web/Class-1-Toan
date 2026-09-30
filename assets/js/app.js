@@ -702,7 +702,7 @@ function goHome() {
 
 // ==========================================
 // MINI GAME TOÁN 1 — HUB + LAZY LOAD
-// 1. Sudoku  |  2. Thám tử đếm  |  3. Chẵn - lẻ  |  4. Cây cầu số  |  5. Tháp số  |  6. Ký ức công trình
+// 1. Sudoku  |  2. Thám tử đếm  |  3. Chẵn - lẻ  |  4. Cây cầu số  |  5. Tháp số  |  6. Xưởng ghép hình kỳ diệu
 // ==========================================
 let inMiniGameFlow = false;
 const MINIGAME_LIST = [
@@ -711,7 +711,7 @@ const MINIGAME_LIST = [
     { id: 'even-odd', title: '3. Ghép đôi - Chẵn lẻ', desc: 'Ghép thành từng đôi để hiểu số chẵn và số lẻ', icon: '👯', ready: true },
     { id: 'number-bridge', title: '4. Cây cầu số', desc: 'Ghép các đoạn cầu vừa khít để hiểu tách - gộp, cộng và phần còn thiếu', icon: '🌉', ready: true },
     { id: 'number-tower', title: '5. Tháp số vươn cao', desc: 'Xây tháp theo thứ tự, số hai chữ số và quy luật cách đều', icon: '🏰', ready: true },
-    { id: 'construction-memory', title: '6. Ký ức công trình', desc: 'Nhìn, ghi nhớ rồi dựng lại công trình bằng các khối hình', icon: '🏗️', ready: true }
+    { id: 'construction-memory', title: '6. Xưởng ghép hình kỳ diệu', desc: 'Ghép đúng hình, màu, hướng và số để lắp mô hình hình học', icon: '🧩', ready: true }
 ];
 const MINIGAME_PALETTES = [
     ['bg-rose-50/80','border-rose-300','text-rose-600'],
@@ -727,7 +727,7 @@ const GAME_SCRIPT_MAP = {
     'even-odd': 'assets/js/games/even-odd.js?v=20260930-pairing-v1',
     'number-bridge': 'assets/js/games/number-bridge.js?v=20260930-number-bridge-v3-wide',
     'number-tower': 'assets/js/games/number-tower.js?v=20260930-number-tower-v2-wide',
-    'construction-memory': 'assets/js/games/construction-memory.js?v=20260930-construction-memory-v1'
+    'construction-memory': 'assets/js/games/construction-memory.js?v=20260930-geometry-workshop-v1'
 };
 const GAME_START_FN_MAP = {
     'sudoku': 'startSudokuGame',
