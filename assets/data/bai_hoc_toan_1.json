@@ -121,14 +121,14 @@
           "items": [
             {
               "type": "choice",
-              "prompt": "Nhóm nào có đúng 4 đồ vật?",
+              "prompt": "Nhóm nào có đúng 4 ngôi sao?",
               "options": [
-                "Nhóm 4 ngôi sao",
-                "Nhóm 3 ngôi sao",
-                "Nhóm 5 ngôi sao"
+                "⭐ ⭐ ⭐ ⭐",
+                "⭐ ⭐ ⭐",
+                "⭐ ⭐ ⭐ ⭐ ⭐"
               ],
               "answer": 0,
-              "explanation": "Đếm lần lượt từng ngôi sao."
+              "explanation": "Đếm lần lượt từng ngôi sao. Nhóm đầu tiên có đúng 4 ngôi sao."
             },
             {
               "type": "fill",
@@ -969,7 +969,7 @@
         "TOAN_C1"
       ],
       "sub_ids": [
-        "4.1"
+        "5.1"
       ],
       "content_status": "sgk_vbt_aligned_original_v1",
       "navigation_model": "3_pages",
@@ -1127,7 +1127,7 @@
         "TOAN_C1"
       ],
       "sub_ids": [
-        "4.1"
+        "5.1"
       ],
       "content_status": "sgk_vbt_aligned_original_v1",
       "navigation_model": "3_pages",
@@ -1745,7 +1745,7 @@
         "TOAN_C1"
       ],
       "sub_ids": [
-        "4.2"
+        "5.2"
       ],
       "content_status": "sgk_vbt_aligned_original_v1",
       "navigation_model": "3_pages",
@@ -1783,13 +1783,13 @@
       "source_title": "Vị trí, định hướng trong không gian",
       "theme": "Làm quen với một số hình khối",
       "lesson_id": "T1_B15",
-      "estimated_minutes": 15,
+      "estimated_minutes": 18,
       "pages": [
         {
           "page_no": 1,
           "page_type": "discovery",
           "title": "Khám phá",
-          "goal": "Mô tả và xác định vị trí tương đối bằng các từ trước - sau, trên - dưới, trái - phải, ở giữa.",
+          "goal": "Mô tả và xác định vị trí bằng trên - dưới, trước - sau - ở giữa, trái - phải; đọc thứ tự trong hàng và nhận biết các mặt nhìn thấy của khối trong tình huống trực quan.",
           "intro": "Cùng Cô Thỏ Hồng khám phá trọng tâm của Bài 15: Vị trí, định hướng trong không gian.",
           "concept_blocks": [
             {
@@ -1810,12 +1810,16 @@
           ],
           "visual_models": [
             {
-              "type": "position_scene",
-              "instruction": "Quan sát cảnh và trả lời vị trí của đồ vật theo vật mốc."
+              "type": "scene_image",
+              "instruction": "Quan sát tranh đời sống và xác định vị trí theo một vật mốc rõ ràng."
             },
             {
-              "type": "move_commands",
-              "instruction": "Di chuyển nhân vật theo lệnh trái/phải/lên/xuống."
+              "type": "ordered_row",
+              "instruction": "Quan sát một hàng đồ vật/người và xác định thứ tự theo hướng được yêu cầu."
+            },
+            {
+              "type": "colored_solid_faces",
+              "instruction": "Quan sát ba mặt nhìn thấy của khối: mặt trước, mặt trên, mặt bên."
             }
           ],
           "teacher_prompts": [
@@ -1904,9 +1908,13 @@
       ],
       "sub_ids": [
         "6.1",
-        "6.2"
+        "6.2",
+        "6.3",
+        "6.4",
+        "6.5",
+        "6.6"
       ],
-      "content_status": "sgk_vbt_aligned_original_v1",
+      "content_status": "sgk_aligned_expanded_visual_v2",
       "navigation_model": "3_pages",
       "learning_flow": [
         "Khám phá",
@@ -2216,7 +2224,7 @@
         "TOAN_C4"
       ],
       "sub_ids": [
-        "3.4"
+        "3.3"
       ],
       "content_status": "sgk_vbt_aligned_original_v1",
       "navigation_model": "3_pages",
@@ -2361,13 +2369,15 @@
         }
       ],
       "competency_links": [
-        "TOAN_C1",
         "TOAN_C6"
       ],
       "sub_ids": [
-        "3.3",
-        "5.1",
-        "5.4"
+        "4.1",
+        "4.2",
+        "4.3",
+        "4.4",
+        "4.5",
+        "4.6"
       ],
       "content_status": "sgk_vbt_aligned_original_v1",
       "navigation_model": "3_pages",
@@ -2525,7 +2535,8 @@
         "TOAN_C3"
       ],
       "sub_ids": [
-        "7.1"
+        "7.1",
+        "7.2"
       ],
       "content_status": "sgk_vbt_aligned_original_v1",
       "navigation_model": "3_pages",
@@ -2678,8 +2689,8 @@
         "TOAN_C3"
       ],
       "sub_ids": [
-        "7.1",
-        "7.2"
+        "7.3",
+        "7.4"
       ],
       "content_status": "sgk_vbt_aligned_original_v1",
       "navigation_model": "3_pages",
@@ -2838,9 +2849,10 @@
         "TOAN_C4"
       ],
       "sub_ids": [
-        "7.1",
-        "7.2",
-        "7.3"
+        "7.3",
+        "7.4",
+        "7.5",
+        "7.6"
       ],
       "content_status": "sgk_vbt_aligned_original_v1",
       "navigation_model": "3_pages",
@@ -3622,7 +3634,8 @@
         "TOAN_C3"
       ],
       "sub_ids": [
-        "8.1"
+        "8.1",
+        "8.2"
       ],
       "content_status": "sgk_vbt_aligned_original_v1",
       "navigation_model": "3_pages",
@@ -3775,7 +3788,9 @@
         "TOAN_C3"
       ],
       "sub_ids": [
-        "8.2"
+        "8.3",
+        "8.4",
+        "8.5"
       ],
       "content_status": "sgk_vbt_aligned_original_v1",
       "navigation_model": "3_pages",
@@ -3928,8 +3943,12 @@
         "TOAN_C3"
       ],
       "sub_ids": [
+        "8.1",
         "8.2",
-        "8.3"
+        "8.3",
+        "8.4",
+        "8.5",
+        "8.6"
       ],
       "content_status": "sgk_vbt_aligned_original_v1",
       "navigation_model": "3_pages",
@@ -4337,7 +4356,7 @@
       "candidate_pool_target": 30,
       "source": "Kho học + SGK + VBT + Bài học",
       "sub_ids": [
-        "4.1"
+        "5.1"
       ],
       "competency_targets": [
         "TOAN_C1"
@@ -4365,8 +4384,8 @@
       "question_bank_filters": [
         {
           "priority": 1,
-          "sub_id": "4.1",
-          "topic_id": 4,
+          "sub_id": "5.1",
+          "topic_id": 5,
           "sub": "Hình phẳng",
           "competency": "TOAN_C1",
           "constraints": {
@@ -4410,7 +4429,7 @@
       "candidate_pool_target": 30,
       "source": "Kho học + SGK + VBT + Bài học",
       "sub_ids": [
-        "4.1"
+        "5.1"
       ],
       "competency_targets": [
         "TOAN_C1"
@@ -4438,8 +4457,8 @@
       "question_bank_filters": [
         {
           "priority": 1,
-          "sub_id": "4.1",
-          "topic_id": 4,
+          "sub_id": "5.1",
+          "topic_id": 5,
           "sub": "Hình phẳng",
           "competency": "TOAN_C1",
           "constraints": {
@@ -4532,7 +4551,7 @@
           "priority": 2,
           "sub_id": "9.1",
           "topic_id": 9,
-          "sub": "Đọc hiểu đề toán",
+          "sub": "Hiểu câu chuyện trong tranh",
           "competency": "TOAN_C5",
           "constraints": {
             "number_max": 10,
@@ -4543,7 +4562,7 @@
           "priority": 2,
           "sub_id": "9.2",
           "topic_id": 9,
-          "sub": "Phân tích từ khóa",
+          "sub": "Từ tình huống đến phép tính",
           "competency": "TOAN_C5",
           "constraints": {
             "number_max": 10,
@@ -4630,7 +4649,7 @@
           "priority": 2,
           "sub_id": "9.1",
           "topic_id": 9,
-          "sub": "Đọc hiểu đề toán",
+          "sub": "Hiểu câu chuyện trong tranh",
           "competency": "TOAN_C5",
           "constraints": {
             "number_max": 10,
@@ -4641,7 +4660,7 @@
           "priority": 2,
           "sub_id": "9.2",
           "topic_id": 9,
-          "sub": "Phân tích từ khóa",
+          "sub": "Từ tình huống đến phép tính",
           "competency": "TOAN_C5",
           "constraints": {
             "number_max": 10,
@@ -4749,7 +4768,7 @@
       "candidate_pool_target": 30,
       "source": "Kho học + SGK + VBT + Bài học",
       "sub_ids": [
-        "4.2"
+        "5.2"
       ],
       "competency_targets": [
         "TOAN_C1"
@@ -4777,8 +4796,8 @@
       "question_bank_filters": [
         {
           "priority": 1,
-          "sub_id": "4.2",
-          "topic_id": 4,
+          "sub_id": "5.2",
+          "topic_id": 5,
           "sub": "Hình khối",
           "competency": "TOAN_C1",
           "constraints": {
@@ -4817,11 +4836,15 @@
       "title": "Vị trí, định hướng trong không gian",
       "exercise_id": "T1_BT15",
       "question_count": 20,
-      "candidate_pool_target": 30,
+      "candidate_pool_target": 60,
       "source": "Kho học + SGK + VBT + Bài học",
       "sub_ids": [
         "6.1",
-        "6.2"
+        "6.2",
+        "6.3",
+        "6.4",
+        "6.5",
+        "6.6"
       ],
       "competency_targets": [
         "TOAN_C4"
@@ -4833,7 +4856,7 @@
       "mode": "scored_practice",
       "lesson_id": "T1_B15",
       "lesson_image": "",
-      "instructions": "Làm 20 câu. Mỗi câu tính vào một năng lực chính. Có thể làm lại với bộ câu khác trong cùng pool, hạn chế lặp câu gần đây.",
+      "instructions": "Làm 20 câu được chọn trong 6 kỹ năng của Bài 15. Câu hỏi dùng tranh hoặc mô hình trực quan; các câu tổng hợp được dùng ở mức khó hơn.",
       "attempt_blueprint": {
         "total_scored_questions": 20,
         "candidate_pool_target": 30,
@@ -4851,17 +4874,12 @@
           "priority": 1,
           "sub_id": "6.1",
           "topic_id": 6,
-          "sub": "Hướng không gian",
+          "sub": "Trên - dưới",
           "competency": "TOAN_C4",
           "constraints": {
             "spatial_terms": [
-              "trước",
-              "sau",
               "trên",
-              "dưới",
-              "trái",
-              "phải",
-              "giữa"
+              "dưới"
             ]
           }
         },
@@ -4869,17 +4887,66 @@
           "priority": 2,
           "sub_id": "6.2",
           "topic_id": 6,
-          "sub": "Vị trí tương quan",
+          "sub": "Trước - sau - ở giữa",
           "competency": "TOAN_C4",
           "constraints": {
             "spatial_terms": [
               "trước",
               "sau",
-              "trên",
-              "dưới",
-              "trái",
-              "phải",
               "giữa"
+            ]
+          }
+        },
+        {
+          "priority": 3,
+          "sub_id": "6.3",
+          "topic_id": 6,
+          "sub": "Trái - phải",
+          "competency": "TOAN_C4",
+          "constraints": {
+            "spatial_terms": [
+              "trái",
+              "phải"
+            ]
+          }
+        },
+        {
+          "priority": 4,
+          "sub_id": "6.4",
+          "topic_id": 6,
+          "sub": "Thứ tự và vị trí trong hàng",
+          "competency": "TOAN_C4",
+          "constraints": {
+            "spatial_terms": [
+              "thứ tự",
+              "từ trái sang phải",
+              "từ phải sang trái"
+            ]
+          }
+        },
+        {
+          "priority": 5,
+          "sub_id": "6.5",
+          "topic_id": 6,
+          "sub": "Mặt trước - mặt trên - mặt bên",
+          "competency": "TOAN_C4",
+          "constraints": {
+            "spatial_terms": [
+              "mặt trước",
+              "mặt trên",
+              "mặt bên"
+            ]
+          }
+        },
+        {
+          "priority": 6,
+          "sub_id": "6.6",
+          "topic_id": 6,
+          "sub": "Tổng hợp vị trí - định hướng",
+          "competency": "TOAN_C4",
+          "constraints": {
+            "spatial_terms": [
+              "tổng hợp từ hai điều kiện vị trí trở lên"
             ]
           }
         }
@@ -4998,7 +5065,7 @@
       "candidate_pool_target": 30,
       "source": "Kho học + SGK + VBT + Bài học",
       "sub_ids": [
-        "3.4"
+        "3.3"
       ],
       "competency_targets": [
         "TOAN_C4"
@@ -5026,7 +5093,7 @@
       "question_bank_filters": [
         {
           "priority": 1,
-          "sub_id": "3.4",
+          "sub_id": "3.3",
           "topic_id": 3,
           "sub": "So sánh số có hai chữ số",
           "competency": "TOAN_C4",
@@ -5068,9 +5135,12 @@
       "candidate_pool_target": 30,
       "source": "Kho học + SGK + VBT + Bài học",
       "sub_ids": [
-        "3.3",
-        "5.1",
-        "5.4"
+        "4.1",
+        "4.2",
+        "4.3",
+        "4.4",
+        "4.5",
+        "4.6"
       ],
       "competency_targets": [
         "TOAN_C1",
@@ -5103,21 +5173,9 @@
       "question_bank_filters": [
         {
           "priority": 1,
-          "sub_id": "3.3",
-          "topic_id": 3,
-          "sub": "Bảng các số từ 1 đến 100",
-          "competency": "TOAN_C1",
-          "constraints": {
-            "number_min": 1,
-            "number_max": 100,
-            "concept": "hundred_chart"
-          }
-        },
-        {
-          "priority": 2,
-          "sub_id": "5.1",
-          "topic_id": 5,
-          "sub": "Số liền trước, liền sau",
+          "sub_id": "4.1",
+          "topic_id": 4,
+          "sub": "Số liền trước, liền sau và số ở giữa",
           "competency": "TOAN_C6",
           "constraints": {
             "number_min": 1,
@@ -5127,14 +5185,62 @@
         },
         {
           "priority": 2,
-          "sub_id": "5.4",
-          "topic_id": 5,
-          "sub": "Quy luật dãy số",
+          "sub_id": "4.2",
+          "topic_id": 4,
+          "sub": "Điền số còn thiếu trong dãy liên tiếp",
           "competency": "TOAN_C6",
           "constraints": {
             "number_min": 1,
             "number_max": 100,
             "concept": "hundred_chart"
+          }
+        },
+        {
+          "priority": 3,
+          "sub_id": "4.3",
+          "topic_id": 4,
+          "sub": "Dãy số cách đều 2 đơn vị",
+          "competency": "TOAN_C6",
+          "constraints": {
+            "number_min": 1,
+            "number_max": 100,
+            "concept": "sequence"
+          }
+        },
+        {
+          "priority": 3,
+          "sub_id": "4.4",
+          "topic_id": 4,
+          "sub": "Dãy số cách đều 5 đơn vị",
+          "competency": "TOAN_C6",
+          "constraints": {
+            "number_min": 1,
+            "number_max": 100,
+            "concept": "sequence"
+          }
+        },
+        {
+          "priority": 4,
+          "sub_id": "4.5",
+          "topic_id": 4,
+          "sub": "Dãy số cách đều 10 đơn vị",
+          "competency": "TOAN_C6",
+          "constraints": {
+            "number_min": 1,
+            "number_max": 100,
+            "concept": "sequence"
+          }
+        },
+        {
+          "priority": 4,
+          "sub_id": "4.6",
+          "topic_id": 4,
+          "sub": "Tìm quy luật và số tiếp theo",
+          "competency": "TOAN_C6",
+          "constraints": {
+            "number_min": 1,
+            "number_max": 100,
+            "concept": "sequence"
           }
         }
       ],
@@ -5169,7 +5275,8 @@
       "candidate_pool_target": 30,
       "source": "Kho học + SGK + VBT + Bài học",
       "sub_ids": [
-        "7.1"
+        "7.1",
+        "7.2"
       ],
       "competency_targets": [
         "TOAN_C3"
@@ -5199,10 +5306,20 @@
           "priority": 1,
           "sub_id": "7.1",
           "topic_id": 7,
-          "sub": "Ước lượng độ dài",
+          "sub": "Dài hơn - ngắn hơn",
           "competency": "TOAN_C3",
           "constraints": {
             "concept": "compare_length"
+          }
+        },
+        {
+          "priority": 1,
+          "sub_id": "7.2",
+          "topic_id": 7,
+          "sub": "Cao hơn - thấp hơn",
+          "competency": "TOAN_C3",
+          "constraints": {
+            "concept": "compare_height"
           }
         }
       ],
@@ -5237,8 +5354,8 @@
       "candidate_pool_target": 30,
       "source": "Kho học + SGK + VBT + Bài học",
       "sub_ids": [
-        "7.1",
-        "7.2"
+        "7.3",
+        "7.4"
       ],
       "competency_targets": [
         "TOAN_C3"
@@ -5266,22 +5383,19 @@
       "question_bank_filters": [
         {
           "priority": 1,
-          "sub_id": "7.1",
+          "sub_id": "7.3",
           "topic_id": 7,
-          "sub": "Ước lượng độ dài",
+          "sub": "Đo bằng gang tay, sải tay, bước chân",
           "competency": "TOAN_C3",
           "constraints": {
-            "units": [
-              "cm"
-            ],
-            "concept": "measure_length"
+            "concept": "nonstandard_measure"
           }
         },
         {
-          "priority": 2,
-          "sub_id": "7.2",
+          "priority": 1,
+          "sub_id": "7.4",
           "topic_id": 7,
-          "sub": "Đơn vị xăng-ti-mét (cm)",
+          "sub": "Xăng-ti-mét và cách dùng thước",
           "competency": "TOAN_C3",
           "constraints": {
             "units": [
@@ -5322,9 +5436,10 @@
       "candidate_pool_target": 30,
       "source": "Kho học + SGK + VBT + Bài học",
       "sub_ids": [
-        "7.1",
-        "7.2",
-        "7.3"
+        "7.3",
+        "7.4",
+        "7.5",
+        "7.6"
       ],
       "competency_targets": [
         "TOAN_C3",
@@ -5357,41 +5472,51 @@
       "question_bank_filters": [
         {
           "priority": 1,
-          "sub_id": "7.1",
+          "sub_id": "7.5",
           "topic_id": 7,
-          "sub": "Ước lượng độ dài",
+          "sub": "Ước lượng rồi đo",
           "competency": "TOAN_C3",
           "constraints": {
             "units": [
               "cm"
             ],
-            "concept": "estimate_measure_compare"
+            "concept": "estimate_measure"
           }
         },
         {
           "priority": 2,
-          "sub_id": "7.2",
+          "sub_id": "7.4",
           "topic_id": 7,
-          "sub": "Đơn vị xăng-ti-mét (cm)",
+          "sub": "Xăng-ti-mét và cách dùng thước",
           "competency": "TOAN_C3",
           "constraints": {
             "units": [
               "cm"
             ],
-            "concept": "estimate_measure_compare"
+            "concept": "measure_length"
           }
         },
         {
           "priority": 2,
+          "sub_id": "7.6",
+          "topic_id": 7,
+          "sub": "Thực hành tổng hợp",
+          "competency": "TOAN_C3",
+          "constraints": {
+            "units": [
+              "cm"
+            ],
+            "concept": "measure_compare_apply"
+          }
+        },
+        {
+          "priority": 3,
           "sub_id": "7.3",
           "topic_id": 7,
-          "sub": "Tính toán và so sánh",
-          "competency": "TOAN_C4",
+          "sub": "Đo bằng gang tay, sải tay, bước chân",
+          "competency": "TOAN_C3",
           "constraints": {
-            "units": [
-              "cm"
-            ],
-            "concept": "estimate_measure_compare"
+            "concept": "nonstandard_measure"
           }
         }
       ],
@@ -5477,7 +5602,7 @@
           "priority": 2,
           "sub_id": "9.1",
           "topic_id": 9,
-          "sub": "Đọc hiểu đề toán",
+          "sub": "Hiểu câu chuyện trong tranh",
           "competency": "TOAN_C5",
           "constraints": {
             "number_max": 99,
@@ -5491,7 +5616,7 @@
           "priority": 2,
           "sub_id": "9.2",
           "topic_id": 9,
-          "sub": "Phân tích từ khóa",
+          "sub": "Từ tình huống đến phép tính",
           "competency": "TOAN_C5",
           "constraints": {
             "number_max": 99,
@@ -5584,7 +5709,7 @@
           "priority": 2,
           "sub_id": "9.1",
           "topic_id": 9,
-          "sub": "Đọc hiểu đề toán",
+          "sub": "Hiểu câu chuyện trong tranh",
           "competency": "TOAN_C5",
           "constraints": {
             "number_max": 99,
@@ -5598,7 +5723,7 @@
           "priority": 2,
           "sub_id": "9.2",
           "topic_id": 9,
-          "sub": "Phân tích từ khóa",
+          "sub": "Từ tình huống đến phép tính",
           "competency": "TOAN_C5",
           "constraints": {
             "number_max": 99,
@@ -5691,7 +5816,7 @@
           "priority": 2,
           "sub_id": "9.1",
           "topic_id": 9,
-          "sub": "Đọc hiểu đề toán",
+          "sub": "Hiểu câu chuyện trong tranh",
           "competency": "TOAN_C5",
           "constraints": {
             "number_max": 99,
@@ -5705,7 +5830,7 @@
           "priority": 2,
           "sub_id": "9.2",
           "topic_id": 9,
-          "sub": "Phân tích từ khóa",
+          "sub": "Từ tình huống đến phép tính",
           "competency": "TOAN_C5",
           "constraints": {
             "number_max": 99,
@@ -5798,7 +5923,7 @@
           "priority": 2,
           "sub_id": "9.1",
           "topic_id": 9,
-          "sub": "Đọc hiểu đề toán",
+          "sub": "Hiểu câu chuyện trong tranh",
           "competency": "TOAN_C5",
           "constraints": {
             "number_max": 99,
@@ -5812,7 +5937,7 @@
           "priority": 2,
           "sub_id": "9.2",
           "topic_id": 9,
-          "sub": "Phân tích từ khóa",
+          "sub": "Từ tình huống đến phép tính",
           "competency": "TOAN_C5",
           "constraints": {
             "number_max": 99,
@@ -5854,7 +5979,8 @@
       "candidate_pool_target": 30,
       "source": "Kho học + SGK + VBT + Bài học",
       "sub_ids": [
-        "8.1"
+        "8.1",
+        "8.2"
       ],
       "competency_targets": [
         "TOAN_C3"
@@ -5884,10 +6010,20 @@
           "priority": 1,
           "sub_id": "8.1",
           "topic_id": 8,
-          "sub": "Xem giờ đúng",
+          "sub": "Kim đồng hồ và xem giờ đúng",
           "competency": "TOAN_C3",
           "constraints": {
-            "time_mode": "whole_hour"
+            "visual_required": true
+          }
+        },
+        {
+          "priority": 2,
+          "sub_id": "8.2",
+          "topic_id": 8,
+          "sub": "Giờ trong sinh hoạt hằng ngày",
+          "competency": "TOAN_C3",
+          "constraints": {
+            "visual_required": true
           }
         }
       ],
@@ -5922,7 +6058,9 @@
       "candidate_pool_target": 30,
       "source": "Kho học + SGK + VBT + Bài học",
       "sub_ids": [
-        "8.2"
+        "8.3",
+        "8.4",
+        "8.5"
       ],
       "competency_targets": [
         "TOAN_C3"
@@ -5950,12 +6088,32 @@
       "question_bank_filters": [
         {
           "priority": 1,
-          "sub_id": "8.2",
+          "sub_id": "8.3",
           "topic_id": 8,
-          "sub": "Lịch tuần lễ",
+          "sub": "Các ngày trong tuần",
           "competency": "TOAN_C3",
           "constraints": {
-            "calendar_mode": "weekdays"
+            "visual_required": true
+          }
+        },
+        {
+          "priority": 2,
+          "sub_id": "8.4",
+          "topic_id": 8,
+          "sub": "Hôm qua - hôm nay - ngày mai",
+          "competency": "TOAN_C3",
+          "constraints": {
+            "visual_required": true
+          }
+        },
+        {
+          "priority": 3,
+          "sub_id": "8.5",
+          "topic_id": 8,
+          "sub": "Đọc thời khóa biểu và lịch hoạt động",
+          "competency": "TOAN_C3",
+          "constraints": {
+            "visual_required": true
           }
         }
       ],
@@ -5990,8 +6148,12 @@
       "candidate_pool_target": 30,
       "source": "Kho học + SGK + VBT + Bài học",
       "sub_ids": [
+        "8.1",
         "8.2",
-        "8.3"
+        "8.3",
+        "8.4",
+        "8.5",
+        "8.6"
       ],
       "competency_targets": [
         "TOAN_C3"
@@ -6019,22 +6181,62 @@
       "question_bank_filters": [
         {
           "priority": 1,
-          "sub_id": "8.2",
+          "sub_id": "8.1",
           "topic_id": 8,
-          "sub": "Lịch tuần lễ",
+          "sub": "Kim đồng hồ và xem giờ đúng",
           "competency": "TOAN_C3",
           "constraints": {
-            "calendar_mode": "date_and_time"
+            "visual_required": true
           }
         },
         {
           "priority": 2,
-          "sub_id": "8.3",
+          "sub_id": "8.2",
           "topic_id": 8,
-          "sub": "Thời gian thực tế và xem lịch nâng cao",
+          "sub": "Giờ trong sinh hoạt hằng ngày",
           "competency": "TOAN_C3",
           "constraints": {
-            "calendar_mode": "date_and_time"
+            "visual_required": true
+          }
+        },
+        {
+          "priority": 3,
+          "sub_id": "8.3",
+          "topic_id": 8,
+          "sub": "Các ngày trong tuần",
+          "competency": "TOAN_C3",
+          "constraints": {
+            "visual_required": true
+          }
+        },
+        {
+          "priority": 4,
+          "sub_id": "8.4",
+          "topic_id": 8,
+          "sub": "Hôm qua - hôm nay - ngày mai",
+          "competency": "TOAN_C3",
+          "constraints": {
+            "visual_required": true
+          }
+        },
+        {
+          "priority": 5,
+          "sub_id": "8.5",
+          "topic_id": 8,
+          "sub": "Đọc thời khóa biểu và lịch hoạt động",
+          "competency": "TOAN_C3",
+          "constraints": {
+            "visual_required": true
+          }
+        },
+        {
+          "priority": 6,
+          "sub_id": "8.6",
+          "topic_id": 8,
+          "sub": "Tổng hợp xem lịch và giờ",
+          "competency": "TOAN_C3",
+          "constraints": {
+            "visual_required": true
           }
         }
       ],
@@ -6063,7 +6265,14 @@
   ],
   "content_status": {
     "bai_hoc": "25/25 bài học đã dựng nội dung V1 theo SGK/VBT",
-    "bai_tap": "25/25 bài tập đã map sang kho câu hỏi hiện có; cần engine mới áp dụng constraints trước khi chạy production"
+    "bai_tap": "25/25 bài tập đã map sang kho câu hỏi hiện có; cần engine mới áp dụng constraints trước khi chạy production",
+    "topic_9": "sgk_aligned_story_visual_v1",
+    "muc10_11": {
+      "status": "restructured_thinking_progression_v2_visual_audited",
+      "topic10_questions": 180,
+      "topic11_questions": 180,
+      "topic11_subpool_size": 30
+    }
   },
   "copyright_policy": "Chỉ bám mục tiêu, cấu trúc kiến thức và dạng hoạt động của SGK/VBT Kết nối tri thức; nội dung giải thích, ví dụ và câu hỏi hướng dẫn trong JSON được biên soạn mới.",
   "competency_definitions": {
@@ -6072,7 +6281,7 @@
       "topics": [
         1,
         3,
-        4
+        5
       ]
     },
     "TOAN_C2": {
@@ -6106,7 +6315,7 @@
     "TOAN_C6": {
       "name": "Dãy số, Quy luật và Tư duy",
       "topics": [
-        5,
+        4,
         10
       ]
     }
@@ -6191,7 +6400,7 @@
       "topic_id": 3,
       "topic_name": "CÁC SỐ TRONG PHẠM VI 100",
       "competency": "TOAN_C1",
-      "question_count": 160,
+      "question_count": 240,
       "sub_pools": [
         {
           "sub_id": "3.1",
@@ -6207,13 +6416,25 @@
         },
         {
           "sub_id": "3.3",
-          "sub": "Bảng các số từ 1 đến 100",
+          "sub": "So sánh số có hai chữ số",
+          "count": 40,
+          "competency": "TOAN_C4"
+        },
+        {
+          "sub_id": "3.4",
+          "sub": "Sắp xếp các số",
+          "count": 40,
+          "competency": "TOAN_C4"
+        },
+        {
+          "sub_id": "3.5",
+          "sub": "Số chẵn và số lẻ",
           "count": 40,
           "competency": "TOAN_C1"
         },
         {
-          "sub_id": "3.4",
-          "sub": "So sánh số có hai chữ số",
+          "sub_id": "3.6",
+          "sub": "Số lớn nhất và số bé nhất",
           "count": 40,
           "competency": "TOAN_C4"
         }
@@ -6221,18 +6442,62 @@
     },
     {
       "topic_id": 4,
+      "topic_name": "DÃY SỐ VÀ QUY LUẬT",
+      "competency": "TOAN_C6",
+      "question_count": 240,
+      "sub_pools": [
+        {
+          "sub_id": "4.1",
+          "sub": "Số liền trước, liền sau và số ở giữa",
+          "count": 40,
+          "competency": "TOAN_C6"
+        },
+        {
+          "sub_id": "4.2",
+          "sub": "Điền số còn thiếu trong dãy liên tiếp",
+          "count": 40,
+          "competency": "TOAN_C6"
+        },
+        {
+          "sub_id": "4.3",
+          "sub": "Dãy số cách đều 2 đơn vị",
+          "count": 40,
+          "competency": "TOAN_C6"
+        },
+        {
+          "sub_id": "4.4",
+          "sub": "Dãy số cách đều 5 đơn vị",
+          "count": 40,
+          "competency": "TOAN_C6"
+        },
+        {
+          "sub_id": "4.5",
+          "sub": "Dãy số cách đều 10 đơn vị",
+          "count": 40,
+          "competency": "TOAN_C6"
+        },
+        {
+          "sub_id": "4.6",
+          "sub": "Tìm quy luật và số tiếp theo",
+          "count": 40,
+          "competency": "TOAN_C6"
+        }
+      ]
+    },
+    {
+      "topic_id": 5,
       "topic_name": "HÌNH HỌC",
       "competency": "TOAN_C1",
       "question_count": 120,
       "sub_pools": [
         {
-          "sub_id": "4.1",
+          "sub_id": "5.1",
           "sub": "Hình phẳng",
           "count": 60,
           "competency": "TOAN_C1"
         },
         {
-          "sub_id": "4.2",
+          "sub_id": "5.2",
           "sub": "Hình khối",
           "count": 60,
           "competency": "TOAN_C1"
@@ -6240,163 +6505,265 @@
       ]
     },
     {
-      "topic_id": 5,
-      "topic_name": "DÃY SỐ VÀ QUY LUẬT",
-      "competency": "TOAN_C6",
-      "question_count": 160,
-      "sub_pools": [
-        {
-          "sub_id": "5.1",
-          "sub": "Số liền trước, liền sau",
-          "count": 40,
-          "competency": "TOAN_C6"
-        },
-        {
-          "sub_id": "5.2",
-          "sub": "Các từ khóa toán học đặc biệt",
-          "count": 40,
-          "competency": "TOAN_C6"
-        },
-        {
-          "sub_id": "5.3",
-          "sub": "Khái niệm Chẵn - Lẻ",
-          "count": 40,
-          "competency": "TOAN_C6"
-        },
-        {
-          "sub_id": "5.4",
-          "sub": "Quy luật dãy số",
-          "count": 40,
-          "competency": "TOAN_C6"
-        }
-      ]
-    },
-    {
       "topic_id": 6,
       "topic_name": "VỊ TRÍ VÀ KHÔNG GIAN",
       "competency": "TOAN_C4",
-      "question_count": 60,
+      "question_count": 140,
       "sub_pools": [
         {
           "sub_id": "6.1",
-          "sub": "Hướng không gian",
-          "count": 30,
+          "sub": "Trên - dưới",
+          "count": 20,
           "competency": "TOAN_C4"
         },
         {
           "sub_id": "6.2",
-          "sub": "Vị trí tương quan",
-          "count": 30,
+          "sub": "Trước - sau - ở giữa",
+          "count": 20,
+          "competency": "TOAN_C4"
+        },
+        {
+          "sub_id": "6.3",
+          "sub": "Trái - phải",
+          "count": 20,
+          "competency": "TOAN_C4"
+        },
+        {
+          "sub_id": "6.4",
+          "sub": "Thứ tự và vị trí trong hàng",
+          "count": 20,
+          "competency": "TOAN_C4"
+        },
+        {
+          "sub_id": "6.5",
+          "sub": "Mặt trước - mặt trên - mặt bên",
+          "count": 20,
+          "competency": "TOAN_C4"
+        },
+        {
+          "sub_id": "6.6",
+          "sub": "Tổng hợp vị trí - định hướng",
+          "count": 40,
           "competency": "TOAN_C4"
         }
       ]
     },
     {
       "topic_id": 7,
-      "topic_name": "ĐỘ DÀI VÀ ĐƠN VỊ ĐO",
+      "topic_name": "ĐỘ DÀI VÀ ĐO ĐỘ DÀI",
       "competency": "TOAN_C3",
-      "question_count": 120,
+      "question_count": 140,
       "sub_pools": [
         {
           "sub_id": "7.1",
-          "sub": "Ước lượng độ dài",
-          "count": 40,
+          "sub": "Dài hơn - ngắn hơn",
+          "count": 20,
           "competency": "TOAN_C3"
         },
         {
           "sub_id": "7.2",
-          "sub": "Đơn vị xăng-ti-mét (cm)",
-          "count": 40,
+          "sub": "Cao hơn - thấp hơn",
+          "count": 20,
           "competency": "TOAN_C3"
         },
         {
           "sub_id": "7.3",
-          "sub": "Tính toán và so sánh",
-          "count": 40,
-          "competency": "TOAN_C4"
+          "sub": "Đo bằng gang tay, sải tay, bước chân",
+          "count": 20,
+          "competency": "TOAN_C3"
+        },
+        {
+          "sub_id": "7.4",
+          "sub": "Xăng-ti-mét và cách dùng thước",
+          "count": 30,
+          "competency": "TOAN_C3"
+        },
+        {
+          "sub_id": "7.5",
+          "sub": "Ước lượng rồi đo",
+          "count": 20,
+          "competency": "TOAN_C3"
+        },
+        {
+          "sub_id": "7.6",
+          "sub": "Thực hành tổng hợp",
+          "count": 30,
+          "competency": "TOAN_C3"
         }
       ]
     },
     {
       "topic_id": 8,
-      "topic_name": "THỜI GIAN, LỊCH VÀ THỰC HÀNH KIỂM ĐẾM",
+      "topic_name": "THỜI GIAN, GIỜ VÀ LỊCH",
       "competency": "TOAN_C3",
-      "question_count": 160,
+      "question_count": 150,
       "sub_pools": [
         {
           "sub_id": "8.1",
-          "sub": "Xem giờ đúng",
-          "count": 40,
+          "sub": "Kim đồng hồ và xem giờ đúng",
+          "count": 30,
           "competency": "TOAN_C3"
         },
         {
           "sub_id": "8.2",
-          "sub": "Lịch tuần lễ",
-          "count": 40,
+          "sub": "Giờ trong sinh hoạt hằng ngày",
+          "count": 20,
           "competency": "TOAN_C3"
         },
         {
           "sub_id": "8.3",
-          "sub": "Thời gian thực tế và xem lịch nâng cao",
-          "count": 40,
+          "sub": "Các ngày trong tuần",
+          "count": 20,
           "competency": "TOAN_C3"
         },
         {
           "sub_id": "8.4",
-          "sub": "Thu thập, phân loại, kiểm đếm (Thống kê trực quan)",
-          "count": 40,
+          "sub": "Hôm qua - hôm nay - ngày mai",
+          "count": 30,
+          "competency": "TOAN_C3"
+        },
+        {
+          "sub_id": "8.5",
+          "sub": "Đọc thời khóa biểu và lịch hoạt động",
+          "count": 20,
+          "competency": "TOAN_C3"
+        },
+        {
+          "sub_id": "8.6",
+          "sub": "Tổng hợp xem lịch và giờ",
+          "count": 30,
           "competency": "TOAN_C3"
         }
       ]
     },
     {
       "topic_id": 9,
-      "topic_name": "GIẢI TOÁN CÓ LỜI VĂN",
+      "topic_name": "GIẢI TOÁN BẰNG CÂU CHUYỆN VÀ HÌNH ẢNH",
       "competency": "TOAN_C5",
-      "question_count": 120,
+      "question_count": 160,
       "sub_pools": [
         {
           "sub_id": "9.1",
-          "sub": "Đọc hiểu đề toán",
-          "count": 40,
+          "sub": "Hiểu câu chuyện trong tranh",
+          "count": 20,
           "competency": "TOAN_C5"
         },
         {
           "sub_id": "9.2",
-          "sub": "Phân tích từ khóa",
-          "count": 40,
+          "sub": "Từ tình huống đến phép tính",
+          "count": 30,
           "competency": "TOAN_C5"
         },
         {
           "sub_id": "9.3",
-          "sub": "Trình bày bài giải",
-          "count": 40,
+          "sub": "Bài toán thêm vào - gộp lại",
+          "count": 30,
+          "competency": "TOAN_C5"
+        },
+        {
+          "sub_id": "9.4",
+          "sub": "Bài toán bớt đi - còn lại",
+          "count": 30,
+          "competency": "TOAN_C5"
+        },
+        {
+          "sub_id": "9.5",
+          "sub": "Đọc hiểu không dựa vào từ khóa",
+          "count": 20,
+          "competency": "TOAN_C5"
+        },
+        {
+          "sub_id": "9.6",
+          "sub": "Luyện tập tổng hợp bằng tranh",
+          "count": 30,
           "competency": "TOAN_C5"
         }
       ]
     },
     {
       "topic_id": 10,
-      "topic_name": "TOÁN TƯ DUY NÂNG CAO VÀ THỬ THÁCH IQ",
+      "topic_name": "TOÁN TƯ DUY NÂNG CAO",
       "competency": "TOAN_C6",
-      "question_count": 120,
+      "question_count": 180,
       "sub_pools": [
         {
           "sub_id": "10.1",
-          "sub": "Toán điền khuyết",
-          "count": 40,
+          "sub": "Tìm số bí mật",
+          "count": 30,
           "competency": "TOAN_C6"
         },
         {
           "sub_id": "10.2",
-          "sub": "Toán logic trực quan",
-          "count": 40,
+          "sub": "Chuỗi phép tính và đường đi số",
+          "count": 30,
           "competency": "TOAN_C6"
         },
         {
           "sub_id": "10.3",
-          "sub": "Đếm hình nâng cao",
-          "count": 40,
+          "sub": "Lập số và suy luận chữ số",
+          "count": 30,
+          "competency": "TOAN_C6"
+        },
+        {
+          "sub_id": "10.4",
+          "sub": "Ô số, quy luật và tổng bằng nhau",
+          "count": 30,
+          "competency": "TOAN_C6"
+        },
+        {
+          "sub_id": "10.5",
+          "sub": "Hình học tư duy và đếm hình",
+          "count": 30,
+          "competency": "TOAN_C6"
+        },
+        {
+          "sub_id": "10.6",
+          "sub": "Bài toán suy luận nâng cao một bước",
+          "count": 30,
+          "competency": "TOAN_C6"
+        }
+      ]
+    },
+    {
+      "topic_id": 11,
+      "topic_name": "XƯỞNG THỬ THÁCH TOÁN",
+      "competency": "TOAN_C6",
+      "question_count": 180,
+      "sub_pools": [
+        {
+          "sub_id": "11.1",
+          "sub": "Thám tử tập sự",
+          "count": 30,
+          "competency": "TOAN_C6"
+        },
+        {
+          "sub_id": "11.2",
+          "sub": "Tìm manh mối",
+          "count": 30,
+          "competency": "TOAN_C6"
+        },
+        {
+          "sub_id": "11.3",
+          "sub": "Ai đúng - ai sai?",
+          "count": 30,
+          "competency": "TOAN_C6"
+        },
+        {
+          "sub_id": "11.4",
+          "sub": "Chuyện gì đã xảy ra?",
+          "count": 30,
+          "competency": "TOAN_C6"
+        },
+        {
+          "sub_id": "11.5",
+          "sub": "Bí mật tuổi, ngày và thời gian",
+          "count": 30,
+          "competency": "TOAN_C6"
+        },
+        {
+          "sub_id": "11.6",
+          "sub": "Siêu thử thách tổng hợp",
+          "count": 30,
           "competency": "TOAN_C6"
         }
       ]
@@ -6433,6 +6800,56 @@
       "sub": "Trong phạm vi từ 20 tới 100",
       "competency": "TOAN_C2"
     },
+    "7.1": {
+      "topic_id": 7,
+      "sub": "Dài hơn - ngắn hơn",
+      "competency": "TOAN_C3"
+    },
+    "7.2": {
+      "topic_id": 7,
+      "sub": "Cao hơn - thấp hơn",
+      "competency": "TOAN_C3"
+    },
+    "7.3": {
+      "topic_id": 7,
+      "sub": "Đo bằng gang tay, sải tay, bước chân",
+      "competency": "TOAN_C3"
+    },
+    "8.1": {
+      "topic_id": 8,
+      "sub": "Kim đồng hồ và xem giờ đúng",
+      "competency": "TOAN_C3"
+    },
+    "8.2": {
+      "topic_id": 8,
+      "sub": "Giờ trong sinh hoạt hằng ngày",
+      "competency": "TOAN_C3"
+    },
+    "8.3": {
+      "topic_id": 8,
+      "sub": "Các ngày trong tuần",
+      "competency": "TOAN_C3"
+    },
+    "8.4": {
+      "topic_id": 8,
+      "sub": "Hôm qua - hôm nay - ngày mai",
+      "competency": "TOAN_C3"
+    },
+    "9.1": {
+      "topic_id": 9,
+      "sub": "Hiểu câu chuyện trong tranh",
+      "competency": "TOAN_C5"
+    },
+    "9.2": {
+      "topic_id": 9,
+      "sub": "Từ tình huống đến phép tính",
+      "competency": "TOAN_C5"
+    },
+    "9.3": {
+      "topic_id": 9,
+      "sub": "Bài toán thêm vào - gộp lại",
+      "competency": "TOAN_C5"
+    },
     "3.1": {
       "topic_id": 3,
       "sub": "Đọc và viết số đến 100",
@@ -6445,117 +6862,192 @@
     },
     "3.3": {
       "topic_id": 3,
-      "sub": "Bảng các số từ 1 đến 100",
-      "competency": "TOAN_C1"
+      "sub": "So sánh số có hai chữ số",
+      "competency": "TOAN_C4"
     },
     "3.4": {
       "topic_id": 3,
-      "sub": "So sánh số có hai chữ số",
+      "sub": "Sắp xếp các số",
+      "competency": "TOAN_C4"
+    },
+    "3.5": {
+      "topic_id": 3,
+      "sub": "Số chẵn và số lẻ",
+      "competency": "TOAN_C1"
+    },
+    "3.6": {
+      "topic_id": 3,
+      "sub": "Số lớn nhất và số bé nhất",
       "competency": "TOAN_C4"
     },
     "4.1": {
       "topic_id": 4,
-      "sub": "Hình phẳng",
-      "competency": "TOAN_C1"
+      "sub": "Số liền trước, liền sau và số ở giữa",
+      "competency": "TOAN_C6"
     },
     "4.2": {
       "topic_id": 4,
-      "sub": "Hình khối",
-      "competency": "TOAN_C1"
+      "sub": "Điền số còn thiếu trong dãy liên tiếp",
+      "competency": "TOAN_C6"
+    },
+    "4.3": {
+      "topic_id": 4,
+      "sub": "Dãy số cách đều 2 đơn vị",
+      "competency": "TOAN_C6"
+    },
+    "4.4": {
+      "topic_id": 4,
+      "sub": "Dãy số cách đều 5 đơn vị",
+      "competency": "TOAN_C6"
+    },
+    "4.5": {
+      "topic_id": 4,
+      "sub": "Dãy số cách đều 10 đơn vị",
+      "competency": "TOAN_C6"
+    },
+    "4.6": {
+      "topic_id": 4,
+      "sub": "Tìm quy luật và số tiếp theo",
+      "competency": "TOAN_C6"
     },
     "5.1": {
       "topic_id": 5,
-      "sub": "Số liền trước, liền sau",
-      "competency": "TOAN_C6"
+      "sub": "Hình phẳng",
+      "competency": "TOAN_C1"
     },
     "5.2": {
       "topic_id": 5,
-      "sub": "Các từ khóa toán học đặc biệt",
-      "competency": "TOAN_C6"
-    },
-    "5.3": {
-      "topic_id": 5,
-      "sub": "Khái niệm Chẵn - Lẻ",
-      "competency": "TOAN_C6"
-    },
-    "5.4": {
-      "topic_id": 5,
-      "sub": "Quy luật dãy số",
-      "competency": "TOAN_C6"
+      "sub": "Hình khối",
+      "competency": "TOAN_C1"
     },
     "6.1": {
       "topic_id": 6,
-      "sub": "Hướng không gian",
+      "sub": "Trên - dưới",
       "competency": "TOAN_C4"
     },
     "6.2": {
       "topic_id": 6,
-      "sub": "Vị trí tương quan",
+      "sub": "Trước - sau - ở giữa",
       "competency": "TOAN_C4"
     },
-    "7.1": {
-      "topic_id": 7,
-      "sub": "Ước lượng độ dài",
-      "competency": "TOAN_C3"
-    },
-    "7.2": {
-      "topic_id": 7,
-      "sub": "Đơn vị xăng-ti-mét (cm)",
-      "competency": "TOAN_C3"
-    },
-    "7.3": {
-      "topic_id": 7,
-      "sub": "Tính toán và so sánh",
+    "6.3": {
+      "topic_id": 6,
+      "sub": "Trái - phải",
       "competency": "TOAN_C4"
     },
-    "8.1": {
-      "topic_id": 8,
-      "sub": "Xem giờ đúng",
+    "6.4": {
+      "topic_id": 6,
+      "sub": "Thứ tự và vị trí trong hàng",
+      "competency": "TOAN_C4"
+    },
+    "6.5": {
+      "topic_id": 6,
+      "sub": "Mặt trước - mặt trên - mặt bên",
+      "competency": "TOAN_C4"
+    },
+    "6.6": {
+      "topic_id": 6,
+      "sub": "Tổng hợp vị trí - định hướng",
+      "competency": "TOAN_C4"
+    },
+    "7.4": {
+      "topic_id": 7,
+      "sub": "Xăng-ti-mét và cách dùng thước",
       "competency": "TOAN_C3"
     },
-    "8.2": {
-      "topic_id": 8,
-      "sub": "Lịch tuần lễ",
+    "7.5": {
+      "topic_id": 7,
+      "sub": "Ước lượng rồi đo",
       "competency": "TOAN_C3"
     },
-    "8.3": {
-      "topic_id": 8,
-      "sub": "Thời gian thực tế và xem lịch nâng cao",
+    "7.6": {
+      "topic_id": 7,
+      "sub": "Thực hành tổng hợp",
       "competency": "TOAN_C3"
     },
-    "8.4": {
+    "8.5": {
       "topic_id": 8,
-      "sub": "Thu thập, phân loại, kiểm đếm (Thống kê trực quan)",
+      "sub": "Đọc thời khóa biểu và lịch hoạt động",
       "competency": "TOAN_C3"
     },
-    "9.1": {
+    "8.6": {
+      "topic_id": 8,
+      "sub": "Tổng hợp xem lịch và giờ",
+      "competency": "TOAN_C3"
+    },
+    "9.4": {
       "topic_id": 9,
-      "sub": "Đọc hiểu đề toán",
+      "sub": "Bài toán bớt đi - còn lại",
       "competency": "TOAN_C5"
     },
-    "9.2": {
+    "9.5": {
       "topic_id": 9,
-      "sub": "Phân tích từ khóa",
+      "sub": "Đọc hiểu không dựa vào từ khóa",
       "competency": "TOAN_C5"
     },
-    "9.3": {
+    "9.6": {
       "topic_id": 9,
-      "sub": "Trình bày bài giải",
+      "sub": "Luyện tập tổng hợp bằng tranh",
       "competency": "TOAN_C5"
     },
     "10.1": {
       "topic_id": 10,
-      "sub": "Toán điền khuyết",
+      "sub": "Tìm số bí mật",
       "competency": "TOAN_C6"
     },
     "10.2": {
       "topic_id": 10,
-      "sub": "Toán logic trực quan",
+      "sub": "Chuỗi phép tính và đường đi số",
       "competency": "TOAN_C6"
     },
     "10.3": {
       "topic_id": 10,
-      "sub": "Đếm hình nâng cao",
+      "sub": "Lập số và suy luận chữ số",
+      "competency": "TOAN_C6"
+    },
+    "10.4": {
+      "topic_id": 10,
+      "sub": "Ô số, quy luật và tổng bằng nhau",
+      "competency": "TOAN_C6"
+    },
+    "10.5": {
+      "topic_id": 10,
+      "sub": "Hình học tư duy và đếm hình",
+      "competency": "TOAN_C6"
+    },
+    "10.6": {
+      "topic_id": 10,
+      "sub": "Bài toán suy luận nâng cao một bước",
+      "competency": "TOAN_C6"
+    },
+    "11.1": {
+      "topic_id": 11,
+      "sub": "Thám tử tập sự",
+      "competency": "TOAN_C6"
+    },
+    "11.2": {
+      "topic_id": 11,
+      "sub": "Tìm manh mối",
+      "competency": "TOAN_C6"
+    },
+    "11.3": {
+      "topic_id": 11,
+      "sub": "Ai đúng - ai sai?",
+      "competency": "TOAN_C6"
+    },
+    "11.4": {
+      "topic_id": 11,
+      "sub": "Chuyện gì đã xảy ra?",
+      "competency": "TOAN_C6"
+    },
+    "11.5": {
+      "topic_id": 11,
+      "sub": "Bí mật tuổi, ngày và thời gian",
+      "competency": "TOAN_C6"
+    },
+    "11.6": {
+      "topic_id": 11,
+      "sub": "Siêu thử thách tổng hợp",
       "competency": "TOAN_C6"
     }
   },
