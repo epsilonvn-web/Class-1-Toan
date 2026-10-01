@@ -38,7 +38,8 @@
             justify-content: flex-start;
         }
         #screen-dashboard {
-            max-width: 72rem !important;
+            width: 100% !important;
+            max-width: none !important;
         }
 
         .pastel-card {
@@ -161,7 +162,7 @@
            Chi thay presentation/layout, giu nguyen engine va workflow.
            ========================================================= */
         body { background:#ffffff !important; }
-        #screen-dashboard { max-width:72rem !important; background:transparent !important; }
+        #screen-dashboard { width:100% !important; max-width:none !important; background:transparent !important; }
 
         .app-main-header{
             display:grid !important;
@@ -237,7 +238,7 @@
         #header-level3-tab > span,#header-level4-tab > span{color:#c084fc !important;font-size:13px !important;}
         #header-level2-icon{display:none !important;}
 
-        #app-footer{width:100%;max-width:72rem;min-height:76px;margin:10px auto 0;padding:0 14px;border-radius:0;background-image:url('footer-bg.jpg');background-size:cover;background-position:center;background-repeat:no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;color:#1827f2;border:0;box-shadow:none;}
+        #app-footer{width:100%;max-width:none;min-height:76px;margin:10px auto 0;padding:0 14px;border-radius:0;background-image:url('footer-bg.jpg');background-size:cover;background-position:center;background-repeat:no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;color:#1827f2;border:0;box-shadow:none;}
         #app-footer .footer-title{font-size:17px;font-weight:900;line-height:1.35;text-shadow:0 1px 0 #fff;}
         #app-footer .footer-sub{font-size:13px;font-weight:800;line-height:1.35;color:#1827f2;text-shadow:0 1px 0 #fff;}
 
@@ -349,16 +350,16 @@
         }
 
 
-        /* TOAN 1 - FOOTER RONG BANG BANNER */
+        /* TOAN 1 - VỎ APP FULL-WIDTH RESPONSIVE: footer đồng bộ banner/khung chính */
         #app-footer {
-            width: calc(100% - 1rem) !important;
-            max-width: 71rem !important;
+            width: 100% !important;
+            max-width: none !important;
             box-sizing: border-box !important;
         }
 
         @media (max-width: 767px) {
             #app-footer {
-                width: calc(100% - 0.5rem) !important;
+                width: 100% !important;
                 max-width: none !important;
             }
         }
@@ -554,7 +555,7 @@
         </div>
 
         <!-- 2. KHUNG CHÍNH CHUẨN TỶ LỆ 16:9 / 16:10 -->
-        <div id="screen-dashboard" class="w-full max-w-5xl flex flex-col space-y-1.5 md:space-y-2 p-1 md:p-2">
+        <div id="screen-dashboard" class="w-full flex flex-col space-y-1.5 md:space-y-2 p-1 md:p-2">
             
             <header class="app-main-header w-full bg-white/95 backdrop-blur-md rounded-2xl shadow-sm border-2 border-pink-200">
                 <button id="btn-header-home" onclick="goHome()" title="Về trang chủ" class="flex items-center justify-center bg-white border border-pink-300 shadow-sm shrink-0 overflow-hidden p-0 transition-shadow duration-200 hover:border-pink-400 hover:shadow-[0_0_18px_rgba(244,114,182,0.65)]">
